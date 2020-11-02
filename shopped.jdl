@@ -1,0 +1,666 @@
+// User has Authorities (auto generated both)
+
+/**
+  * Users for shopped that
+  * is composed with User.
+  * @author Isaac Miranda
+**/
+entity ExtendedUser {
+    alias String required unique,
+    description String required,
+    country String required,
+    birthDate LocalDate required,
+}
+
+/**
+  * Status for the 
+  * entities.
+  * @author Isaac Miranda
+**/
+enum Status {
+	ACTIVE(Active), INACTIVE(Inactive)
+}
+
+/**
+ * For the user money.
+ * @author Isaac Miranda
+ */
+entity Cookies {
+	/**
+   	 * Cookies quantity.
+     * @version 1
+     */
+    amount Integer required,
+    /**
+   	 * Cookies wallet key for
+     * Paypal.
+     * @version 1
+     */
+    walletKey String
+}
+
+/**
+  * When a user follow
+  * another user.
+  * @author Isaac Miranda
+**/
+entity Follower {
+	created Instant required
+}
+
+/**
+  * Payment for Cookies
+  * with Paypal.
+  * @author Isaac Miranda
+**/
+entity Transaction {
+    amount Float required,
+    created Instant required,
+    description String required,
+    cookiesAmount Integer required
+}
+
+/**
+  * A type for notifications.
+  * @author Isaac Miranda
+**/
+entity NotificationType {
+    name String required
+}
+
+/**
+  * Account notification.
+  * @author Isaac Miranda
+**/
+entity Notification {
+    content String required,
+    created Instant required,
+}
+
+/**
+  * Intermediate table for
+  * a user that wants to
+  * give an a ward to a 
+  * post.
+  * @author Isaac Miranda
+**/
+entity Commendation {
+	date Instant
+}
+
+/**
+  * A type for any log
+  * @author Isaac Miranda
+**/
+entity LogType {
+    name String required,
+    template String
+}
+
+/**
+  * A log for every
+  * user.
+  * @author Isaac Miranda
+**/
+entity Log {
+    description String required,
+    created Instant
+}
+
+/**
+  * For managing
+  * ingredients and recipes.
+  * @author Isaac Miranda
+**/
+entity Cart {
+    created Instant required,   
+}
+
+
+/**
+  * Intermediate entity
+  * for recipes and carts.
+  * @author Isaac Miranda
+**/
+entity CartHasRecipe {
+
+}
+
+/**
+  * Comment of a post
+  * by a user.
+  * @author Isaac Miranda
+**/
+entity Comment {
+	content String required,
+    created Instant,
+}
+
+/**
+  * Type for reports.
+  * @author Isaac Miranda
+**/
+entity ReportType {
+	name String required,
+    text String required
+}
+
+
+/**
+  * For reporting
+  * comments.
+  * @author Isaac Miranda
+**/
+entity ReportComment {
+	created Instant required
+}
+
+/**
+  * For reporting
+  * posts.
+  * @author Isaac Miranda
+**/
+entity ReportPost {
+	created Instant required
+}
+
+/**
+  * Central entity
+  * of the app.
+  * @author Isaac Miranda
+**/
+entity Recipe {
+    name String required,
+    portion Integer,
+    description String required,
+    duration Integer required,
+    creation Instant
+}
+
+/**
+  * Intermediate entity
+  * for recipes and the
+  * users that have 
+  * access.
+  * @author Isaac Miranda
+**/
+entity RecipeShared {
+
+}
+
+/**
+  * Save links to
+  * recipes.
+  * @author Isaac Miranda
+**/
+entity Collection {
+	name String required,
+    description String required,
+    created Instant
+}
+
+/**
+  * Intermediate entity
+  * for collectios and
+  * recipes.
+  * @author Isaac Miranda
+**/
+entity CollectionHasRecipe {
+}
+
+/**
+  * Ingredients for
+  * all recipes.
+  * @author Isaac Miranda
+**/
+entity Ingredient {
+	name String required,
+    description String required,
+    units String required,
+}
+
+/**
+  * Intermediate entity
+  * for ingredients and
+  * recipes.
+  * @author Isaac Miranda
+**/
+entity RecipeHasIngredient {
+	amount Integer
+}
+
+/**
+  * Intermediate entity
+  * for cart and 
+  * ingredients.
+  * @author Isaac Miranda
+**/
+entity CartHasIngredient {
+	amount Integer required
+}
+
+/**
+  * Types for recipe and
+  * ingredient tags
+  * @author Isaac Miranda
+**/
+entity TagType {
+	name String required,
+    description String required,
+}
+
+/**
+  * Tags for recipes.
+  * @author Isaac Miranda
+**/
+entity RecipeTag {
+    name String required,
+    description String required,
+}
+
+/**
+  * Intermediate entity
+  * for recipes and recipe
+  * tags.
+  * @author Isaac Miranda
+**/
+entity RecipeHasRecipeTag {
+}
+
+/**
+  * Tags for ingredients.
+  * @author Isaac Miranda
+**/
+entity IngredientTag {
+    name String required,
+    description String required,
+}
+
+/**
+  * Intermediate entity
+  * for ingredient tags
+  * and ingredients.
+  * @author Isaac Miranda
+**/
+entity IngredientHasIngredientTag {
+}
+
+/**
+  * For a feedback to
+  * the posts through
+  * cookies.
+  * @author Isaac Miranda
+**/
+entity Award {
+    name String required,
+    description String required,
+    cost Integer required,
+}
+
+/**
+  * For recipes posting
+  * @author Isaac Miranda
+**/
+entity Post {
+	caption String,
+    date Instant required
+}
+
+/**
+  * For feedback to
+  * the posts.
+  * @author Isaac Miranda
+**/
+entity Bite {
+	created Instant required
+}
+
+/**
+  * Statuses for multiple
+  * entities.
+  * @author Isaac Miranda
+**/
+entity Status {
+	name String required,
+    description String required
+}
+
+/**
+  * Images for multiple
+  * entities.
+  * @author Isaac Miranda
+**/
+entity Image {
+	link String required,
+    description String
+}
+
+/**
+  * System messages.
+  * @author Isaac Miranda
+**/
+entity Message {
+	text String required,
+    description String
+}
+
+//entity Announcement {
+//	text String required,
+//    description String
+//}
+
+/**
+  * For receive emails
+  * for Intuite.
+  * @author Isaac Miranda
+**/
+//entity Contact {
+//	name String required,
+//    email String required,
+//    title String required,
+//    text String required
+//}
+
+/**
+  * Values for
+  * units in ingredients
+  * @author Isaac Miranda
+**/
+//entity Value {
+//	name String required,
+//    quantity Float
+//}
+
+/**
+  * Colors for validations.
+  * @author Isaac Miranda
+**/
+entity Color {
+	name String required,
+    value String required
+}
+
+/**
+  * Extra catalogues for
+  * multiple functions.
+  * @author Isaac Miranda
+**/
+entity Catalogue {
+	idCatalogue String required,
+    value String required
+}
+
+//OO1
+relationship OneToOne {
+    
+    /** **/
+    ExtendedUser{user} to User with jpaDerivedIdentifier,
+    
+    /**  **/
+    Cookies{user required} to ExtendedUser,
+    
+    /**  **/
+    Post{recipe required} to Recipe,
+}
+
+//OM1
+//relationship OneToMany {
+//}
+
+//MO1
+relationship ManyToOne {
+	// Business domain logic
+  	
+    /**  **/
+    Commendation{post required} to Post,
+    
+    /**  **/
+    Commendation{award required} to Award,
+    
+    /**  **/
+    Follower{userFollowed(alias) required} to ExtendedUser,
+    
+    /**  **/
+    Notification{type(name) required} to NotificationType,
+    
+    /**  **/
+    Log{type(name) required} to LogType,
+      
+    /**  **/
+    RecipeShared{recipe(name) required} to Recipe,
+
+	/**  **/
+    CartHasRecipe{recipe(name) required} to Recipe,
+    
+    /**  **/
+    CartHasRecipe{cart required} to Cart,
+    
+    /**  **/
+    CartHasIngredient{cart required} to Cart,
+    
+    /**  **/
+    CartHasIngredient{ingredient(name) required} to Ingredient,
+    
+    /**  **/
+    RecipeHasIngredient{ingredient(name) required} to Ingredient,
+    
+    /**  **/
+    RecipeHasIngredient{recipe(name) required} to Recipe,
+    
+    /**  **/
+    RecipeHasRecipeTag{recipe(name) required} to Recipe,
+    
+    /**  **/
+    RecipeHasRecipeTag{recipeTag(name) required} to RecipeTag,
+    
+     /**  **/
+    IngredientHasIngredientTag{ingredient(name) required} to Ingredient,
+    
+    /**  **/
+    IngredientHasIngredientTag{ingredientTag(name) required} to IngredientTag,
+    
+    /**  **/
+    Comment{post(id) required} to Post, 
+    
+    /**  **/
+    ReportComment{type(name) required} to ReportType,
+    
+    /**  **/
+    ReportComment{comment(content) required} to Comment,
+    
+    /**  **/
+    ReportPost{type(name) required} to ReportType,
+    
+    /**  **/
+    ReportPost{post(caption) required} to Post,
+    
+    /** **/
+	Bite{post required} to Post,
+    
+    /** **/
+    IngredientTag{type(name) required} to TagType,
+    
+    /** **/
+    RecipeTag{type(name) required} to TagType,
+    
+    /** **/
+    CollectionHasRecipe{collection(name) required} to Collection, 
+    
+    /** **/
+    CollectionHasRecipe{recipe(name) required} to Recipe,
+    
+    
+}
+
+//MO2
+relationship ManyToOne {
+ 	// To User
+        
+    /**  **/
+    Transaction{user required} to ExtendedUser,
+        
+    /**  **/
+    Commendation{user required} to ExtendedUser,
+    
+    /**  **/
+    Notification{user required} to ExtendedUser,
+    
+    /**  **/
+    Log{user required} to ExtendedUser,
+    
+    /**  **/
+    Follower{user(alias) required} to ExtendedUser,
+    
+    /**  **/
+    Bite{user required} to ExtendedUser,
+    
+  	/**  **/
+    Cart{user required} to ExtendedUser,
+    
+    /**  **/
+    RecipeShared{user required} to ExtendedUser,
+    
+    /** **/
+    ReportComment{user required} to ExtendedUser,
+    
+    /** **/
+    ReportPost{user required} to ExtendedUser,
+    
+    /** **/
+    Comment{user required} to ExtendedUser,
+    
+    /** **/
+    Recipe{user required} to ExtendedUser,
+    
+    /**  **/
+    Collection{user required} to ExtendedUser,
+    
+    /**  **/
+    Post{user required} to ExtendedUser,
+}
+
+
+//MO3
+relationship ManyToOne {
+ 	// Statuses
+    
+    /**  **/
+    NotificationType{status required} to Status,
+    
+    /**  **/
+    Notification{status required} to Status,
+    
+    /**  **/
+    Follower{status required} to Status,
+    
+    /**  **/
+    Cart{status required} to Status,
+    
+  	/**  **/
+    CartHasRecipe{status required} to Status,
+    
+    /**  **/
+    CartHasIngredient{status required} to Status,
+    
+    /**  **/
+    RecipeShared{status required} to Status,
+    
+    /**  **/
+    Ingredient{status required} to Status,
+    
+    /**  **/
+    Recipe{status required} to Status,
+    
+    /**  **/
+    Collection{status required} to Status,
+    
+    /**  **/
+    CollectionHasRecipe{status required} to Status,
+    
+    /**  **/
+    Award{status required} to Status,
+    
+    /**  **/
+    Post{status required} to Status,
+    
+    /**  **/
+    TagType{status required} to Status,
+    
+    /**  **/
+    RecipeTag{status required} to Status,
+    
+    /** **/
+    LogType{status required} to Status,
+    
+    /**  **/
+    IngredientTag{status required} to Status,
+    
+    /**  **/
+    ReportType{status required} to Status,
+    
+    /**  **/
+    ReportPost{status required} to Status,
+    
+    /**  **/
+    ReportComment{status required} to Status,
+    
+    /**  **/
+    Bite{status required} to Status,
+    
+    /**  **/
+    Comment{status required} to Status,
+    
+    /**  **/
+    RecipeHasIngredient{status required} to Status,
+    
+    /**  **/
+    RecipeHasRecipeTag{status required} to Status,
+    
+    /**  **/
+    IngredientHasIngredientTag{status required} to Status,
+    
+    /**  **/
+    ExtendedUser{status required} to Status,
+    
+    
+}
+
+//MO4
+relationship ManyToOne {
+	// Images
+
+ 	/** **/
+    Recipe{image} to Image,
+    
+    /** **/
+    Award{image} to Image,
+    
+    /** **/
+    Collection{image} to Image,
+    
+    /** **/
+    Ingredient{image} to Image,
+}
+
+//MO5
+relationship ManyToOne {
+    // Colors
+    
+    /**  **/
+    NotificationType{color required} to Color
+	
+    /**  **/
+    TagType{color required} to Color
+}
+
+
+//relationship ManyToMany {
+	//
+//}
+
+//Options
+
+service all with serviceImpl
+service all with serviceClass
+dto * with mapstruct
+paginate * with infinite-scroll
