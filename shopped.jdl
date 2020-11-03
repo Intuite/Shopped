@@ -12,13 +12,23 @@ entity ExtendedUser {
     birthDate LocalDate required,
 }
 
+///**
+//  * Status for the 
+//  * entities.
+// * @author Isaac Miranda
+//**/
+//enum Status {
+//	ACTIVE(Active), INACTIVE(Inactive)
+//}
+
 /**
-  * Status for the 
+  * Statuses for multiple
   * entities.
   * @author Isaac Miranda
 **/
-enum Status {
-	ACTIVE(Active), INACTIVE(Inactive)
+entity Status {
+	name String required,
+    description String required
 }
 
 /**
@@ -173,8 +183,9 @@ entity Recipe {
     name String required,
     portion Integer,
     description String required,
-    duration Integer required,
-    creation Instant
+    duration Duration required,
+    creation Instant,
+    image ImageBlob
 }
 
 /**
@@ -196,7 +207,8 @@ entity RecipeShared {
 entity Collection {
 	name String required,
     description String required,
-    created Instant
+    created Instant,
+    image ImageBlob
 }
 
 /**
@@ -217,6 +229,7 @@ entity Ingredient {
 	name String required,
     description String required,
     units String required,
+    image ImageBlob
 }
 
 /**
@@ -295,6 +308,7 @@ entity Award {
     name String required,
     description String required,
     cost Integer required,
+    image ImageBlob
 }
 
 /**
@@ -315,25 +329,15 @@ entity Bite {
 	created Instant required
 }
 
-/**
-  * Statuses for multiple
-  * entities.
-  * @author Isaac Miranda
-**/
-entity Status {
-	name String required,
-    description String required
-}
-
-/**
-  * Images for multiple
-  * entities.
-  * @author Isaac Miranda
-**/
-entity Image {
-	link String required,
-    description String
-}
+///**
+//  * Images for multiple
+//  * entities.
+//  * @author Isaac Miranda
+//**/
+//entity Image {
+//	link String required,
+//    description String
+//}
 
 /**
   * System messages.
@@ -342,42 +346,6 @@ entity Image {
 entity Message {
 	text String required,
     description String
-}
-
-//entity Announcement {
-//	text String required,
-//    description String
-//}
-
-/**
-  * For receive emails
-  * for Intuite.
-  * @author Isaac Miranda
-**/
-//entity Contact {
-//	name String required,
-//    email String required,
-//    title String required,
-//    text String required
-//}
-
-/**
-  * Values for
-  * units in ingredients
-  * @author Isaac Miranda
-**/
-//entity Value {
-//	name String required,
-//    quantity Float
-//}
-
-/**
-  * Colors for validations.
-  * @author Isaac Miranda
-**/
-entity Color {
-	name String required,
-    value String required
 }
 
 /**
@@ -394,46 +362,79 @@ entity Catalogue {
 relationship OneToOne {
     
     /** **/
-    ExtendedUser{user} to User with jpaDerivedIdentifier,
+    ExtendedUser{user(login)} to User 
+    //with jpaDerivedIdentifier
+    ,
     
     /**  **/
-    Cookies{user required} to ExtendedUser,
+    Cookies{user(login) required} to User,
     
     /**  **/
-    Post{recipe required} to Recipe,
+    Post{recipe(name) required} to Recipe{post},
 }
 
-//OM1
-//relationship OneToMany {
-//}
 
 //MO1
 relationship ManyToOne {
 	// Business domain logic
-  	
+
     /**  **/
-    Commendation{post required} to Post,
-    
-    /**  **/
-    Commendation{award required} to Award,
-    
-    /**  **/
-    Follower{userFollowed(alias) required} to ExtendedUser,
+    Follower{userFollowed(login) required} to User,
     
     /**  **/
     Notification{type(name) required} to NotificationType,
     
     /**  **/
     Log{type(name) required} to LogType,
-      
+    
     /**  **/
-    RecipeShared{recipe(name) required} to Recipe,
-
-	/**  **/
+    Comment{post(id) required} to Post, 
+    
+    /**  **/
+    ReportComment{type(name) required} to ReportType,
+    
+    /**  **/
+    ReportComment{comment(content) required} to Comment,
+    
+    /** **/
+	Bite{post required} to Post,
+    
+    /** **/
+    IngredientTag{type(name) required} to TagType,
+    
+    /** **/
+    RecipeTag{type(name) required} to TagType, 
+    
+    /**  **/
+    ReportPost{type(name) required} to ReportType,
+    
+    /**  **/
+    ReportPost{post(caption) required} to Post,
+    
+    //MANY TO MANY
+    /**  **/
+    Commendation{post required} to Post,
+    
+    /**  **/
+    Commendation{award(name) required} to Award,
+    
+    /**  **/
     CartHasRecipe{recipe(name) required} to Recipe,
     
     /**  **/
     CartHasRecipe{cart required} to Cart,
+    
+    /**  **/
+    RecipeShared{recipe(name) required} to Recipe,
+    
+    /**  **/
+    RecipeShared{user(login) required} to User,
+    
+     /** **/
+    CollectionHasRecipe{collection(name) required} to Collection, 
+    
+    /** **/
+    CollectionHasRecipe{recipe(name) required} to Recipe,
     
     /**  **/
     CartHasIngredient{cart required} to Cart,
@@ -441,7 +442,7 @@ relationship ManyToOne {
     /**  **/
     CartHasIngredient{ingredient(name) required} to Ingredient,
     
-    /**  **/
+     /**  **/
     RecipeHasIngredient{ingredient(name) required} to Ingredient,
     
     /**  **/
@@ -453,43 +454,11 @@ relationship ManyToOne {
     /**  **/
     RecipeHasRecipeTag{recipeTag(name) required} to RecipeTag,
     
-     /**  **/
+    /**  **/
     IngredientHasIngredientTag{ingredient(name) required} to Ingredient,
     
     /**  **/
     IngredientHasIngredientTag{ingredientTag(name) required} to IngredientTag,
-    
-    /**  **/
-    Comment{post(id) required} to Post, 
-    
-    /**  **/
-    ReportComment{type(name) required} to ReportType,
-    
-    /**  **/
-    ReportComment{comment(content) required} to Comment,
-    
-    /**  **/
-    ReportPost{type(name) required} to ReportType,
-    
-    /**  **/
-    ReportPost{post(caption) required} to Post,
-    
-    /** **/
-	Bite{post required} to Post,
-    
-    /** **/
-    IngredientTag{type(name) required} to TagType,
-    
-    /** **/
-    RecipeTag{type(name) required} to TagType,
-    
-    /** **/
-    CollectionHasRecipe{collection(name) required} to Collection, 
-    
-    /** **/
-    CollectionHasRecipe{recipe(name) required} to Recipe,
-    
-    
 }
 
 //MO2
@@ -497,46 +466,43 @@ relationship ManyToOne {
  	// To User
         
     /**  **/
-    Transaction{user required} to ExtendedUser,
+    Transaction{user required} to User,
         
     /**  **/
-    Commendation{user required} to ExtendedUser,
+    Commendation{user(login) required} to User,
     
     /**  **/
-    Notification{user required} to ExtendedUser,
+    Notification{user required} to User,
     
     /**  **/
-    Log{user required} to ExtendedUser,
+    Log{user required} to User,
     
     /**  **/
-    Follower{user(alias) required} to ExtendedUser,
+    Follower{user(login) required} to User,
     
     /**  **/
-    Bite{user required} to ExtendedUser,
+    Bite{user required} to User,
     
   	/**  **/
-    Cart{user required} to ExtendedUser,
+    Cart{user required} to User,
+    
+    /** **/
+    ReportComment{user required} to User,
+    
+    /** **/
+    ReportPost{user required} to User,
+    
+    /** **/
+    Comment{user required} to User,
+    
+    /** **/
+    Recipe{user required} to User,
     
     /**  **/
-    RecipeShared{user required} to ExtendedUser,
-    
-    /** **/
-    ReportComment{user required} to ExtendedUser,
-    
-    /** **/
-    ReportPost{user required} to ExtendedUser,
-    
-    /** **/
-    Comment{user required} to ExtendedUser,
-    
-    /** **/
-    Recipe{user required} to ExtendedUser,
+    Collection{user required} to User,
     
     /**  **/
-    Collection{user required} to ExtendedUser,
-    
-    /**  **/
-    Post{user required} to ExtendedUser,
+    Post{user required} to User,
 }
 
 
@@ -545,122 +511,111 @@ relationship ManyToOne {
  	// Statuses
     
     /**  **/
-    NotificationType{status required} to Status,
+    NotificationType{status(name) required} to Status,
     
     /**  **/
-    Notification{status required} to Status,
+    Notification{status(name) required} to Status,
     
     /**  **/
-    Follower{status required} to Status,
+    Follower{status(name) required} to Status,
     
     /**  **/
-    Cart{status required} to Status,
+    Cart{status(name) required} to Status,
     
   	/**  **/
-    CartHasRecipe{status required} to Status,
+    CartHasRecipe{status(name) required} to Status,
     
     /**  **/
-    CartHasIngredient{status required} to Status,
+    CartHasIngredient{status(name) required} to Status,
     
     /**  **/
-    RecipeShared{status required} to Status,
+    RecipeShared{status(name) required} to Status,
     
     /**  **/
-    Ingredient{status required} to Status,
+    Ingredient{status(name) required} to Status,
     
     /**  **/
-    Recipe{status required} to Status,
+    Recipe{status(name) required} to Status,
     
     /**  **/
-    Collection{status required} to Status,
+    Collection{status(name) required} to Status,
     
     /**  **/
-    CollectionHasRecipe{status required} to Status,
+    CollectionHasRecipe{status(name) required} to Status,
     
     /**  **/
-    Award{status required} to Status,
+    Award{status(name) required} to Status,
     
     /**  **/
-    Post{status required} to Status,
+    Post{status(name) required} to Status,
     
     /**  **/
-    TagType{status required} to Status,
+    TagType{status(name) required} to Status,
     
     /**  **/
-    RecipeTag{status required} to Status,
+    RecipeTag{status(name) required} to Status,
     
     /** **/
-    LogType{status required} to Status,
+    LogType{status(name) required} to Status,
     
     /**  **/
-    IngredientTag{status required} to Status,
+    IngredientTag{status(name) required} to Status,
     
     /**  **/
-    ReportType{status required} to Status,
+    ReportType{status(name) required} to Status,
     
     /**  **/
-    ReportPost{status required} to Status,
+    ReportPost{status(name) required} to Status,
     
     /**  **/
-    ReportComment{status required} to Status,
+    ReportComment{status(name) required} to Status,
     
     /**  **/
-    Bite{status required} to Status,
+    Bite{status(name) required} to Status,
     
     /**  **/
-    Comment{status required} to Status,
+    Comment{status(name) required} to Status,
     
     /**  **/
-    RecipeHasIngredient{status required} to Status,
+    RecipeHasIngredient{status(name) required} to Status,
     
     /**  **/
-    RecipeHasRecipeTag{status required} to Status,
+    RecipeHasRecipeTag{status(name) required} to Status,
     
     /**  **/
-    IngredientHasIngredientTag{status required} to Status,
+    IngredientHasIngredientTag{status(name) required} to Status,
     
     /**  **/
-    ExtendedUser{status required} to Status,
+    ExtendedUser{status(name) required} to Status,
     
     
 }
+
 
 //MO4
-relationship ManyToOne {
-	// Images
 
- 	/** **/
-    Recipe{image} to Image,
-    
-    /** **/
-    Award{image} to Image,
-    
-    /** **/
-    Collection{image} to Image,
-    
-    /** **/
-    Ingredient{image} to Image,
-}
-
-//MO5
-relationship ManyToOne {
-    // Colors
-    
-    /**  **/
-    NotificationType{color required} to Color
-	
-    /**  **/
-    TagType{color required} to Color
-}
-
-
-//relationship ManyToMany {
-	//
+//relationship ManyToOne {
+//	// Images
+//
+// 	/** **/
+//    Recipe{image} to Image,
+//    
+//    /** **/
+//    Award{image} to Image,
+//    
+//    /** **/
+//    Collection{image} to Image,
+//    
+//    /** **/
+//    Ingredient{image} to Image,
 //}
+
 
 //Options
 
 service all with serviceImpl
 service all with serviceClass
 dto * with mapstruct
-paginate * with infinite-scroll
+paginate * with pagination
+filter *
+
