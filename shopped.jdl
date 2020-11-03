@@ -5,11 +5,10 @@
   * is composed with User.
   * @author Isaac Miranda
 **/
-entity ExtendedUser {
-    alias String required unique,
-    description String required,
-    country String required,
-    birthDate LocalDate required,
+entity UserProfile {
+    description String,
+    birthDate LocalDate,
+    image ImageBlob
 }
 
 ///**
@@ -40,7 +39,7 @@ entity Cookies {
    	 * Cookies quantity.
      * @version 1
      */
-    amount Integer required,
+    amount Integer min(0),
     /**
    	 * Cookies wallet key for
      * Paypal.
@@ -181,9 +180,9 @@ entity ReportPost {
 **/
 entity Recipe {
     name String required,
-    portion Integer,
+    portion Integer min(1),
     description String required,
-    duration Duration required,
+    duration Duration,
     creation Instant,
     image ImageBlob
 }
@@ -239,7 +238,7 @@ entity Ingredient {
   * @author Isaac Miranda
 **/
 entity RecipeHasIngredient {
-	amount Integer
+	amount Integer required min(0)
 }
 
 /**
@@ -249,7 +248,7 @@ entity RecipeHasIngredient {
   * @author Isaac Miranda
 **/
 entity CartHasIngredient {
-	amount Integer required
+	amount Integer required min(0)
 }
 
 /**
@@ -307,7 +306,7 @@ entity IngredientHasIngredientTag {
 entity Award {
     name String required,
     description String required,
-    cost Integer required,
+    cost Integer required min(0),
     image ImageBlob
 }
 
@@ -362,7 +361,7 @@ entity Catalogue {
 relationship OneToOne {
     
     /** **/
-    ExtendedUser{user(login)} to User 
+    UserProfile{user(login)} to User 
     //with jpaDerivedIdentifier
     ,
     
@@ -459,6 +458,9 @@ relationship ManyToOne {
     
     /**  **/
     IngredientHasIngredientTag{ingredientTag(name) required} to IngredientTag,
+    
+    ///** **/
+    //UserProfile{country(value)} to Catalogue,
 }
 
 //MO2
@@ -466,44 +468,46 @@ relationship ManyToOne {
  	// To User
         
     /**  **/
-    Transaction{user required} to User,
+    Transaction{user(login) required} to User,
         
     /**  **/
     Commendation{user(login) required} to User,
     
     /**  **/
-    Notification{user required} to User,
+    Notification{user(login) required} to User,
     
     /**  **/
-    Log{user required} to User,
+    Log{user(login) required} to User,
     
     /**  **/
     Follower{user(login) required} to User,
     
     /**  **/
-    Bite{user required} to User,
+    Bite{user(login) required} to User,
     
   	/**  **/
-    Cart{user required} to User,
+    Cart{user(login) required} to User,
     
     /** **/
-    ReportComment{user required} to User,
+    ReportComment{user(login) required} to User,
     
     /** **/
-    ReportPost{user required} to User,
+    ReportPost{user(login) required} to User,
     
     /** **/
-    Comment{user required} to User,
+    Comment{user(login) required} to User,
     
     /** **/
-    Recipe{user required} to User,
+    Recipe{user(login) required} to User,
     
     /**  **/
-    Collection{user required} to User,
+    Collection{user(login) required} to User,
     
     /**  **/
-    Post{user required} to User,
+    Post{user(login) required} to User,
 }
+
+
 
 
 //MO3
@@ -585,10 +589,8 @@ relationship ManyToOne {
     /**  **/
     IngredientHasIngredientTag{status(name) required} to Status,
     
-    /**  **/
-    ExtendedUser{status(name) required} to Status,
-    
-    
+    ///**  **/
+    //UserProfile{status(name) required} to Status,
 }
 
 
