@@ -6,9 +6,9 @@ import { NgJhipsterModule } from 'ng-jhipster';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TranslateModule } from '@ngx-translate/core';
-
 @NgModule({
   exports: [
+    ReactiveFormsModule,
     FormsModule,
     CommonModule,
     NgbModule,

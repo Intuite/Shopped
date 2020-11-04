@@ -4,9 +4,10 @@ import { RouterModule } from '@angular/router';
 import { ShoppedSharedModule } from 'app/shared/shared.module';
 import { HOME_ROUTE } from './home.route';
 import { HomeComponent } from './home.component';
+import { MatChipsModule } from '@angular/material/chips';
 
 @NgModule({
-  imports: [ShoppedSharedModule, RouterModule.forChild([HOME_ROUTE])],
+  imports: [ShoppedSharedModule, RouterModule.forChild([HOME_ROUTE]), MatChipsModule],
   declarations: [HomeComponent],
 })
 export class ShoppedHomeModule {}
