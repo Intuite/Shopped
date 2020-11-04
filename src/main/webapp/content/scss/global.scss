@@ -87,6 +87,7 @@ Custom alerts for notification
 ========================================================================== */
 .alerts {
   .alert {
+    z-index: 100;
     text-overflow: ellipsis;
     pre {
       background: none;
