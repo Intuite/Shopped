@@ -1,5 +1,28 @@
 // User has Authorities (auto generated both)
 
+application {
+  config {
+    baseName Shopped
+    applicationType monolith
+    authenticationType session
+    buildTool maven
+    cacheProvider ehcache
+    clientFramework angularX
+    clientPackageManager npm
+    clientTheme Materia
+    databaseType sql
+    devDatabaseType mysql
+    prodDatabaseType mysql
+    enableHibernateCache true
+    languages [en]
+    nativeLanguage en
+    packageName com.intuite.shopped,
+	serverPort 8080,
+    testFrameworks [protractor]
+  }
+  entities *
+}
+
 /**
   * Users for shopped that
   * is composed with User.
@@ -11,6 +34,18 @@ entity UserProfile {
     image ImageBlob
 }
 
+/**
+  * Statuses for multiple
+  * entities.
+  * @author Isaac Miranda
+**/
+enum Status {
+	ACTIVE(Active), 
+    INACTIVE(Inactive),
+    BLOCKED(blocked),
+    PENDING(pending)
+}
+
 ///**
 //  * Status for the 
 //  * entities.
@@ -19,16 +54,6 @@ entity UserProfile {
 //enum Status {
 //	ACTIVE(Active), INACTIVE(Inactive)
 //}
-
-/**
-  * Statuses for multiple
-  * entities.
-  * @author Isaac Miranda
-**/
-entity Status {
-	name String required,
-    description String required
-}
 
 /**
  * For the user money.
@@ -54,7 +79,8 @@ entity Cookies {
   * @author Isaac Miranda
 **/
 entity Follower {
-	created Instant required
+	created Instant required,
+    status Status
 }
 
 /**
@@ -74,7 +100,8 @@ entity Transaction {
   * @author Isaac Miranda
 **/
 entity NotificationType {
-    name String required
+    name String required,
+    status Status
 }
 
 /**
@@ -84,6 +111,7 @@ entity NotificationType {
 entity Notification {
     content String required,
     created Instant required,
+    status Status
 }
 
 /**
@@ -103,7 +131,8 @@ entity Commendation {
 **/
 entity LogType {
     name String required,
-    template String
+    template String,
+    status Status
 }
 
 /**
@@ -122,7 +151,8 @@ entity Log {
   * @author Isaac Miranda
 **/
 entity Cart {
-    created Instant required,   
+    created Instant required,
+    status Status
 }
 
 
@@ -132,7 +162,7 @@ entity Cart {
   * @author Isaac Miranda
 **/
 entity CartHasRecipe {
-
+	status Status
 }
 
 /**
@@ -143,6 +173,7 @@ entity CartHasRecipe {
 entity Comment {
 	content String required,
     created Instant,
+    status Status
 }
 
 /**
@@ -151,7 +182,8 @@ entity Comment {
 **/
 entity ReportType {
 	name String required,
-    text String required
+    text String required,
+    status Status
 }
 
 
@@ -161,7 +193,8 @@ entity ReportType {
   * @author Isaac Miranda
 **/
 entity ReportComment {
-	created Instant required
+	created Instant required,
+    status Status
 }
 
 /**
@@ -170,7 +203,8 @@ entity ReportComment {
   * @author Isaac Miranda
 **/
 entity ReportPost {
-	created Instant required
+	created Instant required,
+    status Status
 }
 
 /**
@@ -184,7 +218,8 @@ entity Recipe {
     description String required,
     duration Duration,
     creation Instant,
-    image ImageBlob
+    image ImageBlob,
+    status Status
 }
 
 /**
@@ -195,7 +230,7 @@ entity Recipe {
   * @author Isaac Miranda
 **/
 entity RecipeShared {
-
+	status Status
 }
 
 /**
@@ -207,7 +242,8 @@ entity Collection {
 	name String required,
     description String required,
     created Instant,
-    image ImageBlob
+    image ImageBlob,
+    status Status
 }
 
 /**
@@ -217,6 +253,7 @@ entity Collection {
   * @author Isaac Miranda
 **/
 entity CollectionHasRecipe {
+	status Status
 }
 
 /**
@@ -228,7 +265,8 @@ entity Ingredient {
 	name String required,
     description String required,
     units String required,
-    image ImageBlob
+    image ImageBlob,
+    status Status
 }
 
 /**
@@ -238,7 +276,8 @@ entity Ingredient {
   * @author Isaac Miranda
 **/
 entity RecipeHasIngredient {
-	amount Integer required min(0)
+	amount Integer required min(0),
+    status Status
 }
 
 /**
@@ -248,7 +287,8 @@ entity RecipeHasIngredient {
   * @author Isaac Miranda
 **/
 entity CartHasIngredient {
-	amount Integer required min(0)
+	amount Integer required min(0),
+    status Status
 }
 
 /**
@@ -259,6 +299,7 @@ entity CartHasIngredient {
 entity TagType {
 	name String required,
     description String required,
+    status Status
 }
 
 /**
@@ -268,6 +309,7 @@ entity TagType {
 entity RecipeTag {
     name String required,
     description String required,
+    status Status
 }
 
 /**
@@ -277,6 +319,7 @@ entity RecipeTag {
   * @author Isaac Miranda
 **/
 entity RecipeHasRecipeTag {
+	status Status
 }
 
 /**
@@ -286,6 +329,7 @@ entity RecipeHasRecipeTag {
 entity IngredientTag {
     name String required,
     description String required,
+    status Status
 }
 
 /**
@@ -295,6 +339,7 @@ entity IngredientTag {
   * @author Isaac Miranda
 **/
 entity IngredientHasIngredientTag {
+	status Status
 }
 
 /**
@@ -307,7 +352,8 @@ entity Award {
     name String required,
     description String required,
     cost Integer required min(0),
-    image ImageBlob
+    image ImageBlob,
+    status Status
 }
 
 /**
@@ -316,7 +362,8 @@ entity Award {
 **/
 entity Post {
 	caption String,
-    date Instant required
+    date Instant required,
+    status Status
 }
 
 /**
@@ -325,7 +372,8 @@ entity Post {
   * @author Isaac Miranda
 **/
 entity Bite {
-	created Instant required
+	created Instant required,
+    status Status
 }
 
 ///**
@@ -506,93 +554,6 @@ relationship ManyToOne {
     /**  **/
     Post{user(login) required} to User,
 }
-
-
-
-
-//MO3
-relationship ManyToOne {
- 	// Statuses
-    
-    /**  **/
-    NotificationType{status(name) required} to Status,
-    
-    /**  **/
-    Notification{status(name) required} to Status,
-    
-    /**  **/
-    Follower{status(name) required} to Status,
-    
-    /**  **/
-    Cart{status(name) required} to Status,
-    
-  	/**  **/
-    CartHasRecipe{status(name) required} to Status,
-    
-    /**  **/
-    CartHasIngredient{status(name) required} to Status,
-    
-    /**  **/
-    RecipeShared{status(name) required} to Status,
-    
-    /**  **/
-    Ingredient{status(name) required} to Status,
-    
-    /**  **/
-    Recipe{status(name) required} to Status,
-    
-    /**  **/
-    Collection{status(name) required} to Status,
-    
-    /**  **/
-    CollectionHasRecipe{status(name) required} to Status,
-    
-    /**  **/
-    Award{status(name) required} to Status,
-    
-    /**  **/
-    Post{status(name) required} to Status,
-    
-    /**  **/
-    TagType{status(name) required} to Status,
-    
-    /**  **/
-    RecipeTag{status(name) required} to Status,
-    
-    /** **/
-    LogType{status(name) required} to Status,
-    
-    /**  **/
-    IngredientTag{status(name) required} to Status,
-    
-    /**  **/
-    ReportType{status(name) required} to Status,
-    
-    /**  **/
-    ReportPost{status(name) required} to Status,
-    
-    /**  **/
-    ReportComment{status(name) required} to Status,
-    
-    /**  **/
-    Bite{status(name) required} to Status,
-    
-    /**  **/
-    Comment{status(name) required} to Status,
-    
-    /**  **/
-    RecipeHasIngredient{status(name) required} to Status,
-    
-    /**  **/
-    RecipeHasRecipeTag{status(name) required} to Status,
-    
-    /**  **/
-    IngredientHasIngredientTag{status(name) required} to Status,
-    
-    ///**  **/
-    //UserProfile{status(name) required} to Status,
-}
-
 
 //MO4
 
