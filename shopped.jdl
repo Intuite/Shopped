@@ -41,10 +41,10 @@ entity UserProfile {
   * @author Isaac Miranda
 **/
 enum Status {
-    ACTIVE(active), 
-    INACTIVE(inactive),
-    BLOCKED(blocked),
-    PENDING(pending)
+    ACTIVE(Active), 
+    INACTIVE(Inactive),
+    BLOCKED(Blocked),
+    PENDING(Pending)
 }
 
 /**
