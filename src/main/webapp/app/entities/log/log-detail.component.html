@@ -1,0 +1,44 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="log">
+            <h2><span jhiTranslate="shoppedApp.log.detail.title">Log</span> {{ log.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="shoppedApp.log.description">Description</span></dt>
+                <dd>
+                    <span>{{ log.description }}</span>
+                </dd>
+                <dt><span jhiTranslate="shoppedApp.log.created">Created</span></dt>
+                <dd>
+                    <span>{{ log.created }}</span>
+                </dd>
+                <dt><span jhiTranslate="shoppedApp.log.type">Type</span></dt>
+                <dd>
+                    <div *ngIf="log.typeId">
+                        <a [routerLink]="['/log-type', log.typeId, 'view']">{{ log.typeName }}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="shoppedApp.log.user">User</span></dt>
+                <dd>
+                    {{ log.userLogin }}
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/log', log.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

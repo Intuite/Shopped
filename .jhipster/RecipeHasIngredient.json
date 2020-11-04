@@ -1,0 +1,46 @@
+{
+  "name": "RecipeHasIngredient",
+  "fields": [
+    {
+      "fieldName": "amount",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required", "min"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "Status",
+      "fieldValues": "ACTIVE (active),INACTIVE (inactive),BLOCKED (blocked),PENDING (pending)"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "ingredient",
+      "otherEntityRelationshipName": "recipeHasIngredient",
+      "relationshipValidateRules": "required",
+      "relationshipName": "ingredient",
+      "otherEntityField": "name"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "recipe",
+      "otherEntityRelationshipName": "recipeHasIngredient",
+      "relationshipValidateRules": "required",
+      "relationshipName": "recipe",
+      "otherEntityField": "name"
+    }
+  ],
+  "changelogDate": "20201104175838",
+  "javadoc": "Intermediate entity\\nfor ingredients and\\nrecipes.\\n@author Isaac Miranda",
+  "entityTableName": "recipe_has_ingredient",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": ["Shopped"]
+}

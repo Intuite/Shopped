@@ -7,9 +7,6 @@ import { ShoppedCoreModule } from 'app/core/core.module';
 import { ShoppedAppRoutingModule } from './app-routing.module';
 import { ShoppedHomeModule } from './home/home.module';
 import { ShoppedEntityModule } from './entities/entity.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import 'hammerjs';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import { MainComponent } from './layouts/main/main.component';
 import { NavbarComponent } from './layouts/navbar/navbar.component';
@@ -21,8 +18,6 @@ import { ErrorComponent } from './layouts/error/error.component';
 @NgModule({
   imports: [
     BrowserModule,
-    BrowserAnimationsModule,
-    FlexLayoutModule,
     ShoppedSharedModule,
     ShoppedCoreModule,
     ShoppedHomeModule,

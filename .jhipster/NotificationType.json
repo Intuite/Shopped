@@ -1,0 +1,28 @@
+{
+  "name": "NotificationType",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "Status",
+      "fieldValues": "ACTIVE (active),INACTIVE (inactive),BLOCKED (blocked),PENDING (pending)"
+    }
+  ],
+  "relationships": [],
+  "changelogDate": "20201104174238",
+  "javadoc": "A type for notifications.\\n@author Isaac Miranda",
+  "entityTableName": "notification_type",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": ["Shopped"]
+}

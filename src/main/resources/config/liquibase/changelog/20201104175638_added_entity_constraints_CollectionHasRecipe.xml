@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+    <!--
+        Added the constraints for entity CollectionHasRecipe.
+    -->
+    <changeSet id="20201104175638-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="collection_id"
+                                 baseTableName="collection_has_recipe"
+                                 constraintName="fk_collection_has_recipe_collection_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="collection"/>
+
+        <addForeignKeyConstraint baseColumnNames="recipe_id"
+                                 baseTableName="collection_has_recipe"
+                                 constraintName="fk_collection_has_recipe_recipe_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="recipe"/>
+
+    </changeSet>
+</databaseChangeLog>

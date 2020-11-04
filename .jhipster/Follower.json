@@ -1,0 +1,45 @@
+{
+  "name": "Follower",
+  "fields": [
+    {
+      "fieldName": "created",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "Status",
+      "fieldValues": "ACTIVE (active),INACTIVE (inactive),BLOCKED (blocked),PENDING (pending)"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "follower",
+      "relationshipValidateRules": "required",
+      "relationshipName": "userFollowed",
+      "otherEntityField": "login"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "follower",
+      "relationshipValidateRules": "required",
+      "relationshipName": "user",
+      "otherEntityField": "login"
+    }
+  ],
+  "changelogDate": "20201104174038",
+  "javadoc": "When a user follow\\nanother user.\\n@author Isaac Miranda",
+  "entityTableName": "follower",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": ["Shopped"]
+}

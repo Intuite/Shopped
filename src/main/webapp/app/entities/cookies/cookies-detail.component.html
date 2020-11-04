@@ -1,0 +1,38 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="cookies">
+            <h2><span jhiTranslate="shoppedApp.cookies.detail.title">Cookies</span> {{ cookies.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="shoppedApp.cookies.amount" [ngbTooltip]="'shoppedApp.cookies.help.amount' | translate">Amount</span></dt>
+                <dd>
+                    <span>{{ cookies.amount }}</span>
+                </dd>
+                <dt><span jhiTranslate="shoppedApp.cookies.walletKey" [ngbTooltip]="'shoppedApp.cookies.help.walletKey' | translate">Wallet Key</span></dt>
+                <dd>
+                    <span>{{ cookies.walletKey }}</span>
+                </dd>
+                <dt><span jhiTranslate="shoppedApp.cookies.user">User</span></dt>
+                <dd>
+                    {{ cookies.userLogin }}
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/cookies', cookies.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

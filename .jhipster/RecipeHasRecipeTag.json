@@ -1,0 +1,40 @@
+{
+  "name": "RecipeHasRecipeTag",
+  "fields": [
+    {
+      "fieldName": "status",
+      "fieldType": "Status",
+      "fieldValues": "ACTIVE (active),INACTIVE (inactive),BLOCKED (blocked),PENDING (pending)"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "recipe",
+      "otherEntityRelationshipName": "recipeHasRecipeTag",
+      "relationshipValidateRules": "required",
+      "relationshipName": "recipe",
+      "otherEntityField": "name"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "recipeTag",
+      "otherEntityRelationshipName": "recipeHasRecipeTag",
+      "relationshipValidateRules": "required",
+      "relationshipName": "recipeTag",
+      "otherEntityField": "name"
+    }
+  ],
+  "changelogDate": "20201104180238",
+  "javadoc": "Intermediate entity\\nfor recipes and recipe\\ntags.\\n@author Isaac Miranda",
+  "entityTableName": "recipe_has_recipe_tag",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": ["Shopped"]
+}

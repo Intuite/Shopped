@@ -1,0 +1,24 @@
+{
+  "shoppedApp": {
+    "collectionHasRecipe": {
+      "home": {
+        "title": "Collection Has Recipes",
+        "createLabel": "Create a new Collection Has Recipe",
+        "createOrEditLabel": "Create or edit a Collection Has Recipe",
+        "notFound": "No Collection Has Recipes found"
+      },
+      "created": "A new Collection Has Recipe is created with identifier {{ param }}",
+      "updated": "A Collection Has Recipe is updated with identifier {{ param }}",
+      "deleted": "A Collection Has Recipe is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Collection Has Recipe {{ id }}?"
+      },
+      "detail": {
+        "title": "Collection Has Recipe"
+      },
+      "status": "Status",
+      "collection": "Collection",
+      "recipe": "Recipe"
+    }
+  }
+}

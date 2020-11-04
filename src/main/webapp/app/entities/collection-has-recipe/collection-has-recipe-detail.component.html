@@ -1,0 +1,42 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="collectionHasRecipe">
+            <h2><span jhiTranslate="shoppedApp.collectionHasRecipe.detail.title">Collection Has Recipe</span> {{ collectionHasRecipe.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="shoppedApp.collectionHasRecipe.status">Status</span></dt>
+                <dd>
+                    <span jhiTranslate="{{ 'shoppedApp.Status.' + collectionHasRecipe.status }}">{{ collectionHasRecipe.status }}</span>
+                </dd>
+                <dt><span jhiTranslate="shoppedApp.collectionHasRecipe.collection">Collection</span></dt>
+                <dd>
+                    <div *ngIf="collectionHasRecipe.collectionId">
+                        <a [routerLink]="['/collection', collectionHasRecipe.collectionId, 'view']">{{ collectionHasRecipe.collectionName }}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="shoppedApp.collectionHasRecipe.recipe">Recipe</span></dt>
+                <dd>
+                    <div *ngIf="collectionHasRecipe.recipeId">
+                        <a [routerLink]="['/recipe', collectionHasRecipe.recipeId, 'view']">{{ collectionHasRecipe.recipeName }}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/collection-has-recipe', collectionHasRecipe.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

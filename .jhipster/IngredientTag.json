@@ -1,0 +1,42 @@
+{
+  "name": "IngredientTag",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "Status",
+      "fieldValues": "ACTIVE (active),INACTIVE (inactive),BLOCKED (blocked),PENDING (pending)"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "tagType",
+      "otherEntityRelationshipName": "ingredientTag",
+      "relationshipValidateRules": "required",
+      "relationshipName": "type",
+      "otherEntityField": "name"
+    }
+  ],
+  "changelogDate": "20201104180338",
+  "javadoc": "Tags for ingredients.\\n@author Isaac Miranda",
+  "entityTableName": "ingredient_tag",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": ["Shopped"]
+}

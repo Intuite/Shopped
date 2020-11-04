@@ -1,0 +1,44 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="recipeTag">
+            <h2><span jhiTranslate="shoppedApp.recipeTag.detail.title">Recipe Tag</span> {{ recipeTag.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="shoppedApp.recipeTag.name">Name</span></dt>
+                <dd>
+                    <span>{{ recipeTag.name }}</span>
+                </dd>
+                <dt><span jhiTranslate="shoppedApp.recipeTag.description">Description</span></dt>
+                <dd>
+                    <span>{{ recipeTag.description }}</span>
+                </dd>
+                <dt><span jhiTranslate="shoppedApp.recipeTag.status">Status</span></dt>
+                <dd>
+                    <span jhiTranslate="{{ 'shoppedApp.Status.' + recipeTag.status }}">{{ recipeTag.status }}</span>
+                </dd>
+                <dt><span jhiTranslate="shoppedApp.recipeTag.type">Type</span></dt>
+                <dd>
+                    <div *ngIf="recipeTag.typeId">
+                        <a [routerLink]="['/tag-type', recipeTag.typeId, 'view']">{{ recipeTag.typeName }}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/recipe-tag', recipeTag.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

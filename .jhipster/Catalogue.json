@@ -1,0 +1,28 @@
+{
+  "name": "Catalogue",
+  "fields": [
+    {
+      "fieldName": "idCatalogue",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "value",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "relationships": [],
+  "changelogDate": "20201104180938",
+  "javadoc": "Extra catalogues for\\nmultiple functions.\\n@author Isaac Miranda",
+  "entityTableName": "catalogue",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": ["Shopped"]
+}

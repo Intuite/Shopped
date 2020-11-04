@@ -1,0 +1,42 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="follower">
+            <h2><span jhiTranslate="shoppedApp.follower.detail.title">Follower</span> {{ follower.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="shoppedApp.follower.created">Created</span></dt>
+                <dd>
+                    <span>{{ follower.created }}</span>
+                </dd>
+                <dt><span jhiTranslate="shoppedApp.follower.status">Status</span></dt>
+                <dd>
+                    <span jhiTranslate="{{ 'shoppedApp.Status.' + follower.status }}">{{ follower.status }}</span>
+                </dd>
+                <dt><span jhiTranslate="shoppedApp.follower.userFollowed">User Followed</span></dt>
+                <dd>
+                    {{ follower.userFollowedLogin }}
+                </dd>
+                <dt><span jhiTranslate="shoppedApp.follower.user">User</span></dt>
+                <dd>
+                    {{ follower.userLogin }}
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/follower', follower.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

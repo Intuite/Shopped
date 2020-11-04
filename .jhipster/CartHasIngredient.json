@@ -1,0 +1,46 @@
+{
+  "name": "CartHasIngredient",
+  "fields": [
+    {
+      "fieldName": "amount",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required", "min"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "Status",
+      "fieldValues": "ACTIVE (active),INACTIVE (inactive),BLOCKED (blocked),PENDING (pending)"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "cart",
+      "otherEntityRelationshipName": "cartHasIngredient",
+      "relationshipValidateRules": "required",
+      "relationshipName": "cart",
+      "otherEntityField": "id"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "ingredient",
+      "otherEntityRelationshipName": "cartHasIngredient",
+      "relationshipValidateRules": "required",
+      "relationshipName": "ingredient",
+      "otherEntityField": "name"
+    }
+  ],
+  "changelogDate": "20201104175938",
+  "javadoc": "Intermediate entity\\nfor cart and\\ningredients.\\n@author Isaac Miranda",
+  "entityTableName": "cart_has_ingredient",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": ["Shopped"]
+}

@@ -1,0 +1,25 @@
+{
+  "shoppedApp": {
+    "recipeTag": {
+      "home": {
+        "title": "Recipe Tags",
+        "createLabel": "Create a new Recipe Tag",
+        "createOrEditLabel": "Create or edit a Recipe Tag",
+        "notFound": "No Recipe Tags found"
+      },
+      "created": "A new Recipe Tag is created with identifier {{ param }}",
+      "updated": "A Recipe Tag is updated with identifier {{ param }}",
+      "deleted": "A Recipe Tag is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Recipe Tag {{ id }}?"
+      },
+      "detail": {
+        "title": "Recipe Tag"
+      },
+      "name": "Name",
+      "description": "Description",
+      "status": "Status",
+      "type": "Type"
+    }
+  }
+}

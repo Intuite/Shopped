@@ -5,6 +5,8 @@ import com.intuite.shopped.domain.User;
 import com.intuite.shopped.repository.UserRepository;
 import com.intuite.shopped.security.AuthoritiesConstants;
 import com.intuite.shopped.service.MailService;
+import org.springframework.data.domain.Sort;
+import java.util.Collections;
 import com.intuite.shopped.service.UserService;
 import com.intuite.shopped.service.dto.UserDTO;
 import com.intuite.shopped.web.rest.errors.BadRequestAlertException;
@@ -59,6 +61,7 @@ import java.util.*;
 @RestController
 @RequestMapping("/api")
 public class UserResource {
+    private static final List<String> ALLOWED_ORDERED_PROPERTIES = Collections.unmodifiableList(Arrays.asList("id", "login", "firstName", "lastName", "email", "activated", "langKey"));
 
     private final Logger log = LoggerFactory.getLogger(UserResource.class);
 
@@ -144,9 +147,17 @@ public class UserResource {
      */
     @GetMapping("/users")
     public ResponseEntity<List<UserDTO>> getAllUsers(Pageable pageable) {
+        if (!onlyContainsAllowedProperties(pageable)) {
+            return ResponseEntity.badRequest().build();
+        }
+
         final Page<UserDTO> page = userService.getAllManagedUsers(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
+    private boolean onlyContainsAllowedProperties(Pageable pageable) {
+        return pageable.getSort().stream().map(Sort.Order::getProperty).allMatch(ALLOWED_ORDERED_PROPERTIES::contains);
     }
 
     /**

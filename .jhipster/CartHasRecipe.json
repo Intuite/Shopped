@@ -1,0 +1,40 @@
+{
+  "name": "CartHasRecipe",
+  "fields": [
+    {
+      "fieldName": "status",
+      "fieldType": "Status",
+      "fieldValues": "ACTIVE (active),INACTIVE (inactive),BLOCKED (blocked),PENDING (pending)"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "recipe",
+      "otherEntityRelationshipName": "cartHasRecipe",
+      "relationshipValidateRules": "required",
+      "relationshipName": "recipe",
+      "otherEntityField": "name"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "cart",
+      "otherEntityRelationshipName": "cartHasRecipe",
+      "relationshipValidateRules": "required",
+      "relationshipName": "cart",
+      "otherEntityField": "id"
+    }
+  ],
+  "changelogDate": "20201104174838",
+  "javadoc": "Intermediate entity\\nfor recipes and carts.\\n@author Isaac Miranda",
+  "entityTableName": "cart_has_recipe",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": ["Shopped"]
+}

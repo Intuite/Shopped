@@ -1,0 +1,25 @@
+{
+  "shoppedApp": {
+    "cartHasIngredient": {
+      "home": {
+        "title": "Cart Has Ingredients",
+        "createLabel": "Create a new Cart Has Ingredient",
+        "createOrEditLabel": "Create or edit a Cart Has Ingredient",
+        "notFound": "No Cart Has Ingredients found"
+      },
+      "created": "A new Cart Has Ingredient is created with identifier {{ param }}",
+      "updated": "A Cart Has Ingredient is updated with identifier {{ param }}",
+      "deleted": "A Cart Has Ingredient is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Cart Has Ingredient {{ id }}?"
+      },
+      "detail": {
+        "title": "Cart Has Ingredient"
+      },
+      "amount": "Amount",
+      "status": "Status",
+      "cart": "Cart",
+      "ingredient": "Ingredient"
+    }
+  }
+}

@@ -1,0 +1,64 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-cart-has-recipe-heading" jhiTranslate="shoppedApp.cartHasRecipe.home.createOrEditLabel">Create or edit a Cart Has Recipe</h2>
+
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="shoppedApp.cartHasRecipe.status" for="field_status">Status</label>
+                    <select class="form-control" name="status" formControlName="status" id="field_status">
+                        <option value="ACTIVE">{{ 'shoppedApp.Status.ACTIVE' | translate }}</option>
+                        <option value="INACTIVE">{{ 'shoppedApp.Status.INACTIVE' | translate }}</option>
+                        <option value="BLOCKED">{{ 'shoppedApp.Status.BLOCKED' | translate }}</option>
+                        <option value="PENDING">{{ 'shoppedApp.Status.PENDING' | translate }}</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="shoppedApp.cartHasRecipe.recipe" for="field_recipe">Recipe</label>
+                    <select class="form-control" id="field_recipe" name="recipe" formControlName="recipeId">
+                        <option *ngIf="!editForm.get('recipeId')!.value" [ngValue]="null" selected></option>
+                        <option [ngValue]="recipeOption.id" *ngFor="let recipeOption of recipes; trackBy: trackById">{{ recipeOption.name }}</option>
+                    </select>
+                </div>
+                <div *ngIf="editForm.get('recipeId')!.invalid && (editForm.get('recipeId')!.dirty || editForm.get('recipeId')!.touched)">
+                    <small class="form-text text-danger"
+                           *ngIf="editForm.get('recipeId')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="shoppedApp.cartHasRecipe.cart" for="field_cart">Cart</label>
+                    <select class="form-control" id="field_cart" name="cart" formControlName="cartId">
+                        <option *ngIf="!editForm.get('cartId')!.value" [ngValue]="null" selected></option>
+                        <option [ngValue]="cartOption.id" *ngFor="let cartOption of carts; trackBy: trackById">{{ cartOption.id }}</option>
+                    </select>
+                </div>
+                <div *ngIf="editForm.get('cartId')!.invalid && (editForm.get('cartId')!.dirty || editForm.get('cartId')!.touched)">
+                    <small class="form-text text-danger"
+                           *ngIf="editForm.get('cartId')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                </div>
+            </div>
+
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

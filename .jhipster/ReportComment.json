@@ -1,0 +1,53 @@
+{
+  "name": "ReportComment",
+  "fields": [
+    {
+      "fieldName": "created",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "Status",
+      "fieldValues": "ACTIVE (active),INACTIVE (inactive),BLOCKED (blocked),PENDING (pending)"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "reportType",
+      "otherEntityRelationshipName": "reportComment",
+      "relationshipValidateRules": "required",
+      "relationshipName": "type",
+      "otherEntityField": "name"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "comment",
+      "otherEntityRelationshipName": "reportComment",
+      "relationshipValidateRules": "required",
+      "relationshipName": "comment",
+      "otherEntityField": "content"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "reportComment",
+      "relationshipValidateRules": "required",
+      "relationshipName": "user",
+      "otherEntityField": "login"
+    }
+  ],
+  "changelogDate": "20201104175138",
+  "javadoc": "For reporting\\ncomments.\\n@author Isaac Miranda",
+  "entityTableName": "report_comment",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": ["Shopped"]
+}

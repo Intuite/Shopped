@@ -1,0 +1,25 @@
+{
+  "shoppedApp": {
+    "recipeHasIngredient": {
+      "home": {
+        "title": "Recipe Has Ingredients",
+        "createLabel": "Create a new Recipe Has Ingredient",
+        "createOrEditLabel": "Create or edit a Recipe Has Ingredient",
+        "notFound": "No Recipe Has Ingredients found"
+      },
+      "created": "A new Recipe Has Ingredient is created with identifier {{ param }}",
+      "updated": "A Recipe Has Ingredient is updated with identifier {{ param }}",
+      "deleted": "A Recipe Has Ingredient is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Recipe Has Ingredient {{ id }}?"
+      },
+      "detail": {
+        "title": "Recipe Has Ingredient"
+      },
+      "amount": "Amount",
+      "status": "Status",
+      "ingredient": "Ingredient",
+      "recipe": "Recipe"
+    }
+  }
+}

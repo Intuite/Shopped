@@ -1,0 +1,11 @@
+{
+  "shoppedApp": {
+    "Status": {
+      "null": "",
+      "ACTIVE": "active",
+      "INACTIVE": "inactive",
+      "BLOCKED": "blocked",
+      "PENDING": "pending"
+    }
+  }
+}

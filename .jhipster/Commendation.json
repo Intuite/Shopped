@@ -1,0 +1,47 @@
+{
+  "name": "Commendation",
+  "fields": [
+    {
+      "fieldName": "date",
+      "fieldType": "Instant"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "post",
+      "otherEntityRelationshipName": "commendation",
+      "relationshipValidateRules": "required",
+      "relationshipName": "post",
+      "otherEntityField": "id"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "award",
+      "otherEntityRelationshipName": "commendation",
+      "relationshipValidateRules": "required",
+      "relationshipName": "award",
+      "otherEntityField": "name"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "commendation",
+      "relationshipValidateRules": "required",
+      "relationshipName": "user",
+      "otherEntityField": "login"
+    }
+  ],
+  "changelogDate": "20201104174438",
+  "javadoc": "Intermediate table for\\na user that wants to\\ngive an a ward to a\\npost.\\n@author Isaac Miranda",
+  "entityTableName": "commendation",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": ["Shopped"]
+}

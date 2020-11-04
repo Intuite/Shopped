@@ -1,0 +1,28 @@
+{
+  "shoppedApp": {
+    "cookies": {
+      "home": {
+        "title": "Cookies",
+        "createLabel": "Create a new Cookies",
+        "createOrEditLabel": "Create or edit a Cookies",
+        "notFound": "No Cookies found"
+      },
+      "created": "A new Cookies is created with identifier {{ param }}",
+      "updated": "A Cookies is updated with identifier {{ param }}",
+      "deleted": "A Cookies is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Cookies {{ id }}?"
+      },
+      "detail": {
+        "title": "Cookies"
+      },
+      "amount": "Amount",
+      "walletKey": "Wallet Key",
+      "user": "User",
+      "help": {
+        "amount": "Cookies quantity.\n@version 1",
+        "walletKey": "Cookies wallet key for\nPaypal.\n@version 1"
+      }
+    }
+  }
+}

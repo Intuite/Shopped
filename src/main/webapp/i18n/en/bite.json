@@ -1,0 +1,25 @@
+{
+  "shoppedApp": {
+    "bite": {
+      "home": {
+        "title": "Bites",
+        "createLabel": "Create a new Bite",
+        "createOrEditLabel": "Create or edit a Bite",
+        "notFound": "No Bites found"
+      },
+      "created": "A new Bite is created with identifier {{ param }}",
+      "updated": "A Bite is updated with identifier {{ param }}",
+      "deleted": "A Bite is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Bite {{ id }}?"
+      },
+      "detail": {
+        "title": "Bite"
+      },
+      "created": "Created",
+      "status": "Status",
+      "post": "Post",
+      "user": "User"
+    }
+  }
+}

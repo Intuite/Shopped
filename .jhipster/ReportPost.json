@@ -1,0 +1,53 @@
+{
+  "name": "ReportPost",
+  "fields": [
+    {
+      "fieldName": "created",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "Status",
+      "fieldValues": "ACTIVE (active),INACTIVE (inactive),BLOCKED (blocked),PENDING (pending)"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "reportType",
+      "otherEntityRelationshipName": "reportPost",
+      "relationshipValidateRules": "required",
+      "relationshipName": "type",
+      "otherEntityField": "name"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "post",
+      "otherEntityRelationshipName": "reportPost",
+      "relationshipValidateRules": "required",
+      "relationshipName": "post",
+      "otherEntityField": "caption"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "reportPost",
+      "relationshipValidateRules": "required",
+      "relationshipName": "user",
+      "otherEntityField": "login"
+    }
+  ],
+  "changelogDate": "20201104175238",
+  "javadoc": "For reporting\\nposts.\\n@author Isaac Miranda",
+  "entityTableName": "report_post",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": ["Shopped"]
+}

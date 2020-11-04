@@ -9,7 +9,7 @@ application {
     cacheProvider ehcache
     clientFramework angularX
     clientPackageManager npm
-    clientTheme Materia
+    clientTheme materia
     databaseType sql
     devDatabaseType mysql
     prodDatabaseType mysql
@@ -31,7 +31,8 @@ application {
 entity UserProfile {
     description String,
     birthDate LocalDate,
-    image ImageBlob
+    image ImageBlob,
+    status Status
 }
 
 /**
@@ -40,20 +41,11 @@ entity UserProfile {
   * @author Isaac Miranda
 **/
 enum Status {
-	ACTIVE(Active), 
-    INACTIVE(Inactive),
+    ACTIVE(active), 
+    INACTIVE(inactive),
     BLOCKED(blocked),
     PENDING(pending)
 }
-
-///**
-//  * Status for the 
-//  * entities.
-// * @author Isaac Miranda
-//**/
-//enum Status {
-//	ACTIVE(Active), INACTIVE(Inactive)
-//}
 
 /**
  * For the user money.
@@ -203,7 +195,7 @@ entity ReportComment {
   * @author Isaac Miranda
 **/
 entity ReportPost {
-	created Instant required,
+    created Instant required,
     status Status
 }
 
@@ -215,8 +207,8 @@ entity ReportPost {
 entity Recipe {
     name String required,
     portion Integer min(1),
-    description String required,
-    duration Duration,
+    description TextBlob required,
+    duration Integer,
     creation Instant,
     image ImageBlob,
     status Status
@@ -375,16 +367,6 @@ entity Bite {
 	created Instant required,
     status Status
 }
-
-///**
-//  * Images for multiple
-//  * entities.
-//  * @author Isaac Miranda
-//**/
-//entity Image {
-//	link String required,
-//    description String
-//}
 
 /**
   * System messages.
@@ -557,23 +539,6 @@ relationship ManyToOne {
 
 //MO4
 
-//relationship ManyToOne {
-//	// Images
-//
-// 	/** **/
-//    Recipe{image} to Image,
-//    
-//    /** **/
-//    Award{image} to Image,
-//    
-//    /** **/
-//    Collection{image} to Image,
-//    
-//    /** **/
-//    Ingredient{image} to Image,
-//}
-
-
 //Options
 
 service all with serviceImpl
@@ -581,4 +546,3 @@ service all with serviceClass
 dto * with mapstruct
 paginate * with pagination
 filter *
-

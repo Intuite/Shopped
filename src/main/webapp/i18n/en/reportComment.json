@@ -1,0 +1,26 @@
+{
+  "shoppedApp": {
+    "reportComment": {
+      "home": {
+        "title": "Report Comments",
+        "createLabel": "Create a new Report Comment",
+        "createOrEditLabel": "Create or edit a Report Comment",
+        "notFound": "No Report Comments found"
+      },
+      "created": "A new Report Comment is created with identifier {{ param }}",
+      "updated": "A Report Comment is updated with identifier {{ param }}",
+      "deleted": "A Report Comment is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Report Comment {{ id }}?"
+      },
+      "detail": {
+        "title": "Report Comment"
+      },
+      "created": "Created",
+      "status": "Status",
+      "type": "Type",
+      "comment": "Comment",
+      "user": "User"
+    }
+  }
+}

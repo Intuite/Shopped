@@ -50,6 +50,38 @@ public class CacheConfiguration {
             createCache(cm, com.intuite.shopped.domain.User.class.getName() + ".authorities");
             createCache(cm, com.intuite.shopped.domain.PersistentToken.class.getName());
             createCache(cm, com.intuite.shopped.domain.User.class.getName() + ".persistentTokens");
+            createCache(cm, com.intuite.shopped.domain.UserProfile.class.getName());
+            createCache(cm, com.intuite.shopped.domain.Cookies.class.getName());
+            createCache(cm, com.intuite.shopped.domain.Follower.class.getName());
+            createCache(cm, com.intuite.shopped.domain.Transaction.class.getName());
+            createCache(cm, com.intuite.shopped.domain.NotificationType.class.getName());
+            createCache(cm, com.intuite.shopped.domain.Notification.class.getName());
+            createCache(cm, com.intuite.shopped.domain.Commendation.class.getName());
+            createCache(cm, com.intuite.shopped.domain.LogType.class.getName());
+            createCache(cm, com.intuite.shopped.domain.Log.class.getName());
+            createCache(cm, com.intuite.shopped.domain.Cart.class.getName());
+            createCache(cm, com.intuite.shopped.domain.CartHasRecipe.class.getName());
+            createCache(cm, com.intuite.shopped.domain.Comment.class.getName());
+            createCache(cm, com.intuite.shopped.domain.ReportType.class.getName());
+            createCache(cm, com.intuite.shopped.domain.ReportComment.class.getName());
+            createCache(cm, com.intuite.shopped.domain.ReportPost.class.getName());
+            createCache(cm, com.intuite.shopped.domain.Recipe.class.getName());
+            createCache(cm, com.intuite.shopped.domain.RecipeShared.class.getName());
+            createCache(cm, com.intuite.shopped.domain.Collection.class.getName());
+            createCache(cm, com.intuite.shopped.domain.CollectionHasRecipe.class.getName());
+            createCache(cm, com.intuite.shopped.domain.Ingredient.class.getName());
+            createCache(cm, com.intuite.shopped.domain.RecipeHasIngredient.class.getName());
+            createCache(cm, com.intuite.shopped.domain.CartHasIngredient.class.getName());
+            createCache(cm, com.intuite.shopped.domain.TagType.class.getName());
+            createCache(cm, com.intuite.shopped.domain.RecipeTag.class.getName());
+            createCache(cm, com.intuite.shopped.domain.RecipeHasRecipeTag.class.getName());
+            createCache(cm, com.intuite.shopped.domain.IngredientTag.class.getName());
+            createCache(cm, com.intuite.shopped.domain.IngredientHasIngredientTag.class.getName());
+            createCache(cm, com.intuite.shopped.domain.Award.class.getName());
+            createCache(cm, com.intuite.shopped.domain.Post.class.getName());
+            createCache(cm, com.intuite.shopped.domain.Bite.class.getName());
+            createCache(cm, com.intuite.shopped.domain.Message.class.getName());
+            createCache(cm, com.intuite.shopped.domain.Catalogue.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

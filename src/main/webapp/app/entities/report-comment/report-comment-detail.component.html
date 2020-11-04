@@ -1,0 +1,50 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="reportComment">
+            <h2><span jhiTranslate="shoppedApp.reportComment.detail.title">Report Comment</span> {{ reportComment.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="shoppedApp.reportComment.created">Created</span></dt>
+                <dd>
+                    <span>{{ reportComment.created }}</span>
+                </dd>
+                <dt><span jhiTranslate="shoppedApp.reportComment.status">Status</span></dt>
+                <dd>
+                    <span jhiTranslate="{{ 'shoppedApp.Status.' + reportComment.status }}">{{ reportComment.status }}</span>
+                </dd>
+                <dt><span jhiTranslate="shoppedApp.reportComment.type">Type</span></dt>
+                <dd>
+                    <div *ngIf="reportComment.typeId">
+                        <a [routerLink]="['/report-type', reportComment.typeId, 'view']">{{ reportComment.typeName }}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="shoppedApp.reportComment.comment">Comment</span></dt>
+                <dd>
+                    <div *ngIf="reportComment.commentId">
+                        <a [routerLink]="['/comment', reportComment.commentId, 'view']">{{ reportComment.commentContent }}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="shoppedApp.reportComment.user">User</span></dt>
+                <dd>
+                    {{ reportComment.userLogin }}
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/report-comment', reportComment.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

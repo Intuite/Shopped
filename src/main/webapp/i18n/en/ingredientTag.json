@@ -1,0 +1,25 @@
+{
+  "shoppedApp": {
+    "ingredientTag": {
+      "home": {
+        "title": "Ingredient Tags",
+        "createLabel": "Create a new Ingredient Tag",
+        "createOrEditLabel": "Create or edit a Ingredient Tag",
+        "notFound": "No Ingredient Tags found"
+      },
+      "created": "A new Ingredient Tag is created with identifier {{ param }}",
+      "updated": "A Ingredient Tag is updated with identifier {{ param }}",
+      "deleted": "A Ingredient Tag is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Ingredient Tag {{ id }}?"
+      },
+      "detail": {
+        "title": "Ingredient Tag"
+      },
+      "name": "Name",
+      "description": "Description",
+      "status": "Status",
+      "type": "Type"
+    }
+  }
+}

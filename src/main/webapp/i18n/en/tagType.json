@@ -1,0 +1,24 @@
+{
+  "shoppedApp": {
+    "tagType": {
+      "home": {
+        "title": "Tag Types",
+        "createLabel": "Create a new Tag Type",
+        "createOrEditLabel": "Create or edit a Tag Type",
+        "notFound": "No Tag Types found"
+      },
+      "created": "A new Tag Type is created with identifier {{ param }}",
+      "updated": "A Tag Type is updated with identifier {{ param }}",
+      "deleted": "A Tag Type is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Tag Type {{ id }}?"
+      },
+      "detail": {
+        "title": "Tag Type"
+      },
+      "name": "Name",
+      "description": "Description",
+      "status": "Status"
+    }
+  }
+}

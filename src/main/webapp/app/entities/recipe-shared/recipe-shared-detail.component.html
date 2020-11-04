@@ -1,0 +1,40 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="recipeShared">
+            <h2><span jhiTranslate="shoppedApp.recipeShared.detail.title">Recipe Shared</span> {{ recipeShared.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="shoppedApp.recipeShared.status">Status</span></dt>
+                <dd>
+                    <span jhiTranslate="{{ 'shoppedApp.Status.' + recipeShared.status }}">{{ recipeShared.status }}</span>
+                </dd>
+                <dt><span jhiTranslate="shoppedApp.recipeShared.recipe">Recipe</span></dt>
+                <dd>
+                    <div *ngIf="recipeShared.recipeId">
+                        <a [routerLink]="['/recipe', recipeShared.recipeId, 'view']">{{ recipeShared.recipeName }}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="shoppedApp.recipeShared.user">User</span></dt>
+                <dd>
+                    {{ recipeShared.userLogin }}
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/recipe-shared', recipeShared.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

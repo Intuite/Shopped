@@ -1,0 +1,55 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="collection">
+            <h2><span jhiTranslate="shoppedApp.collection.detail.title">Collection</span> {{ collection.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="shoppedApp.collection.name">Name</span></dt>
+                <dd>
+                    <span>{{ collection.name }}</span>
+                </dd>
+                <dt><span jhiTranslate="shoppedApp.collection.description">Description</span></dt>
+                <dd>
+                    <span>{{ collection.description }}</span>
+                </dd>
+                <dt><span jhiTranslate="shoppedApp.collection.created">Created</span></dt>
+                <dd>
+                    <span>{{ collection.created }}</span>
+                </dd>
+                <dt><span jhiTranslate="shoppedApp.collection.image">Image</span></dt>
+                <dd>
+                    <div *ngIf="collection.image">
+                        <a (click)="openFile(collection.imageContentType, collection.image)">
+                            <img [src]="'data:' + collection.imageContentType + ';base64,' + collection.image" style="max-width: 100%;" alt="collection image"/>
+                        </a>
+                        {{ collection.imageContentType }}, {{ byteSize(collection.image) }}
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="shoppedApp.collection.status">Status</span></dt>
+                <dd>
+                    <span jhiTranslate="{{ 'shoppedApp.Status.' + collection.status }}">{{ collection.status }}</span>
+                </dd>
+                <dt><span jhiTranslate="shoppedApp.collection.user">User</span></dt>
+                <dd>
+                    {{ collection.userLogin }}
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/collection', collection.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -14,7 +14,63 @@
     <property name="uuidType" value="varchar(36)" dbms="h2, mysql, mariadb"/>
 
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104173838_added_entity_UserProfile.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104173938_added_entity_Cookies.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104174038_added_entity_Follower.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104174138_added_entity_Transaction.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104174238_added_entity_NotificationType.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104174338_added_entity_Notification.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104174438_added_entity_Commendation.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104174538_added_entity_LogType.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104174638_added_entity_Log.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104174738_added_entity_Cart.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104174838_added_entity_CartHasRecipe.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104174938_added_entity_Comment.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104175038_added_entity_ReportType.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104175138_added_entity_ReportComment.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104175238_added_entity_ReportPost.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104175338_added_entity_Recipe.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104175438_added_entity_RecipeShared.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104175538_added_entity_Collection.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104175638_added_entity_CollectionHasRecipe.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104175738_added_entity_Ingredient.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104175838_added_entity_RecipeHasIngredient.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104175938_added_entity_CartHasIngredient.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104180038_added_entity_TagType.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104180138_added_entity_RecipeTag.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104180238_added_entity_RecipeHasRecipeTag.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104180338_added_entity_IngredientTag.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104180438_added_entity_IngredientHasIngredientTag.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104180538_added_entity_Award.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104180638_added_entity_Post.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104180738_added_entity_Bite.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104180838_added_entity_Message.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104180938_added_entity_Catalogue.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
+    <include file="config/liquibase/changelog/20201104173838_added_entity_constraints_UserProfile.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104173938_added_entity_constraints_Cookies.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104174038_added_entity_constraints_Follower.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104174138_added_entity_constraints_Transaction.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104174338_added_entity_constraints_Notification.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104174438_added_entity_constraints_Commendation.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104174638_added_entity_constraints_Log.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104174738_added_entity_constraints_Cart.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104174838_added_entity_constraints_CartHasRecipe.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104174938_added_entity_constraints_Comment.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104175138_added_entity_constraints_ReportComment.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104175238_added_entity_constraints_ReportPost.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104175338_added_entity_constraints_Recipe.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104175438_added_entity_constraints_RecipeShared.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104175538_added_entity_constraints_Collection.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104175638_added_entity_constraints_CollectionHasRecipe.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104175838_added_entity_constraints_RecipeHasIngredient.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104175938_added_entity_constraints_CartHasIngredient.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104180138_added_entity_constraints_RecipeTag.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104180238_added_entity_constraints_RecipeHasRecipeTag.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104180338_added_entity_constraints_IngredientTag.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104180438_added_entity_constraints_IngredientHasIngredientTag.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104180638_added_entity_constraints_Post.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20201104180738_added_entity_constraints_Bite.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>

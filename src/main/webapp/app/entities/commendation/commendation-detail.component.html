@@ -1,0 +1,46 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="commendation">
+            <h2><span jhiTranslate="shoppedApp.commendation.detail.title">Commendation</span> {{ commendation.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="shoppedApp.commendation.date">Date</span></dt>
+                <dd>
+                    <span>{{ commendation.date }}</span>
+                </dd>
+                <dt><span jhiTranslate="shoppedApp.commendation.post">Post</span></dt>
+                <dd>
+                    <div *ngIf="commendation.postId">
+                        <a [routerLink]="['/post', commendation.postId, 'view']">{{ commendation.postId }}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="shoppedApp.commendation.award">Award</span></dt>
+                <dd>
+                    <div *ngIf="commendation.awardId">
+                        <a [routerLink]="['/award', commendation.awardId, 'view']">{{ commendation.awardName }}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="shoppedApp.commendation.user">User</span></dt>
+                <dd>
+                    {{ commendation.userLogin }}
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/commendation', commendation.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

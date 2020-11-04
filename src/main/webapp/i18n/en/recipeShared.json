@@ -1,0 +1,24 @@
+{
+  "shoppedApp": {
+    "recipeShared": {
+      "home": {
+        "title": "Recipe Shareds",
+        "createLabel": "Create a new Recipe Shared",
+        "createOrEditLabel": "Create or edit a Recipe Shared",
+        "notFound": "No Recipe Shareds found"
+      },
+      "created": "A new Recipe Shared is created with identifier {{ param }}",
+      "updated": "A Recipe Shared is updated with identifier {{ param }}",
+      "deleted": "A Recipe Shared is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Recipe Shared {{ id }}?"
+      },
+      "detail": {
+        "title": "Recipe Shared"
+      },
+      "status": "Status",
+      "recipe": "Recipe",
+      "user": "User"
+    }
+  }
+}

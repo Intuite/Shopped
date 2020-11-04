@@ -1,0 +1,83 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="shoppedApp.ingredientHasIngredientTag.home.title">Ingredient Has Ingredient Tags</span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-ingredient-has-ingredient-tag" [routerLink]="['/ingredient-has-ingredient-tag/new']">
+            <fa-icon icon="plus"></fa-icon>
+            <span  jhiTranslate="shoppedApp.ingredientHasIngredientTag.home.createLabel">
+            Create a new Ingredient Has Ingredient Tag
+            </span>
+        </button>
+    </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="ingredientHasIngredientTags?.length === 0">
+        <span jhiTranslate="shoppedApp.ingredientHasIngredientTag.home.notFound">No ingredientHasIngredientTags found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="ingredientHasIngredientTags && ingredientHasIngredientTags.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+                    <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="status"><span jhiTranslate="shoppedApp.ingredientHasIngredientTag.status">Status</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="ingredientName"><span jhiTranslate="shoppedApp.ingredientHasIngredientTag.ingredient">Ingredient</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="ingredientTagName"><span jhiTranslate="shoppedApp.ingredientHasIngredientTag.ingredientTag">Ingredient Tag</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let ingredientHasIngredientTag of ingredientHasIngredientTags ;trackBy: trackId">
+                    <td><a [routerLink]="['/ingredient-has-ingredient-tag', ingredientHasIngredientTag.id, 'view']">{{ ingredientHasIngredientTag.id }}</a></td>
+                    <td jhiTranslate="{{ 'shoppedApp.Status.' + ingredientHasIngredientTag.status }}">{{ ingredientHasIngredientTag.status }}</td>
+                    <td>
+                        <div *ngIf="ingredientHasIngredientTag.ingredientId">
+                            <a [routerLink]="['/ingredient', ingredientHasIngredientTag.ingredientId , 'view']" >{{ ingredientHasIngredientTag.ingredientName }}</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div *ngIf="ingredientHasIngredientTag.ingredientTagId">
+                            <a [routerLink]="['/ingredient-tag', ingredientHasIngredientTag.ingredientTagId , 'view']" >{{ ingredientHasIngredientTag.ingredientTagName }}</a>
+                        </div>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/ingredient-has-ingredient-tag', ingredientHasIngredientTag.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                            </button>
+
+                            <button type="submit"
+                                    [routerLink]="['/ingredient-has-ingredient-tag', ingredientHasIngredientTag.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(ingredientHasIngredientTag)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div *ngIf="ingredientHasIngredientTags && ingredientHasIngredientTags.length > 0">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
+        </div>
+    </div>
+</div>

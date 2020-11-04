@@ -1,0 +1,40 @@
+{
+  "name": "IngredientHasIngredientTag",
+  "fields": [
+    {
+      "fieldName": "status",
+      "fieldType": "Status",
+      "fieldValues": "ACTIVE (active),INACTIVE (inactive),BLOCKED (blocked),PENDING (pending)"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "ingredient",
+      "otherEntityRelationshipName": "ingredientHasIngredientTag",
+      "relationshipValidateRules": "required",
+      "relationshipName": "ingredient",
+      "otherEntityField": "name"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "ingredientTag",
+      "otherEntityRelationshipName": "ingredientHasIngredientTag",
+      "relationshipValidateRules": "required",
+      "relationshipName": "ingredientTag",
+      "otherEntityField": "name"
+    }
+  ],
+  "changelogDate": "20201104180438",
+  "javadoc": "Intermediate entity\\nfor ingredient tags\\nand ingredients.\\n@author Isaac Miranda",
+  "entityTableName": "ingredient_has_ingredient_tag",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": ["Shopped"]
+}

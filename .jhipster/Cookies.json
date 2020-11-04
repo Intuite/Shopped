@@ -1,0 +1,40 @@
+{
+  "name": "Cookies",
+  "fields": [
+    {
+      "fieldName": "amount",
+      "fieldType": "Integer",
+      "javadoc": "Cookies quantity.\\n@version 1",
+      "fieldValidateRules": ["min"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "walletKey",
+      "fieldType": "String",
+      "javadoc": "Cookies wallet key for\\nPaypal.\\n@version 1"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "cookies",
+      "relationshipValidateRules": "required",
+      "relationshipName": "user",
+      "otherEntityField": "login",
+      "ownerSide": true
+    }
+  ],
+  "changelogDate": "20201104173938",
+  "javadoc": "For the user money.\\n@author Isaac Miranda",
+  "entityTableName": "cookies",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": ["Shopped"]
+}

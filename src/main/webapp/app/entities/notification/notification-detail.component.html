@@ -1,0 +1,48 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="notification">
+            <h2><span jhiTranslate="shoppedApp.notification.detail.title">Notification</span> {{ notification.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="shoppedApp.notification.content">Content</span></dt>
+                <dd>
+                    <span>{{ notification.content }}</span>
+                </dd>
+                <dt><span jhiTranslate="shoppedApp.notification.created">Created</span></dt>
+                <dd>
+                    <span>{{ notification.created }}</span>
+                </dd>
+                <dt><span jhiTranslate="shoppedApp.notification.status">Status</span></dt>
+                <dd>
+                    <span jhiTranslate="{{ 'shoppedApp.Status.' + notification.status }}">{{ notification.status }}</span>
+                </dd>
+                <dt><span jhiTranslate="shoppedApp.notification.type">Type</span></dt>
+                <dd>
+                    <div *ngIf="notification.typeId">
+                        <a [routerLink]="['/notification-type', notification.typeId, 'view']">{{ notification.typeName }}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="shoppedApp.notification.user">User</span></dt>
+                <dd>
+                    {{ notification.userLogin }}
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/notification', notification.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

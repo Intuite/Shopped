@@ -1,0 +1,83 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="shoppedApp.recipeHasRecipeTag.home.title">Recipe Has Recipe Tags</span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-recipe-has-recipe-tag" [routerLink]="['/recipe-has-recipe-tag/new']">
+            <fa-icon icon="plus"></fa-icon>
+            <span  jhiTranslate="shoppedApp.recipeHasRecipeTag.home.createLabel">
+            Create a new Recipe Has Recipe Tag
+            </span>
+        </button>
+    </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="recipeHasRecipeTags?.length === 0">
+        <span jhiTranslate="shoppedApp.recipeHasRecipeTag.home.notFound">No recipeHasRecipeTags found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="recipeHasRecipeTags && recipeHasRecipeTags.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+                    <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="status"><span jhiTranslate="shoppedApp.recipeHasRecipeTag.status">Status</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="recipeName"><span jhiTranslate="shoppedApp.recipeHasRecipeTag.recipe">Recipe</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="recipeTagName"><span jhiTranslate="shoppedApp.recipeHasRecipeTag.recipeTag">Recipe Tag</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let recipeHasRecipeTag of recipeHasRecipeTags ;trackBy: trackId">
+                    <td><a [routerLink]="['/recipe-has-recipe-tag', recipeHasRecipeTag.id, 'view']">{{ recipeHasRecipeTag.id }}</a></td>
+                    <td jhiTranslate="{{ 'shoppedApp.Status.' + recipeHasRecipeTag.status }}">{{ recipeHasRecipeTag.status }}</td>
+                    <td>
+                        <div *ngIf="recipeHasRecipeTag.recipeId">
+                            <a [routerLink]="['/recipe', recipeHasRecipeTag.recipeId , 'view']" >{{ recipeHasRecipeTag.recipeName }}</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div *ngIf="recipeHasRecipeTag.recipeTagId">
+                            <a [routerLink]="['/recipe-tag', recipeHasRecipeTag.recipeTagId , 'view']" >{{ recipeHasRecipeTag.recipeTagName }}</a>
+                        </div>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/recipe-has-recipe-tag', recipeHasRecipeTag.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                            </button>
+
+                            <button type="submit"
+                                    [routerLink]="['/recipe-has-recipe-tag', recipeHasRecipeTag.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(recipeHasRecipeTag)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div *ngIf="recipeHasRecipeTags && recipeHasRecipeTags.length > 0">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
+        </div>
+    </div>
+</div>

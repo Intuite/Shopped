@@ -1,0 +1,84 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-recipe-has-ingredient-heading" jhiTranslate="shoppedApp.recipeHasIngredient.home.createOrEditLabel">Create or edit a Recipe Has Ingredient</h2>
+
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="shoppedApp.recipeHasIngredient.amount" for="field_amount">Amount</label>
+                    <input type="number" class="form-control" name="amount" id="field_amount"
+                           formControlName="amount"/>
+                    <div *ngIf="editForm.get('amount')!.invalid && (editForm.get('amount')!.dirty || editForm.get('amount')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('amount')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('amount')?.errors?.min" jhiTranslate="entity.validation.min" [translateValues]="{ min: 0 }">
+                            This field should be at least 0.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('amount')?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="shoppedApp.recipeHasIngredient.status" for="field_status">Status</label>
+                    <select class="form-control" name="status" formControlName="status" id="field_status">
+                        <option value="ACTIVE">{{ 'shoppedApp.Status.ACTIVE' | translate }}</option>
+                        <option value="INACTIVE">{{ 'shoppedApp.Status.INACTIVE' | translate }}</option>
+                        <option value="BLOCKED">{{ 'shoppedApp.Status.BLOCKED' | translate }}</option>
+                        <option value="PENDING">{{ 'shoppedApp.Status.PENDING' | translate }}</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="shoppedApp.recipeHasIngredient.ingredient" for="field_ingredient">Ingredient</label>
+                    <select class="form-control" id="field_ingredient" name="ingredient" formControlName="ingredientId">
+                        <option *ngIf="!editForm.get('ingredientId')!.value" [ngValue]="null" selected></option>
+                        <option [ngValue]="ingredientOption.id" *ngFor="let ingredientOption of ingredients; trackBy: trackById">{{ ingredientOption.name }}</option>
+                    </select>
+                </div>
+                <div *ngIf="editForm.get('ingredientId')!.invalid && (editForm.get('ingredientId')!.dirty || editForm.get('ingredientId')!.touched)">
+                    <small class="form-text text-danger"
+                           *ngIf="editForm.get('ingredientId')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="shoppedApp.recipeHasIngredient.recipe" for="field_recipe">Recipe</label>
+                    <select class="form-control" id="field_recipe" name="recipe" formControlName="recipeId">
+                        <option *ngIf="!editForm.get('recipeId')!.value" [ngValue]="null" selected></option>
+                        <option [ngValue]="recipeOption.id" *ngFor="let recipeOption of recipes; trackBy: trackById">{{ recipeOption.name }}</option>
+                    </select>
+                </div>
+                <div *ngIf="editForm.get('recipeId')!.invalid && (editForm.get('recipeId')!.dirty || editForm.get('recipeId')!.touched)">
+                    <small class="form-text text-danger"
+                           *ngIf="editForm.get('recipeId')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                </div>
+            </div>
+
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

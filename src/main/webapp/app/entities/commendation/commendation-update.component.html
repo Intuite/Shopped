@@ -1,0 +1,75 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-commendation-heading" jhiTranslate="shoppedApp.commendation.home.createOrEditLabel">Create or edit a Commendation</h2>
+
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="shoppedApp.commendation.date" for="field_date">Date</label>
+                    <div class="d-flex">
+                        <input id="field_date" type="datetime-local" class="form-control" name="date" formControlName="date" placeholder="YYYY-MM-DD HH:mm"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="shoppedApp.commendation.post" for="field_post">Post</label>
+                    <select class="form-control" id="field_post" name="post" formControlName="postId">
+                        <option *ngIf="!editForm.get('postId')!.value" [ngValue]="null" selected></option>
+                        <option [ngValue]="postOption.id" *ngFor="let postOption of posts; trackBy: trackById">{{ postOption.id }}</option>
+                    </select>
+                </div>
+                <div *ngIf="editForm.get('postId')!.invalid && (editForm.get('postId')!.dirty || editForm.get('postId')!.touched)">
+                    <small class="form-text text-danger"
+                           *ngIf="editForm.get('postId')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="shoppedApp.commendation.award" for="field_award">Award</label>
+                    <select class="form-control" id="field_award" name="award" formControlName="awardId">
+                        <option *ngIf="!editForm.get('awardId')!.value" [ngValue]="null" selected></option>
+                        <option [ngValue]="awardOption.id" *ngFor="let awardOption of awards; trackBy: trackById">{{ awardOption.name }}</option>
+                    </select>
+                </div>
+                <div *ngIf="editForm.get('awardId')!.invalid && (editForm.get('awardId')!.dirty || editForm.get('awardId')!.touched)">
+                    <small class="form-text text-danger"
+                           *ngIf="editForm.get('awardId')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="shoppedApp.commendation.user" for="field_user">User</label>
+                    <select class="form-control" id="field_user" name="user" formControlName="userId">
+                        <option *ngIf="!editForm.get('userId')!.value" [ngValue]="null" selected></option>
+                        <option [ngValue]="userOption.id" *ngFor="let userOption of users; trackBy: trackById">{{ userOption.login }}</option>
+                    </select>
+                </div>
+                <div *ngIf="editForm.get('userId')!.invalid && (editForm.get('userId')!.dirty || editForm.get('userId')!.touched)">
+                    <small class="form-text text-danger"
+                           *ngIf="editForm.get('userId')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                </div>
+            </div>
+
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

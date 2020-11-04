@@ -1,0 +1,42 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="cartHasRecipe">
+            <h2><span jhiTranslate="shoppedApp.cartHasRecipe.detail.title">Cart Has Recipe</span> {{ cartHasRecipe.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="shoppedApp.cartHasRecipe.status">Status</span></dt>
+                <dd>
+                    <span jhiTranslate="{{ 'shoppedApp.Status.' + cartHasRecipe.status }}">{{ cartHasRecipe.status }}</span>
+                </dd>
+                <dt><span jhiTranslate="shoppedApp.cartHasRecipe.recipe">Recipe</span></dt>
+                <dd>
+                    <div *ngIf="cartHasRecipe.recipeId">
+                        <a [routerLink]="['/recipe', cartHasRecipe.recipeId, 'view']">{{ cartHasRecipe.recipeName }}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="shoppedApp.cartHasRecipe.cart">Cart</span></dt>
+                <dd>
+                    <div *ngIf="cartHasRecipe.cartId">
+                        <a [routerLink]="['/cart', cartHasRecipe.cartId, 'view']">{{ cartHasRecipe.cartId }}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/cart-has-recipe', cartHasRecipe.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>
