@@ -9,13 +9,180 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$shopped-app-primary: mat-palette(#fea201);
-$shopped-app-accent: mat-palette(#ffe02a, A200, A100, A400);
+/* For use in src/lib/core/theming/_palette.scss */
+/* For use in src/lib/core/theming/_palette.scss */
+$md-shoppedprimary: (
+  50: #fff4e1,
+  100: #ffe3b3,
+  200: #ffd180,
+  300: #febe4d,
+  400: #feb027,
+  500: #fea201,
+  600: #fe9a01,
+  700: #fe9001,
+  800: #fe8601,
+  900: #fd7500,
+  A100: #ffffff,
+  A200: #fff6f1,
+  A400: #ffd8be,
+  A700: #ffc9a4,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #000000,
+    600: #000000,
+    700: #000000,
+    800: #000000,
+    900: #000000,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
+);
+
+$md-shoppedwarn: (
+  50: #fffbe5,
+  100: #fff6bf,
+  200: #fff095,
+  300: #ffe96a,
+  400: #ffe54a,
+  500: #ffe02a,
+  600: #ffdc25,
+  700: #ffd81f,
+  800: #ffd319,
+  900: #ffcb0f,
+  A100: #ffffff,
+  A200: #fffdf7,
+  A400: #fff1c4,
+  A700: #ffebab,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #000000,
+    600: #000000,
+    700: #000000,
+    800: #000000,
+    900: #000000,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
+);
+
+$md-shoppedsuccess: (
+  50: #e6ebe0,
+  100: #c0ccb3,
+  200: #96aa80,
+  300: #6c884d,
+  400: #4d6f26,
+  500: #2d5500,
+  600: #284e00,
+  700: #224400,
+  800: #1c3b00,
+  900: #112a00,
+  A100: #8bff64,
+  A200: #65ff31,
+  A400: #3ffd00,
+  A700: #39e400,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #ffffff,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
+);
+
+$md-shoppedaccent: (
+  50: #f1ece8,
+  100: #dbd1c5,
+  200: #c3b29f,
+  300: #ab9378,
+  400: #997b5b,
+  500: #87643e,
+  600: #7f5c38,
+  700: #745230,
+  800: #6a4828,
+  900: #57361b,
+  A100: #ffc396,
+  A200: #ffa663,
+  A400: #ff8830,
+  A700: #ff7a16,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
+);
+
+$md-shoppeddanger: (
+  50: #ffeeea,
+  100: #ffd4ca,
+  200: #ffb7a7,
+  300: #ff9a83,
+  400: #ff8469,
+  500: #ff6e4e,
+  600: #ff6647,
+  700: #ff5b3d,
+  800: #ff5135,
+  900: #ff3f25,
+  A100: #ffffff,
+  A200: #ffffff,
+  A400: #ffd7d3,
+  A700: #ffc0b9,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #000000,
+    600: #000000,
+    700: #000000,
+    800: #000000,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
+);
+
+$shopped-app-primary: mat-palette($md-shoppedprimary);
+$shopped-app-accent: mat-palette($md-shoppedaccent, A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
-$shopped-app-warn: mat-palette(#ff6e4e);
-$shopped-app-coffee: mat-palette(#87643e);
-$shopped-app-nature: mat-palette(#2d5500);
+$shopped-app-warn: mat-palette($md-shoppedwarn);
+$shopped-app-danger: mat-palette($md-shoppeddanger);
+$shopped-app-success: mat-palette($md-shoppedsuccess);
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as `color` or `typography`.
 $shopped-app-theme: mat-light-theme(
@@ -24,8 +191,8 @@ $shopped-app-theme: mat-light-theme(
       primary: $shopped-app-primary,
       accent: $shopped-app-accent,
       warn: $shopped-app-warn,
-      coffe: $shopped-app-coffee,
-      nature: $shopped-app-nature,
+      coffe: $shopped-app-danger,
+      nature: $shopped-app-success,
     ),
   )
 );
