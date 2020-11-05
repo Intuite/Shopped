@@ -16,6 +16,7 @@ import { AwardDeleteDialogComponent } from './award-delete-dialog.component';
   templateUrl: './award.component.html',
 })
 export class AwardComponent implements OnInit, OnDestroy {
+  test = 'caca';
   awards?: IAward[];
   eventSubscriber?: Subscription;
   totalItems = 0;
