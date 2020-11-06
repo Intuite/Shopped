@@ -1,65 +1,58 @@
 <div class="row justify-content-center">
-  <div class="col-8">
-    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2 id="jhi-tag-type-heading" jhiTranslate="shoppedApp.tagType.home.createOrEditLabel">Create or edit a Tag Type</h2>
+    <div class="col-8">
+        <form (ngSubmit)="save()" [formGroup]="editForm" name="editForm" novalidate role="form">
+            <h2 id="jhi-tag-type-heading" jhiTranslate="shoppedApp.tagType.home.createOrEditLabel">Create or edit a Tag
+                Type</h2>
 
-      <div>
-        <jhi-alert-error></jhi-alert-error>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
 
-        <div class="form-group" [hidden]="!editForm.get('id')!.value">
-          <label for="id" jhiTranslate="global.field.id">ID</label>
-          <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
-        </div>
+                <div [hidden]="!editForm.get('id')!.value" class="form-group">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input class="form-control" formControlName="id" id="id" name="id" readonly type="text"/>
+                </div>
 
-        <mat-form-field class="form-group">
-            <mat-label jhiTranslate="shoppedApp.tagType.name"></mat-label>
-            <input matInput type="text" name="name" id="field_name" formControlName="name"/>
-            <mat-error *ngIf="editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)">
-              This field is required.
-            </mat-error>
-        </mat-form-field>
+                <mat-form-field appearance="fill" class="form-group w-100">
+                    <mat-label jhiTranslate="shoppedApp.tagType.name"></mat-label>
+                    <input formControlName="name" id="field_name" matInput name="name" type="text"/>
+                    <mat-error
+                        *ngIf="editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)">
+                        <span *ngIf="editForm.get('name')?.errors?.required" jhiTranslate="entity.validation.required">
+                            This field is required.
+                        </span>
+                    </mat-error>
+                </mat-form-field>
 
-    <mat-form-field class="form-element">
-      <textarea matInput placeholder="Description" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5" formControlName="description"></textarea>
-      <mat-error *ngIf="!formGroup.controls['description'].valid && formGroup.controls['description'].touched">
-        Required field, must be between 5 and 10 characters.
-      </mat-error>
-    </mat-form-field>
+                <mat-form-field appearance="fill" class="form-group w-100">
+                    <mat-label jhiTranslate="shoppedApp.tagType.description"></mat-label>
+                    <input formControlName="description" id="field_description" matInput name="description"
+                           type="text"/>
+                    <mat-error
+                        *ngIf="editForm.get('description')!.invalid && (editForm.get('description')!.dirty || editForm.get('description')!.touched)">
+                        This field is required.
+                    </mat-error>
+                </mat-form-field>
 
-        <div class="form-group">
-          <label class="form-control-label" jhiTranslate="shoppedApp.tagType.description" for="field_description">Description</label>
-          <input type="text" class="form-control" name="description" id="field_description" formControlName="description" />
-          <div *ngIf="editForm.get('description')!.invalid && (editForm.get('description')!.dirty || editForm.get('description')!.touched)">
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('description')?.errors?.required"
-              jhiTranslate="entity.validation.required"
-            >
-              This field is required.
-            </small>
-          </div>
-        </div>
+                <mat-form-field appearance="fill" class="form-group w-100">
+                    <mat-label jhiTranslate="shoppedApp.tagType.status"></mat-label>
+                    <mat-select formControlName="status" id="status" name="status">
+                        <mat-option *ngFor="let status of statusOptions" [value]="status">
+                            {{status | capitalize }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
 
-        <div class="form-group">
-          <label class="form-control-label" jhiTranslate="shoppedApp.tagType.status" for="field_status">Status</label>
-          <select class="form-control" name="status" formControlName="status" id="field_status">
-            <option value="ACTIVE">{{ 'shoppedApp.Status.ACTIVE' | translate }}</option>
-            <option value="INACTIVE">{{ 'shoppedApp.Status.INACTIVE' | translate }}</option>
-            <option value="BLOCKED">{{ 'shoppedApp.Status.BLOCKED' | translate }}</option>
-            <option value="PENDING">{{ 'shoppedApp.Status.PENDING' | translate }}</option>
-          </select>
-        </div>
-      </div>
+            <div>
+                <button mat-raised-button color="accent" (click)="previousState()" id="cancel-save" type="button">
+                    <fa-icon icon="ban"></fa-icon> <span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
 
-      <div>
-        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
-          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
-        </button>
-
-        <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
-          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
-        </button>
-      </div>
-    </form>
-  </div>
+                <button mat-raised-button color="primary" [disabled]="editForm.invalid || isSaving" id="save-entity"
+                        type="submit">
+                    <fa-icon icon="save"></fa-icon> <span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
 </div>
