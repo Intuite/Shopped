@@ -9,6 +9,7 @@ import { HasAnyAuthorityDirective } from './auth/has-any-authority.directive';
 import { JhMaterialModule } from 'app/shared/jh-material.module';
 import { ListComponent } from './components/list/list.component';
 import { TabsComponent } from './components/tabs/tabs.component';
+import { ImgSelectorComponent } from './components/img-selector/img-selector.component';
 @NgModule({
   imports: [JhMaterialModule, ShoppedSharedLibsModule],
   declarations: [
@@ -19,6 +20,7 @@ import { TabsComponent } from './components/tabs/tabs.component';
     HasAnyAuthorityDirective,
     ListComponent,
     TabsComponent,
+    ImgSelectorComponent,
   ],
   entryComponents: [LoginModalComponent],
   exports: [
@@ -31,6 +33,7 @@ import { TabsComponent } from './components/tabs/tabs.component';
     HasAnyAuthorityDirective,
     ListComponent,
     TabsComponent,
+    ImgSelectorComponent,
   ],
 })
 export class ShoppedSharedModule {}

@@ -7,7 +7,7 @@ import { NameValue } from 'app/shared/generalUsage/NameValue';
   styleUrls: ['./tabs.component.scss'],
 })
 export class TabsComponent implements OnInit {
-  @Input() content: NameValue[] | undefined;
+  @Input() content: any[] | undefined;
   constructor() {}
 
   ngOnInit(): void {
