@@ -7,6 +7,8 @@ import { LoginModalComponent } from './login/login.component';
 import { HasAnyAuthorityDirective } from './auth/has-any-authority.directive';
 
 import { JhMaterialModule } from 'app/shared/jh-material.module';
+import { ColorDirectiveDirective } from './material-color/color-directive.directive';
+import { ChipsComponent } from './components/chips/chips.component';
 import { ListComponent } from './components/list/list.component';
 import { TabsComponent } from './components/tabs/tabs.component';
 @NgModule({
@@ -17,6 +19,8 @@ import { TabsComponent } from './components/tabs/tabs.component';
     AlertErrorComponent,
     LoginModalComponent,
     HasAnyAuthorityDirective,
+    ChipsComponent,
+    ColorDirectiveDirective,
     ListComponent,
     TabsComponent,
   ],
@@ -31,6 +35,8 @@ import { TabsComponent } from './components/tabs/tabs.component';
     HasAnyAuthorityDirective,
     ListComponent,
     TabsComponent,
+    ChipsComponent,
+    ColorDirectiveDirective,
   ],
 })
 export class ShoppedSharedModule {}
