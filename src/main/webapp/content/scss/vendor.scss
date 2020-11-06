@@ -200,7 +200,7 @@ $shopped-app-success: mat-palette($md-shoppedsuccess);
           accent: $shopped-app-accent,
           warn: $shopped-app-warn,
           //danger: $shopped-app-danger,
-          //success: $shopped-app-success,,
+          //success: $shopped-app-success,,,
         ),
       )
     ),
@@ -220,9 +220,32 @@ $shopped-app-theme: shopped-light-theme(
 );
 //@import '~bootswatch/dist/materia/variables';
 // Override Bootstrap variables
+
+//bootstrap customization
+
+$orange: #fea201;
+$blue: #546de5;
+$purple: #786fa6;
+$indigo: #574b90;
+$green: #2d5500;
+$pink: #f78fb3;
+$red: #ff6e4e;
+$teal: #63cdda;
+$cyan: #3dc1d3;
+$yellow: #ffe02a;
+$coffee: #87643e;
+
 @import 'bootstrap-variables';
+/*! Import Bootstrap 4 variables */
+$primary: $orange;
+$theme-colors: (
+  primary: $primary,
+  secondary: $coffee,
+);
+
 // Import Bootstrap source files from node_modules
 @import '~bootstrap/scss/bootstrap';
+
 //@import '~bootswatch/dist/materia/bootswatch';
 // Plus imports for other components in your app.
 
