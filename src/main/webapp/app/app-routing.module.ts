@@ -21,6 +21,14 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
           canActivate: [UserRouteAccessService],
           loadChildren: () => import('./admin/admin-routing.module').then(m => m.AdminRoutingModule),
         },
+        // {
+        //   path: 'mod',
+        //   data: {
+        //     authorities: [Authority.MOD],
+        //   },
+        //   canActivate: [UserRouteAccessService],
+        //   loadChildren: () => import('./mod/mod-routing.module').then(m => m.ModRoutingModule),
+        // },
         {
           path: 'account',
           loadChildren: () => import('./account/account.module').then(m => m.AccountModule),

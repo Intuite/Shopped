@@ -1,6 +1,6 @@
 @import 'bootstrap-variables';
 @import '~bootstrap/scss/functions';
-@import '~bootswatch/dist/materia/variables';
+//@import '~bootswatch/dist/materia/variables';
 @import '~bootstrap/scss/variables';
 
 /* ==============================================================
@@ -163,5 +163,14 @@ ui bootstrap tweaks
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+button:focus,
+button:active:focus,
+button.active:focus {
+  outline: none !important;
+  outline-style: none !important;
+}
+
+//
 
 /* jhipster-needle-scss-add-main JHipster will add new css style */
