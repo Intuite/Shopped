@@ -178,30 +178,74 @@ $md-shoppeddanger: (
 
 $shopped-app-primary: mat-palette($md-shoppedprimary);
 $shopped-app-accent: mat-palette($md-shoppedaccent, A200, A100, A400);
-
-// The warn palette is optional (defaults to red).
 $shopped-app-warn: mat-palette($md-shoppedwarn);
+
+//Additional
 $shopped-app-danger: mat-palette($md-shoppeddanger);
 $shopped-app-success: mat-palette($md-shoppedsuccess);
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as `color` or `typography`.
-$shopped-app-theme: mat-light-theme(
-  (
-    color: (
-      primary: $shopped-app-primary,
-      accent: $shopped-app-accent,
-      warn: $shopped-app-warn,
-      coffe: $shopped-app-danger,
-      nature: $shopped-app-success,
+@function shopped-light-theme(
+  $primary,
+  $accent,
+  $warn: mat-palette($mat-yellow),
+  $success: mat-palette($mat-green),
+  $danger: mat-palette($mat-red)
+) {
+  @return map-merge(
+    mat-light-theme(
+      (
+        color: (
+          primary: $shopped-app-primary,
+          accent: $shopped-app-accent,
+          warn: $shopped-app-warn,
+          //danger: $shopped-app-danger,
+          //success: $shopped-app-success,,,
+        ),
+      )
     ),
-  )
-);
+    (
+      success: $success,
+      danger: $danger,
+    )
+  );
+}
 
+$shopped-app-theme: shopped-light-theme(
+  $shopped-app-primary,
+  $shopped-app-accent,
+  $shopped-app-warn,
+  $shopped-app-success,
+  $shopped-app-danger
+);
 //@import '~bootswatch/dist/materia/variables';
 // Override Bootstrap variables
+
+//bootstrap customization
+
+$orange: #fea201;
+$blue: #546de5;
+$purple: #786fa6;
+$indigo: #574b90;
+$green: #2d5500;
+$pink: #f78fb3;
+$red: #ff6e4e;
+$teal: #63cdda;
+$cyan: #3dc1d3;
+$yellow: #ffe02a;
+$coffee: #87643e;
+
 @import 'bootstrap-variables';
+/*! Import Bootstrap 4 variables */
+$primary: $orange;
+$theme-colors: (
+  primary: $primary,
+  secondary: $coffee,
+);
+
 // Import Bootstrap source files from node_modules
 @import '~bootstrap/scss/bootstrap';
+
 //@import '~bootswatch/dist/materia/bootswatch';
 // Plus imports for other components in your app.
 
@@ -211,3 +255,17 @@ $shopped-app-theme: mat-light-theme(
 @include angular-material-theme($shopped-app-theme);
 //@import '~@angular/material/prebuilt-themes/indigo-pink.css';
 /* jhipster-needle-scss-add-vendor JHipster will add new css style */
+
+@mixin add-color($theme, $color) {
+  $temp: map-get($theme, $color);
+  $temp-color: mat-color($temp);
+  $temp-contrast: mat-color($temp, default-contrast);
+
+  .mat-#{$color} {
+    background: $temp-color;
+    color: $temp-contrast;
+  }
+}
+
+@include add-color($shopped-app-theme, success);
+@include add-color($shopped-app-theme, danger);
