@@ -8,6 +8,7 @@ import { HasAnyAuthorityDirective } from './auth/has-any-authority.directive';
 
 import { JhMaterialModule } from 'app/shared/jh-material.module';
 import { ColorDirectiveDirective } from './material-color/color-directive.directive';
+import { ChipsComponent } from './components/chips/chips.component';
 @NgModule({
   imports: [JhMaterialModule, ShoppedSharedLibsModule],
   declarations: [
@@ -16,6 +17,7 @@ import { ColorDirectiveDirective } from './material-color/color-directive.direct
     AlertErrorComponent,
     LoginModalComponent,
     HasAnyAuthorityDirective,
+    ChipsComponent,
     ColorDirectiveDirective,
   ],
   entryComponents: [LoginModalComponent],
@@ -27,6 +29,7 @@ import { ColorDirectiveDirective } from './material-color/color-directive.direct
     AlertErrorComponent,
     LoginModalComponent,
     HasAnyAuthorityDirective,
+    ChipsComponent,
     ColorDirectiveDirective,
   ],
 })
