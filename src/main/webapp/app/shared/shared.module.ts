@@ -7,9 +7,17 @@ import { LoginModalComponent } from './login/login.component';
 import { HasAnyAuthorityDirective } from './auth/has-any-authority.directive';
 
 import { JhMaterialModule } from 'app/shared/jh-material.module';
+import { ChipsComponent } from './components/chips/chips.component';
 @NgModule({
   imports: [JhMaterialModule, ShoppedSharedLibsModule],
-  declarations: [FindLanguageFromKeyPipe, AlertComponent, AlertErrorComponent, LoginModalComponent, HasAnyAuthorityDirective],
+  declarations: [
+    FindLanguageFromKeyPipe,
+    AlertComponent,
+    AlertErrorComponent,
+    LoginModalComponent,
+    HasAnyAuthorityDirective,
+    ChipsComponent,
+  ],
   entryComponents: [LoginModalComponent],
   exports: [
     JhMaterialModule,
@@ -19,6 +27,7 @@ import { JhMaterialModule } from 'app/shared/jh-material.module';
     AlertErrorComponent,
     LoginModalComponent,
     HasAnyAuthorityDirective,
+    ChipsComponent,
   ],
 })
 export class ShoppedSharedModule {}
