@@ -1,4 +1,5 @@
 /* after changing this file run 'npm run webpack:build' */
+@import '~@angular/material/theming';
 
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
@@ -248,7 +249,11 @@ $theme-colors: (
 //@import '~bootswatch/dist/materia/bootswatch';
 // Plus imports for other components in your app.
 
-@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($shopped-app-theme);
+//@import '~@angular/material/prebuilt-themes/indigo-pink.css';
 /* jhipster-needle-scss-add-vendor JHipster will add new css style */
 
 @mixin add-color($theme, $color) {
