@@ -27,6 +27,7 @@
                     <th scope="col"  jhiSortBy="description"><span jhiTranslate="shoppedApp.ingredient.description">Description</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="image"><span jhiTranslate="shoppedApp.ingredient.image">Image</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="status"><span jhiTranslate="shoppedApp.ingredient.status">Status</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="unitAbbrev"><span jhiTranslate="shoppedApp.ingredient.unit">Unit</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -42,6 +43,11 @@
                         <span *ngIf="ingredient.image">{{ ingredient.imageContentType }}, {{ byteSize(ingredient.image) }}</span>
                     </td>
                     <td jhiTranslate="{{ 'shoppedApp.Status.' + ingredient.status }}">{{ ingredient.status }}</td>
+                    <td>
+                        <div *ngIf="ingredient.unitId">
+                            <a [routerLink]="['/unit', ingredient.unitId , 'view']" >{{ ingredient.unitAbbrev }}</a>
+                        </div>
+                    </td>
                     <td class="text-right">
                         <div class="btn-group">
                             <button type="submit"

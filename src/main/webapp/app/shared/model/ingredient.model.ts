@@ -7,6 +7,8 @@ export interface IIngredient {
   imageContentType?: string;
   image?: any;
   status?: Status;
+  unitAbbrev?: string;
+  unitId?: number;
 }
 
 export class Ingredient implements IIngredient {
@@ -16,6 +18,8 @@ export class Ingredient implements IIngredient {
     public description?: string,
     public imageContentType?: string,
     public image?: any,
-    public status?: Status
+    public status?: Status,
+    public unitAbbrev?: string,
+    public unitId?: number
   ) {}
 }

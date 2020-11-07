@@ -26,6 +26,10 @@ public class IngredientDTO implements Serializable {
     private String imageContentType;
     private Status status;
 
+
+    private Long unitId;
+
+    private String unitAbbrev;
     
     public Long getId() {
         return id;
@@ -75,6 +79,22 @@ public class IngredientDTO implements Serializable {
         this.status = status;
     }
 
+    public Long getUnitId() {
+        return unitId;
+    }
+
+    public void setUnitId(Long unitId) {
+        this.unitId = unitId;
+    }
+
+    public String getUnitAbbrev() {
+        return unitAbbrev;
+    }
+
+    public void setUnitAbbrev(String unitAbbrev) {
+        this.unitAbbrev = unitAbbrev;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -101,6 +121,8 @@ public class IngredientDTO implements Serializable {
             ", description='" + getDescription() + "'" +
             ", image='" + getImage() + "'" +
             ", status='" + getStatus() + "'" +
+            ", unitId=" + getUnitId() +
+            ", unitAbbrev='" + getUnitAbbrev() + "'" +
             "}";
     }
 }

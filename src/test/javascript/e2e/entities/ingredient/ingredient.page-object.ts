@@ -34,6 +34,8 @@ export class IngredientUpdatePage {
   imageInput = element(by.id('file_image'));
   statusSelect = element(by.id('field_status'));
 
+  unitSelect = element(by.id('field_unit'));
+
   async getPageTitle(): Promise<string> {
     return this.pageTitle.getAttribute('jhiTranslate');
   }
@@ -72,6 +74,22 @@ export class IngredientUpdatePage {
 
   async statusSelectLastOption(): Promise<void> {
     await this.statusSelect.all(by.tagName('option')).last().click();
+  }
+
+  async unitSelectLastOption(): Promise<void> {
+    await this.unitSelect.all(by.tagName('option')).last().click();
+  }
+
+  async unitSelectOption(option: string): Promise<void> {
+    await this.unitSelect.sendKeys(option);
+  }
+
+  getUnitSelect(): ElementFinder {
+    return this.unitSelect;
+  }
+
+  async getUnitSelectedOption(): Promise<string> {
+    return await this.unitSelect.element(by.css('option:checked')).getText();
   }
 
   async save(): Promise<void> {

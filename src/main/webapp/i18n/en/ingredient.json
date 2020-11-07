@@ -19,7 +19,8 @@
       "name": "Name",
       "description": "Description",
       "image": "Image",
-      "status": "Status"
+      "status": "Status",
+      "unit": "Unit"
     }
   }
 }

@@ -2,6 +2,7 @@ package com.intuite.shopped.web.rest;
 
 import com.intuite.shopped.ShoppedApp;
 import com.intuite.shopped.domain.Ingredient;
+import com.intuite.shopped.domain.Unit;
 import com.intuite.shopped.repository.IngredientRepository;
 import com.intuite.shopped.service.IngredientService;
 import com.intuite.shopped.service.dto.IngredientDTO;
@@ -84,6 +85,16 @@ public class IngredientResourceIT {
             .image(DEFAULT_IMAGE)
             .imageContentType(DEFAULT_IMAGE_CONTENT_TYPE)
             .status(DEFAULT_STATUS);
+        // Add required entity
+        Unit unit;
+        if (TestUtil.findAll(em, Unit.class).isEmpty()) {
+            unit = UnitResourceIT.createEntity(em);
+            em.persist(unit);
+            em.flush();
+        } else {
+            unit = TestUtil.findAll(em, Unit.class).get(0);
+        }
+        ingredient.setUnit(unit);
         return ingredient;
     }
     /**
@@ -99,6 +110,16 @@ public class IngredientResourceIT {
             .image(UPDATED_IMAGE)
             .imageContentType(UPDATED_IMAGE_CONTENT_TYPE)
             .status(UPDATED_STATUS);
+        // Add required entity
+        Unit unit;
+        if (TestUtil.findAll(em, Unit.class).isEmpty()) {
+            unit = UnitResourceIT.createUpdatedEntity(em);
+            em.persist(unit);
+            em.flush();
+        } else {
+            unit = TestUtil.findAll(em, Unit.class).get(0);
+        }
+        ingredient.setUnit(unit);
         return ingredient;
     }
 
@@ -453,6 +474,22 @@ public class IngredientResourceIT {
         // Get all the ingredientList where status is null
         defaultIngredientShouldNotBeFound("status.specified=false");
     }
+
+    @Test
+    @Transactional
+    public void getAllIngredientsByUnitIsEqualToSomething() throws Exception {
+        // Get already existing entity
+        Unit unit = ingredient.getUnit();
+        ingredientRepository.saveAndFlush(ingredient);
+        Long unitId = unit.getId();
+
+        // Get all the ingredientList where unit equals to unitId
+        defaultIngredientShouldBeFound("unitId.equals=" + unitId);
+
+        // Get all the ingredientList where unit equals to unitId + 1
+        defaultIngredientShouldNotBeFound("unitId.equals=" + (unitId + 1));
+    }
+
     /**
      * Executes the search, and checks that the default entity is returned.
      */

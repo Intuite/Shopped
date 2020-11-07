@@ -22,7 +22,16 @@
       "fieldValues": "ACTIVE (active),INACTIVE (inactive),BLOCKED (blocked),PENDING (pending)"
     }
   ],
-  "relationships": [],
+  "relationships": [
+    {
+      "relationshipName": "unit",
+      "otherEntityName": "unit",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"],
+      "otherEntityField": "abbrev",
+      "otherEntityRelationshipName": "ingredient"
+    }
+  ],
   "changelogDate": "20201104175738",
   "javadoc": "Ingredients for\\nall recipes.\\n@author Isaac Miranda",
   "entityTableName": "ingredient",

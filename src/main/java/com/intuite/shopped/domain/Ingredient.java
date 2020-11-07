@@ -1,5 +1,6 @@
 package com.intuite.shopped.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -42,6 +43,11 @@ public class Ingredient implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private Status status;
+
+    @ManyToOne(optional = false)
+    @NotNull
+    @JsonIgnoreProperties(value = "ingredients", allowSetters = true)
+    private Unit unit;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -115,6 +121,19 @@ public class Ingredient implements Serializable {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public Unit getUnit() {
+        return unit;
+    }
+
+    public Ingredient unit(Unit unit) {
+        this.unit = unit;
+        return this;
+    }
+
+    public void setUnit(Unit unit) {
+        this.unit = unit;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 

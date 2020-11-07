@@ -51,6 +51,8 @@ public class IngredientCriteria implements Serializable, Criteria {
 
     private StatusFilter status;
 
+    private LongFilter unitId;
+
     public IngredientCriteria() {
     }
 
@@ -59,6 +61,7 @@ public class IngredientCriteria implements Serializable, Criteria {
         this.name = other.name == null ? null : other.name.copy();
         this.description = other.description == null ? null : other.description.copy();
         this.status = other.status == null ? null : other.status.copy();
+        this.unitId = other.unitId == null ? null : other.unitId.copy();
     }
 
     @Override
@@ -98,6 +101,14 @@ public class IngredientCriteria implements Serializable, Criteria {
         this.status = status;
     }
 
+    public LongFilter getUnitId() {
+        return unitId;
+    }
+
+    public void setUnitId(LongFilter unitId) {
+        this.unitId = unitId;
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -112,7 +123,8 @@ public class IngredientCriteria implements Serializable, Criteria {
             Objects.equals(id, that.id) &&
             Objects.equals(name, that.name) &&
             Objects.equals(description, that.description) &&
-            Objects.equals(status, that.status);
+            Objects.equals(status, that.status) &&
+            Objects.equals(unitId, that.unitId);
     }
 
     @Override
@@ -121,7 +133,8 @@ public class IngredientCriteria implements Serializable, Criteria {
         id,
         name,
         description,
-        status
+        status,
+        unitId
         );
     }
 
@@ -133,6 +146,7 @@ public class IngredientCriteria implements Serializable, Criteria {
                 (name != null ? "name=" + name + ", " : "") +
                 (description != null ? "description=" + description + ", " : "") +
                 (status != null ? "status=" + status + ", " : "") +
+                (unitId != null ? "unitId=" + unitId + ", " : "") +
             "}";
     }
 

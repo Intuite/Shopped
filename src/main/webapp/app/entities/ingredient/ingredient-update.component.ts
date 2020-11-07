@@ -9,6 +9,8 @@ import { JhiDataUtils, JhiFileLoadError, JhiEventManager, JhiEventWithContent } 
 import { IIngredient, Ingredient } from 'app/shared/model/ingredient.model';
 import { IngredientService } from './ingredient.service';
 import { AlertError } from 'app/shared/alert/alert-error.model';
+import { IUnit } from 'app/shared/model/unit.model';
+import { UnitService } from 'app/entities/unit/unit.service';
 
 @Component({
   selector: 'jhi-ingredient-update',
@@ -16,6 +18,7 @@ import { AlertError } from 'app/shared/alert/alert-error.model';
 })
 export class IngredientUpdateComponent implements OnInit {
   isSaving = false;
+  units: IUnit[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -24,12 +27,14 @@ export class IngredientUpdateComponent implements OnInit {
     image: [],
     imageContentType: [],
     status: [],
+    unitId: [null, Validators.required],
   });
 
   constructor(
     protected dataUtils: JhiDataUtils,
     protected eventManager: JhiEventManager,
     protected ingredientService: IngredientService,
+    protected unitService: UnitService,
     protected elementRef: ElementRef,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
@@ -38,6 +43,8 @@ export class IngredientUpdateComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ ingredient }) => {
       this.updateForm(ingredient);
+
+      this.unitService.query().subscribe((res: HttpResponse<IUnit[]>) => (this.units = res.body || []));
     });
   }
 
@@ -49,6 +56,7 @@ export class IngredientUpdateComponent implements OnInit {
       image: ingredient.image,
       imageContentType: ingredient.imageContentType,
       status: ingredient.status,
+      unitId: ingredient.unitId,
     });
   }
 
@@ -101,6 +109,7 @@ export class IngredientUpdateComponent implements OnInit {
       imageContentType: this.editForm.get(['imageContentType'])!.value,
       image: this.editForm.get(['image'])!.value,
       status: this.editForm.get(['status'])!.value,
+      unitId: this.editForm.get(['unitId'])!.value,
     };
   }
 
@@ -118,5 +127,9 @@ export class IngredientUpdateComponent implements OnInit {
 
   protected onSaveError(): void {
     this.isSaving = false;
+  }
+
+  trackById(index: number, item: IUnit): any {
+    return item.id;
   }
 }
