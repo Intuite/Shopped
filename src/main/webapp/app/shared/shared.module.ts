@@ -11,7 +11,6 @@ import { ColorDirectiveDirective } from './material-color/color-directive.direct
 import { ChipsComponent } from './components/chips/chips.component';
 import { ListComponent } from './components/list/list.component';
 import { TabsComponent } from './components/tabs/tabs.component';
-import { ImgSelectorComponent } from './components/img-selector/img-selector.component';
 @NgModule({
   imports: [JhMaterialModule, ShoppedSharedLibsModule],
   declarations: [
@@ -24,7 +23,6 @@ import { ImgSelectorComponent } from './components/img-selector/img-selector.com
     ColorDirectiveDirective,
     ListComponent,
     TabsComponent,
-    ImgSelectorComponent,
   ],
   entryComponents: [LoginModalComponent],
   exports: [
@@ -39,7 +37,6 @@ import { ImgSelectorComponent } from './components/img-selector/img-selector.com
     TabsComponent,
     ChipsComponent,
     ColorDirectiveDirective,
-    ImgSelectorComponent,
   ],
 })
 export class ShoppedSharedModule {}

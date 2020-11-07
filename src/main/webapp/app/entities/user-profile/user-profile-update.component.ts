@@ -15,6 +15,7 @@ import { UserService } from 'app/core/user/user.service';
 @Component({
   selector: 'jhi-user-profile-update',
   templateUrl: './user-profile-update.component.html',
+  styleUrls: ['./user-profile-update.scss'],
 })
 export class UserProfileUpdateComponent implements OnInit {
   isSaving = false;

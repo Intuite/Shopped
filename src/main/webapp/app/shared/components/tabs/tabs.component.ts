@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { NameValue } from 'app/shared/generalUsage/NameValue';
 
 @Component({
   selector: 'jhi-tabs',
