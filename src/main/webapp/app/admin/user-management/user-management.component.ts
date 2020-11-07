@@ -37,8 +37,12 @@ export class UserManagementComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.accountService.identity().subscribe(account => (this.currentAccount = account));
-    this.userListSubscription = this.eventManager.subscribe('userListModification', () => this.loadAll());
+    this.load();
     this.handleNavigation();
+  }
+
+  load(): void {
+    this.userListSubscription = this.eventManager.subscribe('userListModification', () => this.loadAll());
   }
 
   ngOnDestroy(): void {
@@ -49,6 +53,7 @@ export class UserManagementComponent implements OnInit, OnDestroy {
 
   setActive(user: User, isActivated: boolean): void {
     this.userService.update({ ...user, activated: isActivated }).subscribe(() => this.loadAll());
+    this.load();
   }
 
   trackIdentity(index: number, item: User): any {
