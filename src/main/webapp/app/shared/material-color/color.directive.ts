@@ -1,11 +1,11 @@
 import { Directive, ElementRef, Input, Renderer2 } from '@angular/core';
 
-type ColorClasses = 'primary' | 'accent' | 'warn' | 'success' | 'danger' | undefined;
+type ColorClasses = 'primary' | 'accent' | 'warn' | 'success' | 'danger' | 'secondary' | undefined;
 
 @Directive({
   selector: '[jhiMaterialColor]',
 })
-export class ColorDirectiveDirective {
+export class ColorDirective {
   @Input() set jhiMaterialColor(value: ColorClasses) {
     this.renderer.addClass(this.element.nativeElement, `mat-${value}`);
   }

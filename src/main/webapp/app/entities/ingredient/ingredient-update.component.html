@@ -1,87 +1,103 @@
 <div class="row justify-content-center">
     <div class="col-8">
-        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-            <h2 id="jhi-ingredient-heading" jhiTranslate="shoppedApp.ingredient.home.createOrEditLabel">Create or edit a Ingredient</h2>
+        <form (ngSubmit)="save()" [formGroup]="editForm" name="editForm" novalidate role="form">
+            <h2 id="jhi-ingredient-heading" jhiTranslate="shoppedApp.ingredient.home.createOrEditLabel">Create or edit a
+                Ingredient</h2>
 
             <div>
                 <jhi-alert-error></jhi-alert-error>
 
-                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                <div [hidden]="!editForm.get('id')!.value" class="form-group">
                     <label for="id" jhiTranslate="global.field.id">ID</label>
-                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+                    <input class="form-control" formControlName="id" id="id" name="id" readonly type="text"/>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="shoppedApp.ingredient.name" for="field_name">Name</label>
-                    <input type="text" class="form-control" name="name" id="field_name"
-                           formControlName="name"/>
-                    <div *ngIf="editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)">
-                        <small class="form-text text-danger"
-                               *ngIf="editForm.get('name')?.errors?.required" jhiTranslate="entity.validation.required">
+                <mat-form-field appearance="fill" class="form-group w-100">
+                    <mat-label jhiTranslate="shoppedApp.ingredient.name">Name</mat-label>
+                    <input formControlName="name" id="field_name" matInput name="name"
+                           type="text"/>
+                    <mat-error
+                        *ngIf="(editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)) && editForm.get('name')?.errors?.required"
+                        jhiTranslate="entity.validation.required">
                         This field is required.
-                        </small>
-                    </div>
-                </div>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="form-group w-100">
+                    <mat-label jhiTranslate="shoppedApp.ingredient.description">Description</mat-label>
+                    <input formControlName="description" id="field_description" matInput name="description"
+                           type="text"/>
+                    <mat-error
+                        *ngIf="(editForm.get('description')!.invalid && (editForm.get('description')!.dirty || editForm.get('description')!.touched)) && editForm.get('description')?.errors?.minlength"
+                        [translateValues]="{ min: 5 }" jhiTranslate="entity.validation.minlength">
+                        This field is required to be at least 5 characters.
+                    </mat-error>
+                    <mat-error *ngIf="(editForm.get('description')!.invalid && (editForm.get('description')!.dirty || editForm.get('description')!.touched)) && editForm.get('description')?.errors?.maxlength"
+                               [translateValues]="{ max: 50 }"
+                               jhiTranslate="entity.validation.maxlength">
+                        This field cannot be longer than 50 characters.
+                    </mat-error>
+                </mat-form-field>
 
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="shoppedApp.ingredient.description" for="field_description">Description</label>
-                    <input type="text" class="form-control" name="description" id="field_description"
-                           formControlName="description"/>
-                    <div *ngIf="editForm.get('description')!.invalid && (editForm.get('description')!.dirty || editForm.get('description')!.touched)">
-                        <small class="form-text text-danger"
-                               *ngIf="editForm.get('description')?.errors?.required" jhiTranslate="entity.validation.required">
-                        This field is required.
-                        </small>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="shoppedApp.ingredient.units" for="field_units">Units</label>
-                    <input type="text" class="form-control" name="units" id="field_units"
-                           formControlName="units"/>
-                    <div *ngIf="editForm.get('units')!.invalid && (editForm.get('units')!.dirty || editForm.get('units')!.touched)">
-                        <small class="form-text text-danger"
-                               *ngIf="editForm.get('units')?.errors?.required" jhiTranslate="entity.validation.required">
-                        This field is required.
-                        </small>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="shoppedApp.ingredient.image" for="field_image">Image</label>
+                    <label class="form-control-label" for="field_image"
+                           jhiTranslate="shoppedApp.ingredient.image">Image</label>
                     <div>
-                        <img [src]="'data:' + editForm.get('imageContentType')!.value + ';base64,' + editForm.get('image')!.value" style="max-height: 100px;" *ngIf="editForm.get('image')!.value" alt="ingredient image"/>
+                        <img
+                            *ngIf="editForm.get('image')!.value"
+                            [src]="'data:' + editForm.get('imageContentType')!.value + ';base64,' + editForm.get('image')!.value"
+                            alt="ingredient image" style="max-height: 100px;"/>
                         <div *ngIf="editForm.get('image')!.value" class="form-text text-danger clearfix">
-                            <span class="pull-left">{{ editForm.get('imageContentType')!.value }}, {{ byteSize(editForm.get('image')!.value) }}</span>
-                            <button type="button" (click)="clearInputImage('image', 'imageContentType', 'file_image')" class="btn btn-secondary btn-xs pull-right">
+                        <span class="pull-left">{{ editForm.get('imageContentType')!.value }}
+                            , {{ byteSize(editForm.get('image')!.value) }}</span>
+                            <button (click)="clearInputImage('image', 'imageContentType', 'file_image')"
+                                    class="btn btn-secondary btn-xs pull-right"
+                                    type="button">
                                 <fa-icon icon="times"></fa-icon>
                             </button>
                         </div>
-                        <input type="file" id="file_image" (change)="setFileData($event, 'image', true)" accept="image/*" jhiTranslate="entity.action.addimage"/>
+                        <input (change)="setFileData($event, 'image', true)" accept="image/*" id="file_image"
+                               jhiTranslate="entity.action.addimage" type="file"/>
                     </div>
-                    <input type="hidden" class="form-control" name="image" id="field_image"
-                           formControlName="image"/>
-                    <input type="hidden" class="form-control" name="imageContentType" id="field_imageContentType"
-                           formControlName="imageContentType" />
+                    <input class="form-control" formControlName="image" id="field_image" name="image"
+                           type="hidden"/>
+                    <input class="form-control" formControlName="imageContentType" id="field_imageContentType"
+                           name="imageContentType"
+                           type="hidden"/>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="shoppedApp.ingredient.status" for="field_status">Status</label>
-                    <select class="form-control" name="status" formControlName="status" id="field_status">
-                        <option value="ACTIVE">{{ 'shoppedApp.Status.ACTIVE' | translate }}</option>
-                        <option value="INACTIVE">{{ 'shoppedApp.Status.INACTIVE' | translate }}</option>
-                        <option value="BLOCKED">{{ 'shoppedApp.Status.BLOCKED' | translate }}</option>
-                        <option value="PENDING">{{ 'shoppedApp.Status.PENDING' | translate }}</option>
-                    </select>
-                </div>
+                <mat-form-field appearance="fill" class="form-group w-100">
+                    <mat-label jhiTranslate="shoppedApp.ingredient.status"></mat-label>
+                    <mat-select formControlName="status" id="status" name="status">
+                        <mat-option *ngFor="let status of statusOptions" [value]="status">
+                            {{status | capitalize }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="form-group w-100">
+                    <mat-label jhiTranslate="shoppedApp.ingredient.unit"></mat-label>
+                    <mat-select formControlName="unitId" id="field_unit" name="unit">
+                        <mat-option *ngFor="let unitOption of units; trackBy: trackById" [value]="unitOption.id">
+                            {{unitOption.abbrev }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error
+                        *ngIf="editForm.get('unitId')!.invalid && (editForm.get('unitId')!.dirty || editForm.get('unitId')!.touched)"
+                        jhiTranslate="entity.validation.required">
+                    </mat-error>
+                </mat-form-field>
             </div>
 
             <div>
-                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                <button (click)="previousState()" id="cancel-save" jhiMaterialColor="danger" mat-raised-button
+                        type="button">
                     <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
                 </button>
 
-                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                <button [disabled]="editForm.invalid || isSaving" id="save-entity" jhiMaterialColor="primary"
+                        mat-raised-button
+                        type="submit">
                     <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
                 </button>
             </div>

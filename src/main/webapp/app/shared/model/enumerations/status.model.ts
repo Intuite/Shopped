@@ -1,9 +1,9 @@
 export const enum Status {
-  ACTIVE = 'Active',
+  ACTIVE = 'active',
 
-  INACTIVE = 'Inactive',
+  INACTIVE = 'inactive',
 
-  BLOCKED = 'Blocked',
+  BLOCKED = 'blocked',
 
-  PENDING = 'Pending',
+  PENDING = 'pending',
 }
