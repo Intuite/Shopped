@@ -25,7 +25,6 @@
                     <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="name"><span jhiTranslate="shoppedApp.ingredient.name">Name</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="description"><span jhiTranslate="shoppedApp.ingredient.description">Description</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="units"><span jhiTranslate="shoppedApp.ingredient.units">Units</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="image"><span jhiTranslate="shoppedApp.ingredient.image">Image</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="status"><span jhiTranslate="shoppedApp.ingredient.status">Status</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"></th>
@@ -36,7 +35,6 @@
                     <td><a [routerLink]="['/ingredient', ingredient.id, 'view']">{{ ingredient.id }}</a></td>
                     <td>{{ ingredient.name }}</td>
                     <td>{{ ingredient.description }}</td>
-                    <td>{{ ingredient.units }}</td>
                     <td>
                         <a *ngIf="ingredient.image" (click)="openFile(ingredient.imageContentType, ingredient.image)">
                             <img [src]="'data:' + ingredient.imageContentType + ';base64,' + ingredient.image" style="max-height: 30px;" alt="ingredient image"/>

@@ -97,9 +97,6 @@ public class IngredientQueryService extends QueryService<Ingredient> {
             if (criteria.getDescription() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getDescription(), Ingredient_.description));
             }
-            if (criteria.getUnits() != null) {
-                specification = specification.and(buildStringSpecification(criteria.getUnits(), Ingredient_.units));
-            }
             if (criteria.getStatus() != null) {
                 specification = specification.and(buildSpecification(criteria.getStatus(), Ingredient_.status));
             }

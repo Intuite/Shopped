@@ -32,10 +32,6 @@ public class Ingredient implements Serializable {
     @Column(name = "description", nullable = false)
     private String description;
 
-    @NotNull
-    @Column(name = "units", nullable = false)
-    private String units;
-
     @Lob
     @Column(name = "image")
     private byte[] image;
@@ -80,19 +76,6 @@ public class Ingredient implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getUnits() {
-        return units;
-    }
-
-    public Ingredient units(String units) {
-        this.units = units;
-        return this;
-    }
-
-    public void setUnits(String units) {
-        this.units = units;
     }
 
     public byte[] getImage() {
@@ -158,7 +141,6 @@ public class Ingredient implements Serializable {
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", description='" + getDescription() + "'" +
-            ", units='" + getUnits() + "'" +
             ", image='" + getImage() + "'" +
             ", imageContentType='" + getImageContentType() + "'" +
             ", status='" + getStatus() + "'" +

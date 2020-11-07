@@ -47,14 +47,12 @@ describe('Ingredient e2e test', () => {
     await promise.all([
       ingredientUpdatePage.setNameInput('name'),
       ingredientUpdatePage.setDescriptionInput('description'),
-      ingredientUpdatePage.setUnitsInput('units'),
       ingredientUpdatePage.setImageInput(absolutePath),
       ingredientUpdatePage.statusSelectLastOption(),
     ]);
 
     expect(await ingredientUpdatePage.getNameInput()).to.eq('name', 'Expected Name value to be equals to name');
     expect(await ingredientUpdatePage.getDescriptionInput()).to.eq('description', 'Expected Description value to be equals to description');
-    expect(await ingredientUpdatePage.getUnitsInput()).to.eq('units', 'Expected Units value to be equals to units');
     expect(await ingredientUpdatePage.getImageInput()).to.endsWith(
       fileNameToUpload,
       'Expected Image value to be end with ' + fileNameToUpload

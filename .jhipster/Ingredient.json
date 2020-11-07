@@ -12,11 +12,6 @@
       "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "units",
-      "fieldType": "String",
-      "fieldValidateRules": ["required"]
-    },
-    {
       "fieldName": "image",
       "fieldType": "byte[]",
       "fieldTypeBlobContent": "image"
@@ -39,5 +34,7 @@
   "readOnly": false,
   "embedded": false,
   "clientRootFolder": "",
-  "applications": ["Shopped"]
+  "applications": ["Shopped"],
+  "searchEngine": false,
+  "databaseType": "sql"
 }

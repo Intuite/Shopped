@@ -20,9 +20,6 @@ public class IngredientDTO implements Serializable {
     @NotNull
     private String description;
 
-    @NotNull
-    private String units;
-
     @Lob
     private byte[] image;
 
@@ -52,14 +49,6 @@ public class IngredientDTO implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getUnits() {
-        return units;
-    }
-
-    public void setUnits(String units) {
-        this.units = units;
     }
 
     public byte[] getImage() {
@@ -110,7 +99,6 @@ public class IngredientDTO implements Serializable {
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", description='" + getDescription() + "'" +
-            ", units='" + getUnits() + "'" +
             ", image='" + getImage() + "'" +
             ", status='" + getStatus() + "'" +
             "}";

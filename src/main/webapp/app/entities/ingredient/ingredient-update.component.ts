@@ -16,13 +16,11 @@ import { AlertError } from 'app/shared/alert/alert-error.model';
 })
 export class IngredientUpdateComponent implements OnInit {
   isSaving = false;
-  statusOptions = ['ACTIVE','INACTIVE','BLOCKED','PENDING'];
 
   editForm = this.fb.group({
     id: [],
     name: [null, [Validators.required]],
     description: [null, [Validators.required]],
-    units: [null, [Validators.required]],
     image: [],
     imageContentType: [],
     status: [],
@@ -48,7 +46,6 @@ export class IngredientUpdateComponent implements OnInit {
       id: ingredient.id,
       name: ingredient.name,
       description: ingredient.description,
-      units: ingredient.units,
       image: ingredient.image,
       imageContentType: ingredient.imageContentType,
       status: ingredient.status,
@@ -101,7 +98,6 @@ export class IngredientUpdateComponent implements OnInit {
       id: this.editForm.get(['id'])!.value,
       name: this.editForm.get(['name'])!.value,
       description: this.editForm.get(['description'])!.value,
-      units: this.editForm.get(['units'])!.value,
       imageContentType: this.editForm.get(['imageContentType'])!.value,
       image: this.editForm.get(['image'])!.value,
       status: this.editForm.get(['status'])!.value,

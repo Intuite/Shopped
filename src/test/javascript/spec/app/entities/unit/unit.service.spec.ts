@@ -1,16 +1,15 @@
 import { TestBed, getTestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { IngredientService } from 'app/entities/ingredient/ingredient.service';
-import { IIngredient, Ingredient } from 'app/shared/model/ingredient.model';
-import { Status } from 'app/shared/model/enumerations/status.model';
+import { UnitService } from 'app/entities/unit/unit.service';
+import { IUnit, Unit } from 'app/shared/model/unit.model';
 
 describe('Service Tests', () => {
-  describe('Ingredient Service', () => {
+  describe('Unit Service', () => {
     let injector: TestBed;
-    let service: IngredientService;
+    let service: UnitService;
     let httpMock: HttpTestingController;
-    let elemDefault: IIngredient;
-    let expectedResult: IIngredient | IIngredient[] | boolean | null;
+    let elemDefault: IUnit;
+    let expectedResult: IUnit | IUnit[] | boolean | null;
 
     beforeEach(() => {
       TestBed.configureTestingModule({
@@ -18,10 +17,10 @@ describe('Service Tests', () => {
       });
       expectedResult = null;
       injector = getTestBed();
-      service = injector.get(IngredientService);
+      service = injector.get(UnitService);
       httpMock = injector.get(HttpTestingController);
 
-      elemDefault = new Ingredient(0, 'AAAAAAA', 'AAAAAAA', 'image/png', 'AAAAAAA', Status.ACTIVE);
+      elemDefault = new Unit(0, 'AAAAAAA', 'AAAAAAA');
     });
 
     describe('Service methods', () => {
@@ -35,7 +34,7 @@ describe('Service Tests', () => {
         expect(expectedResult).toMatchObject(elemDefault);
       });
 
-      it('should create a Ingredient', () => {
+      it('should create a Unit', () => {
         const returnedFromService = Object.assign(
           {
             id: 0,
@@ -45,20 +44,18 @@ describe('Service Tests', () => {
 
         const expected = Object.assign({}, returnedFromService);
 
-        service.create(new Ingredient()).subscribe(resp => (expectedResult = resp.body));
+        service.create(new Unit()).subscribe(resp => (expectedResult = resp.body));
 
         const req = httpMock.expectOne({ method: 'POST' });
         req.flush(returnedFromService);
         expect(expectedResult).toMatchObject(expected);
       });
 
-      it('should update a Ingredient', () => {
+      it('should update a Unit', () => {
         const returnedFromService = Object.assign(
           {
             name: 'BBBBBB',
-            description: 'BBBBBB',
-            image: 'BBBBBB',
-            status: 'BBBBBB',
+            abbrev: 'BBBBBB',
           },
           elemDefault
         );
@@ -72,13 +69,11 @@ describe('Service Tests', () => {
         expect(expectedResult).toMatchObject(expected);
       });
 
-      it('should return a list of Ingredient', () => {
+      it('should return a list of Unit', () => {
         const returnedFromService = Object.assign(
           {
             name: 'BBBBBB',
-            description: 'BBBBBB',
-            image: 'BBBBBB',
-            status: 'BBBBBB',
+            abbrev: 'BBBBBB',
           },
           elemDefault
         );
@@ -93,7 +88,7 @@ describe('Service Tests', () => {
         expect(expectedResult).toContainEqual(expected);
       });
 
-      it('should delete a Ingredient', () => {
+      it('should delete a Unit', () => {
         service.delete(123).subscribe(resp => (expectedResult = resp.ok));
 
         const req = httpMock.expectOne({ method: 'DELETE' });

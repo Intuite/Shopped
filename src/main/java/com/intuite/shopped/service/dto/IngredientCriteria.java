@@ -49,8 +49,6 @@ public class IngredientCriteria implements Serializable, Criteria {
 
     private StringFilter description;
 
-    private StringFilter units;
-
     private StatusFilter status;
 
     public IngredientCriteria() {
@@ -60,7 +58,6 @@ public class IngredientCriteria implements Serializable, Criteria {
         this.id = other.id == null ? null : other.id.copy();
         this.name = other.name == null ? null : other.name.copy();
         this.description = other.description == null ? null : other.description.copy();
-        this.units = other.units == null ? null : other.units.copy();
         this.status = other.status == null ? null : other.status.copy();
     }
 
@@ -93,14 +90,6 @@ public class IngredientCriteria implements Serializable, Criteria {
         this.description = description;
     }
 
-    public StringFilter getUnits() {
-        return units;
-    }
-
-    public void setUnits(StringFilter units) {
-        this.units = units;
-    }
-
     public StatusFilter getStatus() {
         return status;
     }
@@ -123,7 +112,6 @@ public class IngredientCriteria implements Serializable, Criteria {
             Objects.equals(id, that.id) &&
             Objects.equals(name, that.name) &&
             Objects.equals(description, that.description) &&
-            Objects.equals(units, that.units) &&
             Objects.equals(status, that.status);
     }
 
@@ -133,7 +121,6 @@ public class IngredientCriteria implements Serializable, Criteria {
         id,
         name,
         description,
-        units,
         status
         );
     }
@@ -145,7 +132,6 @@ public class IngredientCriteria implements Serializable, Criteria {
                 (id != null ? "id=" + id + ", " : "") +
                 (name != null ? "name=" + name + ", " : "") +
                 (description != null ? "description=" + description + ", " : "") +
-                (units != null ? "units=" + units + ", " : "") +
                 (status != null ? "status=" + status + ", " : "") +
             "}";
     }
