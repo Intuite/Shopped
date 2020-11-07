@@ -9,16 +9,12 @@
     <div class="modal-body">
         <jhi-alert-error></jhi-alert-error>
 
-        <p id="jhi-delete-catalogue-heading" jhiTranslate="shoppedApp.catalogue.delete.question" [translateValues]="{ id: catalogue.id }">Are you sure you want to delete this Catalogue?</p>
+        <p id="jhi-delete-catalogue-heading" >You cannot delete catalogues</p>
     </div>
 
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">
             <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
-        </button>
-
-        <button id="jhi-confirm-delete-catalogue" type="submit" class="btn btn-danger">
-            <fa-icon icon="times"></fa-icon>&nbsp;<span jhiTranslate="entity.action.delete">Delete</span>
         </button>
     </div>
 </form>

@@ -10,14 +10,11 @@ import { IAward } from 'app/shared/model/award.model';
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { AwardService } from './award.service';
 import { AwardDeleteDialogComponent } from './award-delete-dialog.component';
-import { NameValue } from 'app/shared/generalUsage/NameValue';
-
 @Component({
   selector: 'jhi-award',
   templateUrl: './award.component.html',
 })
 export class AwardComponent implements OnInit, OnDestroy {
-  test: NameValue[] = [];
   awards?: IAward[];
   eventSubscriber?: Subscription;
   totalItems = 0;
@@ -52,8 +49,6 @@ export class AwardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.test.push(new NameValue('Tab1', 'hola que ase'));
-    this.test.push(new NameValue('Tab2', 'aqui va description'));
     this.handleNavigation();
     this.registerChangeInAwards();
   }
