@@ -19,6 +19,7 @@ import { UnitService } from 'app/entities/unit/unit.service';
 export class IngredientUpdateComponent implements OnInit {
   isSaving = false;
   units: IUnit[] = [];
+  statusOptions = ['ACTIVE', 'INACTIVE'];
 
   editForm = this.fb.group({
     id: [],
