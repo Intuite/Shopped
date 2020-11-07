@@ -47,9 +47,9 @@ public class IngredientCriteria implements Serializable, Criteria {
 
     private StringFilter name;
 
-    private StringFilter description;
-
     private StatusFilter status;
+
+    private StringFilter description;
 
     private LongFilter unitId;
 
@@ -59,8 +59,8 @@ public class IngredientCriteria implements Serializable, Criteria {
     public IngredientCriteria(IngredientCriteria other) {
         this.id = other.id == null ? null : other.id.copy();
         this.name = other.name == null ? null : other.name.copy();
-        this.description = other.description == null ? null : other.description.copy();
         this.status = other.status == null ? null : other.status.copy();
+        this.description = other.description == null ? null : other.description.copy();
         this.unitId = other.unitId == null ? null : other.unitId.copy();
     }
 
@@ -85,20 +85,20 @@ public class IngredientCriteria implements Serializable, Criteria {
         this.name = name;
     }
 
-    public StringFilter getDescription() {
-        return description;
-    }
-
-    public void setDescription(StringFilter description) {
-        this.description = description;
-    }
-
     public StatusFilter getStatus() {
         return status;
     }
 
     public void setStatus(StatusFilter status) {
         this.status = status;
+    }
+
+    public StringFilter getDescription() {
+        return description;
+    }
+
+    public void setDescription(StringFilter description) {
+        this.description = description;
     }
 
     public LongFilter getUnitId() {
@@ -122,8 +122,8 @@ public class IngredientCriteria implements Serializable, Criteria {
         return
             Objects.equals(id, that.id) &&
             Objects.equals(name, that.name) &&
-            Objects.equals(description, that.description) &&
             Objects.equals(status, that.status) &&
+            Objects.equals(description, that.description) &&
             Objects.equals(unitId, that.unitId);
     }
 
@@ -132,8 +132,8 @@ public class IngredientCriteria implements Serializable, Criteria {
         return Objects.hash(
         id,
         name,
-        description,
         status,
+        description,
         unitId
         );
     }
@@ -144,8 +144,8 @@ public class IngredientCriteria implements Serializable, Criteria {
         return "IngredientCriteria{" +
                 (id != null ? "id=" + id + ", " : "") +
                 (name != null ? "name=" + name + ", " : "") +
-                (description != null ? "description=" + description + ", " : "") +
                 (status != null ? "status=" + status + ", " : "") +
+                (description != null ? "description=" + description + ", " : "") +
                 (unitId != null ? "unitId=" + unitId + ", " : "") +
             "}";
     }

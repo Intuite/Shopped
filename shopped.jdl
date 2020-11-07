@@ -255,7 +255,7 @@ entity CollectionHasRecipe {
 **/
 entity Ingredient {
 	name String required,
-    description String required,
+    description String minlength(5) maxlength(50),
     units String required,
     image ImageBlob,
     status Status

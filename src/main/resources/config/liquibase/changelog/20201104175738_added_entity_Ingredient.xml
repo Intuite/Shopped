@@ -19,9 +19,6 @@
             <column name="name" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-            <column name="description" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
             <column name="image" type="longblob">
                 <constraints nullable="true" />
             </column>
@@ -29,6 +26,9 @@
                 <constraints nullable="true" />
             </column>
             <column name="status" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="description" type="varchar(50)">
                 <constraints nullable="true" />
             </column>
             <column name="unit_id" type="bigint">
@@ -58,10 +58,10 @@
                   tableName="ingredient">
             <column name="id" type="numeric"/>
             <column name="name" type="string"/>
-            <column name="description" type="string"/>
             <column name="image" type="blob"/>
             <column name="image_content_type" type="string"/>
             <column name="status" type="string"/>
+            <column name="description" type="string"/>
             <column name="unit_id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>

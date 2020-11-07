@@ -17,14 +17,14 @@ public class IngredientDTO implements Serializable {
     @NotNull
     private String name;
 
-    @NotNull
-    private String description;
-
     @Lob
     private byte[] image;
 
     private String imageContentType;
     private Status status;
+
+    @Size(min = 5, max = 50)
+    private String description;
 
 
     private Long unitId;
@@ -45,14 +45,6 @@ public class IngredientDTO implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public byte[] getImage() {
@@ -77,6 +69,14 @@ public class IngredientDTO implements Serializable {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Long getUnitId() {
@@ -118,9 +118,9 @@ public class IngredientDTO implements Serializable {
         return "IngredientDTO{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", description='" + getDescription() + "'" +
             ", image='" + getImage() + "'" +
             ", status='" + getStatus() + "'" +
+            ", description='" + getDescription() + "'" +
             ", unitId=" + getUnitId() +
             ", unitAbbrev='" + getUnitAbbrev() + "'" +
             "}";

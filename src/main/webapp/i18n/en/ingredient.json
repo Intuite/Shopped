@@ -17,9 +17,9 @@
         "title": "Ingredient"
       },
       "name": "Name",
-      "description": "Description",
       "image": "Image",
       "status": "Status",
+      "description": "Description",
       "unit": "Unit"
     }
   }

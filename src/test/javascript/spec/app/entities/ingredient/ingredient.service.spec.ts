@@ -21,7 +21,7 @@ describe('Service Tests', () => {
       service = injector.get(IngredientService);
       httpMock = injector.get(HttpTestingController);
 
-      elemDefault = new Ingredient(0, 'AAAAAAA', 'AAAAAAA', 'image/png', 'AAAAAAA', Status.ACTIVE);
+      elemDefault = new Ingredient(0, 'AAAAAAA', 'image/png', 'AAAAAAA', Status.ACTIVE, 'AAAAAAA');
     });
 
     describe('Service methods', () => {
@@ -56,9 +56,9 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             name: 'BBBBBB',
-            description: 'BBBBBB',
             image: 'BBBBBB',
             status: 'BBBBBB',
+            description: 'BBBBBB',
           },
           elemDefault
         );
@@ -76,9 +76,9 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             name: 'BBBBBB',
-            description: 'BBBBBB',
             image: 'BBBBBB',
             status: 'BBBBBB',
+            description: 'BBBBBB',
           },
           elemDefault
         );

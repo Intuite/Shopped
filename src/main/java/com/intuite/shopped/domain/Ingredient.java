@@ -29,10 +29,6 @@ public class Ingredient implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @NotNull
-    @Column(name = "description", nullable = false)
-    private String description;
-
     @Lob
     @Column(name = "image")
     private byte[] image;
@@ -43,6 +39,10 @@ public class Ingredient implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private Status status;
+
+    @Size(min = 5, max = 50)
+    @Column(name = "description", length = 50)
+    private String description;
 
     @ManyToOne(optional = false)
     @NotNull
@@ -69,19 +69,6 @@ public class Ingredient implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public Ingredient description(String description) {
-        this.description = description;
-        return this;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public byte[] getImage() {
@@ -123,6 +110,19 @@ public class Ingredient implements Serializable {
         this.status = status;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public Ingredient description(String description) {
+        this.description = description;
+        return this;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public Unit getUnit() {
         return unit;
     }
@@ -159,10 +159,10 @@ public class Ingredient implements Serializable {
         return "Ingredient{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", description='" + getDescription() + "'" +
             ", image='" + getImage() + "'" +
             ", imageContentType='" + getImageContentType() + "'" +
             ", status='" + getStatus() + "'" +
+            ", description='" + getDescription() + "'" +
             "}";
     }
 }

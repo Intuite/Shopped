@@ -23,10 +23,10 @@ export class IngredientUpdateComponent implements OnInit {
   editForm = this.fb.group({
     id: [],
     name: [null, [Validators.required]],
-    description: [null, [Validators.required]],
     image: [],
     imageContentType: [],
     status: [],
+    description: [null, [Validators.minLength(5), Validators.maxLength(50)]],
     unitId: [null, Validators.required],
   });
 
@@ -52,10 +52,10 @@ export class IngredientUpdateComponent implements OnInit {
     this.editForm.patchValue({
       id: ingredient.id,
       name: ingredient.name,
-      description: ingredient.description,
       image: ingredient.image,
       imageContentType: ingredient.imageContentType,
       status: ingredient.status,
+      description: ingredient.description,
       unitId: ingredient.unitId,
     });
   }
@@ -105,10 +105,10 @@ export class IngredientUpdateComponent implements OnInit {
       ...new Ingredient(),
       id: this.editForm.get(['id'])!.value,
       name: this.editForm.get(['name'])!.value,
-      description: this.editForm.get(['description'])!.value,
       imageContentType: this.editForm.get(['imageContentType'])!.value,
       image: this.editForm.get(['image'])!.value,
       status: this.editForm.get(['status'])!.value,
+      description: this.editForm.get(['description'])!.value,
       unitId: this.editForm.get(['unitId'])!.value,
     };
   }

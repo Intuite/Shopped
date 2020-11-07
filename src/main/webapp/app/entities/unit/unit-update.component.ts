@@ -14,6 +14,7 @@ import { UnitService } from './unit.service';
 })
 export class UnitUpdateComponent implements OnInit {
   isSaving = false;
+  statusOptions = ['ACTIVE', 'INACTIVE'];
 
   editForm = this.fb.group({
     id: [],

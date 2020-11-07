@@ -30,9 +30,9 @@ export class IngredientUpdatePage {
   cancelButton = element(by.id('cancel-save'));
 
   nameInput = element(by.id('field_name'));
-  descriptionInput = element(by.id('field_description'));
   imageInput = element(by.id('file_image'));
   statusSelect = element(by.id('field_status'));
+  descriptionInput = element(by.id('field_description'));
 
   unitSelect = element(by.id('field_unit'));
 
@@ -46,14 +46,6 @@ export class IngredientUpdatePage {
 
   async getNameInput(): Promise<string> {
     return await this.nameInput.getAttribute('value');
-  }
-
-  async setDescriptionInput(description: string): Promise<void> {
-    await this.descriptionInput.sendKeys(description);
-  }
-
-  async getDescriptionInput(): Promise<string> {
-    return await this.descriptionInput.getAttribute('value');
   }
 
   async setImageInput(image: string): Promise<void> {
@@ -74,6 +66,14 @@ export class IngredientUpdatePage {
 
   async statusSelectLastOption(): Promise<void> {
     await this.statusSelect.all(by.tagName('option')).last().click();
+  }
+
+  async setDescriptionInput(description: string): Promise<void> {
+    await this.descriptionInput.sendKeys(description);
+  }
+
+  async getDescriptionInput(): Promise<string> {
+    return await this.descriptionInput.getAttribute('value');
   }
 
   async unitSelectLastOption(): Promise<void> {

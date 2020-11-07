@@ -1,49 +1,47 @@
 <div class="row justify-content-center">
     <div class="col-8">
-        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+        <form (ngSubmit)="save()" [formGroup]="editForm" name="editForm" novalidate role="form">
             <h2 id="jhi-unit-heading" jhiTranslate="shoppedApp.unit.home.createOrEditLabel">Create or edit a Unit</h2>
 
             <div>
                 <jhi-alert-error></jhi-alert-error>
 
-                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                <div [hidden]="!editForm.get('id')!.value" class="form-group">
                     <label for="id" jhiTranslate="global.field.id">ID</label>
-                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+                    <input class="form-control" formControlName="id" id="id" name="id" readonly type="text"/>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="shoppedApp.unit.name" for="field_name">Name</label>
-                    <input type="text" class="form-control" name="name" id="field_name"
-                           formControlName="name"/>
-                    <div *ngIf="editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)">
-                        <small class="form-text text-danger"
-                               *ngIf="editForm.get('name')?.errors?.required" jhiTranslate="entity.validation.required">
-                        This field is required.
-                        </small>
-                    </div>
+                <mat-form-field appearance="fill" class="form-group w-100">
+                    <mat-label jhiTranslate="shoppedApp.unit.name"></mat-label>
+                    <input formControlName="name" id="field_name" matInput name="name"
+                           type="text"/>
+                    <mat-error
+                        *ngIf="editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)"
+                        jhiTranslate="entity.validation.required">
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="form-group w-100">
+                    <mat-label jhiTranslate="shoppedApp.unit.abbrev"></mat-label>
+                    <input formControlName="abbrev" id="field_abbrev" matInput name="abbrev"
+                           type="text"/>
+                    <mat-error
+                        *ngIf="editForm.get('abbrev')!.invalid && (editForm.get('abbrev')!.dirty || editForm.get('abbrev')!.touched)"
+                        jhiTranslate="entity.validation.required">
+                    </mat-error>
+                </mat-form-field>
+                <div>
+                    <button (click)="previousState()" id="cancel-save" jhiMaterialColor="danger" mat-raised-button
+                            type="button">
+                        <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                    </button>
+
+                    <button [disabled]="editForm.invalid || isSaving" id="save-entity" jhiMaterialColor="primary"
+                            mat-raised-button
+                            type="submit">
+                        <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                    </button>
                 </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="shoppedApp.unit.abbrev" for="field_abbrev">Abbrev</label>
-                    <input type="text" class="form-control" name="abbrev" id="field_abbrev"
-                           formControlName="abbrev"/>
-                    <div *ngIf="editForm.get('abbrev')!.invalid && (editForm.get('abbrev')!.dirty || editForm.get('abbrev')!.touched)">
-                        <small class="form-text text-danger"
-                               *ngIf="editForm.get('abbrev')?.errors?.required" jhiTranslate="entity.validation.required">
-                        This field is required.
-                        </small>
-                    </div>
-                </div>
-            </div>
-
-            <div>
-                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
-                    <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
-                </button>
-
-                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
-                    <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
-                </button>
             </div>
         </form>
     </div>

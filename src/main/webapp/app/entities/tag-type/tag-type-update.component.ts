@@ -14,7 +14,7 @@ import { TagTypeService } from './tag-type.service';
 })
 export class TagTypeUpdateComponent implements OnInit {
   isSaving = false;
-  statusOptions = ['ACTIVE','INACTIVE','BLOCKED','PENDING'];
+  statusOptions = ['ACTIVE', 'INACTIVE'];
 
   editForm = this.fb.group({
     id: [],

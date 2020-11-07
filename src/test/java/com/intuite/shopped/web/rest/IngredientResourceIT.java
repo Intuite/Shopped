@@ -41,9 +41,6 @@ public class IngredientResourceIT {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
-    private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
-    private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
-
     private static final byte[] DEFAULT_IMAGE = TestUtil.createByteArray(1, "0");
     private static final byte[] UPDATED_IMAGE = TestUtil.createByteArray(1, "1");
     private static final String DEFAULT_IMAGE_CONTENT_TYPE = "image/jpg";
@@ -51,6 +48,9 @@ public class IngredientResourceIT {
 
     private static final Status DEFAULT_STATUS = Status.ACTIVE;
     private static final Status UPDATED_STATUS = Status.INACTIVE;
+
+    private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
+    private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
 
     @Autowired
     private IngredientRepository ingredientRepository;
@@ -81,10 +81,10 @@ public class IngredientResourceIT {
     public static Ingredient createEntity(EntityManager em) {
         Ingredient ingredient = new Ingredient()
             .name(DEFAULT_NAME)
-            .description(DEFAULT_DESCRIPTION)
             .image(DEFAULT_IMAGE)
             .imageContentType(DEFAULT_IMAGE_CONTENT_TYPE)
-            .status(DEFAULT_STATUS);
+            .status(DEFAULT_STATUS)
+            .description(DEFAULT_DESCRIPTION);
         // Add required entity
         Unit unit;
         if (TestUtil.findAll(em, Unit.class).isEmpty()) {
@@ -106,10 +106,10 @@ public class IngredientResourceIT {
     public static Ingredient createUpdatedEntity(EntityManager em) {
         Ingredient ingredient = new Ingredient()
             .name(UPDATED_NAME)
-            .description(UPDATED_DESCRIPTION)
             .image(UPDATED_IMAGE)
             .imageContentType(UPDATED_IMAGE_CONTENT_TYPE)
-            .status(UPDATED_STATUS);
+            .status(UPDATED_STATUS)
+            .description(UPDATED_DESCRIPTION);
         // Add required entity
         Unit unit;
         if (TestUtil.findAll(em, Unit.class).isEmpty()) {
@@ -144,10 +144,10 @@ public class IngredientResourceIT {
         assertThat(ingredientList).hasSize(databaseSizeBeforeCreate + 1);
         Ingredient testIngredient = ingredientList.get(ingredientList.size() - 1);
         assertThat(testIngredient.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testIngredient.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
         assertThat(testIngredient.getImage()).isEqualTo(DEFAULT_IMAGE);
         assertThat(testIngredient.getImageContentType()).isEqualTo(DEFAULT_IMAGE_CONTENT_TYPE);
         assertThat(testIngredient.getStatus()).isEqualTo(DEFAULT_STATUS);
+        assertThat(testIngredient.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
     }
 
     @Test
@@ -193,26 +193,6 @@ public class IngredientResourceIT {
 
     @Test
     @Transactional
-    public void checkDescriptionIsRequired() throws Exception {
-        int databaseSizeBeforeTest = ingredientRepository.findAll().size();
-        // set the field null
-        ingredient.setDescription(null);
-
-        // Create the Ingredient, which fails.
-        IngredientDTO ingredientDTO = ingredientMapper.toDto(ingredient);
-
-
-        restIngredientMockMvc.perform(post("/api/ingredients").with(csrf())
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(ingredientDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Ingredient> ingredientList = ingredientRepository.findAll();
-        assertThat(ingredientList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void getAllIngredients() throws Exception {
         // Initialize the database
         ingredientRepository.saveAndFlush(ingredient);
@@ -223,10 +203,10 @@ public class IngredientResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(ingredient.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
-            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].imageContentType").value(hasItem(DEFAULT_IMAGE_CONTENT_TYPE)))
             .andExpect(jsonPath("$.[*].image").value(hasItem(Base64Utils.encodeToString(DEFAULT_IMAGE))))
-            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)));
     }
     
     @Test
@@ -241,10 +221,10 @@ public class IngredientResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(ingredient.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
-            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
             .andExpect(jsonPath("$.imageContentType").value(DEFAULT_IMAGE_CONTENT_TYPE))
             .andExpect(jsonPath("$.image").value(Base64Utils.encodeToString(DEFAULT_IMAGE)))
-            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()));
+            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
+            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION));
     }
 
 
@@ -347,6 +327,58 @@ public class IngredientResourceIT {
 
     @Test
     @Transactional
+    public void getAllIngredientsByStatusIsEqualToSomething() throws Exception {
+        // Initialize the database
+        ingredientRepository.saveAndFlush(ingredient);
+
+        // Get all the ingredientList where status equals to DEFAULT_STATUS
+        defaultIngredientShouldBeFound("status.equals=" + DEFAULT_STATUS);
+
+        // Get all the ingredientList where status equals to UPDATED_STATUS
+        defaultIngredientShouldNotBeFound("status.equals=" + UPDATED_STATUS);
+    }
+
+    @Test
+    @Transactional
+    public void getAllIngredientsByStatusIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        ingredientRepository.saveAndFlush(ingredient);
+
+        // Get all the ingredientList where status not equals to DEFAULT_STATUS
+        defaultIngredientShouldNotBeFound("status.notEquals=" + DEFAULT_STATUS);
+
+        // Get all the ingredientList where status not equals to UPDATED_STATUS
+        defaultIngredientShouldBeFound("status.notEquals=" + UPDATED_STATUS);
+    }
+
+    @Test
+    @Transactional
+    public void getAllIngredientsByStatusIsInShouldWork() throws Exception {
+        // Initialize the database
+        ingredientRepository.saveAndFlush(ingredient);
+
+        // Get all the ingredientList where status in DEFAULT_STATUS or UPDATED_STATUS
+        defaultIngredientShouldBeFound("status.in=" + DEFAULT_STATUS + "," + UPDATED_STATUS);
+
+        // Get all the ingredientList where status equals to UPDATED_STATUS
+        defaultIngredientShouldNotBeFound("status.in=" + UPDATED_STATUS);
+    }
+
+    @Test
+    @Transactional
+    public void getAllIngredientsByStatusIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        ingredientRepository.saveAndFlush(ingredient);
+
+        // Get all the ingredientList where status is not null
+        defaultIngredientShouldBeFound("status.specified=true");
+
+        // Get all the ingredientList where status is null
+        defaultIngredientShouldNotBeFound("status.specified=false");
+    }
+
+    @Test
+    @Transactional
     public void getAllIngredientsByDescriptionIsEqualToSomething() throws Exception {
         // Initialize the database
         ingredientRepository.saveAndFlush(ingredient);
@@ -425,58 +457,6 @@ public class IngredientResourceIT {
 
     @Test
     @Transactional
-    public void getAllIngredientsByStatusIsEqualToSomething() throws Exception {
-        // Initialize the database
-        ingredientRepository.saveAndFlush(ingredient);
-
-        // Get all the ingredientList where status equals to DEFAULT_STATUS
-        defaultIngredientShouldBeFound("status.equals=" + DEFAULT_STATUS);
-
-        // Get all the ingredientList where status equals to UPDATED_STATUS
-        defaultIngredientShouldNotBeFound("status.equals=" + UPDATED_STATUS);
-    }
-
-    @Test
-    @Transactional
-    public void getAllIngredientsByStatusIsNotEqualToSomething() throws Exception {
-        // Initialize the database
-        ingredientRepository.saveAndFlush(ingredient);
-
-        // Get all the ingredientList where status not equals to DEFAULT_STATUS
-        defaultIngredientShouldNotBeFound("status.notEquals=" + DEFAULT_STATUS);
-
-        // Get all the ingredientList where status not equals to UPDATED_STATUS
-        defaultIngredientShouldBeFound("status.notEquals=" + UPDATED_STATUS);
-    }
-
-    @Test
-    @Transactional
-    public void getAllIngredientsByStatusIsInShouldWork() throws Exception {
-        // Initialize the database
-        ingredientRepository.saveAndFlush(ingredient);
-
-        // Get all the ingredientList where status in DEFAULT_STATUS or UPDATED_STATUS
-        defaultIngredientShouldBeFound("status.in=" + DEFAULT_STATUS + "," + UPDATED_STATUS);
-
-        // Get all the ingredientList where status equals to UPDATED_STATUS
-        defaultIngredientShouldNotBeFound("status.in=" + UPDATED_STATUS);
-    }
-
-    @Test
-    @Transactional
-    public void getAllIngredientsByStatusIsNullOrNotNull() throws Exception {
-        // Initialize the database
-        ingredientRepository.saveAndFlush(ingredient);
-
-        // Get all the ingredientList where status is not null
-        defaultIngredientShouldBeFound("status.specified=true");
-
-        // Get all the ingredientList where status is null
-        defaultIngredientShouldNotBeFound("status.specified=false");
-    }
-
-    @Test
-    @Transactional
     public void getAllIngredientsByUnitIsEqualToSomething() throws Exception {
         // Get already existing entity
         Unit unit = ingredient.getUnit();
@@ -499,10 +479,10 @@ public class IngredientResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(ingredient.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
-            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].imageContentType").value(hasItem(DEFAULT_IMAGE_CONTENT_TYPE)))
             .andExpect(jsonPath("$.[*].image").value(hasItem(Base64Utils.encodeToString(DEFAULT_IMAGE))))
-            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)));
 
         // Check, that the count call also returns 1
         restIngredientMockMvc.perform(get("/api/ingredients/count?sort=id,desc&" + filter))
@@ -550,10 +530,10 @@ public class IngredientResourceIT {
         em.detach(updatedIngredient);
         updatedIngredient
             .name(UPDATED_NAME)
-            .description(UPDATED_DESCRIPTION)
             .image(UPDATED_IMAGE)
             .imageContentType(UPDATED_IMAGE_CONTENT_TYPE)
-            .status(UPDATED_STATUS);
+            .status(UPDATED_STATUS)
+            .description(UPDATED_DESCRIPTION);
         IngredientDTO ingredientDTO = ingredientMapper.toDto(updatedIngredient);
 
         restIngredientMockMvc.perform(put("/api/ingredients").with(csrf())
@@ -566,10 +546,10 @@ public class IngredientResourceIT {
         assertThat(ingredientList).hasSize(databaseSizeBeforeUpdate);
         Ingredient testIngredient = ingredientList.get(ingredientList.size() - 1);
         assertThat(testIngredient.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testIngredient.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
         assertThat(testIngredient.getImage()).isEqualTo(UPDATED_IMAGE);
         assertThat(testIngredient.getImageContentType()).isEqualTo(UPDATED_IMAGE_CONTENT_TYPE);
         assertThat(testIngredient.getStatus()).isEqualTo(UPDATED_STATUS);
+        assertThat(testIngredient.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
     }
 
     @Test

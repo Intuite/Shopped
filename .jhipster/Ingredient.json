@@ -7,11 +7,6 @@
       "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "description",
-      "fieldType": "String",
-      "fieldValidateRules": ["required"]
-    },
-    {
       "fieldName": "image",
       "fieldType": "byte[]",
       "fieldTypeBlobContent": "image"
@@ -20,6 +15,13 @@
       "fieldName": "status",
       "fieldType": "Status",
       "fieldValues": "ACTIVE (active),INACTIVE (inactive),BLOCKED (blocked),PENDING (pending)"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String",
+      "fieldValidateRules": ["minlength", "maxlength"],
+      "fieldValidateRulesMinlength": "5",
+      "fieldValidateRulesMaxlength": "50"
     }
   ],
   "relationships": [
