@@ -41,7 +41,7 @@ entity UserProfile {
   * @author Isaac Miranda
 **/
 enum Status {
-    ACTIVE(Active), 
+    ACTIVE(Active),
     INACTIVE(Inactive),
     BLOCKED(Blocked),
     PENDING(Pending)
@@ -109,7 +109,7 @@ entity Notification {
 /**
   * Intermediate table for
   * a user that wants to
-  * give an a ward to a 
+  * give an a ward to a
   * post.
   * @author Isaac Miranda
 **/
@@ -217,7 +217,7 @@ entity Recipe {
 /**
   * Intermediate entity
   * for recipes and the
-  * users that have 
+  * users that have
   * access.
   * @author Isaac Miranda
 **/
@@ -255,7 +255,7 @@ entity CollectionHasRecipe {
 **/
 entity Ingredient {
 	name String required,
-    description String required,
+    description String minlength(5) maxlength(50),
     units String required,
     image ImageBlob,
     status Status
@@ -274,7 +274,7 @@ entity RecipeHasIngredient {
 
 /**
   * Intermediate entity
-  * for cart and 
+  * for cart and
   * ingredients.
   * @author Isaac Miranda
 **/
@@ -387,17 +387,27 @@ entity Catalogue {
     value String required
 }
 
+/**
+  * Units for
+  * all ingredients.
+  * @author Sebastian Soto
+**/
+entity Unit {
+	name String required,
+    abbrev String required
+}
+
 //OO1
 relationship OneToOne {
-    
+
     /** **/
-    UserProfile{user(login)} to User 
+    UserProfile{user(login)} to User
     //with jpaDerivedIdentifier
     ,
-    
+
     /**  **/
     Cookies{user(login) required} to User,
-    
+
     /**  **/
     Post{recipe(name) required} to Recipe{post},
 }
@@ -408,87 +418,90 @@ relationship ManyToOne {
 	// Business domain logic
 
     /**  **/
+    Ingredient{unit(abbrev) required} to Unit
+
+    /**  **/
     Follower{userFollowed(login) required} to User,
-    
+
     /**  **/
     Notification{type(name) required} to NotificationType,
-    
+
     /**  **/
     Log{type(name) required} to LogType,
-    
+
     /**  **/
-    Comment{post(id) required} to Post, 
-    
+    Comment{post(id) required} to Post,
+
     /**  **/
     ReportComment{type(name) required} to ReportType,
-    
+
     /**  **/
     ReportComment{comment(content) required} to Comment,
-    
+
     /** **/
 	Bite{post required} to Post,
-    
+
     /** **/
     IngredientTag{type(name) required} to TagType,
-    
+
     /** **/
-    RecipeTag{type(name) required} to TagType, 
-    
+    RecipeTag{type(name) required} to TagType,
+
     /**  **/
     ReportPost{type(name) required} to ReportType,
-    
+
     /**  **/
     ReportPost{post(caption) required} to Post,
-    
+
     //MANY TO MANY
     /**  **/
     Commendation{post required} to Post,
-    
+
     /**  **/
     Commendation{award(name) required} to Award,
-    
+
     /**  **/
     CartHasRecipe{recipe(name) required} to Recipe,
-    
+
     /**  **/
     CartHasRecipe{cart required} to Cart,
-    
+
     /**  **/
     RecipeShared{recipe(name) required} to Recipe,
-    
+
     /**  **/
     RecipeShared{user(login) required} to User,
-    
+
      /** **/
-    CollectionHasRecipe{collection(name) required} to Collection, 
-    
+    CollectionHasRecipe{collection(name) required} to Collection,
+
     /** **/
     CollectionHasRecipe{recipe(name) required} to Recipe,
-    
+
     /**  **/
     CartHasIngredient{cart required} to Cart,
-    
+
     /**  **/
     CartHasIngredient{ingredient(name) required} to Ingredient,
-    
+
      /**  **/
     RecipeHasIngredient{ingredient(name) required} to Ingredient,
-    
+
     /**  **/
     RecipeHasIngredient{recipe(name) required} to Recipe,
-    
+
     /**  **/
     RecipeHasRecipeTag{recipe(name) required} to Recipe,
-    
+
     /**  **/
     RecipeHasRecipeTag{recipeTag(name) required} to RecipeTag,
-    
+
     /**  **/
     IngredientHasIngredientTag{ingredient(name) required} to Ingredient,
-    
+
     /**  **/
     IngredientHasIngredientTag{ingredientTag(name) required} to IngredientTag,
-    
+
     ///** **/
     //UserProfile{country(value)} to Catalogue,
 }
@@ -496,43 +509,43 @@ relationship ManyToOne {
 //MO2
 relationship ManyToOne {
  	// To User
-        
+
     /**  **/
     Transaction{user(login) required} to User,
-        
+
     /**  **/
     Commendation{user(login) required} to User,
-    
+
     /**  **/
     Notification{user(login) required} to User,
-    
+
     /**  **/
     Log{user(login) required} to User,
-    
+
     /**  **/
     Follower{user(login) required} to User,
-    
+
     /**  **/
     Bite{user(login) required} to User,
-    
+
   	/**  **/
     Cart{user(login) required} to User,
-    
+
     /** **/
     ReportComment{user(login) required} to User,
-    
+
     /** **/
     ReportPost{user(login) required} to User,
-    
+
     /** **/
     Comment{user(login) required} to User,
-    
+
     /** **/
     Recipe{user(login) required} to User,
-    
+
     /**  **/
     Collection{user(login) required} to User,
-    
+
     /**  **/
     Post{user(login) required} to User,
 }

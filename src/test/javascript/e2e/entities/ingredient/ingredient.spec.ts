@@ -1,7 +1,11 @@
-import { browser, ExpectedConditions as ec, promise } from 'protractor';
+import { browser, ExpectedConditions as ec /* , promise */ } from 'protractor';
 import { NavBarPage, SignInPage } from '../../page-objects/jhi-page-objects';
 
-import { IngredientComponentsPage, IngredientDeleteDialog, IngredientUpdatePage } from './ingredient.page-object';
+import {
+  IngredientComponentsPage,
+  /* IngredientDeleteDialog, */
+  IngredientUpdatePage,
+} from './ingredient.page-object';
 import * as path from 'path';
 
 const expect = chai.expect;
@@ -11,7 +15,7 @@ describe('Ingredient e2e test', () => {
   let signInPage: SignInPage;
   let ingredientComponentsPage: IngredientComponentsPage;
   let ingredientUpdatePage: IngredientUpdatePage;
-  let ingredientDeleteDialog: IngredientDeleteDialog;
+  /* let ingredientDeleteDialog: IngredientDeleteDialog; */
   const fileNameToUpload = 'logo-jhipster.png';
   const fileToUpload = '../../../../../../src/main/webapp/content/images/' + fileNameToUpload;
   const absolutePath = path.resolve(__dirname, fileToUpload);
@@ -39,43 +43,40 @@ describe('Ingredient e2e test', () => {
     await ingredientUpdatePage.cancel();
   });
 
-  it('should create and save Ingredients', async () => {
-    const nbButtonsBeforeCreate = await ingredientComponentsPage.countDeleteButtons();
+  /* it('should create and save Ingredients', async () => {
+        const nbButtonsBeforeCreate = await ingredientComponentsPage.countDeleteButtons();
 
-    await ingredientComponentsPage.clickOnCreateButton();
+        await ingredientComponentsPage.clickOnCreateButton();
 
-    await promise.all([
-      ingredientUpdatePage.setNameInput('name'),
-      ingredientUpdatePage.setDescriptionInput('description'),
-      ingredientUpdatePage.setUnitsInput('units'),
-      ingredientUpdatePage.setImageInput(absolutePath),
-      ingredientUpdatePage.statusSelectLastOption(),
-    ]);
+        await promise.all([
+            ingredientUpdatePage.setNameInput('name'),
+            ingredientUpdatePage.setImageInput(absolutePath),
+            ingredientUpdatePage.statusSelectLastOption(),
+            ingredientUpdatePage.setDescriptionInput('description'),
+            ingredientUpdatePage.unitSelectLastOption(),
+        ]);
 
-    expect(await ingredientUpdatePage.getNameInput()).to.eq('name', 'Expected Name value to be equals to name');
-    expect(await ingredientUpdatePage.getDescriptionInput()).to.eq('description', 'Expected Description value to be equals to description');
-    expect(await ingredientUpdatePage.getUnitsInput()).to.eq('units', 'Expected Units value to be equals to units');
-    expect(await ingredientUpdatePage.getImageInput()).to.endsWith(
-      fileNameToUpload,
-      'Expected Image value to be end with ' + fileNameToUpload
-    );
+        expect(await ingredientUpdatePage.getNameInput()).to.eq('name', 'Expected Name value to be equals to name');
+        expect(await ingredientUpdatePage.getImageInput()).to.endsWith(fileNameToUpload, 'Expected Image value to be end with ' + fileNameToUpload);
+        expect(await ingredientUpdatePage.getDescriptionInput()).to.eq('description', 'Expected Description value to be equals to description');
 
-    await ingredientUpdatePage.save();
-    expect(await ingredientUpdatePage.getSaveButton().isPresent(), 'Expected save button disappear').to.be.false;
+        await ingredientUpdatePage.save();
+        expect(await ingredientUpdatePage.getSaveButton().isPresent(), 'Expected save button disappear').to.be.false;
 
-    expect(await ingredientComponentsPage.countDeleteButtons()).to.eq(nbButtonsBeforeCreate + 1, 'Expected one more entry in the table');
-  });
+        expect(await ingredientComponentsPage.countDeleteButtons()).to.eq(nbButtonsBeforeCreate + 1, 'Expected one more entry in the table');
+    }); */
 
-  it('should delete last Ingredient', async () => {
-    const nbButtonsBeforeDelete = await ingredientComponentsPage.countDeleteButtons();
-    await ingredientComponentsPage.clickOnLastDeleteButton();
+  /* it('should delete last Ingredient', async () => {
+        const nbButtonsBeforeDelete = await ingredientComponentsPage.countDeleteButtons();
+        await ingredientComponentsPage.clickOnLastDeleteButton();
 
-    ingredientDeleteDialog = new IngredientDeleteDialog();
-    expect(await ingredientDeleteDialog.getDialogTitle()).to.eq('shoppedApp.ingredient.delete.question');
-    await ingredientDeleteDialog.clickOnConfirmButton();
+        ingredientDeleteDialog = new IngredientDeleteDialog();
+        expect(await ingredientDeleteDialog.getDialogTitle())
+            .to.eq('shoppedApp.ingredient.delete.question');
+        await ingredientDeleteDialog.clickOnConfirmButton();
 
-    expect(await ingredientComponentsPage.countDeleteButtons()).to.eq(nbButtonsBeforeDelete - 1);
-  });
+        expect(await ingredientComponentsPage.countDeleteButtons()).to.eq(nbButtonsBeforeDelete - 1);
+    }); */
 
   after(async () => {
     await navBarPage.autoSignOut();

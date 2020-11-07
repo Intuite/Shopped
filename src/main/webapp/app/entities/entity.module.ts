@@ -135,6 +135,10 @@ import { RouterModule } from '@angular/router';
         path: 'catalogue',
         loadChildren: () => import('./catalogue/catalogue.module').then(m => m.ShoppedCatalogueModule),
       },
+      {
+        path: 'unit',
+        loadChildren: () => import('./unit/unit.module').then(m => m.ShoppedUnitModule),
+      },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
   ],
