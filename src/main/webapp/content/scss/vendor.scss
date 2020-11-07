@@ -27,20 +27,20 @@ $md-shoppedprimary: (
   A400: #ffd8be,
   A700: #ffc9a4,
   contrast: (
-    50: #000000,
-    100: #000000,
-    200: #000000,
-    300: #000000,
-    400: #000000,
-    500: #000000,
-    600: #000000,
-    700: #000000,
-    800: #000000,
-    900: #000000,
-    A100: #000000,
-    A200: #000000,
-    A400: #000000,
-    A700: #000000,
+    50: #ffffff,
+    100: #ffffff,
+    200: #ffffff,
+    300: #ffffff,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #ffffff,
+    A200: #ffffff,
+    A400: #ffffff,
+    A700: #ffffff,
   ),
 );
 
@@ -110,7 +110,7 @@ $md-shoppedsuccess: (
   ),
 );
 
-$md-shoppedaccent: (
+$md-shoppedsecondary: (
   50: #f1ece8,
   100: #dbd1c5,
   200: #c3b29f,
@@ -176,13 +176,48 @@ $md-shoppeddanger: (
   ),
 );
 
+/* For use in src/lib/core/theming/_palette.scss */
+$md-shoppedaccent: (
+  50: #eaedfc,
+  100: #ccd3f7,
+  200: #aab6f2,
+  300: #8799ed,
+  400: #6e83e9,
+  500: #546de5,
+  600: #4d65e2,
+  700: #435ade,
+  800: #3a50da,
+  900: #293ed3,
+  A100: #ffffff,
+  A200: #dfe2ff,
+  A400: #acb5ff,
+  A700: #929eff,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
+);
+
 $shopped-app-primary: mat-palette($md-shoppedprimary);
-$shopped-app-accent: mat-palette($md-shoppedaccent, A200, A100, A400);
+$shopped-app-accent: mat-palette($md-shoppedaccent);
 $shopped-app-warn: mat-palette($md-shoppedwarn);
 
 //Additional
 $shopped-app-danger: mat-palette($md-shoppeddanger);
 $shopped-app-success: mat-palette($md-shoppedsuccess);
+$shopped-app-secondary: mat-palette($md-shoppedsecondary);
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as `color` or `typography`.
 @function shopped-light-theme(
@@ -190,7 +225,8 @@ $shopped-app-success: mat-palette($md-shoppedsuccess);
   $accent,
   $warn: mat-palette($mat-yellow),
   $success: mat-palette($mat-green),
-  $danger: mat-palette($mat-red)
+  $danger: mat-palette($mat-red),
+  $secondary
 ) {
   @return map-merge(
     mat-light-theme(
@@ -200,13 +236,14 @@ $shopped-app-success: mat-palette($md-shoppedsuccess);
           accent: $shopped-app-accent,
           warn: $shopped-app-warn,
           //danger: $shopped-app-danger,
-          //success: $shopped-app-success,,,,
+          //success: $shopped-app-success,,,,,
         ),
       )
     ),
     (
       success: $success,
       danger: $danger,
+      secondary: $secondary,
     )
   );
 }
@@ -216,7 +253,7 @@ $shopped-app-theme: shopped-light-theme(
   $shopped-app-accent,
   $shopped-app-warn,
   $shopped-app-success,
-  $shopped-app-danger
+  $shopped-app-danger $shopped-app-secondary
 );
 //@import '~bootswatch/dist/materia/variables';
 // Override Bootstrap variables
@@ -269,3 +306,4 @@ $theme-colors: (
 
 @include add-color($shopped-app-theme, success);
 @include add-color($shopped-app-theme, danger);
+@include add-color($shopped-app-theme, secondary);
