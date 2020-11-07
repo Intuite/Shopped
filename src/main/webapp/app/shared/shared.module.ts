@@ -16,6 +16,9 @@ import { WrapperMaterialTableComponent } from './tables/wrapper-material-table/w
 import { FlexModule } from '@angular/flex-layout';
 import { RouterModule } from '@angular/router';
 import { DynamicTablePrototypeComponent } from './tables/dinamic-table-prototype/dynamic-table-prototype.component';
+import { DialogComponent } from './components/dialog/dialog.component';
+import { DatepickerComponent } from './components/datepicker/datepicker.component';
+import { CheckboxComponent } from './components/checkbox/checkbox.component';
 @NgModule({
   imports: [JhMaterialModule, ShoppedSharedLibsModule, FlexModule, RouterModule],
   declarations: [
@@ -31,6 +34,9 @@ import { DynamicTablePrototypeComponent } from './tables/dinamic-table-prototype
     UserTableComponent,
     WrapperMaterialTableComponent,
     DynamicTablePrototypeComponent,
+    DialogComponent,
+    DatepickerComponent,
+    CheckboxComponent,
   ],
   entryComponents: [LoginModalComponent],
   exports: [
