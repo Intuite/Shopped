@@ -236,7 +236,7 @@ $shopped-app-secondary: mat-palette($md-shoppedsecondary);
           accent: $shopped-app-accent,
           warn: $shopped-app-warn,
           //danger: $shopped-app-danger,
-          //success: $shopped-app-success,,,,,
+          //success: $shopped-app-success,,,,,,
         ),
       )
     ),
@@ -253,7 +253,8 @@ $shopped-app-theme: shopped-light-theme(
   $shopped-app-accent,
   $shopped-app-warn,
   $shopped-app-success,
-  $shopped-app-danger $shopped-app-secondary
+  $shopped-app-danger,
+  $shopped-app-secondary
 );
 //@import '~bootswatch/dist/materia/variables';
 // Override Bootstrap variables
