@@ -40,6 +40,7 @@
         "bite": "Bite",
         "message": "Message",
         "catalogue": "Catalogue",
+        "unit": "Unit",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

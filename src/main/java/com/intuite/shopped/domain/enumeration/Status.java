@@ -4,10 +4,10 @@ package com.intuite.shopped.domain.enumeration;
  * The Status enumeration.
  */
 public enum Status {
-    ACTIVE("Active"),
-    INACTIVE("Inactive"),
-    BLOCKED("Blocked"),
-    PENDING("Pending");
+    ACTIVE("active"),
+    INACTIVE("inactive"),
+    BLOCKED("blocked"),
+    PENDING("pending");
 
     private final String value;
 
