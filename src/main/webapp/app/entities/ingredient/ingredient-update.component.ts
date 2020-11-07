@@ -16,6 +16,7 @@ import { AlertError } from 'app/shared/alert/alert-error.model';
 })
 export class IngredientUpdateComponent implements OnInit {
   isSaving = false;
+  statusOptions = ['ACTIVE','INACTIVE','BLOCKED','PENDING'];
 
   editForm = this.fb.group({
     id: [],

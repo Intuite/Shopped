@@ -65,24 +65,23 @@
                            formControlName="imageContentType" />
                 </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="shoppedApp.ingredient.status" for="field_status">Status</label>
-                    <select class="form-control" name="status" formControlName="status" id="field_status">
-                        <option value="ACTIVE">{{ 'shoppedApp.Status.ACTIVE' | translate }}</option>
-                        <option value="INACTIVE">{{ 'shoppedApp.Status.INACTIVE' | translate }}</option>
-                        <option value="BLOCKED">{{ 'shoppedApp.Status.BLOCKED' | translate }}</option>
-                        <option value="PENDING">{{ 'shoppedApp.Status.PENDING' | translate }}</option>
-                    </select>
-                </div>
+                <mat-form-field appearance="fill" class="form-group w-100">
+                    <mat-label jhiTranslate="shoppedApp.ingredient.status"></mat-label>
+                    <mat-select formControlName="status" id="status" name="status">
+                        <mat-option *ngFor="let status of statusOptions" [value]="status">
+                            {{ status | capitalize }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
             </div>
 
             <div>
-                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
-                    <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                <button mat-raised-button jhiMaterialColor="danger" (click)="previousState()" id="cancel-save" type="button">
+                    <fa-icon icon="ban"></fa-icon> <span jhiTranslate="entity.action.cancel">Cancel</span>
                 </button>
-
-                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
-                    <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                <button mat-raised-button jhiMaterialColor="primary" [disabled]="editForm.invalid || isSaving" id="save-entity"
+                        type="submit">
+                    <fa-icon icon="save"></fa-icon> <span jhiTranslate="entity.action.save">Save</span>
                 </button>
             </div>
         </form>

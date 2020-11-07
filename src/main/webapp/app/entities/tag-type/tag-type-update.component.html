@@ -44,11 +44,11 @@
             </div>
 
             <div>
-                <button mat-raised-button color="accent" (click)="previousState()" id="cancel-save" type="button">
+                <button mat-raised-button jhiMaterialColor="danger" (click)="previousState()" id="cancel-save" type="button">
                     <fa-icon icon="ban"></fa-icon> <span jhiTranslate="entity.action.cancel">Cancel</span>
                 </button>
 
-                <button mat-raised-button color="primary" [disabled]="editForm.invalid || isSaving" id="save-entity"
+                <button mat-raised-button jhiMaterialColor="primary" [disabled]="editForm.invalid || isSaving" id="save-entity"
                         type="submit">
                     <fa-icon icon="save"></fa-icon> <span jhiTranslate="entity.action.save">Save</span>
                 </button>
