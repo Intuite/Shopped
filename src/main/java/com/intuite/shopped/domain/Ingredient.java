@@ -1,5 +1,6 @@
 package com.intuite.shopped.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -28,14 +29,6 @@ public class Ingredient implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @NotNull
-    @Column(name = "description", nullable = false)
-    private String description;
-
-    @NotNull
-    @Column(name = "units", nullable = false)
-    private String units;
-
     @Lob
     @Column(name = "image")
     private byte[] image;
@@ -46,6 +39,15 @@ public class Ingredient implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private Status status;
+
+    @Size(min = 5, max = 50)
+    @Column(name = "description", length = 50)
+    private String description;
+
+    @ManyToOne(optional = false)
+    @NotNull
+    @JsonIgnoreProperties(value = "ingredients", allowSetters = true)
+    private Unit unit;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -67,32 +69,6 @@ public class Ingredient implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public Ingredient description(String description) {
-        this.description = description;
-        return this;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getUnits() {
-        return units;
-    }
-
-    public Ingredient units(String units) {
-        this.units = units;
-        return this;
-    }
-
-    public void setUnits(String units) {
-        this.units = units;
     }
 
     public byte[] getImage() {
@@ -133,6 +109,32 @@ public class Ingredient implements Serializable {
     public void setStatus(Status status) {
         this.status = status;
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Ingredient description(String description) {
+        this.description = description;
+        return this;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Unit getUnit() {
+        return unit;
+    }
+
+    public Ingredient unit(Unit unit) {
+        this.unit = unit;
+        return this;
+    }
+
+    public void setUnit(Unit unit) {
+        this.unit = unit;
+    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -157,11 +159,10 @@ public class Ingredient implements Serializable {
         return "Ingredient{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", description='" + getDescription() + "'" +
-            ", units='" + getUnits() + "'" +
             ", image='" + getImage() + "'" +
             ", imageContentType='" + getImageContentType() + "'" +
             ", status='" + getStatus() + "'" +
+            ", description='" + getDescription() + "'" +
             "}";
     }
 }

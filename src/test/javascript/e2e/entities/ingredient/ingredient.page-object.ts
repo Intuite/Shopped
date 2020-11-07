@@ -30,10 +30,11 @@ export class IngredientUpdatePage {
   cancelButton = element(by.id('cancel-save'));
 
   nameInput = element(by.id('field_name'));
-  descriptionInput = element(by.id('field_description'));
-  unitsInput = element(by.id('field_units'));
   imageInput = element(by.id('file_image'));
   statusSelect = element(by.id('field_status'));
+  descriptionInput = element(by.id('field_description'));
+
+  unitSelect = element(by.id('field_unit'));
 
   async getPageTitle(): Promise<string> {
     return this.pageTitle.getAttribute('jhiTranslate');
@@ -45,22 +46,6 @@ export class IngredientUpdatePage {
 
   async getNameInput(): Promise<string> {
     return await this.nameInput.getAttribute('value');
-  }
-
-  async setDescriptionInput(description: string): Promise<void> {
-    await this.descriptionInput.sendKeys(description);
-  }
-
-  async getDescriptionInput(): Promise<string> {
-    return await this.descriptionInput.getAttribute('value');
-  }
-
-  async setUnitsInput(units: string): Promise<void> {
-    await this.unitsInput.sendKeys(units);
-  }
-
-  async getUnitsInput(): Promise<string> {
-    return await this.unitsInput.getAttribute('value');
   }
 
   async setImageInput(image: string): Promise<void> {
@@ -81,6 +66,30 @@ export class IngredientUpdatePage {
 
   async statusSelectLastOption(): Promise<void> {
     await this.statusSelect.all(by.tagName('option')).last().click();
+  }
+
+  async setDescriptionInput(description: string): Promise<void> {
+    await this.descriptionInput.sendKeys(description);
+  }
+
+  async getDescriptionInput(): Promise<string> {
+    return await this.descriptionInput.getAttribute('value');
+  }
+
+  async unitSelectLastOption(): Promise<void> {
+    await this.unitSelect.all(by.tagName('option')).last().click();
+  }
+
+  async unitSelectOption(option: string): Promise<void> {
+    await this.unitSelect.sendKeys(option);
+  }
+
+  getUnitSelect(): ElementFinder {
+    return this.unitSelect;
+  }
+
+  async getUnitSelectedOption(): Promise<string> {
+    return await this.unitSelect.element(by.css('option:checked')).getText();
   }
 
   async save(): Promise<void> {

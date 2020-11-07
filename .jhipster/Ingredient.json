@@ -7,16 +7,6 @@
       "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "description",
-      "fieldType": "String",
-      "fieldValidateRules": ["required"]
-    },
-    {
-      "fieldName": "units",
-      "fieldType": "String",
-      "fieldValidateRules": ["required"]
-    },
-    {
       "fieldName": "image",
       "fieldType": "byte[]",
       "fieldTypeBlobContent": "image"
@@ -25,9 +15,25 @@
       "fieldName": "status",
       "fieldType": "Status",
       "fieldValues": "ACTIVE (active),INACTIVE (inactive),BLOCKED (blocked),PENDING (pending)"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String",
+      "fieldValidateRules": ["minlength", "maxlength"],
+      "fieldValidateRulesMinlength": "5",
+      "fieldValidateRulesMaxlength": "50"
     }
   ],
-  "relationships": [],
+  "relationships": [
+    {
+      "relationshipName": "unit",
+      "otherEntityName": "unit",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"],
+      "otherEntityField": "abbrev",
+      "otherEntityRelationshipName": "ingredient"
+    }
+  ],
   "changelogDate": "20201104175738",
   "javadoc": "Ingredients for\\nall recipes.\\n@author Isaac Miranda",
   "entityTableName": "ingredient",
@@ -39,5 +45,7 @@
   "readOnly": false,
   "embedded": false,
   "clientRootFolder": "",
-  "applications": ["Shopped"]
+  "applications": ["Shopped"],
+  "searchEngine": false,
+  "databaseType": "sql"
 }

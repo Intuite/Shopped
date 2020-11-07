@@ -12,9 +12,9 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="shoppedApp.catalogue.idCatalogue" for="field_idCatalogue">Id Catalogue</label>
+                    <label class="form-control-label" for="field_idCatalogue">Name</label>
                     <input type="text" class="form-control" name="idCatalogue" id="field_idCatalogue"
-                           formControlName="idCatalogue"/>
+                           formControlName="idCatalogue" readonly/>
                     <div *ngIf="editForm.get('idCatalogue')!.invalid && (editForm.get('idCatalogue')!.dirty || editForm.get('idCatalogue')!.touched)">
                         <small class="form-text text-danger"
                                *ngIf="editForm.get('idCatalogue')?.errors?.required" jhiTranslate="entity.validation.required">

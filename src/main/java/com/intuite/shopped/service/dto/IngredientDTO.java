@@ -17,18 +17,19 @@ public class IngredientDTO implements Serializable {
     @NotNull
     private String name;
 
-    @NotNull
-    private String description;
-
-    @NotNull
-    private String units;
-
     @Lob
     private byte[] image;
 
     private String imageContentType;
     private Status status;
 
+    @Size(min = 5, max = 50)
+    private String description;
+
+
+    private Long unitId;
+
+    private String unitAbbrev;
     
     public Long getId() {
         return id;
@@ -44,22 +45,6 @@ public class IngredientDTO implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getUnits() {
-        return units;
-    }
-
-    public void setUnits(String units) {
-        this.units = units;
     }
 
     public byte[] getImage() {
@@ -86,6 +71,30 @@ public class IngredientDTO implements Serializable {
         this.status = status;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Long getUnitId() {
+        return unitId;
+    }
+
+    public void setUnitId(Long unitId) {
+        this.unitId = unitId;
+    }
+
+    public String getUnitAbbrev() {
+        return unitAbbrev;
+    }
+
+    public void setUnitAbbrev(String unitAbbrev) {
+        this.unitAbbrev = unitAbbrev;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -109,10 +118,11 @@ public class IngredientDTO implements Serializable {
         return "IngredientDTO{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", description='" + getDescription() + "'" +
-            ", units='" + getUnits() + "'" +
             ", image='" + getImage() + "'" +
             ", status='" + getStatus() + "'" +
+            ", description='" + getDescription() + "'" +
+            ", unitId=" + getUnitId() +
+            ", unitAbbrev='" + getUnitAbbrev() + "'" +
             "}";
     }
 }

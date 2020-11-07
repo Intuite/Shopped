@@ -17,10 +17,10 @@
         "title": "Ingredient"
       },
       "name": "Name",
-      "description": "Description",
-      "units": "Units",
       "image": "Image",
-      "status": "Status"
+      "status": "Status",
+      "description": "Description",
+      "unit": "Unit"
     }
   }
 }
