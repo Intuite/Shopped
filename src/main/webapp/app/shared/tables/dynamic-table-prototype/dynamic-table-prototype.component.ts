@@ -1,5 +1,4 @@
 import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
-import { UserManagementComponent } from 'app/admin/user-management/user-management.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
