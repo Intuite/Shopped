@@ -19,6 +19,8 @@ import { DynamicTablePrototypeComponent } from './tables/dynamic-table-prototype
 import { UnitTableComponent } from './tables/unit-table/unit-table.component';
 import { TagTypeTableComponent } from './tables/tag-type-table/tag-type-table.component';
 import { IngredientTableComponent } from './tables/ingredient-table/ingredient-table.component';
+import { CatalogueTableComponent } from './tables/catalogue-table/catalogue-table.component';
+import { AwardTableComponent } from './tables/award-table/award-table.component';
 @NgModule({
   imports: [JhMaterialModule, ShoppedSharedLibsModule, FlexModule, RouterModule],
   declarations: [
@@ -36,7 +38,8 @@ import { IngredientTableComponent } from './tables/ingredient-table/ingredient-t
     DynamicTablePrototypeComponent,
     UnitTableComponent,
     TagTypeTableComponent,
-    IngredientTableComponent,
+    CatalogueTableComponent,
+    AwardTableComponent,
   ],
   entryComponents: [LoginModalComponent],
   exports: [
@@ -55,7 +58,8 @@ import { IngredientTableComponent } from './tables/ingredient-table/ingredient-t
     DynamicTablePrototypeComponent,
     UnitTableComponent,
     TagTypeTableComponent,
-    IngredientTableComponent,
+    CatalogueTableComponent,
+    AwardTableComponent,
   ],
 })
 export class ShoppedSharedModule {}
