@@ -16,6 +16,7 @@ import { AlertError } from 'app/shared/alert/alert-error.model';
 })
 export class AwardUpdateComponent implements OnInit {
   isSaving = false;
+  statusOptions = ['ACTIVE', 'INACTIVE'];
 
   editForm = this.fb.group({
     id: [],

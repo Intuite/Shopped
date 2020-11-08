@@ -14,52 +14,39 @@
         </td>
     </ng-container>
 
-    <ng-container matColumnDef="name">
+    <ng-container matColumnDef="idCatalogue">
         <th *matHeaderCellDef mat-header-cell mat-sort-header>Name</th>
         <td *matCellDef="let element" mat-cell>
             <span>
-                {{ element.name }}
+                {{ element.idCatalogue }}
             </span>
         </td>
     </ng-container>
 
-    <ng-container matColumnDef="description">
-        <th *matHeaderCellDef mat-header-cell mat-sort-header>Description</th>
+    <ng-container matColumnDef="value">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>Value</th>
         <td *matCellDef="let element" mat-cell>
             <span>
-                {{ element.description }}
-            </span>
-        </td>
-    </ng-container>
-
-    <ng-container matColumnDef="status">
-        <th *matHeaderCellDef mat-header-cell mat-sort-header>Status</th>
-        <td *matCellDef="let element" mat-cell>
-            <span>
-                {{ element.status }}
+                {{ element.value }}
             </span>
         </td>
     </ng-container>
 
     <ng-container class="text-right" matColumnDef="options">
         <th *matHeaderCellDef mat-header-cell mat-sort-header> Options</th>
-        <td *matCellDef="let unit" mat-cell>
+        <td *matCellDef="let catalogue" mat-cell>
             <div class="btn-group">
-                <button [routerLink]="['/unit', unit.id, 'view']"
-                        class="btn btn-info btn-sm"
-                        type="submit">
-                    <fa-icon icon="eye"></fa-icon>
-                </button>
-
-                <button [routerLink]="['/unit', unit.id, 'edit']"
-                        class="btn btn-warning btn-sm"
-                        type="submit">
+                <button type="submit"
+                        [routerLink]="['/catalogue', catalogue.id, 'edit']"
+                        class="btn btn-primary btn-sm">
                     <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                 </button>
 
-                <button (click)="managementComponent.delete(unit)" class="btn btn-danger btn-sm"
-                        type="submit">
+                <button type="submit" (click)="managementComponent.delete(catalogue)"
+                        class="btn btn-danger btn-sm ml-2">
                     <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
                 </button>
             </div>
         </td>

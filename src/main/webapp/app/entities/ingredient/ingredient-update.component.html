@@ -12,33 +12,6 @@
                     <input class="form-control" formControlName="id" id="id" name="id" readonly type="text"/>
                 </div>
 
-                <mat-form-field appearance="fill" class="form-group w-100">
-                    <mat-label jhiTranslate="shoppedApp.ingredient.name">Name</mat-label>
-                    <input formControlName="name" id="field_name" matInput name="name"
-                           type="text"/>
-                    <mat-error
-                        *ngIf="(editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)) && editForm.get('name')?.errors?.required"
-                        jhiTranslate="entity.validation.required">
-                        This field is required.
-                    </mat-error>
-                </mat-form-field>
-
-                <mat-form-field appearance="fill" class="form-group w-100">
-                    <mat-label jhiTranslate="shoppedApp.ingredient.description">Description</mat-label>
-                    <input formControlName="description" id="field_description" matInput name="description"
-                           type="text"/>
-                    <mat-error
-                        *ngIf="(editForm.get('description')!.invalid && (editForm.get('description')!.dirty || editForm.get('description')!.touched)) && editForm.get('description')?.errors?.minlength"
-                        [translateValues]="{ min: 5 }" jhiTranslate="entity.validation.minlength">
-                        This field is required to be at least 5 characters.
-                    </mat-error>
-                    <mat-error *ngIf="(editForm.get('description')!.invalid && (editForm.get('description')!.dirty || editForm.get('description')!.touched)) && editForm.get('description')?.errors?.maxlength"
-                               [translateValues]="{ max: 50 }"
-                               jhiTranslate="entity.validation.maxlength">
-                        This field cannot be longer than 50 characters.
-                    </mat-error>
-                </mat-form-field>
-
                 <div class="form-group">
                     <label class="form-control-label" for="field_image"
                            jhiTranslate="shoppedApp.ingredient.image">Image</label>
@@ -65,6 +38,33 @@
                            name="imageContentType"
                            type="hidden"/>
                 </div>
+
+                <mat-form-field appearance="fill" class="form-group w-100">
+                    <mat-label jhiTranslate="shoppedApp.ingredient.name">Name</mat-label>
+                    <input formControlName="name" id="field_name" matInput name="name"
+                           type="text"/>
+                    <mat-error
+                        *ngIf="(editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)) && editForm.get('name')?.errors?.required"
+                        jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="form-group w-100">
+                    <mat-label jhiTranslate="shoppedApp.ingredient.description">Description</mat-label>
+                    <input formControlName="description" id="field_description" matInput name="description"
+                           type="text"/>
+                    <mat-error
+                        *ngIf="(editForm.get('description')!.invalid && (editForm.get('description')!.dirty || editForm.get('description')!.touched)) && editForm.get('description')?.errors?.minlength"
+                        [translateValues]="{ min: 5 }" jhiTranslate="entity.validation.minlength">
+                        This field is required to be at least 5 characters.
+                    </mat-error>
+                    <mat-error *ngIf="(editForm.get('description')!.invalid && (editForm.get('description')!.dirty || editForm.get('description')!.touched)) && editForm.get('description')?.errors?.maxlength"
+                               [translateValues]="{ max: 50 }"
+                               jhiTranslate="entity.validation.maxlength">
+                        This field cannot be longer than 50 characters.
+                    </mat-error>
+                </mat-form-field>
 
                 <mat-form-field appearance="fill" class="form-group w-100">
                     <mat-label jhiTranslate="shoppedApp.ingredient.status"></mat-label>
