@@ -16,6 +16,8 @@ import { WrapperMaterialTableComponent } from './tables/wrapper-material-table/w
 import { FlexModule } from '@angular/flex-layout';
 import { RouterModule } from '@angular/router';
 import { DynamicTablePrototypeComponent } from './tables/dinamic-table-prototype/dynamic-table-prototype.component';
+import { UnitTableComponent } from './tables/unit-table/unit-table.component';
+import { TagTypeTableComponent } from './tables/tag-type-table/tag-type-table.component';
 @NgModule({
   imports: [JhMaterialModule, ShoppedSharedLibsModule, FlexModule, RouterModule],
   declarations: [
@@ -31,6 +33,8 @@ import { DynamicTablePrototypeComponent } from './tables/dinamic-table-prototype
     UserTableComponent,
     WrapperMaterialTableComponent,
     DynamicTablePrototypeComponent,
+    UnitTableComponent,
+    TagTypeTableComponent,
   ],
   entryComponents: [LoginModalComponent],
   exports: [
@@ -47,6 +51,8 @@ import { DynamicTablePrototypeComponent } from './tables/dinamic-table-prototype
     ColorDirective,
     UserTableComponent,
     DynamicTablePrototypeComponent,
+    UnitTableComponent,
+    TagTypeTableComponent,
   ],
 })
 export class ShoppedSharedModule {}
