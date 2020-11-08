@@ -59,20 +59,12 @@
                         [translateValues]="{ min: 5 }" jhiTranslate="entity.validation.minlength">
                         This field is required to be at least 5 characters.
                     </mat-error>
-                    <mat-error *ngIf="(editForm.get('description')!.invalid && (editForm.get('description')!.dirty || editForm.get('description')!.touched)) && editForm.get('description')?.errors?.maxlength"
-                               [translateValues]="{ max: 50 }"
-                               jhiTranslate="entity.validation.maxlength">
+                    <mat-error
+                        *ngIf="(editForm.get('description')!.invalid && (editForm.get('description')!.dirty || editForm.get('description')!.touched)) && editForm.get('description')?.errors?.maxlength"
+                        [translateValues]="{ max: 50 }"
+                        jhiTranslate="entity.validation.maxlength">
                         This field cannot be longer than 50 characters.
                     </mat-error>
-                </mat-form-field>
-
-                <mat-form-field appearance="fill" class="form-group w-100">
-                    <mat-label jhiTranslate="shoppedApp.ingredient.status"></mat-label>
-                    <mat-select formControlName="status" id="status" name="status">
-                        <mat-option *ngFor="let status of statusOptions" [value]="status">
-                            {{status | capitalize }}
-                        </mat-option>
-                    </mat-select>
                 </mat-form-field>
 
                 <mat-form-field appearance="fill" class="form-group w-100">
@@ -87,6 +79,16 @@
                         jhiTranslate="entity.validation.required">
                     </mat-error>
                 </mat-form-field>
+
+                <mat-form-field appearance="fill" class="form-group w-100">
+                    <mat-label jhiTranslate="shoppedApp.ingredient.status"></mat-label>
+                    <mat-select [(ngModel)]="statusOptions[0]" formControlName="status" id="status" name="status">
+                        <mat-option *ngFor="let status of statusOptions" [value]="status">
+                            {{status | capitalize }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
             </div>
 
             <div>
