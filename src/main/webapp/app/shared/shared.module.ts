@@ -24,6 +24,7 @@ import { AwardTableComponent } from './tables/award-table/award-table.component'
 import { DialogComponent } from './components/dialog/dialog.component';
 import { DatepickerComponent } from './components/datepicker/datepicker.component';
 import { CheckboxComponent } from './components/checkbox/checkbox.component';
+import { PostTableComponent } from './tables/post-table/post-table.component';
 @NgModule({
   imports: [JhMaterialModule, ShoppedSharedLibsModule, FlexModule, RouterModule],
   declarations: [
@@ -47,6 +48,7 @@ import { CheckboxComponent } from './components/checkbox/checkbox.component';
     DialogComponent,
     DatepickerComponent,
     CheckboxComponent,
+    PostTableComponent,
   ],
   entryComponents: [LoginModalComponent],
   exports: [
@@ -68,6 +70,10 @@ import { CheckboxComponent } from './components/checkbox/checkbox.component';
     CatalogueTableComponent,
     AwardTableComponent,
     IngredientTableComponent,
+    DialogComponent,
+    DatepickerComponent,
+    CheckboxComponent,
+    PostTableComponent,
   ],
 })
 export class ShoppedSharedModule {}
