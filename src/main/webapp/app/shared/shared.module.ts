@@ -40,6 +40,7 @@ import { AwardTableComponent } from './tables/award-table/award-table.component'
     TagTypeTableComponent,
     CatalogueTableComponent,
     AwardTableComponent,
+    IngredientTableComponent,
   ],
   entryComponents: [LoginModalComponent],
   exports: [
@@ -60,6 +61,7 @@ import { AwardTableComponent } from './tables/award-table/award-table.component'
     TagTypeTableComponent,
     CatalogueTableComponent,
     AwardTableComponent,
+    IngredientTableComponent,
   ],
 })
 export class ShoppedSharedModule {}
