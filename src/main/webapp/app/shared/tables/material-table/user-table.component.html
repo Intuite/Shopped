@@ -36,17 +36,18 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
         <td mat-cell *matCellDef="let element" >
             <span>
-                <button mat-raised-button class="btn btn-danger btn-sm"
+                <button mat-raised-button jhiMaterialColor="success" class="btn-sm"
                         (click)="managementComponent.setActive(element, true); reloadSource()"
                         *ngIf="!element.activated"
                         jhiTranslate="userManagement.deactivated">Deactivated
                 </button>
-               <button mat-raised-button class="btn btn-success btn-sm"
+               <button mat-raised-button jhiMaterialColor="success" class="btn-sm"
                        (click)="managementComponent.setActive(element, false); reloadSource()"
                        *ngIf="element.activated"
                        [disabled]="!managementComponent.currentAccount ||
                        managementComponent.currentAccount.login === element.login"
-                       jhiTranslate="userManagement.activated">Activated</button>
+                       jhiTranslate="userManagement.activated">Activated
+               </button>
             </span>
         </td>
     </ng-container>
