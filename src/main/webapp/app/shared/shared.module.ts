@@ -15,7 +15,7 @@ import { UserTableComponent } from './tables/material-table/user-table.component
 import { WrapperMaterialTableComponent } from './tables/wrapper-material-table/wrapper-material-table.component';
 import { FlexModule } from '@angular/flex-layout';
 import { RouterModule } from '@angular/router';
-import { DynamicTablePrototypeComponent } from './tables/dinamic-table-prototype/dynamic-table-prototype.component';
+import { DynamicTablePrototypeComponent } from './tables/dynamic-table-prototype/dynamic-table-prototype.component';
 import { UnitTableComponent } from './tables/unit-table/unit-table.component';
 import { TagTypeTableComponent } from './tables/tag-type-table/tag-type-table.component';
 import { IngredientTableComponent } from './tables/ingredient-table/ingredient-table.component';
