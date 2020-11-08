@@ -17,7 +17,7 @@
     {
       "fieldName": "status",
       "fieldType": "Status",
-      "fieldValues": "ACTIVE (active),INACTIVE (inactive),BLOCKED (blocked),PENDING (pending)"
+      "fieldValues": "ACTIVE (Active),INACTIVE (Inactive),BLOCKED (Blocked),PENDING (Pending)"
     }
   ],
   "relationships": [

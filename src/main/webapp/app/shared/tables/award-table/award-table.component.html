@@ -32,6 +32,24 @@
         </td>
     </ng-container>
 
+    <ng-container matColumnDef="cost">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>Cost</th>
+        <td *matCellDef="let element" mat-cell>
+            <span>
+                {{ element.cost }}
+            </span>
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="image">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>Image</th>
+        <td *matCellDef="let element" mat-cell>
+            <span>
+                <img [src]="'data:' + element.imageContentType + ';base64,' + element.image" style="max-height: 40px;" alt="award image"/>
+            </span>
+        </td>
+    </ng-container>
+
     <ng-container matColumnDef="status">
         <th *matHeaderCellDef mat-header-cell mat-sort-header>Status</th>
         <td *matCellDef="let element" mat-cell>
@@ -43,23 +61,26 @@
 
     <ng-container class="text-right" matColumnDef="options">
         <th *matHeaderCellDef mat-header-cell mat-sort-header> Options</th>
-        <td *matCellDef="let unit" mat-cell>
+        <td *matCellDef="let award" mat-cell>
             <div class="btn-group">
-                <button [routerLink]="['/unit', unit.id, 'view']"
+                <button [routerLink]="['/award', award.id, 'view']"
                         class="btn btn-info btn-sm"
                         type="submit">
                     <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
                 </button>
 
-                <button [routerLink]="['/unit', unit.id, 'edit']"
-                        class="btn btn-warning btn-sm"
-                        type="submit">
+                <button type="submit"
+                        [routerLink]="['/award', award.id, 'edit']"
+                        class="btn btn-primary btn-sm">
                     <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                 </button>
 
-                <button (click)="managementComponent.delete(unit)" class="btn btn-danger btn-sm"
-                        type="submit">
+                <button type="submit" (click)="managementComponent.delete(award)"
+                        class="btn btn-danger btn-sm ml-2">
                     <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
                 </button>
             </div>
         </td>

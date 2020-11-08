@@ -1,12 +1,16 @@
 <div>
     <h2 id="page-heading">
         <span jhiTranslate="shoppedApp.unit.home.title">Units</span>
-
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-unit" [routerLink]="['/unit/new']">
-            <fa-icon icon="plus"></fa-icon>
-            <span  jhiTranslate="shoppedApp.unit.home.createLabel">
-            Create a new Unit
-            </span>
+        <button
+            [matTooltipHideDelay]="0"
+            [matTooltipShowDelay]="1000"
+            [routerLink]="['/unit/new']"
+            aria-label="Create a new unit"
+            class="float-right jh-create-entity create-unit"
+            jhiMaterialColor="accent"
+            mat-flat-button
+            matTooltip="Create a new unit">
+            <mat-icon>add</mat-icon>
         </button>
     </h2>
 
@@ -14,11 +18,11 @@
 
     <jhi-alert></jhi-alert>
 
-    <div class="alert alert-warning" id="no-result" *ngIf="units?.length === 0">
+    <div *ngIf="units?.length === 0" class="alert alert-warning" id="no-result">
         <span jhiTranslate="shoppedApp.unit.home.notFound">No units found</span>
     </div>
 
-    <div class="table-responsive" id="entities" *ngIf="units && units.length > 0">
+    <div *ngIf="units && units.length > 0" class="table-responsive" id="entities">
         <jhi-unit-table [data]="units" [managementComponent]="this"></jhi-unit-table>
     </div>
 </div>

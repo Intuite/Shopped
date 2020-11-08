@@ -1,12 +1,16 @@
 <div>
     <h2 id="page-heading">
         <span jhiTranslate="shoppedApp.tagType.home.title">Tag Types</span>
-
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-tag-type" [routerLink]="['/tag-type/new']">
-            <fa-icon icon="plus"></fa-icon>
-            <span  jhiTranslate="shoppedApp.tagType.home.createLabel">
-            Create a new Tag Type
-            </span>
+        <button
+            [matTooltipHideDelay]="0"
+            [matTooltipShowDelay]="1000"
+            [routerLink]="['/tag-type/new']"
+            aria-label="Create a new tag type"
+            class="float-right jh-create-entity create-tagType"
+            jhiMaterialColor="accent"
+            mat-flat-button
+            matTooltip="Create a new tag type">
+            <mat-icon>add</mat-icon>
         </button>
     </h2>
 
@@ -20,15 +24,5 @@
 
     <div class="table-responsive" id="entities" *ngIf="tagTypes && tagTypes.length > 0">
         <jhi-tag-type-table [data]="tagTypes" [managementComponent]="this"></jhi-tag-type-table>
-    </div>
-
-    <div *ngIf="tagTypes && tagTypes.length > 0">
-        <div class="row justify-content-center">
-            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
-        </div>
-
-        <div class="row justify-content-center">
-            <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
-        </div>
     </div>
 </div>
