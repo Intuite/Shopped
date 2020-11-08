@@ -2,19 +2,21 @@ import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/cor
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
+import { Award } from 'app/shared/model/award.model';
+import { AwardComponent } from 'app/entities/award/award.component';
 
 @Component({
-  selector: 'jhi-dinamic-table-prototype',
-  templateUrl: './dynamic-table-prototype.component.html',
-  styleUrls: ['./dynamic-table-prototype.component.scss'],
+  selector: 'jhi-award-table',
+  templateUrl: './award-table.component.html',
+  styleUrls: ['./award-table.component.scss'],
 })
-export class DynamicTablePrototypeComponent implements OnInit, AfterViewInit {
-  @Input() data!: any[];
+export class AwardTableComponent implements OnInit, AfterViewInit {
+  @Input() data!: Award[];
+  @Input() managementComponent!: AwardComponent;
 
-  @Input() displayedColumns!: string[];
-  @Input() displayedHeaders!: string[];
+  displayedColumns: string[] = ['id', 'name', 'description', 'cost', 'image', 'status', 'options'];
 
-  dataSource = new MatTableDataSource<any>();
+  dataSource = new MatTableDataSource<Award>();
 
   @ViewChild('sort') sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -28,26 +30,16 @@ export class DynamicTablePrototypeComponent implements OnInit, AfterViewInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.filterPredicate = (data: any, filter) => {
       const dataStr = JSON.stringify(data).toLowerCase();
-      // return dataStr.indexOf(filter) !== -1;
       return dataStr.includes(filter);
     };
   }
 
-  isDate(value: any): boolean {
-    // return value instanceof Date;
-    return value instanceof Date;
-  }
-
-  isArray(value: any): boolean {
-    // return Array.isArray(value);
-    return value instanceof Array;
-  }
-  //
-  // instanceOfDate(member: string, object: any): object is Date {
-  //   return member in object;
-  // }
-
   public filter = (e: Event) => {
     this.dataSource.filter = (e.target as HTMLInputElement).value.trim().toLocaleLowerCase();
   };
+
+  public reloadSource(): void {
+    this.data = this.managementComponent.awards as Award[];
+    this.dataSource = new MatTableDataSource<Award>(this.data);
+  }
 }
