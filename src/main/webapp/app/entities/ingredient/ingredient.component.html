@@ -1,12 +1,16 @@
 <div>
     <h2 id="page-heading">
         <span jhiTranslate="shoppedApp.ingredient.home.title">Ingredients</span>
-
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-ingredient" [routerLink]="['/ingredient/new']">
-            <fa-icon icon="plus"></fa-icon>
-            <span  jhiTranslate="shoppedApp.ingredient.home.createLabel">
-            Create a new Ingredient
-            </span>
+        <button
+                [routerLink]="['/ingredient/new']"
+                aria-label="Create a new ingredient"
+                class="float-right jh-create-entity create-ingredient"
+                jhiMaterialColor="accent"
+                mat-flat-button
+                [matTooltipHideDelay]="0"
+                [matTooltipShowDelay]="1000"
+                matTooltip="Create a new ingredient">
+            <mat-icon>add</mat-icon>
         </button>
     </h2>
 
@@ -14,75 +18,91 @@
 
     <jhi-alert></jhi-alert>
 
-    <div class="alert alert-warning" id="no-result" *ngIf="ingredients?.length === 0">
+    <div *ngIf="ingredients?.length === 0" class="alert alert-warning" id="no-result">
         <span jhiTranslate="shoppedApp.ingredient.home.notFound">No ingredients found</span>
     </div>
 
-    <div class="table-responsive" id="entities" *ngIf="ingredients && ingredients.length > 0">
-        <table class="table table-striped" aria-describedby="page-heading">
+    <div *ngIf="ingredients && ingredients.length > 0" class="table-responsive" id="entities">
+        <table aria-describedby="page-heading" class="table table-striped">
             <thead>
-                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
-                    <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="name"><span jhiTranslate="shoppedApp.ingredient.name">Name</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="image"><span jhiTranslate="shoppedApp.ingredient.image">Image</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="status"><span jhiTranslate="shoppedApp.ingredient.status">Status</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="description"><span jhiTranslate="shoppedApp.ingredient.description">Description</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="unitAbbrev"><span jhiTranslate="shoppedApp.ingredient.unit">Unit</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"></th>
-                </tr>
+            <tr [(ascending)]="ascending" [(predicate)]="predicate" [callback]="loadPage.bind(this)" jhiSort>
+                <th jhiSortBy="id" scope="col"><span jhiTranslate="global.field.id">ID</span>
+                    <fa-icon icon="sort"></fa-icon>
+                </th>
+                <th jhiSortBy="name" scope="col"><span jhiTranslate="shoppedApp.ingredient.name">Name</span>
+                    <fa-icon icon="sort"></fa-icon>
+                </th>
+                <th jhiSortBy="image" scope="col"><span jhiTranslate="shoppedApp.ingredient.image">Image</span>
+                    <fa-icon icon="sort"></fa-icon>
+                </th>
+                <th jhiSortBy="status" scope="col"><span jhiTranslate="shoppedApp.ingredient.status">Status</span>
+                    <fa-icon icon="sort"></fa-icon>
+                </th>
+                <th jhiSortBy="description" scope="col"><span jhiTranslate="shoppedApp.ingredient.description">Description</span>
+                    <fa-icon icon="sort"></fa-icon>
+                </th>
+                <th jhiSortBy="unitAbbrev" scope="col"><span jhiTranslate="shoppedApp.ingredient.unit">Unit</span>
+                    <fa-icon icon="sort"></fa-icon>
+                </th>
+                <th scope="col"></th>
+            </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let ingredient of ingredients ;trackBy: trackId">
-                    <td><a [routerLink]="['/ingredient', ingredient.id, 'view']">{{ ingredient.id }}</a></td>
-                    <td>{{ ingredient.name }}</td>
-                    <td>
-                        <a *ngIf="ingredient.image" (click)="openFile(ingredient.imageContentType, ingredient.image)">
-                            <img [src]="'data:' + ingredient.imageContentType + ';base64,' + ingredient.image" style="max-height: 30px;" alt="ingredient image"/>
-                        </a>
-                        <span *ngIf="ingredient.image">{{ ingredient.imageContentType }}, {{ byteSize(ingredient.image) }}</span>
-                    </td>
-                    <td jhiTranslate="{{ 'shoppedApp.Status.' + ingredient.status }}">{{ ingredient.status }}</td>
-                    <td>{{ ingredient.description }}</td>
-                    <td>
-                        <div *ngIf="ingredient.unitId">
-                            <a [routerLink]="['/unit', ingredient.unitId , 'view']" >{{ ingredient.unitAbbrev }}</a>
-                        </div>
-                    </td>
-                    <td class="text-right">
-                        <div class="btn-group">
-                            <button type="submit"
-                                    [routerLink]="['/ingredient', ingredient.id, 'view']"
-                                    class="btn btn-info btn-sm">
-                                <fa-icon icon="eye"></fa-icon>
-                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-                            </button>
+            <tr *ngFor="let ingredient of ingredients ;trackBy: trackId">
+                <td><a [routerLink]="['/ingredient', ingredient.id, 'view']">{{ ingredient.id }}</a></td>
+                <td>{{ ingredient.name }}</td>
+                <td>
+                    <a (click)="openFile(ingredient.imageContentType, ingredient.image)" *ngIf="ingredient.image">
+                        <img [src]="'data:' + ingredient.imageContentType + ';base64,' + ingredient.image"
+                             alt="ingredient image" style="max-height: 30px;"/>
+                    </a>
+                    <span *ngIf="ingredient.image">{{ ingredient.imageContentType }}
+                        , {{ byteSize(ingredient.image) }}</span>
+                </td>
+                <td jhiTranslate="{{ 'shoppedApp.Status.' + ingredient.status }}">{{ ingredient.status }}</td>
+                <td>{{ ingredient.description }}</td>
+                <td>
+                    <div *ngIf="ingredient.unitId">
+                        <a [routerLink]="['/unit', ingredient.unitId , 'view']">{{ ingredient.unitAbbrev }}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group">
+                        <button [routerLink]="['/ingredient', ingredient.id, 'view']"
+                                class="btn btn-info btn-sm"
+                                type="submit">
+                            <fa-icon icon="eye"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
 
-                            <button type="submit"
-                                    [routerLink]="['/ingredient', ingredient.id, 'edit']"
-                                    class="btn btn-primary btn-sm">
-                                <fa-icon icon="pencil-alt"></fa-icon>
-                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
-                            </button>
+                        <button [routerLink]="['/ingredient', ingredient.id, 'edit']"
+                                class="btn btn-primary btn-sm"
+                                type="submit">
+                            <fa-icon icon="pencil-alt"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
 
-                            <button type="submit" (click)="delete(ingredient)"
-                                    class="btn btn-danger btn-sm">
-                                <fa-icon icon="times"></fa-icon>
-                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
+                        <button (click)="delete(ingredient)" class="btn btn-danger btn-sm"
+                                type="submit">
+                            <fa-icon icon="times"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
             </tbody>
         </table>
     </div>
 
     <div *ngIf="ingredients && ingredients.length > 0">
         <div class="row justify-content-center">
-            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+            <jhi-item-count [itemsPerPage]="itemsPerPage" [page]="page" [total]="totalItems"></jhi-item-count>
         </div>
 
         <div class="row justify-content-center">
-            <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
+            <ngb-pagination (pageChange)="loadPage($event)" [(page)]="ngbPaginationPage" [boundaryLinks]="true"
+                            [collectionSize]="totalItems" [maxSize]="5" [pageSize]="itemsPerPage"
+                            [rotate]="true"></ngb-pagination>
         </div>
     </div>
 </div>
