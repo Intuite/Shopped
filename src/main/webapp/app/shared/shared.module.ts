@@ -21,6 +21,8 @@ import { TagTypeTableComponent } from './tables/tag-type-table/tag-type-table.co
 import { IngredientTableComponent } from './tables/ingredient-table/ingredient-table.component';
 import { CatalogueTableComponent } from './tables/catalogue-table/catalogue-table.component';
 import { AwardTableComponent } from './tables/award-table/award-table.component';
+
+import { RecipeTagTableComponent } from './tables/recipe-tag-table/recipe-tag-table.component';
 import { DialogComponent } from './components/dialog/dialog.component';
 import { DatepickerComponent } from './components/datepicker/datepicker.component';
 import { CheckboxComponent } from './components/checkbox/checkbox.component';
@@ -45,6 +47,7 @@ import { PostTableComponent } from './tables/post-table/post-table.component';
     CatalogueTableComponent,
     AwardTableComponent,
     IngredientTableComponent,
+    RecipeTagTableComponent,
     DialogComponent,
     DatepickerComponent,
     CheckboxComponent,
@@ -70,6 +73,7 @@ import { PostTableComponent } from './tables/post-table/post-table.component';
     CatalogueTableComponent,
     AwardTableComponent,
     IngredientTableComponent,
+    RecipeTagTableComponent,
     DialogComponent,
     DatepickerComponent,
     CheckboxComponent,
