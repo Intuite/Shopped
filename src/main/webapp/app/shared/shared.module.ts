@@ -16,6 +16,8 @@ import { WrapperMaterialTableComponent } from './tables/wrapper-material-table/w
 import { FlexModule } from '@angular/flex-layout';
 import { RouterModule } from '@angular/router';
 import { DynamicTablePrototypeComponent } from './tables/dinamic-table-prototype/dynamic-table-prototype.component';
+import { UnitTableComponent } from './tables/unit-table/unit-table.component';
+import { TagTypeTableComponent } from './tables/tag-type-table/tag-type-table.component';
 import { DialogComponent } from './components/dialog/dialog.component';
 import { DatepickerComponent } from './components/datepicker/datepicker.component';
 import { CheckboxComponent } from './components/checkbox/checkbox.component';
@@ -53,6 +55,8 @@ import { CheckboxComponent } from './components/checkbox/checkbox.component';
     ColorDirective,
     UserTableComponent,
     DynamicTablePrototypeComponent,
+    UnitTableComponent,
+    TagTypeTableComponent,
   ],
 })
 export class ShoppedSharedModule {}
