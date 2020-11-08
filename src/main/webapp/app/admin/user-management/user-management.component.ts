@@ -11,7 +11,6 @@ import { Account } from 'app/core/user/account.model';
 import { UserService } from 'app/core/user/user.service';
 import { User } from 'app/core/user/user.model';
 import { UserManagementDeleteDialogComponent } from './user-management-delete-dialog.component';
-import { UserTableComponent } from 'app/shared/tables/material-table/user-table.component';
 
 @Component({
   selector: 'jhi-user-mgmt',
