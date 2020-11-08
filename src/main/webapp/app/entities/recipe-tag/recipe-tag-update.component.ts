@@ -17,6 +17,7 @@ import { TagTypeService } from 'app/entities/tag-type/tag-type.service';
 export class RecipeTagUpdateComponent implements OnInit {
   isSaving = false;
   tagtypes: ITagType[] = [];
+  statusOptions = ['ACTIVE', 'INACTIVE'];
 
   editForm = this.fb.group({
     id: [],
@@ -65,15 +66,8 @@ export class RecipeTagUpdateComponent implements OnInit {
     }
   }
 
-  private createFromForm(): IRecipeTag {
-    return {
-      ...new RecipeTag(),
-      id: this.editForm.get(['id'])!.value,
-      name: this.editForm.get(['name'])!.value,
-      description: this.editForm.get(['description'])!.value,
-      status: this.editForm.get(['status'])!.value,
-      typeId: this.editForm.get(['typeId'])!.value,
-    };
+  trackById(index: number, item: ITagType): any {
+    return item.id;
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IRecipeTag>>): void {
@@ -92,7 +86,14 @@ export class RecipeTagUpdateComponent implements OnInit {
     this.isSaving = false;
   }
 
-  trackById(index: number, item: ITagType): any {
-    return item.id;
+  private createFromForm(): IRecipeTag {
+    return {
+      ...new RecipeTag(),
+      id: this.editForm.get(['id'])!.value,
+      name: this.editForm.get(['name'])!.value,
+      description: this.editForm.get(['description'])!.value,
+      status: this.editForm.get(['status'])!.value,
+      typeId: this.editForm.get(['typeId'])!.value,
+    };
   }
 }

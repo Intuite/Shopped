@@ -21,6 +21,8 @@ import { TagTypeTableComponent } from './tables/tag-type-table/tag-type-table.co
 import { IngredientTableComponent } from './tables/ingredient-table/ingredient-table.component';
 import { CatalogueTableComponent } from './tables/catalogue-table/catalogue-table.component';
 import { AwardTableComponent } from './tables/award-table/award-table.component';
+import { RecipeTagTableComponent } from './tables/recipe-tag-table/recipe-tag-table.component';
+
 @NgModule({
   imports: [JhMaterialModule, ShoppedSharedLibsModule, FlexModule, RouterModule],
   declarations: [
@@ -41,6 +43,7 @@ import { AwardTableComponent } from './tables/award-table/award-table.component'
     CatalogueTableComponent,
     AwardTableComponent,
     IngredientTableComponent,
+    RecipeTagTableComponent,
   ],
   entryComponents: [LoginModalComponent],
   exports: [
@@ -62,6 +65,7 @@ import { AwardTableComponent } from './tables/award-table/award-table.component'
     CatalogueTableComponent,
     AwardTableComponent,
     IngredientTableComponent,
+    RecipeTagTableComponent,
   ],
 })
 export class ShoppedSharedModule {}
