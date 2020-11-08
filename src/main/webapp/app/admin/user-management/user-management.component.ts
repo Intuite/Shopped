@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { HttpResponse, HttpHeaders } from '@angular/common/http';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription, combineLatest } from 'rxjs';
@@ -11,6 +11,7 @@ import { Account } from 'app/core/user/account.model';
 import { UserService } from 'app/core/user/user.service';
 import { User } from 'app/core/user/user.model';
 import { UserManagementDeleteDialogComponent } from './user-management-delete-dialog.component';
+import { UserTableComponent } from 'app/shared/tables/material-table/user-table.component';
 
 @Component({
   selector: 'jhi-user-mgmt',
@@ -42,6 +43,7 @@ export class UserManagementComponent implements OnInit, OnDestroy {
   }
 
   load(): void {
+    this.users = null;
     this.userListSubscription = this.eventManager.subscribe('userListModification', () => this.loadAll());
   }
 
