@@ -1,6 +1,6 @@
 <div fxLayout fxLayoutAlign="left left">
     <mat-form-field fxFlex="40%">
-        <input matInput type="text" (keyup)="filter($event)" placeholder="Filtrar">
+        <input matInput type="text" (keyup)="filter($event)" placeholder="Filter">
     </mat-form-field>
 </div>
 <jhi-wrapper-material-table [dataSource]="dataSource" [columns]="displayedColumns"
@@ -122,4 +122,4 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns; "></tr>
 </jhi-wrapper-material-table>
-<mat-paginator [pageSize]="20" [pageSizeOptions]="[5, 10, 20, 50, 100]"></mat-paginator>
+<mat-paginator [length]="managementComponent.totalItems" [pageSize]="managementComponent.itemsPerPage" [pageSizeOptions]="[5, 10, 20, 50, 100]"></mat-paginator>
