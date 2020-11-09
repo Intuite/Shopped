@@ -14,24 +14,6 @@
         </td>
     </ng-container>
 
-    <ng-container matColumnDef="caption">
-        <th *matHeaderCellDef mat-header-cell mat-sort-header>Caption</th>
-        <td *matCellDef="let element" mat-cell>
-            <span>
-                {{ element.caption }}
-            </span>
-        </td>
-    </ng-container>
-
-    <ng-container matColumnDef="date">
-        <th *matHeaderCellDef mat-header-cell mat-sort-header>Date</th>
-        <td *matCellDef="let element" mat-cell>
-            <span>
-                {{ element.date }}
-            </span>
-        </td>
-    </ng-container>
-
     <ng-container matColumnDef="recipeName">
         <th *matHeaderCellDef mat-header-cell mat-sort-header>Recipe Name</th>
         <td *matCellDef="let element" mat-cell>
@@ -41,11 +23,29 @@
         </td>
     </ng-container>
 
+    <ng-container matColumnDef="caption">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>Caption</th>
+        <td *matCellDef="let element" mat-cell>
+            <span>
+                {{ element.caption }}
+            </span>
+        </td>
+    </ng-container>
+
     <ng-container matColumnDef="userLogin">
         <th *matHeaderCellDef mat-header-cell mat-sort-header>User</th>
         <td *matCellDef="let element" mat-cell>
             <span>
                 {{ element.userLogin }}
+            </span>
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="date">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>Date</th>
+        <td *matCellDef="let element" mat-cell>
+            <span>
+                {{ element.date }}
             </span>
         </td>
     </ng-container>
@@ -74,11 +74,12 @@
                         type="submit">
                     <fa-icon icon="pencil-alt"></fa-icon>
                 </button>
-
+                <!--
                 <button (click)="managementComponent.delete(post)" class="btn btn-danger btn-sm"
                         type="submit">
                     <fa-icon icon="times"></fa-icon>
                 </button>
+                -->
             </div>
         </td>
     </ng-container>

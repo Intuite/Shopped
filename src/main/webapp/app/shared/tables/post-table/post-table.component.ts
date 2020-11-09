@@ -14,7 +14,7 @@ export class PostTableComponent implements OnInit, AfterViewInit {
   @Input() data!: Post[];
   @Input() managementComponent!: PostComponent;
 
-  displayedColumns: string[] = ['id', 'caption', 'date', 'status', 'recipeName', 'userLogin', 'options'];
+  displayedColumns: string[] = ['id', 'recipeName', 'caption', 'userLogin', 'date', 'status', 'options'];
 
   dataSource = new MatTableDataSource<Post>();
 

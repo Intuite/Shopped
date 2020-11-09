@@ -1,34 +1,48 @@
 <div class="row justify-content-center">
     <div class="col-8">
         <div *ngIf="post">
-            <h2><span jhiTranslate="shoppedApp.post.detail.title">Post</span> {{ post.id }}</h2>
+            <h2>
+                <span jhiTranslate="shoppedApp.post.detail.title">Post</span> {{ post.recipeName }}
+            </h2>
 
             <hr>
 
             <jhi-alert-error></jhi-alert-error>
 
             <dl class="row-md jh-entity-details">
+
+                <dt><span jhiTranslate="global.field.id">ID</span></dt>
+                <dd>
+                    <span>{{ post.id }}</span>
+                </dd>
+
                 <dt><span jhiTranslate="shoppedApp.post.caption">Caption</span></dt>
                 <dd>
                     <span>{{ post.caption }}</span>
                 </dd>
-                <dt><span jhiTranslate="shoppedApp.post.date">Date</span></dt>
+
+                <dt><span jhiTranslate="shoppedApp.post.user">User</span></dt>
                 <dd>
-                    <span>{{ post.date }}</span>
+                    {{ post.userLogin }}
                 </dd>
-                <dt><span jhiTranslate="shoppedApp.post.status">Status</span></dt>
-                <dd>
-                    <span jhiTranslate="{{ 'shoppedApp.Status.' + post.status }}">{{ post.status }}</span>
-                </dd>
+
+                <!--
                 <dt><span jhiTranslate="shoppedApp.post.recipe">Recipe</span></dt>
                 <dd>
                     <div *ngIf="post.recipeId">
                         <a [routerLink]="['/recipe', post.recipeId, 'view']">{{ post.recipeName }}</a>
                     </div>
                 </dd>
-                <dt><span jhiTranslate="shoppedApp.post.user">User</span></dt>
+                -->
+
+                <dt><span jhiTranslate="shoppedApp.post.date">Date</span></dt>
                 <dd>
-                    {{ post.userLogin }}
+                    <span>{{ post.date }}</span>
+                </dd>
+
+                <dt><span jhiTranslate="shoppedApp.post.status">Status</span></dt>
+                <dd>
+                    <span jhiTranslate="{{ 'shoppedApp.Status.' + post.status }}">{{ post.status }}</span>
                 </dd>
             </dl>
 
