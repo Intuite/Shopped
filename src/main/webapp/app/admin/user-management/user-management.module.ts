@@ -7,9 +7,10 @@ import { UserManagementDetailComponent } from './user-management-detail.componen
 import { UserManagementUpdateComponent } from './user-management-update.component';
 import { UserManagementDeleteDialogComponent } from './user-management-delete-dialog.component';
 import { userManagementRoute } from './user-management.route';
+import { FlexModule } from '@angular/flex-layout';
 
 @NgModule({
-  imports: [ShoppedSharedModule, RouterModule.forChild(userManagementRoute)],
+  imports: [ShoppedSharedModule, RouterModule.forChild(userManagementRoute), FlexModule],
   declarations: [
     UserManagementComponent,
     UserManagementDetailComponent,
