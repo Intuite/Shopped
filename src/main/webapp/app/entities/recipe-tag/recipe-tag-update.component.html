@@ -4,78 +4,67 @@
             <h2 id="jhi-recipe-tag-heading" jhiTranslate="shoppedApp.recipeTag.home.createOrEditLabel">Create or edit a
                 Recipe Tag</h2>
 
-            <div>
-                <jhi-alert-error></jhi-alert-error>
+            <jhi-alert-error></jhi-alert-error>
 
-                <div [hidden]="!editForm.get('id')!.value" class="form-group">
-                    <label for="id" jhiTranslate="global.field.id">ID</label>
-                    <input class="form-control" formControlName="id" id="id" name="id" readonly type="text"/>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" for="field_name"
-                           jhiTranslate="shoppedApp.recipeTag.name">Name</label>
-                    <input class="form-control" formControlName="name" id="field_name" name="name"
-                           type="text"/>
-                    <div
-                        *ngIf="editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)">
-                        <small *ngIf="editForm.get('name')?.errors?.required"
-                               class="form-text text-danger" jhiTranslate="entity.validation.required">
-                            This field is required.
-                        </small>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" for="field_description"
-                           jhiTranslate="shoppedApp.recipeTag.description">Description</label>
-                    <input class="form-control" formControlName="description" id="field_description" name="description"
-                           type="text"/>
-                    <div
-                        *ngIf="editForm.get('description')!.invalid && (editForm.get('description')!.dirty || editForm.get('description')!.touched)">
-                        <small *ngIf="editForm.get('description')?.errors?.required"
-                               class="form-text text-danger"
-                               jhiTranslate="entity.validation.required">
-                            This field is required.
-                        </small>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" for="field_status" jhiTranslate="shoppedApp.recipeTag.status">Status</label>
-                    <select class="form-control" formControlName="status" id="field_status" name="status">
-                        <option value="ACTIVE">{{ 'shoppedApp.Status.ACTIVE' | translate }}</option>
-                        <option value="INACTIVE">{{ 'shoppedApp.Status.INACTIVE' | translate }}</option>
-                        <option value="BLOCKED">{{ 'shoppedApp.Status.BLOCKED' | translate }}</option>
-                        <option value="PENDING">{{ 'shoppedApp.Status.PENDING' | translate }}</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" for="field_type"
-                           jhiTranslate="shoppedApp.recipeTag.type">Type</label>
-                    <select class="form-control" formControlName="typeId" id="field_type" name="type">
-                        <option *ngIf="!editForm.get('typeId')!.value" [ngValue]="null" selected></option>
-                        <option *ngFor="let tagTypeOption of tagtypes; trackBy: trackById" [ngValue]="tagTypeOption.id">
-                            {{ tagTypeOption.name }}
-                        </option>
-                    </select>
-                </div>
-                <div
-                    *ngIf="editForm.get('typeId')!.invalid && (editForm.get('typeId')!.dirty || editForm.get('typeId')!.touched)">
-                    <small *ngIf="editForm.get('typeId')?.errors?.required"
-                           class="form-text text-danger" jhiTranslate="entity.validation.required">
-                        This field is required.
-                    </small>
-                </div>
+            <div [hidden]="!editForm.get('id')!.value" class="form-group">
+                <label for="id" jhiTranslate="global.field.id">ID</label>
+                <input class="form-control" formControlName="id" id="id" name="id" readonly type="text"/>
             </div>
 
             <div>
-                <button (click)="previousState()" class="btn btn-secondary" id="cancel-save" type="button">
+                <mat-form-field appearance="fill" class="form-group w-100">
+                    <mat-label jhiTranslate="shoppedApp.recipeTag.name"></mat-label>
+                    <input formControlName="name" id="field_name" matInput name="name"
+                           type="text"/>
+                    <mat-error
+                        *ngIf="(editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)) && editForm.get('name')?.errors?.required"
+                        jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="form-group w-100">
+                    <mat-label jhiTranslate="shoppedApp.recipeTag.description"></mat-label>
+                    <input formControlName="description" id="field_description" matInput name="description"
+                           type="text"/>
+                    <mat-error
+                        *ngIf="(editForm.get('description')!.invalid && (editForm.get('description')!.dirty || editForm.get('description')!.touched)) && editForm.get('description')?.errors?.required"
+                        jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="form-group w-100">
+                    <mat-label jhiTranslate="shoppedApp.recipeTag.type"></mat-label>
+                    <mat-select formControlName="typeId" id="field_type" name="type">
+                        <mat-option *ngFor="let typeOption of tagtypes; trackBy: trackById" [value]="typeOption.id">
+                            {{typeOption.name }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error
+                        *ngIf="editForm.get('typeId')!.invalid && (editForm.get('typeId')!.dirty || editForm.get('typeId')!.touched)"
+                        jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="form-group w-100">
+                    <mat-label jhiTranslate="shoppedApp.recipeTag.status"></mat-label>
+                    <mat-select [(ngModel)]="statusOptions[0]" formControlName="status" id="status" name="status">
+                        <mat-option *ngFor="let status of statusOptions" [value]="status">
+                            {{status | capitalize }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div>
+                <button (click)="previousState()" id="cancel-save" jhiMaterialColor="secondary" mat-raised-button
+                        type="button">
                     <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
                 </button>
 
-                <button [disabled]="editForm.invalid || isSaving" class="btn btn-primary" id="save-entity"
+                <button [disabled]="editForm.invalid || isSaving" id="save-entity" jhiMaterialColor="primary"
+                        mat-raised-button
                         type="submit">
                     <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
                 </button>
