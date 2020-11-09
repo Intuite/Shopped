@@ -54,8 +54,4 @@ export class UserTableComponent implements OnInit, AfterViewInit {
     this.data = data;
     this.dataSource.data = data;
   }
-
-  public reload(): void {
-    this.managementComponent.load();
-  }
 }

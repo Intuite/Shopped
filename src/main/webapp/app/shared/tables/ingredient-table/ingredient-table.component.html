@@ -3,6 +3,15 @@
         <input (keyup)="filter($event)" matInput placeholder="Search" type="text">
     </mat-form-field>
 </div>
+<div *ngIf="dataSource.data && dataSource.data.length > 0">
+    <mat-paginator *ngIf="loaded" (page)="managementComponent.reloadPage($event.pageIndex);
+     managementComponent.changePageSize($event.pageSize)"
+                   [length]="managementComponent.totalItems"
+                   [pageSize]="managementComponent.itemsPerPage"
+                   [pageIndex]="managementComponent.page-1"
+                   [pageSizeOptions]="[5, 10, 20, 50, 100]">
+    </mat-paginator>
+</div>
 <jhi-wrapper-material-table #sort="matSort" [columns]="displayedColumns"
                             [dataSource]="dataSource" matSort>
     <ng-container matColumnDef="id">
@@ -35,7 +44,7 @@
     <ng-container matColumnDef="status">
         <th *matHeaderCellDef mat-header-cell mat-sort-header>Status</th>
         <td *matCellDef="let element" mat-cell>
-            <span>
+            <span jhiTranslate="{{ 'shoppedApp.Status.' + element.status }}">
                 {{ element.status }}
             </span>
         </td>
@@ -77,4 +86,12 @@
     <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
     <tr *matRowDef="let row; columns: displayedColumns; " mat-row></tr>
 </jhi-wrapper-material-table>
-<mat-paginator [pageSizeOptions]="[5, 10, 20, 50, 100]" [pageSize]="20"></mat-paginator>
+<div *ngIf="dataSource.data && dataSource.data.length > 0">
+    <mat-paginator *ngIf="loaded" (page)="managementComponent.reloadPage($event.pageIndex);
+     managementComponent.changePageSize($event.pageSize)"
+                   [length]="managementComponent.totalItems"
+                   [pageSize]="managementComponent.itemsPerPage"
+                   [pageIndex]="managementComponent.page-1"
+                   [pageSizeOptions]="[5, 10, 20, 50, 100]">
+    </mat-paginator>
+</div>

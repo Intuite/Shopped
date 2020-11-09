@@ -20,6 +20,7 @@ export class IngredientTableComponent implements OnInit, AfterViewInit {
 
   @ViewChild('sort') sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  loaded = false;
 
   ngOnInit(): void {
     this.dataSource.data = this.data;
@@ -32,14 +33,10 @@ export class IngredientTableComponent implements OnInit, AfterViewInit {
       const dataStr = JSON.stringify(data).toLowerCase();
       return dataStr.includes(filter);
     };
+    this.loaded = true;
   }
 
   public filter = (e: Event) => {
     this.dataSource.filter = (e.target as HTMLInputElement).value.trim().toLocaleLowerCase();
   };
-
-  public reloadSource(): void {
-    this.data = this.managementComponent.ingredients as Ingredient[];
-    this.dataSource = new MatTableDataSource<Ingredient>(this.data);
-  }
 }

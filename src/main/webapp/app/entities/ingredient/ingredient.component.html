@@ -23,6 +23,6 @@
     </div>
 
     <div *ngIf="ingredients && ingredients.length > 0" class="table-responsive" id="entities">
-        <jhi-ingredient-table [data]="ingredients" [managementComponent]="this"></jhi-ingredient-table>
+        <jhi-ingredient-table #tableComponent [data]="ingredients" [managementComponent]="this"></jhi-ingredient-table>
     </div>
 </div>

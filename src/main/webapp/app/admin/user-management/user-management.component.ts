@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { HttpResponse, HttpHeaders } from '@angular/common/http';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription, combineLatest } from 'rxjs';
@@ -11,6 +11,7 @@ import { Account } from 'app/core/user/account.model';
 import { UserService } from 'app/core/user/user.service';
 import { User } from 'app/core/user/user.model';
 import { UserManagementDeleteDialogComponent } from './user-management-delete-dialog.component';
+import { UserTableComponent } from 'app/shared/tables/material-table/user-table.component';
 
 @Component({
   selector: 'jhi-user-mgmt',
@@ -25,7 +26,7 @@ export class UserManagementComponent implements OnInit, OnDestroy {
   page!: number;
   predicate!: string;
   ascending!: boolean;
-
+  @ViewChild('tableComponent', { static: false }) table!: UserTableComponent;
   constructor(
     private userService: UserService,
     private accountService: AccountService,
@@ -42,7 +43,6 @@ export class UserManagementComponent implements OnInit, OnDestroy {
   }
 
   load(): void {
-    this.users = null;
     this.userListSubscription = this.eventManager.subscribe('userListModification', () => this.loadAll());
   }
 
@@ -53,8 +53,9 @@ export class UserManagementComponent implements OnInit, OnDestroy {
   }
 
   setActive(user: User, isActivated: boolean): void {
-    this.userService.update({ ...user, activated: isActivated }).subscribe(() => this.loadAll());
-    this.load();
+    this.userService.update({ ...user, activated: isActivated }).subscribe(() => {
+      this.loadAll();
+    });
   }
 
   trackIdentity(index: number, item: User): any {
@@ -108,5 +109,6 @@ export class UserManagementComponent implements OnInit, OnDestroy {
   private onSuccess(users: User[] | null, headers: HttpHeaders): void {
     this.totalItems = Number(headers.get('X-Total-Count'));
     this.users = users;
+    this.table.reloadSource(users as User[]);
   }
 }
