@@ -27,6 +27,7 @@ import { DialogComponent } from './components/dialog/dialog.component';
 import { DatepickerComponent } from './components/datepicker/datepicker.component';
 import { CheckboxComponent } from './components/checkbox/checkbox.component';
 import { PostTableComponent } from './tables/post-table/post-table.component';
+import { BuyCookieComponent } from './components/buy-cookie/buy-cookie.component';
 @NgModule({
   imports: [JhMaterialModule, ShoppedSharedLibsModule, FlexModule, RouterModule],
   declarations: [
@@ -52,6 +53,7 @@ import { PostTableComponent } from './tables/post-table/post-table.component';
     DatepickerComponent,
     CheckboxComponent,
     PostTableComponent,
+    BuyCookieComponent,
   ],
   entryComponents: [LoginModalComponent],
   exports: [

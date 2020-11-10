@@ -111,7 +111,7 @@ export class AwardUpdateComponent implements OnInit {
   private saveValidated(val: number, award: any, first: Award): void {
     if (award.id !== undefined && val <= 1) {
       if (first.id !== award.id) {
-        this.alertService.addAlert({ toast: false, type: 'warning', msg: 'shoppedApp.validation.forms.nameUnique' }, []);
+        this.alertService.addAlert({ toast: false, type: 'danger', msg: 'shoppedApp.validation.forms.nameUnique' }, []);
       } else {
         this.subscribeToSaveResponse(this.awardService.update(award));
         this.isSaving = true;
@@ -120,7 +120,7 @@ export class AwardUpdateComponent implements OnInit {
       this.subscribeToSaveResponse(this.awardService.create(award));
       this.isSaving = true;
     } else {
-      this.alertService.addAlert({ toast: false, type: 'warning', msg: 'Name already in use' }, []);
+      this.alertService.addAlert({ toast: false, type: 'danger', msg: 'shoppedApp.validation.forms.nameUnique' }, []);
     }
   }
 
