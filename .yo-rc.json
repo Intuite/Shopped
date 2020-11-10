@@ -45,7 +45,7 @@
     "skipUserManagement": false,
     "skipClient": false,
     "skipServer": false,
-    "lastLiquibaseTimestamp": 1604714936000
+    "lastLiquibaseTimestamp": 1604961798000
   },
   "entities": [
     "UserProfile",

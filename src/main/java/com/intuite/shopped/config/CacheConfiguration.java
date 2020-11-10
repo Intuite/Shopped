@@ -83,6 +83,7 @@ public class CacheConfiguration {
             createCache(cm, com.intuite.shopped.domain.Message.class.getName());
             createCache(cm, com.intuite.shopped.domain.Catalogue.class.getName());
             createCache(cm, com.intuite.shopped.domain.Unit.class.getName());
+            createCache(cm, com.intuite.shopped.domain.Bundle.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }
