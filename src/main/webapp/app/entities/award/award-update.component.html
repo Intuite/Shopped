@@ -1,16 +1,16 @@
 <div class="row justify-content-center">
     <div class="col-8">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-            <h2 id="jhi-award-heading" jhiTranslate="shoppedApp.award.home.createOrEditLabel">Create or edit a
+            <h2 id="jhi-ingredient-heading">{{ editForm.get('id')!.value !== undefined ? "Edit" : "Create" }}
                 Award</h2>
 
             <div>
                 <jhi-alert-error></jhi-alert-error>
                 <jhi-alert></jhi-alert>
-                <div class="form-group" [hidden]="!editForm.get('id')!.value">
-                    <label for="id" jhiTranslate="global.field.id">ID</label>
-                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly/>
-                </div>
+                <mat-form-field class="form-group w-100" appearance="fill" [hidden]="!editForm.get('id')!.value">
+                    <mat-label for="id" jhiTranslate="global.field.id">ID</mat-label>
+                    <input matInput type="text" id="id" name="id" formControlName="id" readonly/>
+                </mat-form-field>
 
                 <mat-form-field appearance="fill" class="form-group w-100">
                     <mat-label jhiTranslate="shoppedApp.award.name">Name</mat-label>
@@ -69,7 +69,7 @@
 
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="shoppedApp.award.image"
-                           for="field_image">Image</label>
+                           for="">Image</label>
                     <div>
                         <img
                             [src]="'data:' + editForm.get('imageContentType')!.value + ';base64,' + editForm.get('image')!.value"
@@ -83,14 +83,19 @@
                             </button>
                         </div>
                         <input type="file" id="file_image" (change)="setFileData($event, 'image', true)"
-                               accept="image/*" jhiTranslate="entity.action.addimage"/>
-                    </div>
-                    <input type="hidden" class="form-control" name="image" id="field_image"
+                               accept="image/*" jhiTranslate="entity.action.addimage" class="inputfile"/>
+                        <label for="file_image">
+                            <a type="button" mat-flat-button jhiMaterialColor="primary">
+                                <fa-icon icon="image"></fa-icon>
+                                Add Image
+                            </a>
+                        </label>
+                        <!--<input type="hidden" class="form-control" name="image" id="field_image"
                            formControlName="image"/>
                     <input type="hidden" class="form-control" name="imageContentType" id="field_imageContentType"
-                           formControlName="imageContentType"/>
+                           formControlName="imageContentType"/>-->
+                    </div>
                 </div>
-
                 <mat-form-field appearance="fill" class="form-group w-100">
                     <mat-label jhiTranslate="shoppedApp.award.status"></mat-label>
                     <mat-select formControlName="status" id="status" name="status">
