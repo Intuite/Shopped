@@ -145,7 +145,7 @@ export class IngredientComponent implements OnInit, OnDestroy {
     this.ngbPaginationPage = this.page ?? 1;
   }
 
-  public navigate() {
+  public navigate(): void {
     this.router.navigate(['/ingredient'], {
       queryParams: {
         page: this.page,
