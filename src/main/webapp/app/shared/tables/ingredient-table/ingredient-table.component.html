@@ -1,6 +1,10 @@
 <div fxLayout fxLayoutAlign="left left">
-    <mat-form-field fxFlex="40%">
-        <input (keyup)="filter($event)" matInput placeholder="Search" type="text">
+    <mat-form-field fxFlex="40%" appearance="fill" >
+        <mat-label>
+            Search
+        </mat-label>
+        <mat-icon matSuffix>search</mat-icon>
+        <input (keyup)="filter($event)" matInput placeholder="Type a text filter" type="text">
     </mat-form-field>
 </div>
 
@@ -80,9 +84,12 @@
 </jhi-wrapper-material-table>
 <div #paginator1 *ngIf="dataSource.data && dataSource.data.length > 0 && managementComponent.tableLoaded">
     <mat-paginator *ngIf="managementComponent.tableLoaded"
+                   (page)="managementComponent.changePage($event.pageIndex);
+                    managementComponent.changePageSize($event.pageSize);
+                    managementComponent.navigate()"
                    [length]="managementComponent.totalItems"
-                   [pageSize]="20"
-                   [pageIndex]="0"
+                   [pageSize]="managementComponent.itemsPerPage"
+                   [pageIndex]="managementComponent.page"
                    [pageSizeOptions]="[5, 10, 20, 50, 100]">
     </mat-paginator>
 </div>

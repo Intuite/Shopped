@@ -37,14 +37,6 @@ export class IngredientComponent implements OnInit, OnDestroy {
     protected modalService: NgbModal
   ) {}
 
-  reloadPage(pageIndex: number): void {
-    const page = pageIndex + 1;
-    if (page !== this.page) {
-      this.page = page;
-      this.loadPage(page);
-    }
-  }
-
   private loadPage(page?: number): void {
     const pageToLoad: number = page || this.page || 0;
     if (this.totalItems === 0) {
@@ -63,10 +55,16 @@ export class IngredientComponent implements OnInit, OnDestroy {
     }
   }
 
+  changePage(pageIndex: number): void {
+    const page = pageIndex;
+    if (page !== this.page) {
+      this.page = page;
+    }
+  }
+
   changePageSize(pageSize: number): void {
     if (pageSize !== this.itemsPerPage) {
       this.itemsPerPage = pageSize;
-      this.loadPage(this.page);
     }
   }
 
@@ -147,16 +145,13 @@ export class IngredientComponent implements OnInit, OnDestroy {
     this.ngbPaginationPage = this.page ?? 1;
   }
 
-  private getTotal(): void {
-    this.ingredientService.count().subscribe(
-      (res: HttpResponse<number>) => this.onSuccessCount(res.body),
-      () => this.onError()
-    );
-  }
-
-  private onSuccessCount(count: number | null): void {
-    if (count != null) {
-      this.totalItems = count;
-    }
+  public navigate() {
+    this.router.navigate(['/ingredient'], {
+      queryParams: {
+        page: this.page,
+        size: this.itemsPerPage,
+        sort: this.predicate + ',' + (this.ascending ? 'asc' : 'desc'),
+      },
+    });
   }
 }
