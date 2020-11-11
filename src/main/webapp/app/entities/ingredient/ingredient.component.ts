@@ -11,7 +11,6 @@ import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { IngredientService } from './ingredient.service';
 import { IngredientDeleteDialogComponent } from './ingredient-delete-dialog.component';
 import { IngredientTableComponent } from 'app/shared/tables/ingredient-table/ingredient-table.component';
-import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'jhi-ingredient',
@@ -25,7 +24,7 @@ export class IngredientComponent implements OnInit, OnDestroy {
   page!: number;
   predicate!: string;
   ascending!: boolean;
-  ngbPaginationPage = 1;
+  ngbPaginationPage = 0;
   tableLoaded = false;
   @ViewChild('tableComponent', { static: false }) table!: IngredientTableComponent;
 
@@ -42,28 +41,32 @@ export class IngredientComponent implements OnInit, OnDestroy {
     const page = pageIndex + 1;
     if (page !== this.page) {
       this.page = page;
-      this.loadPage(page, false);
+      this.loadPage(page);
     }
   }
 
-  private loadPage(page?: number, dontNavigate?: boolean): void {
-    const pageToLoad: number = page || this.page || 1;
-    this.ingredientService
-      .query({
-        page: pageToLoad - 1,
-        size: this.itemsPerPage,
-        sort: this.sort(),
-      })
-      .subscribe(
-        (res: HttpResponse<IIngredient[]>) => this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate),
-        () => this.onError()
-      );
+  private loadPage(page?: number): void {
+    const pageToLoad: number = page || this.page || 0;
+    if (this.totalItems === 0) {
+      this.ingredientService
+        .queryAll({
+          // page: pageToLoad - 1,
+          // size: 439,
+          sort: this.sort(),
+        })
+        .subscribe(
+          (res: HttpResponse<IIngredient[]>) => this.onSuccess(res.body, res.headers, pageToLoad),
+          () => this.onError()
+        );
+    } else {
+      this.refresh(pageToLoad);
+    }
   }
 
   changePageSize(pageSize: number): void {
     if (pageSize !== this.itemsPerPage) {
       this.itemsPerPage = pageSize;
-      this.loadPage(this.page, false);
+      this.loadPage(this.page);
     }
   }
 
@@ -75,7 +78,7 @@ export class IngredientComponent implements OnInit, OnDestroy {
   protected handleNavigation(): void {
     combineLatest(this.activatedRoute.data, this.activatedRoute.queryParamMap, (data: Data, params: ParamMap) => {
       const page = params.get('page');
-      const pageNumber = page !== null ? +page : 1;
+      const pageNumber = page !== null ? +page : 0;
       const pageSize = params.get('size');
       this.itemsPerPage = pageSize !== null ? +pageSize : ITEMS_PER_PAGE;
       const sort = (params.get('sort') ?? data['defaultSort']).split(',');
@@ -84,7 +87,7 @@ export class IngredientComponent implements OnInit, OnDestroy {
       if (pageNumber !== this.page || predicate !== this.predicate || ascending !== this.ascending) {
         this.predicate = predicate;
         this.ascending = ascending;
-        this.loadPage(pageNumber, true);
+        this.loadPage(pageNumber);
       }
     }).subscribe();
   }
@@ -128,26 +131,32 @@ export class IngredientComponent implements OnInit, OnDestroy {
     return result;
   }
 
-  protected onSuccess(data: IIngredient[] | null, headers: HttpHeaders, page: number, navigate: boolean): void {
+  protected onSuccess(data: IIngredient[] | null, headers: HttpHeaders, page: number): void {
     this.totalItems = Number(headers.get('X-Total-Count'));
     this.page = page;
-    if (navigate) {
-      this.router.navigate(['/ingredient'], {
-        queryParams: {
-          page: this.page,
-          size: this.itemsPerPage,
-          sort: this.predicate + ',' + (this.ascending ? 'asc' : 'desc'),
-        },
-      });
-    }
     this.ingredients = data || [];
     this.ngbPaginationPage = this.page;
-    if (this.tableLoaded) {
-      this.table.dataSource.data = data as IIngredient[];
-    } else this.tableLoaded = true;
+    this.tableLoaded = true;
+  }
+
+  protected refresh(page: number): void {
+    this.page = page;
   }
 
   protected onError(): void {
     this.ngbPaginationPage = this.page ?? 1;
+  }
+
+  private getTotal(): void {
+    this.ingredientService.count().subscribe(
+      (res: HttpResponse<number>) => this.onSuccessCount(res.body),
+      () => this.onError()
+    );
+  }
+
+  private onSuccessCount(count: number | null): void {
+    if (count != null) {
+      this.totalItems = count;
+    }
   }
 }

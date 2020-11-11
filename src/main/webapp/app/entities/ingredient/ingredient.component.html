@@ -18,11 +18,14 @@
 
     <jhi-alert></jhi-alert>
 
-    <div *ngIf="ingredients?.length === 0" class="alert alert-warning" id="no-result">
+    <div *ngIf="ingredients?.length === 0 || !ingredients" class="alert alert-warning" id="no-result">
         <span jhiTranslate="shoppedApp.ingredient.home.notFound">No ingredients found</span>
     </div>
 
-    <div *ngIf="ingredients && ingredients.length > 0" class="table-responsive" id="entities">
+    <div *ngIf="ingredients && ingredients.length > 0" class="table-responsive table-hover" id="entities">
         <jhi-ingredient-table #tableComponent [data]="ingredients" [managementComponent]="this"></jhi-ingredient-table>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="space-around center" class="w-100">
+        <mat-spinner *ngIf="!ingredients || ingredients.length == 0" diameter="50" strokeWidth="5"></mat-spinner>
     </div>
 </div>

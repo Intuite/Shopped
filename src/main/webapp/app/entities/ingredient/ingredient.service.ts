@@ -32,7 +32,16 @@ export class IngredientService {
     return this.http.get<IIngredient[]>(this.resourceUrl, { params: options, observe: 'response' });
   }
 
+  queryAll(req?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http.get<IIngredient[]>(`${this.resourceUrl}/all`, { params: options, observe: 'response' });
+  }
+
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  }
+
+  count(): Observable<HttpResponse<number>> {
+    return this.http.get<number>(`${this.resourceUrl}/count`, { observe: 'response' });
   }
 }
