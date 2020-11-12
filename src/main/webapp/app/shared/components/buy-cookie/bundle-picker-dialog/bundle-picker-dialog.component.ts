@@ -7,6 +7,8 @@ import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/user/account.model';
 import { Cookies } from 'app/shared/model/cookies.model';
 import { CookiesService } from 'app/entities/cookies/cookies.service';
+import { UserService } from 'app/core/user/user.service';
+import { User } from 'app/core/user/user.model';
 
 @Component({
   selector: 'jhi-bundle-picker-dialog',
@@ -20,12 +22,14 @@ export class BundlePickerDialogComponent implements OnInit {
   bundle = new Bundle();
   account?: Account;
   cookie?: Cookies;
+  user?: User;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: Bundle[],
     private _formBuilder: FormBuilder,
     private accountService: AccountService,
-    private cookieService: CookiesService
+    private cookieService: CookiesService,
+    private userService: UserService
   ) {
     this.firstFormGroup = this._formBuilder.group({
       firstCtrl: ['', Validators.required],
@@ -37,7 +41,14 @@ export class BundlePickerDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.accountService.identity().subscribe(res => (this.account = res || undefined));
-    this.cookieService.query().subscribe(res => (this.cookie = res.body![0] || undefined));
+    this.userService.find(this.account!.login).subscribe(res => (this.user = res || undefined));
+    console.warn(this.user?.id);
+    this.cookieService
+      .query({
+        ...(this.user?.id && { 'user_id.equals': this.user?.id }),
+      })
+      .subscribe(res => (this.cookie = res.body![0] || undefined));
+
     console.warn(this.account?.login);
     console.warn(this.cookie?.amount);
   }
