@@ -1,4 +1,4 @@
-<nav class="navbar navbar-dark navbar-expand-md bg-primary">
+<nav class="navbar navbar-light navbar-expand-md bg-secondary">
     <a (click)="collapseNavbar()" class="navbar-brand logo" routerLink="/">
         <span class="logo-img"></span>
         <span class="navbar-title" jhiTranslate="global.title">Shopped</span> <span
@@ -20,11 +20,11 @@
          id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
             <li [routerLinkActiveOptions]="{ exact: true }" class="nav-item" routerLinkActive="active">
-                <button (click)="collapseNavbar()" class="nav-link text-white" mat-button routerLink="/">
-          <span>
-            <fa-icon icon="home"></fa-icon>
-            <span jhiTranslate="global.menu.home">Home</span>
-          </span>
+                <button (click)="collapseNavbar()" class="nav-link" mat-button routerLink="/">
+                  <span>
+                    <fa-icon icon="home"></fa-icon>
+                    <span jhiTranslate="global.menu.home">Home</span>
+                  </span>
                 </button>
             </li>
             <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
@@ -36,12 +36,12 @@
                 ngbDropdown
                 routerLinkActive="active"
             >
-                <button [matMenuTriggerFor]="entitiesMenu" class="nav-link dropdown-toggle text-white" id="entity-menu"
+                <button [matMenuTriggerFor]="entitiesMenu" class="nav-link dropdown-toggle" id="entity-menu"
                         mat-button>
-          <span>
-            <fa-icon icon="th-list"></fa-icon>
-            <span jhiTranslate="global.menu.entities.main"> Entities </span>
-          </span>
+                <span>
+                  <fa-icon icon="th-list"></fa-icon>
+                  <span jhiTranslate="global.menu.entities.main"> Entities </span>
+                </span>
                 </button>
                 <mat-menu #entitiesMenu="matMenu">
                     <button
@@ -418,7 +418,7 @@
                 ngbDropdown
                 routerLinkActive="active"
             >
-                <button [matMenuTriggerFor]="adminMenu" class="nav-link dropdown-toggle text-white" id="admin-menu"
+                <button [matMenuTriggerFor]="adminMenu" class="nav-link dropdown-toggle" id="admin-menu"
                         mat-button>
             <span>
               <fa-icon icon="user-plus"></fa-icon>
@@ -465,7 +465,7 @@
             </li>
             <li *ngIf="languages && languages.length > 1" class="nav-item dropdown pointer" display="dynamic"
                 ngbDropdown>
-                <button [matMenuTriggerFor]="languagesMenu" class="nav-link dropdown-toggle text-white"
+                <button [matMenuTriggerFor]="languagesMenu" class="nav-link dropdown-toggle"
                         id="languagesnavBarDropdown"
                         mat-button>
             <span>
@@ -488,7 +488,7 @@
                 ngbDropdown
                 routerLinkActive="active"
             >
-                <button [matMenuTriggerFor]="accountMenu" class="nav-link dropdown-toggle text-white" mat-button>
+                <button [matMenuTriggerFor]="accountMenu" class="nav-link dropdown-toggle" mat-button>
               <span *ngIf="!getImageUrl()">
                 <fa-icon icon="user"></fa-icon>
                 <span jhiTranslate="global.menu.account.main"> Account </span>
