@@ -1,0 +1,40 @@
+<div mat-dialog-title>
+    <h1>Select your ingredients</h1>
+    <div class="row w-100">
+        <div class="col">
+            <mat-form-field appearance="fill" class="w-100">
+                <mat-label>Search</mat-label>
+                <input [disabled]="data.length === 0" matInput type="text">
+                <mat-icon matSuffix>search</mat-icon>
+            </mat-form-field>
+        </div>
+        <button (click)="ingredientList.selectAll()" [disabled]="data.length === 0"
+                class="align-self-center mb-3" color="primary"
+                mat-icon-button>
+            <mat-icon>gps_fixed</mat-icon>
+        </button>
+        <button (click)="ingredientList.deselectAll()" [disabled]="ingredientList.selectedOptions.isEmpty()"
+                class="align-self-center mb-3" color="warn"
+                mat-icon-button>
+            <mat-icon>cleaning_services</mat-icon>
+        </button>
+    </div>
+</div>
+<mat-dialog-content>
+    <mat-selection-list #ingredientList>
+        <mat-list-option *ngFor="let item of data" [value]="item">
+            <h2 matLine>{{item.name}} <strong>{{item.unitAbbrev}}</strong></h2>
+            <p matLine>
+                <span> {{item.description}} </span>
+            </p>
+        </mat-list-option>
+        <mat-divider></mat-divider>
+    </mat-selection-list>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button (click)="exit()" mat-button>Cancel</button>
+    <button [mat-dialog-close]="ingredientList.selectedOptions.selected" cdkFocusInitiaL color="accent"
+            mat-raised-button>
+        Add Items
+    </button>
+</mat-dialog-actions>

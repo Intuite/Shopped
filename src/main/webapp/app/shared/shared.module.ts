@@ -23,10 +23,13 @@ import { CatalogueTableComponent } from './tables/catalogue-table/catalogue-tabl
 import { AwardTableComponent } from './tables/award-table/award-table.component';
 
 import { RecipeTagTableComponent } from './tables/recipe-tag-table/recipe-tag-table.component';
-import { DialogComponent } from './components/dialog/dialog.component';
 import { DatepickerComponent } from './components/datepicker/datepicker.component';
 import { CheckboxComponent } from './components/checkbox/checkbox.component';
 import { PostTableComponent } from './tables/post-table/post-table.component';
+import { IngredientPickerComponent } from './components/pickers/ingredient-picker/ingredient-picker.component';
+import { SelectionComponent as IngredientPKSelectionComponent } from './components/pickers/ingredient-picker/selection/selection.component';
+import { DialogComponent as IngredientPKDialogComponent } from './components/pickers/ingredient-picker/dialog/dialog.component';
+
 import { BuyCookieComponent } from './components/buy-cookie/buy-cookie.component';
 import { BundlePickerDialogComponent } from './components/buy-cookie/bundle-picker-dialog/bundle-picker-dialog.component';
 @NgModule({
@@ -50,10 +53,12 @@ import { BundlePickerDialogComponent } from './components/buy-cookie/bundle-pick
     AwardTableComponent,
     IngredientTableComponent,
     RecipeTagTableComponent,
-    DialogComponent,
     DatepickerComponent,
     CheckboxComponent,
     PostTableComponent,
+    IngredientPickerComponent,
+    IngredientPKSelectionComponent,
+    IngredientPKDialogComponent,
     BuyCookieComponent,
     BundlePickerDialogComponent,
   ],
@@ -78,10 +83,12 @@ import { BundlePickerDialogComponent } from './components/buy-cookie/bundle-pick
     AwardTableComponent,
     IngredientTableComponent,
     RecipeTagTableComponent,
-    DialogComponent,
     DatepickerComponent,
     CheckboxComponent,
     PostTableComponent,
+    IngredientPickerComponent,
+    IngredientPKSelectionComponent,
+    IngredientPKDialogComponent,
     BuyCookieComponent,
   ],
 })

@@ -32,6 +32,11 @@ export class RecipeTagService {
     return this.http.get<IRecipeTag[]>(this.resourceUrl, { params: options, observe: 'response' });
   }
 
+  queryAll(req?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http.get<IRecipeTag[]>(`${this.resourceUrl}/all`, { params: options, observe: 'response' });
+  }
+
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
