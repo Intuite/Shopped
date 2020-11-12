@@ -1,0 +1,8 @@
+diff a/src/main/webapp/app/shared/components/buy-cookie/bundle-picker-dialog/bundle-picker-dialog.component.ts b/src/main/webapp/app/shared/components/buy-cookie/bundle-picker-dialog/bundle-picker-dialog.component.ts	(rejected hunks)
+@@ -10,5 +11 @@ export class BundlePickerDialogComponent implements OnInit {
+-  constructor() { }
+-
+-  ngOnInit(): void {
+-  }
+-
++  ngOnInit(): void {}

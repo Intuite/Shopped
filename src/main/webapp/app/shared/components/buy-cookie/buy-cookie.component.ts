@@ -1,9 +1,10 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { Bundle } from 'app/shared/model/bundle.model';
+import { Component, OnInit } from '@angular/core';
+import { Bundle, IBundle } from 'app/shared/model/bundle.model';
 import { Subscription } from 'rxjs';
 import { BundleService } from 'app/entities/bundle/bundle.service';
-import { MatDialogContent, MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { HttpResponse } from '@angular/common/http';
+import { BundlePickerDialogComponent } from 'app/shared/components/buy-cookie/bundle-picker-dialog/bundle-picker-dialog.component';
 
 @Component({
   selector: 'jhi-buy-cookie',
@@ -23,7 +24,7 @@ export class BuyCookieComponent implements OnInit {
 
   ngOnInit(): void {
     this.service.query().subscribe(
-      (res: HttpResponse<Bundle>) => this.onSuccess(res.body),
+      (res: HttpResponse<IBundle[]>) => this.onSuccess(res.body),
       () => this.onError()
     );
   }
@@ -37,15 +38,8 @@ export class BuyCookieComponent implements OnInit {
   }
 
   open(): any {
-    this.dialog.open(BundlePickerDialog, {
+    this.dialog.open(BundlePickerDialogComponent, {
       data: this.bundles,
     });
   }
-}
-@Component({
-  selector: 'bundle-picker-dialog',
-  templateUrl: './bundle-picker-dialog.html',
-})
-export class BundlePickerDialog {
-  constructor(@Inject(MAT_DIALOG_DATA) public data: Bundle[]) {}
 }
