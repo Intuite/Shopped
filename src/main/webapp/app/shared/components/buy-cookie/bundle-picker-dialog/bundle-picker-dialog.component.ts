@@ -5,10 +5,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/user/account.model';
-import { Cookies } from 'app/shared/model/cookies.model';
+import { Cookies, ICookies } from 'app/shared/model/cookies.model';
 import { CookiesService } from 'app/entities/cookies/cookies.service';
-import { UserService } from 'app/core/user/user.service';
-import { User } from 'app/core/user/user.model';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'jhi-bundle-picker-dialog',
@@ -22,14 +21,12 @@ export class BundlePickerDialogComponent implements OnInit {
   bundle = new Bundle();
   account?: Account;
   cookie?: Cookies;
-  user?: User;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: Bundle[],
     private _formBuilder: FormBuilder,
     private accountService: AccountService,
-    private cookieService: CookiesService,
-    private userService: UserService
+    private cookieService: CookiesService
   ) {
     this.firstFormGroup = this._formBuilder.group({
       firstCtrl: ['', Validators.required],
@@ -39,18 +36,19 @@ export class BundlePickerDialogComponent implements OnInit {
     });
   }
 
+  onSuccess(data: any): void {
+    this.cookie = data[0];
+  }
   ngOnInit(): void {
     this.accountService.identity().subscribe(res => (this.account = res || undefined));
-    this.userService.find(this.account!.login).subscribe(res => (this.user = res || undefined));
-    console.warn(this.user?.id);
     this.cookieService
       .query({
-        ...(this.user?.id && { 'user_id.equals': this.user?.id }),
+        ...(3 && { 'userId.equals': 3 }),
       })
-      .subscribe(res => (this.cookie = res.body![0] || undefined));
-
-    console.warn(this.account?.login);
-    console.warn(this.cookie?.amount);
+      .subscribe(
+        (res: HttpResponse<ICookies[]>) => this.onSuccess(res.body),
+        () => console.warn('se cayo')
+      );
   }
 
   selectBundle(s?: Bundle, stepper?: MatStepper): void {
@@ -59,7 +57,7 @@ export class BundlePickerDialogComponent implements OnInit {
     }
   }
 
-  /*getBundle(id: number): void {
+  /* getBundle(id: number): void {
     this.service.find(id).subscribe((res: any) => this.bundle = res.body || new Bundle());
 
   }*/
