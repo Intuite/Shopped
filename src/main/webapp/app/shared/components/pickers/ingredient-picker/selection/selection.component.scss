@@ -1,0 +1,28 @@
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+/* Firefox */
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+.corner-exit {
+  position: absolute !important;
+  top: 0px;
+  right: 0px;
+}
+
+.mat-card-avatar {
+  margin-top: 0px;
+
+  .mat-card-image {
+    border-radius: 50% !important;
+    height: 40px;
+    width: 40px;
+    object-fit: cover;
+    margin: 0;
+  }
+}
