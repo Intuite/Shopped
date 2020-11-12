@@ -72,7 +72,7 @@
             <div class="w-100" fxLayout="row" fxLayoutAlign="center center">
                 <button [routerLink]="['/recipe-tag/', element.id, 'view']"
                         class="text-white"
-                        color="secondary"
+                        jhiMaterialColor="secondary"
                         mat-flat-button
                         type="submit"
                 >
@@ -81,8 +81,7 @@
 
                 <button [routerLink]="['/recipe-tag/', element.id, 'edit']"
                         class="text-white mx-3"
-                        color="secondary"
-                        color="primary"
+                        jhiMaterialColor="primary"
                         mat-flat-button
                         type="submit">
                     <mat-icon>create</mat-icon>
@@ -90,8 +89,7 @@
 
                 <button (click)="managementComponent.delete(element)"
                         class="text-white"
-                        color="secondary"
-                        color="warn"
+                        jhiMaterialColor="warn"
                         mat-flat-button
                         type="submit">
                     <mat-icon>close</mat-icon>
