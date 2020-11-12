@@ -13,6 +13,7 @@ import { AlertError } from 'app/shared/alert/alert-error.model';
 @Component({
   selector: 'jhi-award-update',
   templateUrl: './award-update.component.html',
+  styleUrls: ['../../../content/scss/image_Select.scss'],
 })
 export class AwardUpdateComponent implements OnInit {
   isSaving = false;

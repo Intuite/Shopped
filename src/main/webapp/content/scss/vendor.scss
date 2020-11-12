@@ -11,7 +11,7 @@
 // hue. Available color palettes: https://material.io/design/color/
 /* For use in src/lib/core/theming/_palette.scss */
 /* For use in src/lib/core/theming/_palette.scss */
-$md-shoppedprimary: (
+$md-shopped-orange: (
   50: #fff4e1,
   100: #ffe3b3,
   200: #ffd180,
@@ -44,7 +44,7 @@ $md-shoppedprimary: (
   ),
 );
 
-$md-shoppedwarn: (
+$md-shopped-yellow: (
   50: #fffbe5,
   100: #fff6bf,
   200: #fff095,
@@ -77,7 +77,7 @@ $md-shoppedwarn: (
   ),
 );
 
-$md-shoppedsuccess: (
+$md-shopped-green: (
   50: #e6ebe0,
   100: #c0ccb3,
   200: #96aa80,
@@ -110,7 +110,7 @@ $md-shoppedsuccess: (
   ),
 );
 
-$md-shoppedsecondary: (
+$md-shopped-coffee: (
   50: #f1ece8,
   100: #dbd1c5,
   200: #c3b29f,
@@ -143,7 +143,7 @@ $md-shoppedsecondary: (
   ),
 );
 
-$md-shoppeddanger: (
+$md-shopped-red: (
   50: #ffeeea,
   100: #ffd4ca,
   200: #ffb7a7,
@@ -177,7 +177,7 @@ $md-shoppeddanger: (
 );
 
 /* For use in src/lib/core/theming/_palette.scss */
-$md-shoppedaccent: (
+$md-shopped-blue: (
   50: #eaedfc,
   100: #ccd3f7,
   200: #aab6f2,
@@ -210,23 +210,23 @@ $md-shoppedaccent: (
   ),
 );
 
-$shopped-app-primary: mat-palette($md-shoppedprimary);
-$shopped-app-accent: mat-palette($md-shoppedaccent);
-$shopped-app-warn: mat-palette($md-shoppedwarn);
+$shopped-app-primary: mat-palette($md-shopped-orange);
+$shopped-app-accent: mat-palette($md-shopped-blue);
+$shopped-app-warn: mat-palette($md-shopped-red);
 
 //Additional
-$shopped-app-danger: mat-palette($md-shoppeddanger);
-$shopped-app-success: mat-palette($md-shoppedsuccess);
-$shopped-app-secondary: mat-palette($md-shoppedsecondary);
+$shopped-app-attention: mat-palette($md-shopped-yellow);
+$shopped-app-success: mat-palette($md-shopped-green);
+$shopped-app-secondary: mat-palette($md-shopped-coffee);
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as `color` or `typography`.
 @function shopped-light-theme(
   $primary,
   $accent,
-  $warn: mat-palette($mat-yellow),
+  $warn: mat-palette($mat-red),
   $success: mat-palette($mat-green),
-  $danger: mat-palette($mat-red),
-  $secondary
+  $attention: mat-palette($mat-yellow),
+  $secondary: mat-palette($mat-brown)
 ) {
   @return map-merge(
     mat-light-theme(
@@ -236,13 +236,13 @@ $shopped-app-secondary: mat-palette($md-shoppedsecondary);
           accent: $shopped-app-accent,
           warn: $shopped-app-warn,
           //danger: $shopped-app-danger,
-          //success: $shopped-app-success,,,,,,,,
+          //success: $shopped-app-success,,,,,,,,,,
         ),
       )
     ),
     (
       success: $success,
-      danger: $danger,
+      attention: $attention,
       secondary: $secondary,
     )
   );
@@ -253,7 +253,7 @@ $shopped-app-theme: shopped-light-theme(
   $shopped-app-accent,
   $shopped-app-warn,
   $shopped-app-success,
-  $shopped-app-danger,
+  $shopped-app-attention,
   $shopped-app-secondary
 );
 //@import '~bootswatch/dist/materia/variables';
@@ -272,13 +272,14 @@ $teal: #63cdda;
 $cyan: #3dc1d3;
 $yellow: #ffe02a;
 $coffee: #87643e;
+$secondary: #f1ece8;
 
 @import 'bootstrap-variables';
 /*! Import Bootstrap 4 variables */
 $primary: $orange;
 $theme-colors: (
   primary: $primary,
-  secondary: $coffee,
+  secondary: $secondary,
 );
 
 // Import Bootstrap source files from node_modules
@@ -306,5 +307,5 @@ $theme-colors: (
 }
 
 @include add-color($shopped-app-theme, success);
-@include add-color($shopped-app-theme, danger);
+@include add-color($shopped-app-theme, attention);
 @include add-color($shopped-app-theme, secondary);

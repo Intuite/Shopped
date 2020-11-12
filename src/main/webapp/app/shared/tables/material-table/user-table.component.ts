@@ -50,8 +50,8 @@ export class UserTableComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = (e.target as HTMLInputElement).value.trim().toLocaleLowerCase();
   };
 
-  public reloadSource(): void {
-    this.data = this.managementComponent.users as User[];
-    this.dataSource = new MatTableDataSource<User>(this.data);
+  public reloadSource(data: User[]): void {
+    this.data = data;
+    this.dataSource.data = data;
   }
 }
