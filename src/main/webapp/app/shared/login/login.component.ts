@@ -57,7 +57,10 @@ export class LoginModalComponent implements AfterViewInit {
             this.router.navigate(['']);
           }
         },
-        () => (this.authenticationError = true)
+        () => {
+          setTimeout(() => (this.authenticationError = false), 2500);
+          this.authenticationError = true;
+        }
       );
   }
 

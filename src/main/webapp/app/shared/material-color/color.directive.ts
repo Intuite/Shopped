@@ -1,6 +1,6 @@
 import { Directive, ElementRef, Input, Renderer2 } from '@angular/core';
 
-type ColorClasses = 'primary' | 'accent' | 'warn' | 'success' | 'danger' | 'secondary' | undefined;
+type ColorClasses = 'primary' | 'accent' | 'warn' | 'success' | 'attention' | 'secondary' | undefined;
 
 @Directive({
   selector: '[jhiMaterialColor]',

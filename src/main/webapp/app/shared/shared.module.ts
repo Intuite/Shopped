@@ -13,7 +13,7 @@ import { ListComponent } from './components/list/list.component';
 import { TabsComponent } from './components/tabs/tabs.component';
 import { UserTableComponent } from './tables/material-table/user-table.component';
 import { WrapperMaterialTableComponent } from './tables/wrapper-material-table/wrapper-material-table.component';
-import { FlexModule } from '@angular/flex-layout';
+import { ExtendedModule, FlexModule } from '@angular/flex-layout';
 import { RouterModule } from '@angular/router';
 import { DynamicTablePrototypeComponent } from './tables/dynamic-table-prototype/dynamic-table-prototype.component';
 import { UnitTableComponent } from './tables/unit-table/unit-table.component';
@@ -30,7 +30,7 @@ import { PostTableComponent } from './tables/post-table/post-table.component';
 import { BuyCookieComponent } from './components/buy-cookie/buy-cookie.component';
 import { BundlePickerDialogComponent } from './components/buy-cookie/bundle-picker-dialog/bundle-picker-dialog.component';
 @NgModule({
-  imports: [JhMaterialModule, ShoppedSharedLibsModule, FlexModule, RouterModule],
+  imports: [JhMaterialModule, ShoppedSharedLibsModule, FlexModule, RouterModule, ExtendedModule],
   declarations: [
     FindLanguageFromKeyPipe,
     AlertComponent,
