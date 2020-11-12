@@ -236,7 +236,7 @@ $shopped-app-secondary: mat-palette($md-shoppedsecondary);
           accent: $shopped-app-accent,
           warn: $shopped-app-warn,
           //danger: $shopped-app-danger,
-          //success: $shopped-app-success,,,,,,,,
+          //success: $shopped-app-success,,,,,,,,,
         ),
       )
     ),
@@ -308,3 +308,11 @@ $theme-colors: (
 @include add-color($shopped-app-theme, success);
 @include add-color($shopped-app-theme, danger);
 @include add-color($shopped-app-theme, secondary);
+
+.mat-form-field.ng-dirty.ng-invalid .mat-form-field-underline,
+.mat-form-field-underline {
+  background-color: mat-color($shopped-app-accent) !important;
+}
+.mat-form-field.ng-dirty.ng-invalid .mat-form-field-label {
+  color: mat-color($shopped-app-danger) !important;
+}
