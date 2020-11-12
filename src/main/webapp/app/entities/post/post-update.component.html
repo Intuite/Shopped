@@ -1,47 +1,65 @@
 <div class="row justify-content-center">
+    <div class="col-10">
+        <button type="submit" class="btn btn-secondary" (click)="previousState()">
+            <fa-icon icon="arrow-left"></fa-icon>
+        </button>
+    </div>
+
     <div class="col-8">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-            <h2 id="jhi-post-heading" jhiTranslate="shoppedApp.post.home.createOrEditLabel">Create or edit a Post</h2>
+            <h2 id="jhi-post-heading">{{ editForm.get('id')!.value !== undefined ? "Edit" : "Create" }}
+                a public post for your recipe</h2>
 
-            <jhi-alert-error></jhi-alert-error>
-
-            <div [hidden]="!editForm.get('id')!.value" class="form-group">
-                <label for="id" jhiTranslate="global.field.id">ID</label>
-                <input class="form-control" formControlName="id" id="id" name="id" readonly type="text"/>
-            </div>
-
-            <div  class="form-group">
-                <label class="form-control-label" jhiTranslate="shoppedApp.post.date" for="field_date">Date</label>
-                <div class="d-flex">
-                    <input id="field_date" type="datetime-local" class="form-control" name="date" formControlName="date" placeholder="YYYY-MM-DD HH:mm"/>
-                </div>
-                <div *ngIf="editForm.get('date')!.invalid && (editForm.get('date')!.dirty || editForm.get('date')!.touched)">
-                    <small class="form-text text-danger"
-                           *ngIf="editForm.get('date')?.errors?.required" jhiTranslate="entity.validation.required">
-                        This field is required.
-                    </small>
-                    <small class="form-text text-danger"
-                           [hidden]="!editForm.get('date')?.errors?.ZonedDateTimelocal" jhiTranslate="entity.validation.ZonedDateTimelocal">
-                        This field should be a date and time.
-                    </small>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="form-control-label" jhiTranslate="shoppedApp.post.user" for="field_user">User</label>
-                <select class="form-control" id="field_user" name="user" formControlName="userId">
-                    <option *ngIf="!editForm.get('userId')!.value" [ngValue]="null" selected></option>
-                    <option [ngValue]="userOption.id" *ngFor="let userOption of users; trackBy: trackById">{{ userOption.login }}</option>
-                </select>
-            </div>
-            <div *ngIf="editForm.get('userId')!.invalid && (editForm.get('userId')!.dirty || editForm.get('userId')!.touched)">
-                <small class="form-text text-danger"
-                       *ngIf="editForm.get('userId')?.errors?.required" jhiTranslate="entity.validation.required">
-                    This field is required.
-                </small>
-            </div>
+            <br>
+            <br>
 
             <div>
+                <jhi-alert-error></jhi-alert-error>
+                <jhi-alert></jhi-alert>
+
+                <mat-form-field class="form-group w-100" appearance="fill" [hidden]="!editForm.get('id')!.value"
+                                style="display: none">
+                    <mat-label for="id" jhiTranslate="global.field.id">ID</mat-label>
+                    <input matInput type="text" id="id" name="id" formControlName="id" readonly/>
+                </mat-form-field>
+
+                <div class="form-group" style="display: none">
+                    <label class="form-control-label" jhiTranslate="shoppedApp.post.date" for="field_date">Date</label>
+                    <div class="d-flex">
+                        <input id="field_date" type="datetime-local" class="form-control" name="date"
+                               formControlName="date"
+                               placeholder="YYYY-MM-DD HH:mm"/>
+                    </div>
+                    <div
+                        *ngIf="editForm.get('date')!.invalid && (editForm.get('date')!.dirty || editForm.get('date')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('date')?.errors?.required" jhiTranslate="entity.validation.required">
+                            This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               [hidden]="!editForm.get('date')?.errors?.ZonedDateTimelocal"
+                               jhiTranslate="entity.validation.ZonedDateTimelocal">
+                            This field should be a date and time.
+                        </small>
+                    </div>
+                </div>
+
+                <h6>Choose a recipe you created to post:</h6>
+
+                <mat-form-field appearance="fill" class="form-group w-100">
+                    <mat-label jhiTranslate="shoppedApp.post.recipe"></mat-label>
+                    <mat-select formControlName="recipeId" id="field_recipe" name="recipe">
+                        <mat-option *ngFor="let recipeOption of recipes; trackBy: trackById" [value]="recipeOption.id">
+                            {{recipeOption.name }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error
+                        *ngIf="editForm.get('recipeId')!.invalid && (editForm.get('recipeId')!.dirty || editForm.get('recipeId')!.touched)"
+                        jhiTranslate="entity.validation.required">
+                    </mat-error>
+                </mat-form-field>
+
+                <h6>(Optional) Write a caption for your recipe</h6>
                 <mat-form-field appearance="fill" class="form-group w-100">
                     <mat-label jhiTranslate="shoppedApp.post.caption"></mat-label>
                     <input formControlName="caption" id="field_caption" matInput name="caption"
@@ -54,21 +72,21 @@
                     </mat-error>
                 </mat-form-field>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="shoppedApp.post.recipe" for="field_recipe">Recipe</label>
-                    <select class="form-control" id="field_recipe" name="recipe" formControlName="recipeId">
-                        <option *ngIf="!editForm.get('recipeId')!.value" [ngValue]="null" selected></option>
-                        <option [ngValue]="recipeOption.id" *ngFor="let recipeOption of recipes; trackBy: trackById">{{ recipeOption.name }}</option>
-                    </select>
-                </div>
-                <div *ngIf="editForm.get('recipeId')!.invalid && (editForm.get('recipeId')!.dirty || editForm.get('recipeId')!.touched)">
-                    <small class="form-text text-danger"
-                           *ngIf="editForm.get('recipeId')?.errors?.required" jhiTranslate="entity.validation.required">
-                        This field is required.
-                    </small>
-                </div>
-
                 <mat-form-field appearance="fill" class="form-group w-100">
+                    <mat-label jhiTranslate="shoppedApp.post.user"></mat-label>
+                    <mat-select formControlName="userId" id="field_user" name="user">
+                        <mat-option *ngFor="let userOption of users; trackBy: trackById" [value]="userOption.id">
+                            {{userOption.login }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error
+                        *ngIf="editForm.get('userId')!.invalid && (editForm.get('userId')!.dirty || editForm.get('userId')!.touched)"
+                        jhiTranslate="entity.validation.required">
+                    </mat-error>
+                </mat-form-field>
+
+
+                <mat-form-field appearance="fill" class="form-group w-100" style="display: none">
                     <mat-label jhiTranslate="shoppedApp.post.status"></mat-label>
                     <mat-select [(ngModel)]="statusOptions[0]" formControlName="status" id="status" name="status">
                         <mat-option *ngFor="let status of statusOptions" [value]="status">
@@ -80,19 +98,14 @@
 
             <div>
                 <!--
-                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
-                    <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving"
+                        class="btn btn-primary">
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
                 </button>
                 -->
-
-                <button type="submit"
-                        (click)="previousState()"
-                        class="btn btn-info">
-                    <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
-                </button>
-
-                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
-                    <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving"
+                        class="btn btn-primary">
+                    &nbsp;<span>Create Post</span>
                 </button>
             </div>
         </form>
