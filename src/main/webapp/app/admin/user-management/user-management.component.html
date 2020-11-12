@@ -2,8 +2,16 @@
     <h2>
         <span id="user-management-page-heading" jhiTranslate="userManagement.home.title">Users</span>
 
-        <button class="btn btn-primary float-right jh-create-entity" [routerLink]="['./new']">
-            <fa-icon icon="plus"></fa-icon> <span jhiTranslate="userManagement.home.createLabel">Create a new User</span>
+        <button
+            class="btn btn-primary float-right jh-create-entity"
+            [routerLink]="['./new']"
+            [matTooltipHideDelay]="0"
+            [matTooltipShowDelay]="1000"
+            matTooltip="Create a new user"
+            jhiMaterialColor="accent"
+            mat-flat-button
+        >
+            <mat-icon>add</mat-icon>
         </button>
     </h2>
 
@@ -12,7 +20,6 @@
     <jhi-alert></jhi-alert>
 
     <div class="table-responsive table-hover" *ngIf="users">
-        <jhi-material-table [data]="users" [managementComponent]="this"></jhi-material-table>
+        <jhi-material-table #tableComponent [data]="users" [managementComponent]="this"></jhi-material-table>
     </div>
 </div>
-u
