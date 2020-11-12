@@ -82,7 +82,7 @@
                 <button [routerLink]="['/award/', element.id, 'view']"
                         class="text-white"
                         jhiMaterialColor="secondary"
-                        mat-flat-button
+                        mat-mini-fab
                         type="submit"
                 >
                     <mat-icon>launch</mat-icon>
@@ -91,7 +91,7 @@
                 <button [routerLink]="['/award/', element.id, 'edit']"
                         class="text-white mx-3"
                         jhiMaterialColor="primary"
-                        mat-flat-button
+                        mat-mini-fab
                         type="submit">
                     <mat-icon>create</mat-icon>
                 </button>
@@ -99,7 +99,7 @@
                 <button (click)="managementComponent.delete(element)"
                         class="text-white"
                         jhiMaterialColor="warn"
-                        mat-flat-button
+                        mat-mini-fab
                         type="submit">
                     <mat-icon>close</mat-icon>
                 </button>
