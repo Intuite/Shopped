@@ -211,14 +211,14 @@ $md-shopped-blue: (
   ),
 );
 
-$shopped-app-primary: mat-palette($md-shopped-orange, 500, 100, 700, 50);
-$shopped-app-accent: mat-palette($md-shopped-blue, 500, 100, 700, 50);
-$shopped-app-warn: mat-palette($md-shopped-red, 500, 100, 700, 50);
+$shopped-app-primary: mat-palette($md-shopped-orange, 500, 100, 700);
+$shopped-app-accent: mat-palette($md-shopped-blue, 500, 100, 700);
+$shopped-app-warn: mat-palette($md-shopped-red, 500, 100, 700);
 
 //Additional
-$shopped-app-attention: mat-palette($md-shopped-yellow, 500, 100, 700, 50);
-$shopped-app-success: mat-palette($md-shopped-green, 500, 100, 700, 50);
-$shopped-app-secondary: mat-palette($md-shopped-coffee, 500, 100, 700, 50);
+$shopped-app-attention: mat-palette($md-shopped-yellow, 500, 100, 700);
+$shopped-app-success: mat-palette($md-shopped-green, 500, 100, 700);
+$shopped-app-secondary: mat-palette($md-shopped-coffee, 500, 100, 700);
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as `color` or `typography`.
 @function shopped-light-theme(
@@ -237,7 +237,7 @@ $shopped-app-secondary: mat-palette($md-shopped-coffee, 500, 100, 700, 50);
           accent: $shopped-app-accent,
           warn: $shopped-app-warn,
           //danger: $shopped-app-danger,
-          //success: $shopped-app-success,,,,,,,,,,,
+          //success: $shopped-app-success,,,,,,,,,,,,
         ),
       )
     ),
