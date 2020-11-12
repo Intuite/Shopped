@@ -1,28 +1,20 @@
 <div>
     <h2 id="page-heading">
         <span jhiTranslate="shoppedApp.post.home.title">Posts</span>
-        <button
-            [matTooltipHideDelay]="0"
-            [matTooltipShowDelay]="1000"
-            [routerLink]="['/post/new']"
-            aria-label="Create a new post"
-            class="float-right jh-create-entity create-post"
-            jhiMaterialColor="accent"
-            mat-flat-button
-            matTooltip="Create a new post">
-            <mat-icon>add</mat-icon>
-        </button>
     </h2>
-
     <jhi-alert-error></jhi-alert-error>
 
     <jhi-alert></jhi-alert>
 
-    <div class="alert alert-warning" id="no-result" *ngIf="posts?.length === 0">
+    <div class="w-100" fxLayout="row" fxLayoutAlign="space-around center">
+        <mat-spinner *ngIf="!posts || posts.length == 0" diameter="50" strokeWidth="5"></mat-spinner>
+    </div>
+
+    <div *ngIf="posts?.length === 0" class="alert alert-warning" id="no-result">
         <span jhiTranslate="shoppedApp.post.home.notFound">No posts found</span>
     </div>
 
-    <div class="table-responsive" id="entities" *ngIf="posts && posts.length > 0">
+    <div *ngIf="posts && posts.length > 0" class="table-responsive" id="entities">
         <jhi-post-table [data]="posts" [managementComponent]="this"></jhi-post-table>
     </div>
 </div>

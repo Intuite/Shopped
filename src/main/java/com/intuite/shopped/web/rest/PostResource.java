@@ -1,11 +1,10 @@
 package com.intuite.shopped.web.rest;
 
-import com.intuite.shopped.service.PostService;
-import com.intuite.shopped.web.rest.errors.BadRequestAlertException;
-import com.intuite.shopped.service.dto.PostDTO;
-import com.intuite.shopped.service.dto.PostCriteria;
 import com.intuite.shopped.service.PostQueryService;
-
+import com.intuite.shopped.service.PostService;
+import com.intuite.shopped.service.dto.PostCriteria;
+import com.intuite.shopped.service.dto.PostDTO;
+import com.intuite.shopped.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -15,10 +14,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -33,16 +31,12 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class PostResource {
 
-    private final Logger log = LoggerFactory.getLogger(PostResource.class);
-
     private static final String ENTITY_NAME = "post";
-
+    private final Logger log = LoggerFactory.getLogger(PostResource.class);
+    private final PostService postService;
+    private final PostQueryService postQueryService;
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
-
-    private final PostService postService;
-
-    private final PostQueryService postQueryService;
 
     public PostResource(PostService postService, PostQueryService postQueryService) {
         this.postService = postService;
