@@ -1,7 +1,8 @@
-import { Component, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, AfterViewInit, ElementRef, ViewChild, Inject, PLATFORM_ID } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 
 import { PasswordResetInitService } from './password-reset-init.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'jhi-password-reset-init',
@@ -16,10 +17,18 @@ export class PasswordResetInitComponent implements AfterViewInit {
     email: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(254), Validators.email]],
   });
 
-  constructor(private passwordResetInitService: PasswordResetInitService, private fb: FormBuilder) {}
+  constructor(
+    private passwordResetInitService: PasswordResetInitService,
+    private fb: FormBuilder,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   ngAfterViewInit(): void {
-    if (this.email) {
+    this.setFocusMail();
+  }
+
+  setFocusMail(): void {
+    if (isPlatformBrowser(this.platformId) && this.email) {
       this.email.nativeElement.focus();
     }
   }
