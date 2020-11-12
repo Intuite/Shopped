@@ -41,6 +41,7 @@
         "message": "Message",
         "catalogue": "Catalogue",
         "unit": "Unit",
+        "bundle": "Bundle",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

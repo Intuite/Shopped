@@ -14,12 +14,13 @@ export class IngredientTableComponent implements OnInit, AfterViewInit {
   @Input() data!: Ingredient[];
   @Input() managementComponent!: IngredientComponent;
 
-  displayedColumns: string[] = ['id', 'name', 'unit', 'description', 'status', 'options'];
+  displayedColumns: string[] = ['id', 'name', 'unitAbbrev', 'description', 'status', 'options'];
 
   dataSource = new MatTableDataSource<Ingredient>();
 
   @ViewChild('sort') sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  loaded = false;
 
   ngOnInit(): void {
     this.dataSource.data = this.data;
@@ -29,17 +30,14 @@ export class IngredientTableComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.dataSource.filterPredicate = (data: any, filter) => {
-      const dataStr = JSON.stringify(data).toLowerCase();
+      let dataStr = JSON.stringify(data).toLowerCase();
+      dataStr = dataStr.replace(/(\{|,)\s*(.+?)\s*:/g, '');
       return dataStr.includes(filter);
+      // return dataStr.indexOf(filter) != -1;
     };
   }
 
   public filter = (e: Event) => {
     this.dataSource.filter = (e.target as HTMLInputElement).value.trim().toLocaleLowerCase();
   };
-
-  public reloadSource(): void {
-    this.data = this.managementComponent.ingredients as Ingredient[];
-    this.dataSource = new MatTableDataSource<Ingredient>(this.data);
-  }
 }

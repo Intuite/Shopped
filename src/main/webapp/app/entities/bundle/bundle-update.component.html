@@ -1,0 +1,87 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-ingredient-heading">{{ editForm.get('id')!.value !== undefined ? "Edit" : "Create" }}
+                Bundle</h2>
+
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <jhi-alert></jhi-alert>
+                <mat-form-field class="form-group w-100" appearance="fill" [hidden]="!editForm.get('id')!.value">
+                    <mat-label for="id" jhiTranslate="global.field.id">ID</mat-label>
+                    <input matInput type="text" id="id" name="id" formControlName="id" readonly/>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="form-group w-100">
+                    <mat-label jhiTranslate="shoppedApp.bundle.name" for="field_name">Name</mat-label>
+                    <input type="text" class="form-control" name="name" id="field_name"
+                           formControlName="name" matInput/>
+                    <mat-error
+                        *ngIf="editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('name')?.errors?.required" jhiTranslate="entity.validation.required">
+                            This field is required.
+                        </small>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="form-group w-100">
+                    <mat-label jhiTranslate="shoppedApp.bundle.cost" for="field_cost">Cost</mat-label>
+                    <input type="number" name="cost" id="field_cost"
+                           formControlName="cost" matInput/>
+                    <mat-error
+                        *ngIf="editForm.get('cost')!.invalid && (editForm.get('cost')!.dirty || editForm.get('cost')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('cost')?.errors?.required" jhiTranslate="entity.validation.required">
+                            This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('cost')?.errors?.min" jhiTranslate="entity.validation.min"
+                               [translateValues]="{ min: 0 }">
+                            This field should be at least 0.
+                        </small>
+                        <small class="form-text text-danger"
+                               [hidden]="!editForm.get('cost')?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="form-group w-100">
+                    <mat-label jhiTranslate="shoppedApp.bundle.cookieAmount"
+                           for="field_cookieAmount">Cookie Amount</mat-label>
+                    <input type="number" matInput name="cookieAmount" id="field_cookieAmount"
+                           formControlName="cookieAmount"/>
+                    <mat-error
+                        *ngIf="editForm.get('cookieAmount')!.invalid && (editForm.get('cookieAmount')!.dirty || editForm.get('cookieAmount')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('cookieAmount')?.errors?.required"
+                               jhiTranslate="entity.validation.required">
+                            This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('cookieAmount')?.errors?.min" jhiTranslate="entity.validation.min"
+                               [translateValues]="{ min: 0 }">
+                            This field should be at least 0.
+                        </small>
+                        <small class="form-text text-danger"
+                               [hidden]="!editForm.get('cookieAmount')?.errors?.number"
+                               jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                 </button>
+
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

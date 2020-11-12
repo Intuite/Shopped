@@ -1,0 +1,9 @@
+{
+  "shoppedApp": {
+    "validation": {
+      "forms": {
+        "nameUnique": "This name is already in use"
+      }
+    }
+  }
+}

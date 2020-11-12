@@ -13,7 +13,7 @@ import { ListComponent } from './components/list/list.component';
 import { TabsComponent } from './components/tabs/tabs.component';
 import { UserTableComponent } from './tables/material-table/user-table.component';
 import { WrapperMaterialTableComponent } from './tables/wrapper-material-table/wrapper-material-table.component';
-import { FlexModule } from '@angular/flex-layout';
+import { ExtendedModule, FlexModule } from '@angular/flex-layout';
 import { RouterModule } from '@angular/router';
 import { DynamicTablePrototypeComponent } from './tables/dynamic-table-prototype/dynamic-table-prototype.component';
 import { UnitTableComponent } from './tables/unit-table/unit-table.component';
@@ -23,12 +23,15 @@ import { CatalogueTableComponent } from './tables/catalogue-table/catalogue-tabl
 import { AwardTableComponent } from './tables/award-table/award-table.component';
 
 import { RecipeTagTableComponent } from './tables/recipe-tag-table/recipe-tag-table.component';
-import { DialogComponent } from './components/dialog/dialog.component';
 import { DatepickerComponent } from './components/datepicker/datepicker.component';
 import { CheckboxComponent } from './components/checkbox/checkbox.component';
 import { PostTableComponent } from './tables/post-table/post-table.component';
+import { IngredientPickerComponent } from './components/pickers/ingredient-picker/ingredient-picker.component';
+import { SelectionComponent as IngredientPKSelectionComponent } from './components/pickers/ingredient-picker/selection/selection.component';
+import { DialogComponent as IngredientPKDialogComponent } from './components/pickers/ingredient-picker/dialog/dialog.component';
+
 @NgModule({
-  imports: [JhMaterialModule, ShoppedSharedLibsModule, FlexModule, RouterModule],
+  imports: [JhMaterialModule, ShoppedSharedLibsModule, FlexModule, RouterModule, ExtendedModule],
   declarations: [
     FindLanguageFromKeyPipe,
     AlertComponent,
@@ -48,10 +51,12 @@ import { PostTableComponent } from './tables/post-table/post-table.component';
     AwardTableComponent,
     IngredientTableComponent,
     RecipeTagTableComponent,
-    DialogComponent,
     DatepickerComponent,
     CheckboxComponent,
     PostTableComponent,
+    IngredientPickerComponent,
+    IngredientPKSelectionComponent,
+    IngredientPKDialogComponent,
   ],
   entryComponents: [LoginModalComponent],
   exports: [
@@ -74,10 +79,12 @@ import { PostTableComponent } from './tables/post-table/post-table.component';
     AwardTableComponent,
     IngredientTableComponent,
     RecipeTagTableComponent,
-    DialogComponent,
     DatepickerComponent,
     CheckboxComponent,
     PostTableComponent,
+    IngredientPickerComponent,
+    IngredientPKSelectionComponent,
+    IngredientPKDialogComponent,
   ],
 })
 export class ShoppedSharedModule {}

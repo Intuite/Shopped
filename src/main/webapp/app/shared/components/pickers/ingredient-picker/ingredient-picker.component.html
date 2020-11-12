@@ -1,0 +1,35 @@
+<form [formGroup]="ingredientForm">
+    <mat-expansion-panel (closed)="panelOpenState = false"
+                         (opened)="panelOpenState = true">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Ingredients
+            </mat-panel-title>
+            <mat-panel-description>
+                {{ getSelectedControls().length }} ingredients selected
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <button (click)="addIngredient()" class="align-self-center mb-3 corner-add" color="primary" mat-raised-button>
+            <mat-icon>add</mat-icon>
+            Select Ingredients
+        </button>
+        <div fxLayout="row wrap" fxLayoutGap="16px grid">
+            <jhi-ingredient-selection (deselect)="deleteIngredient($event)"
+                                      *ngFor="let iSelected of getSelectedControls(); let i = index"
+                                      [fxFlex.lg]="(100/5) + '%'"
+                                      [fxFlex.md]="(100/4) + '%'"
+                                      [index]="i"
+                                      [ingredientSelectedForm]="iSelected"
+                                      fxFlex.sm="50%"
+                                      fxFlex.xs="100%">
+            </jhi-ingredient-selection>
+        </div>
+    </mat-expansion-panel>
+    <button (click)="saveIngredients()"
+            [disabled]="ingredientForm.invalid"
+            class="w-100 mat-elevation-z3"
+            color="accent"
+            mat-raised-button
+            type="submit">Submit
+    </button>
+</form>

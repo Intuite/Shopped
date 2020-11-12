@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -102,6 +103,18 @@ public class IngredientResource {
         Page<IngredientDTO> page = ingredientQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * {@code GET  /ingredients} : get all the ingredients.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of ingredients in body.
+     */
+    @GetMapping("/ingredients/all")
+    public ResponseEntity<List<IngredientDTO>> getAllIngredients(IngredientCriteria criteria) {
+        List<IngredientDTO> list = ingredientQueryService.findByCriteria(criteria);
+        return ResponseEntity.ok().body(list);
     }
 
     /**
