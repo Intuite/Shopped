@@ -1,22 +1,15 @@
 <div>
     <h2 id="page-heading">
         <span jhiTranslate="shoppedApp.recipeTag.home.title">Recipe Tags</span>
-        <button
-            [matTooltipHideDelay]="0"
-            [matTooltipShowDelay]="1000"
-            [routerLink]="['/recipe-tag/new']"
-            aria-label="Create a new recipe tag"
-            class="float-right jh-create-entity create-recipe-tag"
-            jhiMaterialColor="accent"
-            mat-flat-button
-            matTooltip="Create a new recipe tag">
-            <mat-icon>add</mat-icon>
-        </button>
     </h2>
 
     <jhi-alert-error></jhi-alert-error>
 
     <jhi-alert></jhi-alert>
+
+    <div class="w-100" fxLayout="row" fxLayoutAlign="space-around center">
+        <mat-spinner *ngIf="!recipeTags || recipeTags.length == 0" diameter="50" strokeWidth="5"></mat-spinner>
+    </div>
 
     <div *ngIf="recipeTags?.length === 0" class="alert alert-warning" id="no-result">
         <span jhiTranslate="shoppedApp.recipeTag.home.notFound">No recipeTags found</span>
