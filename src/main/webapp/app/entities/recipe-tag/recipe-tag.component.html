@@ -7,9 +7,7 @@
 
     <jhi-alert></jhi-alert>
 
-    <div class="w-100" fxLayout="row" fxLayoutAlign="space-around center">
-        <mat-spinner *ngIf="!recipeTags || recipeTags.length == 0" diameter="50" strokeWidth="5"></mat-spinner>
-    </div>
+
 
     <div *ngIf="recipeTags?.length === 0" class="alert alert-warning" id="no-result">
         <span jhiTranslate="shoppedApp.recipeTag.home.notFound">No recipeTags found</span>

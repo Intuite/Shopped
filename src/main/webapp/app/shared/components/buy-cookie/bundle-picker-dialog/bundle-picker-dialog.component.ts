@@ -20,7 +20,7 @@ export class BundlePickerDialogComponent implements OnInit {
   bundleId = 0;
   bundle = new Bundle();
   account?: Account;
-  cookie?: Cookies;
+  cookie = new Cookies();
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: Bundle[],
@@ -37,21 +37,23 @@ export class BundlePickerDialogComponent implements OnInit {
   }
 
   onSuccess(data: any): void {
-    this.cookie = data[0];
+    if (data !== null && data !== undefined) {
+      this.cookie = data[0];
+    }
   }
   ngOnInit(): void {
     this.accountService.identity().subscribe(res => (this.account = res || undefined));
     this.cookieService
       .query({
-        ...(3 && { 'userId.equals': 3 }),
+        ...(this.account?.id && { 'userId.equals': this.account?.id }),
       })
       .subscribe(
-        (res: HttpResponse<ICookies[]>) => this.onSuccess(res.body),
+        (res: HttpResponse<ICookies[]>) => this.onSuccess(res.body || undefined),
         () => console.warn('se cayo')
       );
   }
 
-  selectBundle(s?: Bundle, stepper?: MatStepper): void {
+  selectBundle(s?: Bundle): void {
     if (s) {
       this.bundle = s;
     }

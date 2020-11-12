@@ -21,7 +21,7 @@
                             </mat-card-content>
                             <mat-card-actions class="align-middle mb-0">
                                 <button mat-button matStepperNext jhiMaterialColor="primary"
-                                        (click)="selectBundle(item,stepper)">$ {{item.cost}}</button>
+                                        (click)="selectBundle(item)">$ {{item.cost}}</button>
                             </mat-card-actions>
                             <div class="d-none">
                                 <input type="text" value="{{item.id}} required">
@@ -45,18 +45,18 @@
                             </mat-card-header>
                             <mat-card-content>
                                 <span class="align-middle">
-                                    Current: {{cookie.amount}}
+                                    Current: {{cookie.amount||0}}
                                 </span>
                                 <div class="block"></div>
                                 <span class="align-middle badge badge-primary text-10">
-                                    Buying: {{bundle.cookieAmount}} bonus cookies
+                                    Buying: {{bundle.cookieAmount||0}} bonus cookies
                                 </span>
                                 <span class="align-middle block">
-                                    New Balance: {{cookie.amount + bundle.cookieAmount}}
+                                    New Balance: {{(cookie.amount||0) + (bundle.cookieAmount || 0) }}
                                 </span>
                             </mat-card-content>
                             <mat-card-actions class="align-middle">
-                                <button mat-button jhiMaterialColor="primary">Total: ${{bundle.cost}}</button>
+                                <button mat-button jhiMaterialColor="primary">Total: ${{bundle.cost || 0}}</button>
                             </mat-card-actions>
                         </mat-card>
                     </mat-grid-tile>

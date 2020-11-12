@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
 import { IAward } from 'app/shared/model/award.model';
+import { IRecipeTag } from 'app/shared/model/recipe-tag.model';
 
 type EntityResponseType = HttpResponse<IAward>;
 type EntityArrayResponseType = HttpResponse<IAward[]>;
@@ -32,6 +33,10 @@ export class AwardService {
     return this.http.get<IAward[]>(this.resourceUrl, { params: options, observe: 'response' });
   }
 
+  queryAll(req?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http.get<IAward[]>(`${this.resourceUrl}/all`, { params: options, observe: 'response' });
+  }
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }

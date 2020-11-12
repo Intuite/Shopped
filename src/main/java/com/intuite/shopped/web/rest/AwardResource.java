@@ -1,6 +1,8 @@
 package com.intuite.shopped.web.rest;
 
 import com.intuite.shopped.service.AwardService;
+import com.intuite.shopped.service.dto.RecipeTagCriteria;
+import com.intuite.shopped.service.dto.RecipeTagDTO;
 import com.intuite.shopped.web.rest.errors.BadRequestAlertException;
 import com.intuite.shopped.service.dto.AwardDTO;
 import com.intuite.shopped.service.dto.AwardCriteria;
@@ -102,6 +104,19 @@ public class AwardResource {
         Page<AwardDTO> page = awardQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * {@code GET  /recipe-tags} : get all the recipeTags.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of recipeTags in body.
+     */
+    @GetMapping("/awards/all")
+    public ResponseEntity<List<AwardDTO>> getAllAwards(AwardCriteria criteria) {
+        log.debug("REST request to get RecipeTags by criteria: {}", criteria);
+        List<AwardDTO> list = awardQueryService.findByCriteria(criteria);
+        return ResponseEntity.ok().body(list);
     }
 
     /**
