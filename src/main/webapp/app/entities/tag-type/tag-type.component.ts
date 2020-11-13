@@ -10,7 +10,6 @@ import { ITagType } from 'app/shared/model/tag-type.model';
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { TagTypeService } from './tag-type.service';
 import { TagTypeDeleteDialogComponent } from './tag-type-delete-dialog.component';
-import { IRecipeTag } from 'app/shared/model/recipe-tag.model';
 
 @Component({
   selector: 'jhi-tag-type',
@@ -134,7 +133,7 @@ export class TagTypeComponent implements OnInit, OnDestroy {
           sort: this.sort(),
         })
         .subscribe(
-          (res: HttpResponse<IRecipeTag[]>) => this.onSuccess(res.body, res.headers, pageToLoad),
+          (res: HttpResponse<ITagType[]>) => this.onSuccess(res.body, res.headers, pageToLoad),
           () => this.onError()
         );
     } else {

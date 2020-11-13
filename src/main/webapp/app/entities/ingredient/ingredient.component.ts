@@ -90,7 +90,7 @@ export class IngredientComponent implements OnInit, OnDestroy {
   }
 
   navigate(): void {
-    this.router.navigate(['/recipe-tag'], {
+    this.router.navigate(['ingredient'], {
       queryParams: {
         page: this.page,
         size: this.itemsPerPage,
