@@ -37,7 +37,7 @@ export class IngredientPickerComponent implements OnInit, OnDestroy {
       this.ingredientForm = ingredientsPicker;
       this.ingredientsSelected = this.ingredientForm.get('selections') as FormArray;
     });
-    this.ingredientService.query().subscribe(
+    this.ingredientService.queryAll().subscribe(
       (res: HttpResponse<IIngredient[]>) => this.onSuccess(res.body),
       () => this.onError()
     );
