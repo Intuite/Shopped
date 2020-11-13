@@ -14,7 +14,7 @@ export class IngredientTableComponent implements OnInit, AfterViewInit {
   @Input() data!: IIngredient[];
   @Input() managementComponent!: IngredientComponent;
 
-  displayedColumns: string[] = ['id', 'name', 'unitAbbrev', 'description', 'status', 'options'];
+  displayedColumns: string[] = ['id', 'image', 'name', 'unitAbbrev', 'description', 'status', 'options'];
 
   dataSource = new MatTableDataSource<IIngredient>();
 

@@ -34,6 +34,16 @@
         </td>
     </ng-container>
 
+    <ng-container matColumnDef="image">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>Image</th>
+        <td *matCellDef="let element" mat-cell>
+            <span>
+                <img [src]="'data:' + element.imageContentType + ';base64,' + element.image" alt="---"
+                     style="max-height: 40px;"/>
+            </span>
+        </td>
+    </ng-container>
+
     <ng-container matColumnDef="name">
         <th *matHeaderCellDef mat-header-cell mat-sort-header>Name</th>
         <td *matCellDef="let element" mat-cell>
