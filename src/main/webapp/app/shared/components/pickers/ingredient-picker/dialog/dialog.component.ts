@@ -10,6 +10,7 @@ import { MatSelectionList } from '@angular/material/list';
 })
 export class DialogComponent implements OnInit {
   @ViewChild('ingredientList') ingredientList!: MatSelectionList;
+  searchText = '';
 
   constructor(public dialogRef: MatDialogRef<DialogComponent>, @Inject(MAT_DIALOG_DATA) public data: IIngredient[]) {}
 
