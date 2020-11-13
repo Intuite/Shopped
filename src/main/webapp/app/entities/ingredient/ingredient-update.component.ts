@@ -1,16 +1,17 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { JhiDataUtils, JhiFileLoadError, JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
+import { JhiDataUtils, JhiEventManager, JhiEventWithContent, JhiFileLoadError } from 'ng-jhipster';
 
 import { IIngredient, Ingredient } from 'app/shared/model/ingredient.model';
 import { IngredientService } from './ingredient.service';
 import { AlertError } from 'app/shared/alert/alert-error.model';
 import { IUnit } from 'app/shared/model/unit.model';
 import { UnitService } from 'app/entities/unit/unit.service';
+import { Status } from 'app/shared/model/enumerations/status.model';
 
 @Component({
   selector: 'jhi-ingredient-update',
@@ -19,7 +20,6 @@ import { UnitService } from 'app/entities/unit/unit.service';
 export class IngredientUpdateComponent implements OnInit {
   isSaving = false;
   units: IUnit[] = [];
-  statusOptions = ['ACTIVE', 'INACTIVE'];
 
   editForm = this.fb.group({
     id: [],
@@ -97,21 +97,13 @@ export class IngredientUpdateComponent implements OnInit {
     if (ingredient.id !== undefined) {
       this.subscribeToSaveResponse(this.ingredientService.update(ingredient));
     } else {
+      ingredient.status = Status.ACTIVE.toUpperCase() as Status;
       this.subscribeToSaveResponse(this.ingredientService.create(ingredient));
     }
   }
 
-  private createFromForm(): IIngredient {
-    return {
-      ...new Ingredient(),
-      id: this.editForm.get(['id'])!.value,
-      name: this.editForm.get(['name'])!.value,
-      imageContentType: this.editForm.get(['imageContentType'])!.value,
-      image: this.editForm.get(['image'])!.value,
-      status: this.editForm.get(['status'])!.value,
-      description: this.editForm.get(['description'])!.value,
-      unitId: this.editForm.get(['unitId'])!.value,
-    };
+  trackById(index: number, item: IUnit): any {
+    return item.id;
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IIngredient>>): void {
@@ -130,7 +122,16 @@ export class IngredientUpdateComponent implements OnInit {
     this.isSaving = false;
   }
 
-  trackById(index: number, item: IUnit): any {
-    return item.id;
+  private createFromForm(): IIngredient {
+    return {
+      ...new Ingredient(),
+      id: this.editForm.get(['id'])!.value,
+      name: this.editForm.get(['name'])!.value,
+      imageContentType: this.editForm.get(['imageContentType'])!.value,
+      image: this.editForm.get(['image'])!.value,
+      status: this.editForm.get(['status'])!.value,
+      description: this.editForm.get(['description'])!.value,
+      unitId: this.editForm.get(['unitId'])!.value,
+    };
   }
 }

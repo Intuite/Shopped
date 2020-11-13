@@ -1,28 +1,21 @@
 <div>
     <h2 id="page-heading">
         <span jhiTranslate="shoppedApp.tagType.home.title">Tag Types</span>
-        <button
-            [matTooltipHideDelay]="0"
-            [matTooltipShowDelay]="1000"
-            [routerLink]="['/tag-type/new']"
-            aria-label="Create a new tag type"
-            class="float-right jh-create-entity create-tagType"
-            jhiMaterialColor="accent"
-            mat-flat-button
-            matTooltip="Create a new tag type">
-            <mat-icon>add</mat-icon>
-        </button>
     </h2>
 
     <jhi-alert-error></jhi-alert-error>
 
     <jhi-alert></jhi-alert>
 
-    <div class="alert alert-warning" id="no-result" *ngIf="tagTypes?.length === 0">
-        <span jhiTranslate="shoppedApp.tagType.home.notFound">No tagTypes found</span>
+    <div *ngIf="tagTypes && tagTypes.length > 0" class="table-responsive table-hover" id="entities">
+        <jhi-tag-type-table [data]="tagTypes" [managementComponent]="this"></jhi-tag-type-table>
     </div>
 
-    <div class="table-responsive" id="entities" *ngIf="tagTypes && tagTypes.length > 0">
-        <jhi-tag-type-table [data]="tagTypes" [managementComponent]="this"></jhi-tag-type-table>
+    <div *ngIf="tagTypes?.length === 0 || !tagTypes" class="alert alert-warning" id="no-result">
+        <span jhiTranslate="shoppedApp.ingredient.home.notFound">No Tag Types found</span>
+    </div>
+
+    <div class="w-100" fxLayout="row" fxLayoutAlign="space-around center">
+        <mat-spinner *ngIf="!tagTypes || tagTypes.length == 0" diameter="50" strokeWidth="5"></mat-spinner>
     </div>
 </div>

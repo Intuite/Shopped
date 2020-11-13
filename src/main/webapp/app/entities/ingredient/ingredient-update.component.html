@@ -40,7 +40,7 @@
                 </div>
 
                 <mat-form-field appearance="fill" class="form-group w-100">
-                    <mat-label jhiTranslate="shoppedApp.ingredient.name">Name</mat-label>
+                    <mat-label>Name*</mat-label>
                     <input formControlName="name" id="field_name" matInput name="name"
                            type="text"/>
                     <mat-error
@@ -51,7 +51,7 @@
                 </mat-form-field>
 
                 <mat-form-field appearance="fill" class="form-group w-100">
-                    <mat-label jhiTranslate="shoppedApp.ingredient.description">Description</mat-label>
+                    <mat-label>Description</mat-label>
                     <input formControlName="description" id="field_description" matInput name="description"
                            type="text"/>
                     <mat-error
@@ -68,7 +68,7 @@
                 </mat-form-field>
 
                 <mat-form-field appearance="fill" class="form-group w-100">
-                    <mat-label jhiTranslate="shoppedApp.ingredient.unit"></mat-label>
+                    <mat-label>Unit*</mat-label>
                     <mat-select formControlName="unitId" id="field_unit" name="unit">
                         <mat-option *ngFor="let unitOption of units; trackBy: trackById" [value]="unitOption.id">
                             {{unitOption.abbrev }}
@@ -79,27 +79,16 @@
                         jhiTranslate="entity.validation.required">
                     </mat-error>
                 </mat-form-field>
-
-                <mat-form-field appearance="fill" class="form-group w-100">
-                    <mat-label jhiTranslate="shoppedApp.ingredient.status"></mat-label>
-                    <mat-select [(ngModel)]="statusOptions[0]" formControlName="status" id="status" name="status">
-                        <mat-option *ngFor="let status of statusOptions" [value]="status">
-                            {{status | capitalize }}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-
             </div>
 
             <div>
-                <button (click)="previousState()" id="cancel-save" jhiMaterialColor="secondary" mat-raised-button
-                        type="button">
+                <button (click)="previousState()" class="text-white" id="cancel-save" jhiMaterialColor="secondary"
+                        mat-raised-button type="button">
                     <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
                 </button>
 
-                <button [disabled]="editForm.invalid || isSaving" id="save-entity" jhiMaterialColor="primary"
-                        mat-raised-button
-                        type="submit">
+                <button [disabled]="editForm.invalid || isSaving" class="text-white" id="save-entity"
+                        jhiMaterialColor="primary" mat-raised-button type="submit">
                     <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
                 </button>
             </div>

@@ -1,18 +1,6 @@
 <div>
     <h2>
         <span id="user-management-page-heading" jhiTranslate="userManagement.home.title">Users</span>
-
-        <button
-            class="btn btn-primary float-right jh-create-entity"
-            [routerLink]="['./new']"
-            [matTooltipHideDelay]="0"
-            [matTooltipShowDelay]="1000"
-            matTooltip="Create a new user"
-            jhiMaterialColor="accent"
-            mat-flat-button
-        >
-            <mat-icon>add</mat-icon>
-        </button>
     </h2>
 
     <jhi-alert-error></jhi-alert-error>
@@ -22,4 +10,8 @@
     <div class="table-responsive table-hover" *ngIf="users">
         <jhi-material-table #tableComponent [data]="users" [managementComponent]="this"></jhi-material-table>
     </div>
-</div>
+
+    <div class="w-100" fxLayout="row" fxLayoutAlign="space-around center">
+        <mat-spinner *ngIf="!users || users.length == 0" diameter="50" strokeWidth="5"></mat-spinner>
+    </div>
+</div><!-- -->

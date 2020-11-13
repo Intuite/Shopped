@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
-import { Ingredient } from 'app/shared/model/ingredient.model';
+import { IIngredient } from 'app/shared/model/ingredient.model';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { IngredientComponent } from 'app/entities/ingredient/ingredient.component';
@@ -11,12 +11,12 @@ import { IngredientComponent } from 'app/entities/ingredient/ingredient.componen
   styleUrls: ['./ingredient-table.component.scss'],
 })
 export class IngredientTableComponent implements OnInit, AfterViewInit {
-  @Input() data!: Ingredient[];
+  @Input() data!: IIngredient[];
   @Input() managementComponent!: IngredientComponent;
 
-  displayedColumns: string[] = ['id', 'name', 'unitAbbrev', 'description', 'status', 'options'];
+  displayedColumns: string[] = ['id', 'image', 'name', 'unitAbbrev', 'description', 'status', 'options'];
 
-  dataSource = new MatTableDataSource<Ingredient>();
+  dataSource = new MatTableDataSource<IIngredient>();
 
   @ViewChild('sort') sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -33,11 +33,15 @@ export class IngredientTableComponent implements OnInit, AfterViewInit {
       let dataStr = JSON.stringify(data).toLowerCase();
       dataStr = dataStr.replace(/(\{|,)\s*(.+?)\s*:/g, '');
       return dataStr.includes(filter);
-      // return dataStr.indexOf(filter) != -1;
     };
   }
 
   public filter = (e: Event) => {
     this.dataSource.filter = (e.target as HTMLInputElement).value.trim().toLocaleLowerCase();
   };
+
+  public reloadSource(data: IIngredient[]): void {
+    this.data = data;
+    this.dataSource.data = data;
+  }
 }
