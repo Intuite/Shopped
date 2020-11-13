@@ -29,7 +29,8 @@ export class TagTypeTableComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.dataSource.filterPredicate = (data: any, filter) => {
-      const dataStr = JSON.stringify(data).toLowerCase();
+      let dataStr = JSON.stringify(data).toLowerCase();
+      dataStr = dataStr.replace(/({|,)\s(.+?)\s:/g, '');
       return dataStr.includes(filter);
     };
   }
@@ -38,8 +39,8 @@ export class TagTypeTableComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = (e.target as HTMLInputElement).value.trim().toLocaleLowerCase();
   };
 
-  public reloadSource(): void {
-    this.data = this.managementComponent.tagTypes as TagType[];
-    this.dataSource = new MatTableDataSource<TagType>(this.data);
+  public reloadSource(data: TagType[]): void {
+    this.data = data;
+    this.dataSource.data = data;
   }
 }
