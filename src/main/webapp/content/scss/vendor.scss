@@ -237,7 +237,7 @@ $shopped-app-secondary: mat-palette($md-shopped-coffee, 500, 100, 700);
           accent: $shopped-app-accent,
           warn: $shopped-app-warn,
           //danger: $shopped-app-danger,
-          //success: $shopped-app-success,,,,,,,,,,,,
+          //success: $shopped-app-success,,,,,,,,,,,,,,
         ),
       )
     ),
@@ -327,4 +327,14 @@ $theme-colors: (
   @include mat-button-theme($theme);
   @include mat-button-toggle-theme($theme);
   @include mat-card-theme($theme);
+}
+
+.mat-column-image {
+  img {
+    border-radius: 50% !important;
+    height: 40px;
+    width: 40px;
+    object-fit: cover;
+    margin: 0;
+  }
 }

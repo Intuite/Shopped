@@ -24,7 +24,7 @@ export class RecipeTagComponent implements OnInit, OnDestroy {
   predicate!: string;
   ascending!: boolean;
   ngbPaginationPage = 1;
-  tableLoaded: any;
+  tableLoaded = false;
 
   constructor(
     protected recipeTagService: RecipeTagService,

@@ -5,6 +5,7 @@ import com.intuite.shopped.domain.User;
 import com.intuite.shopped.repository.UserRepository;
 import com.intuite.shopped.security.AuthoritiesConstants;
 import com.intuite.shopped.service.MailService;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import java.util.Collections;
 import com.intuite.shopped.service.UserService;
@@ -152,6 +153,18 @@ public class UserResource {
         }
 
         final Page<UserDTO> page = userService.getAllManagedUsers(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
+    /**
+     * {@code GET /users} : get all users.
+     *
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body all users.
+     */
+    @GetMapping("/users/all")
+    public ResponseEntity<List<UserDTO>> getAllUsers() {
+        final Page<UserDTO> page = userService.getAllManagedUsers(PageRequest.of(0, Integer.MAX_VALUE));
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
