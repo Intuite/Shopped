@@ -1,6 +1,6 @@
 <form *ngIf="user" name="deleteForm" (ngSubmit)="confirmDelete(user?.login!)">
     <div class="modal-header">
-        <h4 class="modal-title" jhiTranslate="entity.delete.title">Confirm delete operation</h4>
+        <h4 class="modal-title w-100 font-weight-bold" jhiTranslate="entity.delete.title">Confirm delete operation</h4>
 
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="cancel()">&times;</button>
     </div>
@@ -12,11 +12,11 @@
     </div>
 
     <div class="modal-footer">
-        <button type="button" mat-flat-button jhiMaterialColor="secondary" data-dismiss="modal" (click)="cancel()">
+        <button type="button" class="text-white" mat-flat-button jhiMaterialColor="secondary" data-dismiss="modal" (click)="cancel()">
             <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
         </button>
-
-        <button type="submit" mat-flat-button jhiMaterialColor="warn">
+        <span class="mx-2"></span>
+        <button type="submit" class="text-white" mat-flat-button jhiMaterialColor="warn">
             <fa-icon icon="times"></fa-icon>&nbsp;<span jhiTranslate="entity.action.delete">Delete</span>
         </button>
     </div>
