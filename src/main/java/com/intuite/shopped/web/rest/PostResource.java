@@ -99,6 +99,19 @@ public class PostResource {
     }
 
     /**
+     * {@code GET  /posts} : get all the posts.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of posts in body.
+     */
+    @GetMapping("/posts/all")
+    public ResponseEntity<List<PostDTO>> getAllPosts(PostCriteria criteria) {
+        log.debug("REST request to get Posts by criteria: {}", criteria);
+        List<PostDTO> list = postQueryService.findByCriteria(criteria);
+        return ResponseEntity.ok().body(list);
+    }
+
+    /**
      * {@code GET  /posts/count} : count all the posts.
      *
      * @param criteria the criteria which the requested entities should match.
