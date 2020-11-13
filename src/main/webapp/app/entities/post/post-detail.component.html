@@ -7,7 +7,7 @@
     <div class="col-8">
 
         <div *ngIf="post">
-            <h2> {{ post.recipeName }} </h2>
+            <h2>Post {{ post.recipeName }} </h2>
 
             <hr>
 
@@ -26,7 +26,14 @@
                 </dd>
                 <dt><span jhiTranslate="shoppedApp.post.date">Date</span></dt>
                 <dd>
-                    <span>{{ post.date | date:"longDate" }}</span>
+                    <span>{{ post.date | date:"long" }}</span>
+                </dd>
+
+
+                <dt><span jhiTranslate="shoppedApp.post.status">Status</span></dt>
+                <dd>
+                    <span jhiTranslate="{{ 'shoppedApp.Status.' + post.status }}">{{ post.status }}</span>
+
                 </dd>
 
                 <hr>

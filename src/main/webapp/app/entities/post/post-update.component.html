@@ -8,7 +8,7 @@
     <div class="col-8">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
             <h2 id="jhi-post-heading">{{ editForm.get('id')!.value !== undefined ? "Edit" : "Create" }}
-                a public post for your recipe</h2>
+                the public post for your recipe</h2>
 
             <br>
             <br>
@@ -17,13 +17,12 @@
                 <jhi-alert-error></jhi-alert-error>
                 <jhi-alert></jhi-alert>
 
-                <mat-form-field class="form-group w-100" appearance="fill" [hidden]="!editForm.get('id')!.value"
-                                style="display: none">
-                    <mat-label for="id" jhiTranslate="global.field.id">ID</mat-label>
-                    <input matInput type="text" id="id" name="id" formControlName="id" readonly/>
+                <mat-form-field [hidden]="!editForm.get('id')!.value" appearance="fill" class="form-group w-100">
+                    <mat-label jhiTranslate="global.field.id"></mat-label>
+                    <input formControlName="id" id="id" matInput name="id" readonly type="text"/>
                 </mat-form-field>
 
-                <div class="form-group">
+                <div [hidden]="true" class="form-group">
                     <label class="form-control-label" jhiTranslate="shoppedApp.post.date" for="field_date">Date</label>
                     <div class="d-flex">
                         <input id="field_date" type="datetime-local" class="form-control" name="date"
@@ -44,8 +43,6 @@
                     </div>
                 </div>
 
-                <h6>Choose a recipe you created to post:</h6>
-
                 <mat-form-field appearance="fill" class="form-group w-100">
                     <mat-label jhiTranslate="shoppedApp.post.recipe"></mat-label>
                     <mat-select formControlName="recipeId" id="field_recipe" name="recipe">
@@ -59,7 +56,6 @@
                     </mat-error>
                 </mat-form-field>
 
-                <h6>(Optional) Write a caption for your recipe</h6>
                 <mat-form-field appearance="fill" class="form-group w-100">
                     <mat-label jhiTranslate="shoppedApp.post.caption"></mat-label>
                     <input formControlName="caption" id="field_caption" matInput name="caption"
@@ -86,7 +82,7 @@
                 </mat-form-field>
 
 
-                <mat-form-field appearance="fill" class="form-group w-100" style="display: none">
+                <mat-form-field appearance="fill" class="form-group w-100" >
                     <mat-label jhiTranslate="shoppedApp.post.status"></mat-label>
                     <mat-select [(ngModel)]="statusOptions[0]" formControlName="status" id="status" name="status">
                         <mat-option *ngFor="let status of statusOptions" [value]="status">
@@ -103,9 +99,10 @@
                     <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
                 </button>
                 -->
-                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving"
-                        class="btn btn-primary">
-                    &nbsp;<span>Create Post</span>
+                <button [disabled]="editForm.invalid || isSaving" id="save-entity" jhiMaterialColor="primary"
+                        mat-raised-button
+                        type="submit">
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
                 </button>
             </div>
         </form>

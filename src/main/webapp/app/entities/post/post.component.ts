@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, ParamMap, Router, Data } from '@angular/router';
 import { Subscription, combineLatest } from 'rxjs';
@@ -10,6 +10,8 @@ import { IPost } from 'app/shared/model/post.model';
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { PostService } from './post.service';
 import { PostDeleteDialogComponent } from './post-delete-dialog.component';
+import { Status } from 'app/shared/model/enumerations/status.model';
+import { PostTableComponent } from 'app/shared/tables/post-table/post-table.component';
 
 @Component({
   selector: 'jhi-post',
@@ -19,12 +21,14 @@ export class PostComponent implements OnInit, OnDestroy {
   posts?: IPost[];
   eventSubscriber?: Subscription;
   totalItems = 0;
-  itemsPerPage = ITEMS_PER_PAGE;
+  itemsPerPage = 20;
   page!: number;
   predicate!: string;
   ascending!: boolean;
-  ngbPaginationPage = 1;
-  tableLoaded: any;
+  ngbPaginationPage = 0;
+  tableLoaded = false;
+
+  @ViewChild('tbl', { static: false }) tbl!: PostTableComponent;
 
   constructor(
     protected postService: PostService,
@@ -90,6 +94,17 @@ export class PostComponent implements OnInit, OnDestroy {
     });
   }
 
+  setStatus(element: IPost, newStatus: boolean): void {
+    this.postService
+      .update({
+        ...element,
+        status: !newStatus ? (Status.ACTIVE.toUpperCase() as Status) : (Status.INACTIVE.toUpperCase() as Status),
+      })
+      .subscribe(() => {
+        this.loadPage(this.page);
+      });
+  }
+
   protected handleNavigation(): void {
     combineLatest(this.activatedRoute.data, this.activatedRoute.queryParamMap, (data: Data, params: ParamMap) => {
       const page = params.get('page');
@@ -128,8 +143,6 @@ export class PostComponent implements OnInit, OnDestroy {
     if (this.totalItems === 0) {
       this.postService
         .queryAll({
-          // page: pageToLoad - 1,
-          // size: 439,
           sort: this.sort(),
         })
         .subscribe(
