@@ -30,6 +30,9 @@ import { IngredientPickerComponent } from './components/pickers/ingredient-picke
 import { SelectionComponent as IngredientPKSelectionComponent } from './components/pickers/ingredient-picker/selection/selection.component';
 import { DialogComponent as IngredientPKDialogComponent } from './components/pickers/ingredient-picker/dialog/dialog.component';
 
+import { BuyCookieComponent } from './components/buy-cookie/buy-cookie.component';
+import { BundlePickerDialogComponent } from './components/buy-cookie/bundle-picker-dialog/bundle-picker-dialog.component';
+import { CheckOutComponent } from './components/check-out/check-out.component';
 @NgModule({
   imports: [JhMaterialModule, ShoppedSharedLibsModule, FlexModule, RouterModule, ExtendedModule],
   declarations: [
@@ -57,6 +60,9 @@ import { DialogComponent as IngredientPKDialogComponent } from './components/pic
     IngredientPickerComponent,
     IngredientPKSelectionComponent,
     IngredientPKDialogComponent,
+    BuyCookieComponent,
+    BundlePickerDialogComponent,
+    CheckOutComponent,
   ],
   entryComponents: [LoginModalComponent],
   exports: [
@@ -85,6 +91,7 @@ import { DialogComponent as IngredientPKDialogComponent } from './components/pic
     IngredientPickerComponent,
     IngredientPKSelectionComponent,
     IngredientPKDialogComponent,
+    BuyCookieComponent,
   ],
 })
 export class ShoppedSharedModule {}
