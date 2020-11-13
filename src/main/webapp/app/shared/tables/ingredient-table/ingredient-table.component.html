@@ -1,15 +1,30 @@
-<div fxLayout fxLayoutAlign="left left">
-    <mat-form-field fxFlex="40%" appearance="fill" >
+<div class="mt-3" fxLayout fxLayoutAlign="space-between center">
+    <mat-form-field appearance="fill" fxFlex="100%">
         <mat-label>
             Search
         </mat-label>
         <mat-icon matSuffix>search</mat-icon>
-        <input (keyup)="filter($event)" matInput placeholder="Type a text filter" type="text">
+        <input (keyup)="filter($event)"
+               matInput
+               placeholder="Type a text filter"
+               type="text">
     </mat-form-field>
+    <button
+        [matTooltipHideDelay]="0"
+        [matTooltipShowDelay]="1000"
+        [routerLink]="['/ingredient/new']"
+        aria-label="Create a new ingredient"
+        class="jh-create-entity create-ingredient mx-4 mb-3"
+        jhiMaterialColor="accent"
+        mat-mini-fab
+        matTooltip="Create a new ingredient">
+        <mat-icon>add</mat-icon>
+    </button>
 </div>
 
-<jhi-wrapper-material-table #sort="matSort" [columns]="displayedColumns"
-                            [dataSource]="dataSource" matSort>
+<jhi-wrapper-material-table #sort="matSort"
+                            [columns]="displayedColumns" [dataSource]="dataSource"
+                            matSort>
     <ng-container matColumnDef="id">
         <th *matHeaderCellDef mat-header-cell mat-sort-header>ID</th>
         <td *matCellDef="let element" mat-cell>
@@ -56,24 +71,31 @@
     </ng-container>
 
     <ng-container class="text-right" matColumnDef="options">
-        <th *matHeaderCellDef mat-header-cell class="text-center"> Options</th>
-        <td *matCellDef="let ingredient" mat-cell>
-            <div fxLayout="row" fxLayoutAlign="space-around center" class="w-100">
-                <button [routerLink]="['/ingredient/', ingredient.id, 'view']"
-                        class="btn btn-info btn-sm"
+        <th *matHeaderCellDef class="text-center" mat-header-cell>Options</th>
+        <td *matCellDef="let element" mat-cell>
+            <div class="w-100" fxLayout="row" fxLayoutAlign="center center">
+                <button [routerLink]="['/ingredient/', element.id, 'view']"
+                        class="text-white"
+                        jhiMaterialColor="secondary"
+                        mat-mini-fab
                         type="submit">
-                    <fa-icon icon="eye"></fa-icon>
+                    <mat-icon>launch</mat-icon>
                 </button>
 
-                <button [routerLink]="['/ingredient/', ingredient.id, 'edit']"
-                        class="btn btn-warning btn-sm"
+                <button [routerLink]="['/ingredient/', element.id, 'edit']"
+                        class="text-white mx-3"
+                        color="primary"
+                        mat-mini-fab
                         type="submit">
-                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <mat-icon>create</mat-icon>
                 </button>
 
-                <button (click)="managementComponent.delete(ingredient)" class="btn btn-danger btn-sm"
+                <button (click)="managementComponent.delete(element)"
+                        class="text-white"
+                        color="warn"
+                        mat-mini-fab
                         type="submit">
-                    <fa-icon icon="times"></fa-icon>
+                    <mat-icon>close</mat-icon>
                 </button>
             </div>
         </td>
@@ -82,14 +104,14 @@
     <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
     <tr *matRowDef="let row; columns: displayedColumns; " mat-row></tr>
 </jhi-wrapper-material-table>
-<div #paginator1 *ngIf="dataSource.data && dataSource.data.length > 0 && managementComponent.tableLoaded">
-    <mat-paginator *ngIf="managementComponent.tableLoaded"
-                   (page)="managementComponent.changePage($event.pageIndex);
+<div *ngIf="dataSource.data && dataSource.data.length > 0 && managementComponent.tableLoaded">
+    <mat-paginator (page)="managementComponent.changePage($event.pageIndex);
                     managementComponent.changePageSize($event.pageSize);
                     managementComponent.navigate()"
+                   *ngIf="managementComponent.tableLoaded"
                    [length]="managementComponent.totalItems"
-                   [pageSize]="managementComponent.itemsPerPage"
                    [pageIndex]="managementComponent.page"
-                   [pageSizeOptions]="[5, 10, 20, 50, 100]">
+                   [pageSizeOptions]="[5, 10, 20, 50, 100]"
+                   [pageSize]="managementComponent.itemsPerPage">
     </mat-paginator>
 </div>
