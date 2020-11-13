@@ -107,10 +107,10 @@ public class AwardResource {
     }
 
     /**
-     * {@code GET  /recipe-tags} : get all the recipeTags.
+     * {@code GET  /awards} : get all the recipeTags.
      *
      * @param criteria the criteria which the requested entities should match.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of recipeTags in body.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of awards in body.
      */
     @GetMapping("/awards/all")
     public ResponseEntity<List<AwardDTO>> getAllAwards(AwardCriteria criteria) {

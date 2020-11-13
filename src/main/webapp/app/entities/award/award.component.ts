@@ -34,13 +34,11 @@ export class AwardComponent implements OnInit, OnDestroy {
     protected modalService: NgbModal
   ) {}
 
-  loadPage(page?: number, dontNavigate?: boolean): void {
+  loadPage(page?: number): void {
     const pageToLoad: number = page || this.page || 0;
     if (this.totalItems === 0) {
       this.awardService
         .queryAll({
-          /* page: pageToLoad - 1,
-                    size: this.itemsPerPage, */
           sort: this.sort(),
         })
         .subscribe(
@@ -69,7 +67,7 @@ export class AwardComponent implements OnInit, OnDestroy {
       if (pageNumber !== this.page || predicate !== this.predicate || ascending !== this.ascending) {
         this.predicate = predicate;
         this.ascending = ascending;
-        this.loadPage(pageNumber, true);
+        this.loadPage(pageNumber);
       }
     }).subscribe();
   }
