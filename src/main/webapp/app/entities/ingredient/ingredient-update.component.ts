@@ -97,7 +97,7 @@ export class IngredientUpdateComponent implements OnInit {
     if (ingredient.id !== undefined) {
       this.subscribeToSaveResponse(this.ingredientService.update(ingredient));
     } else {
-      ingredient.status = Status.ACTIVE;
+      ingredient.status = Status.ACTIVE.toUpperCase() as Status;
       this.subscribeToSaveResponse(this.ingredientService.create(ingredient));
     }
   }
