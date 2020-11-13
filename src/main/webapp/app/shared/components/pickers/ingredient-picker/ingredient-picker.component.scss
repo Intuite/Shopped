@@ -2,3 +2,12 @@
   position: absolute !important;
   top: 10px;
 }
+
+.mat-expansion-panel-header-title,
+.mat-expansion-panel-header-description {
+  flex-basis: 0;
+}
+
+.mat-expansion-panel-header-description {
+  flex-grow: 1 !important;
+}
