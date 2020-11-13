@@ -81,7 +81,11 @@
         </mat-step>
         <mat-step>
             <ng-template matStepLabel>Done</ng-template>
-            <p>You are now done.</p>
+            <div *ngIf="bundleId !== 0">
+                <jhi-check-out [price]="bundle.cost" [cookies]="bundle.cookieAmount" [userId]="account!.id" *ngIf="bundle"></jhi-check-out>
+            </div>
+
+            <p *ngIf="bundleId === 0">No bundle found</p>
             <mat-dialog-actions align="end">
                 <button mat-button [mat-dialog-close]>Cancel</button>
                 <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Install</button>

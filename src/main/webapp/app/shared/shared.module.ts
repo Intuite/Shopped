@@ -32,6 +32,7 @@ import { DialogComponent as IngredientPKDialogComponent } from './components/pic
 
 import { BuyCookieComponent } from './components/buy-cookie/buy-cookie.component';
 import { BundlePickerDialogComponent } from './components/buy-cookie/bundle-picker-dialog/bundle-picker-dialog.component';
+import { CheckOutComponent } from './components/check-out/check-out.component';
 @NgModule({
   imports: [JhMaterialModule, ShoppedSharedLibsModule, FlexModule, RouterModule, ExtendedModule],
   declarations: [
@@ -61,6 +62,7 @@ import { BundlePickerDialogComponent } from './components/buy-cookie/bundle-pick
     IngredientPKDialogComponent,
     BuyCookieComponent,
     BundlePickerDialogComponent,
+    CheckOutComponent,
   ],
   entryComponents: [LoginModalComponent],
   exports: [

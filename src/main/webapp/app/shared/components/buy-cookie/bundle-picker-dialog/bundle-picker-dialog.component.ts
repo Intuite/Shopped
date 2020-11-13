@@ -2,7 +2,6 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Bundle } from 'app/shared/model/bundle.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatStepper } from '@angular/material/stepper';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/user/account.model';
 import { Cookies, ICookies } from 'app/shared/model/cookies.model';
@@ -56,6 +55,8 @@ export class BundlePickerDialogComponent implements OnInit {
   selectBundle(s?: Bundle): void {
     if (s) {
       this.bundle = s;
+      this.bundleId = this.bundle.id || 0;
+      console.warn(this.bundleId);
     }
   }
 
