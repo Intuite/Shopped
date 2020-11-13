@@ -1,10 +1,12 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { JhiDataUtils, JhiEventManager } from 'ng-jhipster';
+import { map } from 'rxjs/operators';
+import * as moment from 'moment';
+import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 
 import { IPost, Post } from 'app/shared/model/post.model';
 import { PostService } from './post.service';
@@ -12,11 +14,6 @@ import { IRecipe } from 'app/shared/model/recipe.model';
 import { RecipeService } from 'app/entities/recipe/recipe.service';
 import { IUser } from 'app/core/user/user.model';
 import { UserService } from 'app/core/user/user.service';
-import { Status } from 'app/shared/model/enumerations/status.model';
-
-import { map } from 'rxjs/operators';
-import * as moment from 'moment';
-import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 
 type SelectableEntity = IRecipe | IUser;
 
@@ -26,9 +23,9 @@ type SelectableEntity = IRecipe | IUser;
 })
 export class PostUpdateComponent implements OnInit {
   isSaving = false;
-  statusOptions = ['ACTIVE', 'INACTIVE'];
   recipes: IRecipe[] = [];
   users: IUser[] = [];
+  statusOptions = ['ACTIVE', 'INACTIVE'];
 
   editForm = this.fb.group({
     id: [],
@@ -40,24 +37,21 @@ export class PostUpdateComponent implements OnInit {
   });
 
   constructor(
-    protected dataUtils: JhiDataUtils,
-    protected eventManager: JhiEventManager,
     protected postService: PostService,
     protected recipeService: RecipeService,
     protected userService: UserService,
-    protected elementRef: ElementRef,
-    private fb: FormBuilder,
-    protected activatedRoute: ActivatedRoute
+    protected activatedRoute: ActivatedRoute,
+    private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ post }) => {
-      this.updateForm(post);
-
       if (!post.id) {
         const today = moment().startOf('minute');
         post.date = today;
       }
+
+      this.updateForm(post);
 
       this.recipeService
         .query({ 'postId.specified': 'false' })
@@ -106,13 +100,20 @@ export class PostUpdateComponent implements OnInit {
     if (post.id !== undefined) {
       this.subscribeToSaveResponse(this.postService.update(post));
     } else {
-      post.status = Status.ACTIVE;
       this.subscribeToSaveResponse(this.postService.create(post));
     }
   }
 
-  trackById(index: number, item: SelectableEntity): any {
-    return item.id;
+  private createFromForm(): IPost {
+    return {
+      ...new Post(),
+      id: this.editForm.get(['id'])!.value,
+      caption: this.editForm.get(['caption'])!.value,
+      date: this.editForm.get(['date'])!.value ? moment(this.editForm.get(['date'])!.value, DATE_TIME_FORMAT) : undefined,
+      status: this.editForm.get(['status'])!.value,
+      recipeId: this.editForm.get(['recipeId'])!.value,
+      userId: this.editForm.get(['userId'])!.value,
+    };
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IPost>>): void {
@@ -131,15 +132,7 @@ export class PostUpdateComponent implements OnInit {
     this.isSaving = false;
   }
 
-  private createFromForm(): IPost {
-    return {
-      ...new Post(),
-      id: this.editForm.get(['id'])!.value,
-      caption: this.editForm.get(['caption'])!.value,
-      date: this.editForm.get(['date'])!.value ? moment(this.editForm.get(['date'])!.value, DATE_TIME_FORMAT) : undefined,
-      status: this.editForm.get(['status'])!.value,
-      recipeId: this.editForm.get(['recipeId'])!.value,
-      userId: this.editForm.get(['userId'])!.value,
-    };
+  trackById(index: number, item: SelectableEntity): any {
+    return item.id;
   }
 }

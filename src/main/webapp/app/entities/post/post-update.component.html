@@ -82,7 +82,7 @@
                 </mat-form-field>
 
 
-                <mat-form-field appearance="fill" class="form-group w-100" >
+                <mat-form-field [hidden]="true" appearance="fill" class="form-group w-100" >
                     <mat-label jhiTranslate="shoppedApp.post.status"></mat-label>
                     <mat-select [(ngModel)]="statusOptions[0]" formControlName="status" id="status" name="status">
                         <mat-option *ngFor="let status of statusOptions" [value]="status">
@@ -93,12 +93,7 @@
             </div>
 
             <div>
-                <!--
-                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving"
-                        class="btn btn-primary">
-                    <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
-                </button>
-                -->
+
                 <button [disabled]="editForm.invalid || isSaving" id="save-entity" jhiMaterialColor="primary"
                         mat-raised-button
                         type="submit">
