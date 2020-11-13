@@ -14,7 +14,7 @@ export class IngredientTableComponent implements OnInit, AfterViewInit {
   @Input() data!: IIngredient[];
   @Input() managementComponent!: IngredientComponent;
 
-  displayedColumns: string[] = ['id', 'name', 'unitAbbrev', 'description', 'status', 'options'];
+  displayedColumns: string[] = ['id', 'image', 'name', 'unitAbbrev', 'description', 'status', 'options'];
 
   dataSource = new MatTableDataSource<IIngredient>();
 
@@ -39,4 +39,9 @@ export class IngredientTableComponent implements OnInit, AfterViewInit {
   public filter = (e: Event) => {
     this.dataSource.filter = (e.target as HTMLInputElement).value.trim().toLocaleLowerCase();
   };
+
+  public reloadSource(data: IIngredient[]): void {
+    this.data = data;
+    this.dataSource.data = data;
+  }
 }
