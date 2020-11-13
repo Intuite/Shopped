@@ -39,4 +39,9 @@ export class IngredientTableComponent implements OnInit, AfterViewInit {
   public filter = (e: Event) => {
     this.dataSource.filter = (e.target as HTMLInputElement).value.trim().toLocaleLowerCase();
   };
+
+  public reloadSource(data: IIngredient[]): void {
+    this.data = data;
+    this.dataSource.data = data;
+  }
 }

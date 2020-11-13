@@ -55,9 +55,18 @@
     <ng-container matColumnDef="status">
         <th *matHeaderCellDef mat-header-cell mat-sort-header>Status</th>
         <td *matCellDef="let element" mat-cell>
-            <span jhiTranslate="{{ 'shoppedApp.Status.' + element.status }}">
-                {{ element.status }}
-            </span>
+            <div [ngSwitch]="element.status">
+                <button (click)="managementComponent.setStatus(element, true)" *ngSwitchCase="'ACTIVE'"
+                        class="text-white" jhiMaterialColor="success"
+                        mat-mini-fab>
+                    <mat-icon>toggle_on</mat-icon>
+                </button>
+                <button (click)="managementComponent.setStatus(element, false)" *ngSwitchDefault class="text-white"
+                        color="warn"
+                        mat-mini-fab>
+                    <mat-icon>toggle_off</mat-icon>
+                </button>
+            </div>
         </td>
     </ng-container>
 
@@ -83,14 +92,14 @@
                 </button>
 
                 <button [routerLink]="['/ingredient/', element.id, 'edit']"
-                        class="text-white mx-3"
+                        class="text-white ml-3"
                         color="primary"
                         mat-mini-fab
                         type="submit">
                     <mat-icon>create</mat-icon>
                 </button>
 
-                <button (click)="managementComponent.delete(element)"
+                <button (click)="managementComponent.delete(element)" [hidden]="true"
                         class="text-white"
                         color="warn"
                         mat-mini-fab

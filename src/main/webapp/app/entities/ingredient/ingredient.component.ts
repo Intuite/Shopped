@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
 import { combineLatest, Subscription } from 'rxjs';
@@ -10,6 +10,8 @@ import { IIngredient } from 'app/shared/model/ingredient.model';
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { IngredientService } from './ingredient.service';
 import { IngredientDeleteDialogComponent } from './ingredient-delete-dialog.component';
+import { Status } from 'app/shared/model/enumerations/status.model';
+import { IngredientTableComponent } from 'app/shared/tables/ingredient-table/ingredient-table.component';
 
 @Component({
   selector: 'jhi-ingredient',
@@ -25,6 +27,8 @@ export class IngredientComponent implements OnInit, OnDestroy {
   ascending!: boolean;
   ngbPaginationPage = 0;
   tableLoaded = false;
+
+  @ViewChild('tbl', { static: false }) tbl!: IngredientTableComponent;
 
   constructor(
     protected ingredientService: IngredientService,
@@ -97,6 +101,17 @@ export class IngredientComponent implements OnInit, OnDestroy {
         sort: this.predicate + ',' + (this.ascending ? 'asc' : 'desc'),
       },
     });
+  }
+
+  setStatus(element: IIngredient, newStatus: boolean): void {
+    this.ingredientService
+      .update({
+        ...element,
+        status: !newStatus ? (Status.ACTIVE.toUpperCase() as Status) : (Status.INACTIVE.toUpperCase() as Status),
+      })
+      .subscribe(() => {
+        this.loadPage(this.page);
+      });
   }
 
   protected handleNavigation(): void {
