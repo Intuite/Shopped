@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
 import { ITagType } from 'app/shared/model/tag-type.model';
+import { IRecipeTag } from 'app/shared/model/recipe-tag.model';
 
 type EntityResponseType = HttpResponse<ITagType>;
 type EntityArrayResponseType = HttpResponse<ITagType[]>;
@@ -30,6 +31,11 @@ export class TagTypeService {
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http.get<ITagType[]>(this.resourceUrl, { params: options, observe: 'response' });
+  }
+
+  queryAll(req?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http.get<IRecipeTag[]>(`${this.resourceUrl}/all`, { params: options, observe: 'response' });
   }
 
   delete(id: number): Observable<HttpResponse<{}>> {
