@@ -1,44 +1,5 @@
-<div class="row justify-content-center">
-    <div class="col-8">
-        <div *ngIf="ingredientTag">
-            <h2><span jhiTranslate="shoppedApp.ingredientTag.detail.title">Ingredient Tag</span> {{ ingredientTag.id }}</h2>
-
-            <hr>
-
-            <jhi-alert-error></jhi-alert-error>
-
-            <dl class="row-md jh-entity-details">
-                <dt><span jhiTranslate="shoppedApp.ingredientTag.name">Name</span></dt>
-                <dd>
-                    <span>{{ ingredientTag.name }}</span>
-                </dd>
-                <dt><span jhiTranslate="shoppedApp.ingredientTag.description">Description</span></dt>
-                <dd>
-                    <span>{{ ingredientTag.description }}</span>
-                </dd>
-                <dt><span jhiTranslate="shoppedApp.ingredientTag.status">Status</span></dt>
-                <dd>
-                    <span jhiTranslate="{{ 'shoppedApp.Status.' + ingredientTag.status }}">{{ ingredientTag.status }}</span>
-                </dd>
-                <dt><span jhiTranslate="shoppedApp.ingredientTag.type">Type</span></dt>
-                <dd>
-                    <div *ngIf="ingredientTag.typeId">
-                        <a [routerLink]="['/tag-type', ingredientTag.typeId, 'view']">{{ ingredientTag.typeName }}</a>
-                    </div>
-                </dd>
-            </dl>
-
-            <button type="submit"
-                    (click)="previousState()"
-                    class="btn btn-info">
-                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
-            </button>
-
-            <button type="button"
-                    [routerLink]="['/ingredient-tag', ingredientTag.id, 'edit']"
-                    class="btn btn-primary">
-                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
-            </button>
-        </div>
-    </div>
-</div>
+<h1 mat-dialog-title>{{ element.name | capitalize }}</h1>
+<mat-dialog-content>
+    <strong>{{element.typeName}}</strong>
+    <p>{{ element.description }}</p>
+</mat-dialog-content>
