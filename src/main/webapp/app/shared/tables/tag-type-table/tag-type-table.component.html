@@ -56,7 +56,7 @@
         <th *matHeaderCellDef mat-header-cell mat-sort-header>Status</th>
         <td *matCellDef="let element" mat-cell>
             <span>
-                {{ element.status }}
+                {{ element.status | capitalize }}
             </span>
         </td>
     </ng-container>

@@ -4,6 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { UserManagementComponent } from 'app/admin/user-management/user-management.component';
 import { User } from 'app/core/user/user.model';
+import { Status } from 'app/shared/model/enumerations/status.model';
 
 @Component({
   selector: 'jhi-material-table',
@@ -11,6 +12,8 @@ import { User } from 'app/core/user/user.model';
   styleUrls: ['./user-table.component.scss'],
 })
 export class UserTableComponent implements OnInit, AfterViewInit {
+  status: typeof Status | undefined;
+
   @Input() data!: User[];
   @Input() managementComponent!: UserManagementComponent;
 
@@ -40,8 +43,8 @@ export class UserTableComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.dataSource.filterPredicate = (data: any, filter) => {
-      const dataStr = JSON.stringify(data).toLowerCase();
-      // return dataStr.indexOf(filter) !== -1;
+      let dataStr = JSON.stringify(data).toLowerCase();
+      dataStr = dataStr.replace(/(\{|,)\s*(.+?)\s*:/g, '');
       return dataStr.includes(filter);
     };
   }

@@ -1,13 +1,12 @@
 <div class="row justify-content-center">
     <div class="col-8">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-            <h2 id="myUserLabel" jhiTranslate="userManagement.home.createOrEditLabel">
-                Create or edit a User
+            <h2 id="myUserLabel">
+                {{ editForm.get('id')!.value !== undefined ? "Edit" : "Create" }} a User
             </h2>
 
             <div *ngIf="user">
                 <jhi-alert-error></jhi-alert-error>
-
                 <mat-form-field class="form-group w-100 mat-form-field-disabled" appearance="fill" [hidden]="!user.id">
                     <mat-label jhiTranslate="global.field.id">ID</mat-label>
                     <input matInput type="text" name="id" formControlName="id" readonly>
@@ -125,11 +124,11 @@
             </div>
 
             <div *ngIf="user">
-                <button mat-flat-button type="button" jhiMaterialColor="secondary" class="" (click)="previousState()">
+                <button mat-flat-button class="text-white" type="button" jhiMaterialColor="secondary" (click)="previousState()">
                     <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
                 </button>
 
-                <button mat-flat-button type="submit" [disabled]="editForm.invalid || isSaving" jhiMaterialColor="primary">
+                <button mat-flat-button class="text-white" type="submit" [disabled]="editForm.invalid || isSaving" jhiMaterialColor="primary">
                     <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
                 </button>
             </div>

@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { LoginModalService } from 'app/core/login/login-modal.service';
 import { PasswordResetFinishService } from './password-reset-finish.service';
+import { PasswordStrengthBarComponent } from 'app/account/password/password-strength-bar.component';
 
 @Component({
   selector: 'jhi-password-reset-finish',
@@ -18,10 +19,13 @@ export class PasswordResetFinishComponent implements OnInit, AfterViewInit {
   error = false;
   success = false;
   key = '';
+  requesting = false;
+  unacceptablePassword = false;
+  @ViewChild('strengthBarComponent', { static: false }) stBar!: PasswordStrengthBarComponent;
 
   passwordForm = this.fb.group({
-    newPassword: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
-    confirmPassword: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
+    newPassword: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(64)]],
+    confirmPassword: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(64)]],
   });
 
   constructor(
@@ -55,15 +59,28 @@ export class PasswordResetFinishComponent implements OnInit, AfterViewInit {
 
     if (newPassword !== confirmPassword) {
       this.doNotMatch = true;
-    } else {
+    }
+
+    this.unacceptablePassword = !this.isPasswordAcceptable();
+
+    if (!this.doNotMatch && !this.unacceptablePassword) {
+      this.requesting = true;
       this.passwordResetFinishService.save(this.key, newPassword).subscribe(
         () => (this.success = true),
-        () => (this.error = true)
+        () => {
+          this.error = true;
+          this.requesting = false;
+        },
+        () => (this.requesting = false)
       );
     }
   }
 
   login(): void {
     this.loginModalService.open();
+  }
+
+  isPasswordAcceptable(): boolean {
+    return this.stBar.curIdx === 5;
   }
 }

@@ -1,19 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, Inject, OnInit } from '@angular/core';
 
 import { IRecipeTag } from 'app/shared/model/recipe-tag.model';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'jhi-recipe-tag-detail',
   templateUrl: './recipe-tag-detail.component.html',
 })
 export class RecipeTagDetailComponent implements OnInit {
-  recipeTag: IRecipeTag | null = null;
+  element: any;
 
-  constructor(protected activatedRoute: ActivatedRoute) {}
+  constructor(@Inject(MAT_DIALOG_DATA) public data: IRecipeTag) {}
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ recipeTag }) => (this.recipeTag = recipeTag));
+    this.element = this.data;
   }
 
   previousState(): void {
