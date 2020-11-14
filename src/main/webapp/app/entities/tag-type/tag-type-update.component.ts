@@ -7,6 +7,8 @@ import { Observable } from 'rxjs';
 
 import { ITagType, TagType } from 'app/shared/model/tag-type.model';
 import { TagTypeService } from './tag-type.service';
+import { Status } from 'app/shared/model/enumerations/status.model';
+import { JhiAlertService } from 'ng-jhipster';
 
 @Component({
   selector: 'jhi-tag-type-update',
@@ -14,7 +16,6 @@ import { TagTypeService } from './tag-type.service';
 })
 export class TagTypeUpdateComponent implements OnInit {
   isSaving = false;
-  statusOptions = ['ACTIVE', 'INACTIVE'];
 
   editForm = this.fb.group({
     id: [],
@@ -23,7 +24,12 @@ export class TagTypeUpdateComponent implements OnInit {
     status: [],
   });
 
-  constructor(protected tagTypeService: TagTypeService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
+  constructor(
+    protected tagTypeService: TagTypeService,
+    private alertService: JhiAlertService,
+    protected activatedRoute: ActivatedRoute,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ tagType }) => {
@@ -47,21 +53,24 @@ export class TagTypeUpdateComponent implements OnInit {
   save(): void {
     this.isSaving = true;
     const tagType = this.createFromForm();
-    if (tagType.id !== undefined) {
-      this.subscribeToSaveResponse(this.tagTypeService.update(tagType));
-    } else {
-      this.subscribeToSaveResponse(this.tagTypeService.create(tagType));
-    }
-  }
-
-  private createFromForm(): ITagType {
-    return {
-      ...new TagType(),
-      id: this.editForm.get(['id'])!.value,
-      name: this.editForm.get(['name'])!.value,
-      description: this.editForm.get(['description'])!.value,
-      status: this.editForm.get(['status'])!.value,
-    };
+    this.tagTypeService
+      .query({
+        ...(tagType.name && { 'name.equals': tagType.name }),
+      })
+      .subscribe((res: HttpResponse<ITagType[]>) => {
+        const valid = this.validateForm(tagType, res.body || []);
+        if (valid) {
+          if (tagType.id !== undefined) {
+            this.subscribeToSaveResponse(this.tagTypeService.update(tagType));
+          } else {
+            tagType.status = Status.ACTIVE.toUpperCase() as Status;
+            this.subscribeToSaveResponse(this.tagTypeService.create(tagType));
+          }
+        } else {
+          this.alertService.addAlert({ toast: false, type: 'danger', msg: 'shoppedApp.validation.forms.nameUnique' }, []);
+        }
+        this.isSaving = false;
+      });
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<ITagType>>): void {
@@ -78,5 +87,30 @@ export class TagTypeUpdateComponent implements OnInit {
 
   protected onSaveError(): void {
     this.isSaving = false;
+  }
+
+  private validateForm(tagType: ITagType, tagTypeList: ITagType[]): boolean {
+    const rt = tagTypeList[0];
+    if (tagTypeList.length === 0) {
+      // no existen tags con el mismo nombre
+      return true;
+    } else if (tagType.id !== undefined && tagTypeList.length < 2) {
+      if (tagType.id !== rt.id) {
+        // si no es el mismo tag
+        return false; // equal name
+      }
+      return true; // can update
+    }
+    return false;
+  }
+
+  private createFromForm(): ITagType {
+    return {
+      ...new TagType(),
+      id: this.editForm.get(['id'])!.value,
+      name: this.editForm.get(['name'])!.value,
+      description: this.editForm.get(['description'])!.value,
+      status: this.editForm.get(['status'])!.value,
+    };
   }
 }

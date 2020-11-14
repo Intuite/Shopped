@@ -14,7 +14,7 @@ export class TagTypeTableComponent implements OnInit, AfterViewInit {
   @Input() data!: TagType[];
   @Input() managementComponent!: TagTypeComponent;
 
-  displayedColumns: string[] = ['id', 'name', 'description', 'status', 'options'];
+  displayedColumns: string[] = ['name', 'description', 'status', 'options'];
 
   dataSource = new MatTableDataSource<TagType>();
 
