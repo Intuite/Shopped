@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { HttpResponse, HttpHeaders } from '@angular/common/http';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription, combineLatest } from 'rxjs';
@@ -11,6 +11,7 @@ import { Account } from 'app/core/user/account.model';
 import { UserService } from 'app/core/user/user.service';
 import { User } from 'app/core/user/user.model';
 import { UserManagementDeleteDialogComponent } from './user-management-delete-dialog.component';
+import { UserTableComponent } from 'app/shared/tables/material-table/user-table.component';
 
 @Component({
   selector: 'jhi-user-mgmt',
@@ -25,6 +26,8 @@ export class UserManagementComponent implements OnInit, OnDestroy {
   page!: number;
   predicate!: string;
   ascending!: boolean;
+  @ViewChild('tableComponent', { static: false }) table!: UserTableComponent;
+  tableLoaded = false;
 
   constructor(
     private userService: UserService,
@@ -37,8 +40,12 @@ export class UserManagementComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.accountService.identity().subscribe(account => (this.currentAccount = account));
-    this.userListSubscription = this.eventManager.subscribe('userListModification', () => this.loadAll());
+    this.load();
     this.handleNavigation();
+  }
+
+  load(): void {
+    this.userListSubscription = this.eventManager.subscribe('userListModification', () => this.loadAll());
   }
 
   ngOnDestroy(): void {
@@ -47,8 +54,23 @@ export class UserManagementComponent implements OnInit, OnDestroy {
     }
   }
 
+  changePage(pageIndex: number): void {
+    const page = pageIndex;
+    if (page !== this.page) {
+      this.page = page;
+    }
+  }
+
+  changePageSize(pageSize: number): void {
+    if (pageSize !== this.itemsPerPage) {
+      this.itemsPerPage = pageSize;
+    }
+  }
+
   setActive(user: User, isActivated: boolean): void {
-    this.userService.update({ ...user, activated: isActivated }).subscribe(() => this.loadAll());
+    this.userService.update({ ...user, activated: isActivated }).subscribe(() => {
+      this.loadAll();
+    });
   }
 
   trackIdentity(index: number, item: User): any {
@@ -65,6 +87,7 @@ export class UserManagementComponent implements OnInit, OnDestroy {
       relativeTo: this.activatedRoute.parent,
       queryParams: {
         page: this.page,
+        size: this.itemsPerPage,
         sort: this.predicate + ',' + (this.ascending ? 'asc' : 'desc'),
       },
     });
@@ -74,6 +97,8 @@ export class UserManagementComponent implements OnInit, OnDestroy {
     combineLatest(this.activatedRoute.data, this.activatedRoute.queryParamMap, (data: Data, params: ParamMap) => {
       const page = params.get('page');
       this.page = page !== null ? +page : 1;
+      const pageSize = params.get('size');
+      this.itemsPerPage = pageSize !== null ? +pageSize : ITEMS_PER_PAGE;
       const sort = (params.get('sort') ?? data['defaultSort']).split(',');
       this.predicate = sort[0];
       this.ascending = sort[1] === 'asc';
@@ -82,25 +107,23 @@ export class UserManagementComponent implements OnInit, OnDestroy {
   }
 
   private loadAll(): void {
-    this.userService
-      .query({
-        page: this.page - 1,
-        size: this.itemsPerPage,
-        sort: this.sort(),
-      })
-      .subscribe((res: HttpResponse<User[]>) => this.onSuccess(res.body, res.headers));
+    this.userService.queryAll().subscribe((res: HttpResponse<User[]>) => {
+      this.onSuccess(res.body, res.headers);
+    });
   }
 
-  private sort(): string[] {
-    const result = [this.predicate + ',' + (this.ascending ? 'asc' : 'desc')];
-    if (this.predicate !== 'id') {
-      result.push('id');
-    }
-    return result;
-  }
+  // private sort(): string[] {
+  //   const result = [this.predicate + ',' + (this.ascending ? 'asc' : 'desc')];
+  //   if (this.predicate !== 'id') {
+  //     result.push('id');
+  //   }
+  //   return result;
+  // }
 
   private onSuccess(users: User[] | null, headers: HttpHeaders): void {
     this.totalItems = Number(headers.get('X-Total-Count'));
     this.users = users;
+    if (this.tableLoaded) this.table.reloadSource(users as User[]);
+    this.tableLoaded = true;
   }
 }

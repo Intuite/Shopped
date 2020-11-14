@@ -2,11 +2,16 @@
     <h2 id="page-heading">
         <span jhiTranslate="shoppedApp.userProfile.home.title">User Profiles</span>
 
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-user-profile" [routerLink]="['/user-profile/new']">
-            <fa-icon icon="plus"></fa-icon>
-            <span  jhiTranslate="shoppedApp.userProfile.home.createLabel">
-            Create a new User Profile
-            </span>
+        <button id="jh-create-entity"
+                class="btn btn-primary float-right jh-create-entity create-user-profile"
+                [routerLink]="['/user-profile/new']"
+                [matTooltipHideDelay]="0"
+                [matTooltipShowDelay]="1000"
+                matTooltip="Create a new user profile"
+                jhiMaterialColor="accent"
+                mat-flat-button
+        >
+            <mat-icon>add</mat-icon>
         </button>
     </h2>
 

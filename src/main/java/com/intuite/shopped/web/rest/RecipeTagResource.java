@@ -1,11 +1,10 @@
 package com.intuite.shopped.web.rest;
 
-import com.intuite.shopped.service.RecipeTagService;
-import com.intuite.shopped.web.rest.errors.BadRequestAlertException;
-import com.intuite.shopped.service.dto.RecipeTagDTO;
-import com.intuite.shopped.service.dto.RecipeTagCriteria;
 import com.intuite.shopped.service.RecipeTagQueryService;
-
+import com.intuite.shopped.service.RecipeTagService;
+import com.intuite.shopped.service.dto.RecipeTagCriteria;
+import com.intuite.shopped.service.dto.RecipeTagDTO;
+import com.intuite.shopped.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -15,10 +14,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -33,16 +31,12 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class RecipeTagResource {
 
-    private final Logger log = LoggerFactory.getLogger(RecipeTagResource.class);
-
     private static final String ENTITY_NAME = "recipeTag";
-
+    private final Logger log = LoggerFactory.getLogger(RecipeTagResource.class);
+    private final RecipeTagService recipeTagService;
+    private final RecipeTagQueryService recipeTagQueryService;
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
-
-    private final RecipeTagService recipeTagService;
-
-    private final RecipeTagQueryService recipeTagQueryService;
 
     public RecipeTagResource(RecipeTagService recipeTagService, RecipeTagQueryService recipeTagQueryService) {
         this.recipeTagService = recipeTagService;
@@ -102,6 +96,19 @@ public class RecipeTagResource {
         Page<RecipeTagDTO> page = recipeTagQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * {@code GET  /recipe-tags} : get all the recipeTags.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of recipeTags in body.
+     */
+    @GetMapping("/recipe-tags/all")
+    public ResponseEntity<List<RecipeTagDTO>> getAllRecipeTags(RecipeTagCriteria criteria) {
+        log.debug("REST request to get RecipeTags by criteria: {}", criteria);
+        List<RecipeTagDTO> list = recipeTagQueryService.findByCriteria(criteria);
+        return ResponseEntity.ok().body(list);
     }
 
     /**

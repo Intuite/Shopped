@@ -1,0 +1,13 @@
+table.mat-table {
+  display: table;
+  width: 100%;
+}
+
+.mat-footer-row,
+.mat-header-row,
+.mat-row {
+  display: flex;
+  justify-content: flex-end;
+  min-width: 100%;
+  vertical-align: middle;
+}

@@ -1,0 +1,45 @@
+<form [formGroup]="ingredientForm">
+    <mat-expansion-panel (closed)="panelOpenState = false"
+                         (opened)="panelOpenState = true">
+        <mat-expansion-panel-header fxLayoutAlign="space-between center" fxlayout="row">
+            <mat-panel-title>
+                <span *ngIf="!panelOpenState">
+                    Ingredients
+                </span>
+            </mat-panel-title>
+            <mat-panel-description>
+                Selected {{ getSelectedControls().length }}
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <button
+            (click)="addIngredient()"
+            *ngIf="panelOpenState"
+            [matTooltipHideDelay]="0"
+            [matTooltipShowDelay]="1000"
+            aria-label="Select a new ingredient"
+            class="align-self-center mb-3 corner-add"
+            jhiMaterialColor="accent"
+            mat-mini-fab
+            matTooltip="Select a new ingredient">
+            <mat-icon>add</mat-icon>
+        </button>
+        <div fxLayout="row wrap" fxLayoutGap="16px grid">
+            <jhi-ingredient-selection (deselect)="deleteIngredient($event)"
+                                      *ngFor="let iSelected of getSelectedControls(); let i = index"
+                                      [fxFlex.lg]="(100/5) + '%'"
+                                      [fxFlex.md]="(100/4) + '%'"
+                                      [index]="i"
+                                      [ingredientSelectedForm]="iSelected"
+                                      fxFlex.sm="50%"
+                                      fxFlex.xs="100%">
+            </jhi-ingredient-selection>
+        </div>
+    </mat-expansion-panel>
+    <button (click)="saveIngredients()"
+            [disabled]="ingredientForm.invalid"
+            class="w-100 mat-elevation-z3"
+            color="accent"
+            mat-raised-button
+            type="submit">Submit
+    </button>
+</form>

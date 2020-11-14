@@ -12,14 +12,6 @@
                 <dd>
                     <span>{{ ingredient.name }}</span>
                 </dd>
-                <dt><span jhiTranslate="shoppedApp.ingredient.description">Description</span></dt>
-                <dd>
-                    <span>{{ ingredient.description }}</span>
-                </dd>
-                <dt><span jhiTranslate="shoppedApp.ingredient.units">Units</span></dt>
-                <dd>
-                    <span>{{ ingredient.units }}</span>
-                </dd>
                 <dt><span jhiTranslate="shoppedApp.ingredient.image">Image</span></dt>
                 <dd>
                     <div *ngIf="ingredient.image">
@@ -32,6 +24,16 @@
                 <dt><span jhiTranslate="shoppedApp.ingredient.status">Status</span></dt>
                 <dd>
                     <span jhiTranslate="{{ 'shoppedApp.Status.' + ingredient.status }}">{{ ingredient.status }}</span>
+                </dd>
+                <dt><span jhiTranslate="shoppedApp.ingredient.description">Description</span></dt>
+                <dd>
+                    <span>{{ ingredient.description }}</span>
+                </dd>
+                <dt><span jhiTranslate="shoppedApp.ingredient.unit">Unit</span></dt>
+                <dd>
+                    <div *ngIf="ingredient.unitId">
+                        <a [routerLink]="['/unit', ingredient.unitId, 'view']">{{ ingredient.unitAbbrev }}</a>
+                    </div>
                 </dd>
             </dl>
 

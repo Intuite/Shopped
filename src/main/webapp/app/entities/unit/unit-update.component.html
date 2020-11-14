@@ -1,0 +1,50 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form (ngSubmit)="save()" [formGroup]="editForm" name="editForm" novalidate role="form">
+            <h2 id="jhi-unit-heading">{{ editForm.get('id')!.value !== undefined ? "Edit" : "Create" }}
+                Unit</h2>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <div>
+                <mat-form-field [hidden]="!editForm.get('id')!.value" appearance="fill" class="form-group w-100">
+                    <mat-label jhiTranslate="global.field.id"></mat-label>
+                    <input formControlName="id" id="id" matInput name="id" readonly type="text"/>
+                </mat-form-field>
+
+
+                <mat-form-field appearance="fill" class="form-group w-100">
+                    <mat-label jhiTranslate="shoppedApp.unit.name"></mat-label>
+                    <input formControlName="name" id="field_name" matInput name="name"
+                           type="text"/>
+                    <mat-error
+                        *ngIf="editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)"
+                        jhiTranslate="entity.validation.required">
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="form-group w-100">
+                    <mat-label jhiTranslate="shoppedApp.unit.abbrev"></mat-label>
+                    <input formControlName="abbrev" id="field_abbrev" matInput name="abbrev"
+                           type="text"/>
+                    <mat-error
+                        *ngIf="editForm.get('abbrev')!.invalid && (editForm.get('abbrev')!.dirty || editForm.get('abbrev')!.touched)"
+                        jhiTranslate="entity.validation.required">
+                    </mat-error>
+                </mat-form-field>
+                <div>
+                    <button (click)="previousState()" id="cancel-save" jhiMaterialColor="secondary" mat-raised-button
+                            type="button">
+                        <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                    </button>
+
+                    <button [disabled]="editForm.invalid || isSaving" id="save-entity" jhiMaterialColor="primary"
+                            mat-raised-button
+                            type="submit">
+                        <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

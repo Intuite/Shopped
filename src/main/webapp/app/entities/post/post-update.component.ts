@@ -25,6 +25,7 @@ export class PostUpdateComponent implements OnInit {
   isSaving = false;
   recipes: IRecipe[] = [];
   users: IUser[] = [];
+  statusOptions = ['ACTIVE', 'INACTIVE'];
 
   editForm = this.fb.group({
     id: [],
@@ -46,7 +47,7 @@ export class PostUpdateComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ post }) => {
       if (!post.id) {
-        const today = moment().startOf('day');
+        const today = moment().startOf('minute');
         post.date = today;
       }
 

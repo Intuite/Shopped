@@ -40,6 +40,8 @@
         "bite": "Bite",
         "message": "Message",
         "catalogue": "Catalogue",
+        "unit": "Unit",
+        "bundle": "Bundle",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {
@@ -96,14 +98,14 @@
       "validate": {
         "newpassword": {
           "required": "Your password is required.",
-          "minlength": "Your password is required to be at least 4 characters.",
-          "maxlength": "Your password cannot be longer than 50 characters.",
+          "minlength": "Your password is required to be at least 8 characters.",
+          "maxlength": "Your password cannot be longer than 64 characters.",
           "strength": "Password strength:"
         },
         "confirmpassword": {
           "required": "Your confirmation password is required.",
-          "minlength": "Your confirmation password is required to be at least 4 characters.",
-          "maxlength": "Your confirmation password cannot be longer than 50 characters."
+          "minlength": "Your confirmation password is required to be at least 8 characters.",
+          "maxlength": "Your confirmation password cannot be longer than 64 characters."
         },
         "email": {
           "required": "Your email is required.",

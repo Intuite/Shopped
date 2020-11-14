@@ -47,11 +47,11 @@ public class IngredientCriteria implements Serializable, Criteria {
 
     private StringFilter name;
 
+    private StatusFilter status;
+
     private StringFilter description;
 
-    private StringFilter units;
-
-    private StatusFilter status;
+    private LongFilter unitId;
 
     public IngredientCriteria() {
     }
@@ -59,9 +59,9 @@ public class IngredientCriteria implements Serializable, Criteria {
     public IngredientCriteria(IngredientCriteria other) {
         this.id = other.id == null ? null : other.id.copy();
         this.name = other.name == null ? null : other.name.copy();
-        this.description = other.description == null ? null : other.description.copy();
-        this.units = other.units == null ? null : other.units.copy();
         this.status = other.status == null ? null : other.status.copy();
+        this.description = other.description == null ? null : other.description.copy();
+        this.unitId = other.unitId == null ? null : other.unitId.copy();
     }
 
     @Override
@@ -85,6 +85,14 @@ public class IngredientCriteria implements Serializable, Criteria {
         this.name = name;
     }
 
+    public StatusFilter getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusFilter status) {
+        this.status = status;
+    }
+
     public StringFilter getDescription() {
         return description;
     }
@@ -93,20 +101,12 @@ public class IngredientCriteria implements Serializable, Criteria {
         this.description = description;
     }
 
-    public StringFilter getUnits() {
-        return units;
+    public LongFilter getUnitId() {
+        return unitId;
     }
 
-    public void setUnits(StringFilter units) {
-        this.units = units;
-    }
-
-    public StatusFilter getStatus() {
-        return status;
-    }
-
-    public void setStatus(StatusFilter status) {
-        this.status = status;
+    public void setUnitId(LongFilter unitId) {
+        this.unitId = unitId;
     }
 
 
@@ -122,9 +122,9 @@ public class IngredientCriteria implements Serializable, Criteria {
         return
             Objects.equals(id, that.id) &&
             Objects.equals(name, that.name) &&
+            Objects.equals(status, that.status) &&
             Objects.equals(description, that.description) &&
-            Objects.equals(units, that.units) &&
-            Objects.equals(status, that.status);
+            Objects.equals(unitId, that.unitId);
     }
 
     @Override
@@ -132,9 +132,9 @@ public class IngredientCriteria implements Serializable, Criteria {
         return Objects.hash(
         id,
         name,
+        status,
         description,
-        units,
-        status
+        unitId
         );
     }
 
@@ -144,9 +144,9 @@ public class IngredientCriteria implements Serializable, Criteria {
         return "IngredientCriteria{" +
                 (id != null ? "id=" + id + ", " : "") +
                 (name != null ? "name=" + name + ", " : "") +
-                (description != null ? "description=" + description + ", " : "") +
-                (units != null ? "units=" + units + ", " : "") +
                 (status != null ? "status=" + status + ", " : "") +
+                (description != null ? "description=" + description + ", " : "") +
+                (unitId != null ? "unitId=" + unitId + ", " : "") +
             "}";
     }
 

@@ -9,6 +9,8 @@ import { IRecipeTag, RecipeTag } from 'app/shared/model/recipe-tag.model';
 import { RecipeTagService } from './recipe-tag.service';
 import { ITagType } from 'app/shared/model/tag-type.model';
 import { TagTypeService } from 'app/entities/tag-type/tag-type.service';
+import { JhiAlertService } from 'ng-jhipster';
+import { Status } from 'app/shared/model/enumerations/status.model';
 
 @Component({
   selector: 'jhi-recipe-tag-update',
@@ -30,7 +32,8 @@ export class RecipeTagUpdateComponent implements OnInit {
     protected recipeTagService: RecipeTagService,
     protected tagTypeService: TagTypeService,
     protected activatedRoute: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private alertService: JhiAlertService
   ) {}
 
   ngOnInit(): void {
@@ -58,22 +61,28 @@ export class RecipeTagUpdateComponent implements OnInit {
   save(): void {
     this.isSaving = true;
     const recipeTag = this.createFromForm();
-    if (recipeTag.id !== undefined) {
-      this.subscribeToSaveResponse(this.recipeTagService.update(recipeTag));
-    } else {
-      this.subscribeToSaveResponse(this.recipeTagService.create(recipeTag));
-    }
+    this.recipeTagService
+      .query({
+        ...(recipeTag.name && { 'name.equals': recipeTag.name }),
+      })
+      .subscribe((res: HttpResponse<IRecipeTag[]>) => {
+        const valid = this.validateForm(recipeTag, res.body || []);
+        if (valid) {
+          if (recipeTag.id !== undefined) {
+            this.subscribeToSaveResponse(this.recipeTagService.update(recipeTag));
+          } else {
+            recipeTag.status = Status.ACTIVE.toUpperCase() as Status;
+            this.subscribeToSaveResponse(this.recipeTagService.create(recipeTag));
+          }
+        } else {
+          this.alertService.addAlert({ toast: false, type: 'danger', msg: 'shoppedApp.validation.forms.nameUnique' }, []);
+        }
+        this.isSaving = false;
+      });
   }
 
-  private createFromForm(): IRecipeTag {
-    return {
-      ...new RecipeTag(),
-      id: this.editForm.get(['id'])!.value,
-      name: this.editForm.get(['name'])!.value,
-      description: this.editForm.get(['description'])!.value,
-      status: this.editForm.get(['status'])!.value,
-      typeId: this.editForm.get(['typeId'])!.value,
-    };
+  trackById(index: number, item: ITagType): any {
+    return item.id;
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IRecipeTag>>): void {
@@ -92,7 +101,29 @@ export class RecipeTagUpdateComponent implements OnInit {
     this.isSaving = false;
   }
 
-  trackById(index: number, item: ITagType): any {
-    return item.id;
+  private validateForm(recipeTag: IRecipeTag, recipeTagList: IRecipeTag[]): boolean {
+    const rt = recipeTagList[0];
+    if (recipeTagList.length === 0) {
+      // no existen tags con el mismo nombre
+      return true;
+    } else if (recipeTag.id !== undefined && recipeTagList.length < 2) {
+      if (recipeTag.id !== rt.id) {
+        // si no es el mismo tag
+        return false; // equal name
+      }
+      return true; // can update
+    }
+    return false;
+  }
+
+  private createFromForm(): IRecipeTag {
+    return {
+      ...new RecipeTag(),
+      id: this.editForm.get(['id'])!.value,
+      name: this.editForm.get(['name'])!.value,
+      description: this.editForm.get(['description'])!.value,
+      status: this.editForm.get(['status'])!.value,
+      typeId: this.editForm.get(['typeId'])!.value,
+    };
   }
 }

@@ -1,0 +1,6 @@
+<mat-tab-group mat-align-tabs="center">
+    <mat-tab *ngFor="let tab of content">
+        <ng-template mat-tab-label>{{tab.name}}</ng-template>
+        <div [innerHTML]="tab.value">tab.value</div>
+    </mat-tab>
+</mat-tab-group>
