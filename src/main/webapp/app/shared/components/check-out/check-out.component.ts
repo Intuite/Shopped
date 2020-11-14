@@ -3,7 +3,7 @@ import { TransactionService } from 'app/entities/transaction/transaction.service
 import { ITransaction, Transaction } from 'app/shared/model/transaction.model';
 import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
-import { PdfGeneratorService } from 'app/shared/services/pdf-generator.service';
+import { TransactionLogicService } from 'app/shared/services/transaction-logic.service';
 
 declare let paypal: any;
 
@@ -24,24 +24,22 @@ export class CheckOutComponent implements OnInit {
     description: 'Shopped, Cookies',
   };
 
-  constructor(private transactionService: TransactionService, private pdfGenerator: PdfGeneratorService) {}
+  constructor(private transactionService: TransactionService, private transactionLogicService: TransactionLogicService) {}
 
   ngOnInit(): void {
     const cookie = this.cookies;
     const transactionService = this.transactionService;
-    const generator = this.pdfGenerator;
+    const transactionLogicService = this.transactionLogicService;
     const userId = this.userId;
     /* eslint-disable @typescript-eslint/camelcase */
     this.product.price = this.price || 0;
 
-    function saveThings(transac: ITransaction): void {
+    function processTransaction(transac: ITransaction): void {
       transac.userId = userId;
       transac.cookiesAmount = cookie;
-      transactionService.create(transac).subscribe(
-        res => console.warn(res),
-        () => console.warn('error')
-      );
-      generator.generatePdf();
+
+      transactionLogicService.processTransactionBuy(transac);
+      // TODO llamar transaction-logic-service con transac ya armado.
     }
 
     paypal
@@ -75,7 +73,7 @@ export class CheckOutComponent implements OnInit {
             };
           };
           transaction(order);
-          saveThings(this.transac);
+          processTransaction(this.transac);
           console.warn(this.transac);
         },
         onError(err: any): any {
