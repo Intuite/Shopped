@@ -12,6 +12,8 @@ import { RecipeTagService } from './recipe-tag.service';
 import { RecipeTagDeleteDialogComponent } from './recipe-tag-delete-dialog.component';
 import { IIngredient } from 'app/shared/model/ingredient.model';
 import { Status } from 'app/shared/model/enumerations/status.model';
+import { MatDialog } from '@angular/material/dialog';
+import { RecipeTagDetailComponent } from 'app/entities/recipe-tag/recipe-tag-detail.component';
 
 @Component({
   selector: 'jhi-recipe-tag',
@@ -33,7 +35,8 @@ export class RecipeTagComponent implements OnInit, OnDestroy {
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
     protected eventManager: JhiEventManager,
-    protected modalService: NgbModal
+    protected modalService: NgbModal,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -101,6 +104,12 @@ export class RecipeTagComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.loadPage(this.page);
       });
+  }
+
+  view(recipeTag: any): void {
+    this.dialog.open(RecipeTagDetailComponent, {
+      data: recipeTag,
+    });
   }
 
   protected handleNavigation(): void {
