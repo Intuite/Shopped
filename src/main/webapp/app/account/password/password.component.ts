@@ -16,6 +16,7 @@ export class PasswordComponent implements OnInit {
   unacceptablePassword = false;
   error = false;
   success = false;
+  requesting = false;
   account$?: Observable<Account | null>;
   passwordForm = this.fb.group({
     currentPassword: ['', [Validators.required]],
@@ -39,19 +40,27 @@ export class PasswordComponent implements OnInit {
     if (newPassword !== this.passwordForm.get(['confirmPassword'])!.value) {
       this.doNotMatch = true;
     }
-    if (!this.isPasswordAcceptable()) {
-      this.unacceptablePassword = true;
-    }
+
+    this.unacceptablePassword = !this.isPasswordAcceptable();
 
     if (!this.doNotMatch && !this.unacceptablePassword) {
+      this.requesting = true;
       this.passwordService.save(newPassword, this.passwordForm.get(['currentPassword'])!.value).subscribe(
-        () => (this.success = true),
-        () => (this.error = true)
+        () => {
+          this.success = true;
+        },
+        () => {
+          this.error = true;
+          this.requesting = false;
+        },
+        () => {
+          this.requesting = false;
+        }
       );
     }
   }
 
   isPasswordAcceptable(): boolean {
-    return this.stBar.currPassedMatches >= 3 && this.passwordForm.get(['newPassword'])!.value >= this.stBar.currForce;
+    return this.stBar.curIdx === 5;
   }
 }

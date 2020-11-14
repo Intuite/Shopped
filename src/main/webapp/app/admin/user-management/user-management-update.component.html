@@ -7,8 +7,6 @@
 
             <div *ngIf="user">
                 <jhi-alert-error></jhi-alert-error>
-                <h2 id="jhi-ingredient-heading">{{ editForm.get('id')!.value !== undefined ? "Edit" : "Create" }}
-                    Ingredient</h2>
                 <mat-form-field class="form-group w-100 mat-form-field-disabled" appearance="fill" [hidden]="!user.id">
                     <mat-label jhiTranslate="global.field.id">ID</mat-label>
                     <input matInput type="text" name="id" formControlName="id" readonly>
