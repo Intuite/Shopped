@@ -1,5 +1,4 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { TransactionService } from 'app/entities/transaction/transaction.service';
 import { ITransaction, Transaction } from 'app/shared/model/transaction.model';
 import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
@@ -24,11 +23,10 @@ export class CheckOutComponent implements OnInit {
     description: 'Shopped, Cookies',
   };
 
-  constructor(private transactionService: TransactionService, private transactionLogicService: TransactionLogicService) {}
+  constructor(private transactionLogicService: TransactionLogicService) {}
 
   ngOnInit(): void {
     const cookie = this.cookies;
-    const transactionService = this.transactionService;
     const transactionLogicService = this.transactionLogicService;
     const userId = this.userId;
     /* eslint-disable @typescript-eslint/camelcase */
