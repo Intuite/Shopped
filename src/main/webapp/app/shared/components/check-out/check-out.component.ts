@@ -3,6 +3,7 @@ import { TransactionService } from 'app/entities/transaction/transaction.service
 import { ITransaction, Transaction } from 'app/shared/model/transaction.model';
 import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
+import { PdfGeneratorService } from 'app/shared/services/pdf-generator.service';
 
 declare let paypal: any;
 
@@ -23,23 +24,24 @@ export class CheckOutComponent implements OnInit {
     description: 'Shopped, Cookies',
   };
 
-  constructor(private transactionService: TransactionService) {}
+  constructor(private transactionService: TransactionService, private pdfGenerator: PdfGeneratorService) {}
 
   ngOnInit(): void {
     const cookie = this.cookies;
     const transactionService = this.transactionService;
+    const generator = this.pdfGenerator;
     const userId = this.userId;
     /* eslint-disable @typescript-eslint/camelcase */
     this.product.price = this.price || 0;
 
     function saveThings(transac: ITransaction): void {
-      console.warn(transac);
       transac.userId = userId;
       transac.cookiesAmount = cookie;
       transactionService.create(transac).subscribe(
-        () => console.warn('success'),
+        res => console.warn(res),
         () => console.warn('error')
       );
+      generator.generatePdf();
     }
 
     paypal
