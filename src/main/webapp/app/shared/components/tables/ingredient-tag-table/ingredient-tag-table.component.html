@@ -9,12 +9,12 @@
     <button
         [matTooltipHideDelay]="0"
         [matTooltipShowDelay]="1000"
-        [routerLink]="['/recipe-tag/new']"
-        aria-label="Create a new recipe tag"
-        class="float-right jh-create-entity create-recipe-tag mx-4 mb-3"
+        [routerLink]="['/ingredient-tag/new']"
+        aria-label="Create a new ingredient tag"
+        class="float-right jh-create-entity create-ingredient-tag mx-4 mb-3"
         jhiMaterialColor="accent"
         mat-mini-fab
-        matTooltip="Create a new recipe tag">
+        matTooltip="Create a new ingredient tag">
         <mat-icon>add</mat-icon>
     </button>
 </div>
@@ -79,7 +79,7 @@
                     <mat-icon>launch</mat-icon>
                 </button>
 
-                <button [routerLink]="['/recipe-tag/', element.id, 'edit']"
+                <button [routerLink]="['/ingredient-tag/', element.id, 'edit']"
                         class="text-white mx-3"
                         color="primary"
                         mat-mini-fab

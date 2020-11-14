@@ -14,6 +14,7 @@ import { IIngredient } from 'app/shared/model/ingredient.model';
 import { Status } from 'app/shared/model/enumerations/status.model';
 import { MatDialog } from '@angular/material/dialog';
 import { RecipeTagDetailComponent } from 'app/entities/recipe-tag/recipe-tag-detail.component';
+import { TagTypeDetailComponent } from 'app/entities/tag-type/tag-type-detail.component';
 
 @Component({
   selector: 'jhi-recipe-tag',
@@ -109,6 +110,12 @@ export class RecipeTagComponent implements OnInit, OnDestroy {
   view(recipeTag: any): void {
     this.dialog.open(RecipeTagDetailComponent, {
       data: recipeTag,
+    });
+  }
+
+  viewType(typeId: number): void {
+    this.dialog.open(TagTypeDetailComponent, {
+      data: typeId,
     });
   }
 
