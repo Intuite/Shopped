@@ -408,14 +408,14 @@
                         <span jhiTranslate="global.menu.entities.unit">Unit</span>
                     </button>
                     <button
-                        [routerLinkActiveOptions]="{ exact: true }"
                         (click)="collapseNavbar()"
+                        [routerLinkActiveOptions]="{ exact: true }"
                         class="dropdown-item"
                         mat-menu-item
                         routerLink="bundle"
                         routerLinkActive="active"
                     >
-                        <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                        <fa-icon [fixedWidth]="true" icon="asterisk"></fa-icon>
                         <span jhiTranslate="global.menu.entities.bundle">Bundle</span>
                     </button>
                     <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->

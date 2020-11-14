@@ -11,6 +11,6 @@ import { recipeTagRoute } from './recipe-tag.route';
 @NgModule({
   imports: [ShoppedSharedModule, RouterModule.forChild(recipeTagRoute)],
   declarations: [RecipeTagComponent, RecipeTagDetailComponent, RecipeTagUpdateComponent, RecipeTagDeleteDialogComponent],
-  entryComponents: [RecipeTagDeleteDialogComponent],
+  entryComponents: [RecipeTagUpdateComponent, RecipeTagDeleteDialogComponent],
 })
 export class ShoppedRecipeTagModule {}

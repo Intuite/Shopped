@@ -10,6 +10,10 @@ import { IRecipeTag } from 'app/shared/model/recipe-tag.model';
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { RecipeTagService } from './recipe-tag.service';
 import { RecipeTagDeleteDialogComponent } from './recipe-tag-delete-dialog.component';
+import { IIngredient } from 'app/shared/model/ingredient.model';
+import { Status } from 'app/shared/model/enumerations/status.model';
+import { MatDialog } from '@angular/material/dialog';
+import { RecipeTagDetailComponent } from 'app/entities/recipe-tag/recipe-tag-detail.component';
 
 @Component({
   selector: 'jhi-recipe-tag',
@@ -31,7 +35,8 @@ export class RecipeTagComponent implements OnInit, OnDestroy {
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
     protected eventManager: JhiEventManager,
-    protected modalService: NgbModal
+    protected modalService: NgbModal,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -87,6 +92,23 @@ export class RecipeTagComponent implements OnInit, OnDestroy {
         size: this.itemsPerPage,
         sort: this.predicate + ',' + (this.ascending ? 'asc' : 'desc'),
       },
+    });
+  }
+
+  setStatus(element: IIngredient, newStatus: boolean): void {
+    this.recipeTagService
+      .update({
+        ...element,
+        status: !newStatus ? (Status.ACTIVE.toUpperCase() as Status) : (Status.INACTIVE.toUpperCase() as Status),
+      })
+      .subscribe(() => {
+        this.loadPage(this.page);
+      });
+  }
+
+  view(recipeTag: any): void {
+    this.dialog.open(RecipeTagDetailComponent, {
+      data: recipeTag,
     });
   }
 
