@@ -1,22 +1,22 @@
 import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
-import { RecipeTag } from 'app/shared/model/recipe-tag.model';
-import { RecipeTagComponent } from 'app/entities/recipe-tag/recipe-tag.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
+import { IIngredientTag } from 'app/shared/model/ingredient-tag.model';
+import { IngredientTagComponent } from 'app/entities/ingredient-tag/ingredient-tag.component';
 
 @Component({
-  selector: 'jhi-recipe-tag-table',
-  templateUrl: './recipe-tag-table.component.html',
-  styleUrls: ['./recipe-tag-table.component.scss'],
+  selector: 'jhi-ingredient-tag-table',
+  templateUrl: './ingredient-tag-table.component.html',
+  styleUrls: ['./ingredient-tag-table.component.scss'],
 })
-export class RecipeTagTableComponent implements OnInit, AfterViewInit {
-  @Input() data!: RecipeTag[];
-  @Input() managementComponent!: RecipeTagComponent;
+export class IngredientTagTableComponent implements OnInit, AfterViewInit {
+  @Input() data!: IIngredientTag[];
+  @Input() managementComponent!: IngredientTagComponent;
 
   displayedColumns: string[] = ['name', 'typeName', 'description', 'status', 'options'];
 
-  dataSource = new MatTableDataSource<RecipeTag>();
+  dataSource = new MatTableDataSource<IIngredientTag>();
 
   @ViewChild('sort') sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -39,7 +39,7 @@ export class RecipeTagTableComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = (e.target as HTMLInputElement).value.trim().toLocaleLowerCase();
   };
 
-  public reloadSource(data: RecipeTag[]): void {
+  public reloadSource(data: IIngredientTag[]): void {
     this.data = data;
     this.dataSource.data = data;
   }
