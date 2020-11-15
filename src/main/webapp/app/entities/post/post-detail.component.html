@@ -9,41 +9,63 @@
         <div *ngIf="post">
             <h2>Post {{ post.recipeName }} </h2>
 
+            <mat-card class="card-recipe-profile">
+                <mat-card-title>Grid</mat-card-title>
+                <mat-card-content class="containerX">
+                    <div class="colorNested box" style="height: auto;">
+                        <div
+                            gdAreas.xs="recipePicture | sidebarLeftIcons | userLogin | sidebarRightButtons | caption"
+                            gdGap="1em"
+                            gdColumns.xs="none"
+                            gdAreas.sm="recipePicture recipePicture | sidebarLeftIcons userLogin | sidebarRightButtons sidebarRightButtons | caption caption"
+                            gdColumns.sm="100%!"
+                            gdAreas.gt-sm="recipePicture recipePicture recipePicture | sidebarLeftIcons userLogin sidebarRightButtons | caption caption caption"
+                            gdColumns.gt-sm="120px auto 120px"
+                            gdGap.gt-sm="20px"
+                            [ngStyle]="{ 'max-width': 'auto' }"
+                            [ngStyle.gt-sm]="{ 'max-width': '900px' }">
+
+                            <div style="border-style: solid" class="blocks one" gdArea="recipePicture">recipePicture</div>
+                            <div style="border-style: solid" class="blocks two" gdArea="sidebarLeftIcons">sidebarLeftIcons</div>
+                            <div style="border-style: solid" class="blocks three" gdArea="sidebarRightButtons">sidebarRightButtons</div>
+                            <div style="border-style: solid" class="blocks four" gdArea="userLogin">
+                                By <br/>
+                                <dt><span jhiTranslate="shoppedApp.post.user">User</span></dt>
+                                <dd>
+                                    {{ post.userLogin }}
+                                </dd>
+                                <br/>
+                                <dt><span jhiTranslate="shoppedApp.post.date">Date</span></dt>
+                                <dd>
+                                    <span>{{ post.date | date:"long" }}</span>
+                                </dd>
+                            </div>
+                            <div style="border-style: solid" class="blocks five" gdArea="caption">
+                                <dt><span jhiTranslate="shoppedApp.post.recipe">Recipe</span></dt>
+                                <dd>
+                                    <div *ngIf="post.recipeId">
+                                        <h2>
+                                            {{ post.recipeName }}
+                                        </h2>
+                                    </div>
+                                </dd>
+
+                                <dt><span jhiTranslate="shoppedApp.post.caption">Caption</span></dt>
+                                <dd>
+                                    <span>{{ post.caption }}</span>
+                                </dd>
+                            </div>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
             <hr>
 
             <jhi-alert-error></jhi-alert-error>
 
             <dl class="row-md jh-entity-details">
 
-                <dt><span jhiTranslate="shoppedApp.post.caption">Caption</span></dt>
-                <dd>
-                    <span>{{ post.caption }}</span>
-                </dd>
 
-                <dt><span jhiTranslate="shoppedApp.post.user">User</span></dt>
-                <dd>
-                    {{ post.userLogin }}
-                </dd>
-                <dt><span jhiTranslate="shoppedApp.post.date">Date</span></dt>
-                <dd>
-                    <span>{{ post.date | date:"long" }}</span>
-                </dd>
-
-
-                <dt><span jhiTranslate="shoppedApp.post.status">Status</span></dt>
-                <dd>
-                    <span jhiTranslate="{{ 'shoppedApp.Status.' + post.status }}">{{ post.status }}</span>
-
-                </dd>
-
-                <hr>
-
-                <dt><span jhiTranslate="shoppedApp.post.recipe">Recipe</span></dt>
-                <dd>
-                    <div *ngIf="post.recipeId">
-                        <a [routerLink]="['/recipe', post.recipeId, 'view']">{{ post.recipeName }}</a>
-                    </div>
-                </dd>
 
             </dl>
         </div>
