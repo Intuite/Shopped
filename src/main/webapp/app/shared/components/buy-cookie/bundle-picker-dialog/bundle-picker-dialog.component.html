@@ -1,9 +1,9 @@
-<h2 mat-dialog-title>Available Bundles</h2>
+<h2 mat-dialog-title>Recharge cookies</h2>
 <mat-divider></mat-divider>
 <mat-dialog-content class="mat-typography">
     <mat-horizontal-stepper [linear]=false class="h-auto" #stepper>
         <mat-step [stepControl]="firstFormGroup" label="Available Bundles">
-            <form [formGroup]="firstFormGroup">
+            <form [formGroup]="firstFormGroup" *ngIf="data.length > 0">
                 <div class="content mt-3" fxLayout="row wrap" fxLayoutGap="16px grid">
                     <div [fxFlex]="(100/3) + '%'" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let item of data">
                         <mat-card class="mat-elevation-z4 text-center" >
@@ -29,6 +29,9 @@
                         </mat-card>
                     </div>
                 </div>
+                <div *ngIf="data.length === 0">
+                    We are sorry, they are currently no available bundles.
+                </div>
                 <mat-divider class="mt-3"></mat-divider>
                 <mat-dialog-actions align="end">
                     <button mat-button [mat-dialog-close]>Cancel</button>
@@ -37,7 +40,7 @@
         </mat-step>
         <mat-step [stepControl]="secondFormGroup" label="Order Details">
             <form [formGroup]="secondFormGroup">
-                <mat-grid-list cols="3" rowHeight="1:1">
+                <mat-grid-list cols="3" rowHeight="1:1" *ngIf="bundle.cookieAmount">
                     <mat-grid-tile [colspan]="1">
                         <mat-card class="mat-elevation-z4 text-center w-10 mr-2" >
                             <mat-card-header class="d-flex justify-content-center" align="center">
@@ -73,6 +76,9 @@
                         </div>
                     </mat-grid-tile>
                 </mat-grid-list>
+                <div *ngIf="!bundle.cookieAmount">
+                    No bundle selected, please pick a bundle
+                </div>
                 <div align="right">
                     <button mat-button matStepperPrevious>Back</button>
                     <button mat-button matStepperNext>Next</button>

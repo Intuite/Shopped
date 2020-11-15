@@ -8,6 +8,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import javax.transaction.Transaction;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -102,5 +103,11 @@ public class MailService {
     public void sendPasswordResetMail(User user) {
         log.debug("Sending password reset email to '{}'", user.getEmail());
         sendEmailFromTemplate(user, "mail/passwordResetEmail", "email.reset.title");
+    }
+
+    @Async
+    public void sendInvoiceEmail(Transaction transac, User user) {
+        log.debug("Sending Invoice email to '{}", user.getEmail());
+        sendEmailFromTemplate(user, );
     }
 }
