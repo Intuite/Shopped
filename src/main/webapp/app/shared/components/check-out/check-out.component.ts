@@ -3,6 +3,8 @@ import { ITransaction, Transaction } from 'app/shared/model/transaction.model';
 import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { TransactionLogicService } from 'app/shared/services/transaction-logic.service';
+import { MatDialogRef } from '@angular/material/dialog';
+import { BundlePickerDialogComponent } from 'app/shared/components/buy-cookie/bundle-picker-dialog/bundle-picker-dialog.component';
 
 declare let paypal: any;
 
@@ -23,9 +25,10 @@ export class CheckOutComponent implements OnInit {
     description: 'Shopped, Cookies',
   };
 
-  constructor(private transactionLogicService: TransactionLogicService) {}
+  constructor(private transactionLogicService: TransactionLogicService, public dialogRef: MatDialogRef<BundlePickerDialogComponent>) {}
 
   ngOnInit(): void {
+    const dialog = this.dialogRef;
     const cookie = this.cookies;
     const transactionLogicService = this.transactionLogicService;
     const userId = this.userId;
@@ -37,6 +40,7 @@ export class CheckOutComponent implements OnInit {
       transac.cookiesAmount = cookie;
 
       transactionLogicService.processTransactionBuy(transac);
+      dialog.close();
       // TODO llamar transaction-logic-service con transac ya armado.
     }
 

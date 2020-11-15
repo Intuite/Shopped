@@ -2,13 +2,13 @@ package com.intuite.shopped.service;
 
 import com.intuite.shopped.domain.User;
 
+import com.intuite.shopped.service.dto.TransactionDTO;
 import io.github.jhipster.config.JHipsterProperties;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import javax.transaction.Transaction;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -106,8 +106,19 @@ public class MailService {
     }
 
     @Async
-    public void sendInvoiceEmail(Transaction transac, User user) {
+    public void sendInvoiceEmail(User user, TransactionDTO transac) {
         log.debug("Sending Invoice email to '{}", user.getEmail());
-        sendEmailFromTemplate(user, );
+        if (user.getEmail() == null) {
+            log.debug("Email doesn't exist for user '{}'", user.getLogin());
+            return;
+        }
+        Locale locale = Locale.forLanguageTag(user.getLangKey());
+        Context context = new Context(locale);
+        context.setVariable(USER, user);
+        context.setVariable("transac",transac);
+        context.setVariable(BASE_URL, jHipsterProperties.getMail().getBaseUrl());
+        String content = templateEngine.process("mail/invoiceEmail", context);
+        String subject = messageSource.getMessage("email.invoice.title", null, locale);
+        sendEmail(user.getEmail(), subject, content, false, true);
     }
 }
