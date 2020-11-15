@@ -1,1 +1,28 @@
-<p>grid-layout works!</p>
+<mat-card class="card-demo">
+    <mat-card-title>Grid</mat-card-title>
+    <mat-card-content class="containerX">
+        <div class="colorNested box" style="height: auto;">
+            <div
+                gdAreas.xs="recipePicture | sidebarLeftIcons | userLogin | sidebarRightButtons | caption"
+                gdGap="1em"
+                gdColumns.xs="none"
+                gdAreas.sm="recipePicture recipePicture | sidebarLeftIcons userLogin | sidebarRightButtons sidebarRightButtons | caption caption"
+                gdColumns.sm="20%!"
+                gdAreas.gt-sm="recipePicture recipePicture recipePicture | sidebarLeftIcons userLogin sidebarRightButtons | caption caption caption"
+                gdColumns.gt-sm="120px auto 120px"
+                gdGap.gt-sm="20px"
+                [ngStyle]="{ 'max-width': 'auto' }"
+                [ngStyle.gt-sm]="{ 'max-width': '900px' }">
+
+                <div style="border-style: solid" class="blocks one" gdArea="recipePicture">recipePicture</div>
+                <div style="border-style: solid" class="blocks two" gdArea="sidebarLeftIcons">sidebarLeftIcons</div>
+                <div style="border-style: solid" class="blocks three" gdArea="sidebarRightButtons">sidebarRightButtons</div>
+                <div style="border-style: solid" class="blocks four" gdArea="userLogin">
+                    userLogin <br/>
+                    This is the userLogin
+                </div>
+                <div style="border-style: solid" class="blocks five" gdArea="caption">caption</div>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>
