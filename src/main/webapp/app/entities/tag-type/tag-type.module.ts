@@ -11,6 +11,6 @@ import { tagTypeRoute } from './tag-type.route';
 @NgModule({
   imports: [ShoppedSharedModule, RouterModule.forChild(tagTypeRoute)],
   declarations: [TagTypeComponent, TagTypeDetailComponent, TagTypeUpdateComponent, TagTypeDeleteDialogComponent],
-  entryComponents: [TagTypeDeleteDialogComponent],
+  entryComponents: [TagTypeDetailComponent, TagTypeDeleteDialogComponent],
 })
 export class ShoppedTagTypeModule {}

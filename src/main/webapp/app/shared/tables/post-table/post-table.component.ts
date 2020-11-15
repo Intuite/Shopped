@@ -1,9 +1,9 @@
 import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
-import { Post } from 'app/shared/model/post.model';
-import { PostComponent } from 'app/entities/post/post.component';
-import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
+import { IPost } from 'app/shared/model/post.model';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { PostComponent } from 'app/entities/post/post.component';
 
 @Component({
   selector: 'jhi-post-table',
@@ -11,15 +11,16 @@ import { MatPaginator } from '@angular/material/paginator';
   styleUrls: ['./post-table.component.scss'],
 })
 export class PostTableComponent implements OnInit, AfterViewInit {
-  @Input() data!: Post[];
+  @Input() data!: IPost[];
   @Input() managementComponent!: PostComponent;
 
-  displayedColumns: string[] = ['id', 'caption', 'date', 'status', 'recipeName', 'userLogin', 'options'];
+  displayedColumns: string[] = ['id', 'recipeName', 'caption', 'userLogin', 'date', 'status', 'options'];
 
-  dataSource = new MatTableDataSource<Post>();
+  dataSource = new MatTableDataSource<IPost>();
 
   @ViewChild('sort') sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  loaded = false;
 
   ngOnInit(): void {
     this.dataSource.data = this.data;
@@ -29,7 +30,8 @@ export class PostTableComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.dataSource.filterPredicate = (data: any, filter) => {
-      const dataStr = JSON.stringify(data).toLowerCase();
+      let dataStr = JSON.stringify(data).toLowerCase();
+      dataStr = dataStr.replace(/({|,)\s(.+?)\s:/g, '');
       return dataStr.includes(filter);
     };
   }
@@ -38,8 +40,8 @@ export class PostTableComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = (e.target as HTMLInputElement).value.trim().toLocaleLowerCase();
   };
 
-  public reloadSource(): void {
-    this.data = this.managementComponent.posts as Post[];
-    this.dataSource = new MatTableDataSource<Post>(this.data);
+  public reloadSource(data: IPost[]): void {
+    this.data = data;
+    this.dataSource.data = data;
   }
 }

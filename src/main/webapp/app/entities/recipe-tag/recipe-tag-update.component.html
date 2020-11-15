@@ -7,13 +7,13 @@
             <jhi-alert></jhi-alert>
 
             <div>
-                <mat-form-field [hidden]="!editForm.get('id')!.value" appearance="fill" class="form-group w-100">
+                <mat-form-field [hidden]="true" appearance="fill" class="form-group w-100">
                     <mat-label jhiTranslate="global.field.id"></mat-label>
                     <input formControlName="id" id="id" matInput name="id" readonly type="text"/>
                 </mat-form-field>
 
                 <mat-form-field appearance="fill" class="form-group w-100">
-                    <mat-label jhiTranslate="shoppedApp.recipeTag.name"></mat-label>
+                    <mat-label>Name*</mat-label>
                     <input formControlName="name" id="field_name" matInput name="name" type="text"/>
                     <mat-error
                         *ngIf="(editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)) && editForm.get('name')?.errors?.required"
@@ -23,7 +23,7 @@
                 </mat-form-field>
 
                 <mat-form-field appearance="fill" class="form-group w-100">
-                    <mat-label jhiTranslate="shoppedApp.recipeTag.description"></mat-label>
+                    <mat-label>Description*</mat-label>
                     <input formControlName="description" id="field_description" matInput name="description"
                            type="text"/>
                     <mat-error
@@ -34,7 +34,7 @@
                 </mat-form-field>
 
                 <mat-form-field appearance="fill" class="form-group w-100">
-                    <mat-label jhiTranslate="shoppedApp.recipeTag.type"></mat-label>
+                    <mat-label>Tag Type*</mat-label>
                     <mat-select formControlName="typeId" id="field_type" name="type">
                         <mat-option *ngFor="let typeOption of tagtypes; trackBy: trackById" [value]="typeOption.id">
                             {{typeOption.name }}
@@ -46,25 +46,16 @@
                         This field is required.
                     </mat-error>
                 </mat-form-field>
-
-                <mat-form-field appearance="fill" class="form-group w-100">
-                    <mat-label jhiTranslate="shoppedApp.recipeTag.status"></mat-label>
-                    <mat-select [(ngModel)]="statusOptions[0]" formControlName="status" id="status" name="status">
-                        <mat-option *ngFor="let status of statusOptions" [value]="status">
-                            {{status | capitalize }}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
             </div>
+
             <div>
-                <button (click)="previousState()" id="cancel-save" jhiMaterialColor="secondary" mat-raised-button
-                        type="button">
+                <button (click)="previousState()" class="text-white" id="cancel-save" jhiMaterialColor="secondary"
+                        mat-raised-button type="button">
                     <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
                 </button>
 
-                <button [disabled]="editForm.invalid || isSaving" id="save-entity" jhiMaterialColor="primary"
-                        mat-raised-button
-                        type="submit">
+                <button [disabled]="editForm.invalid || isSaving" class="text-white" id="save-entity"
+                        jhiMaterialColor="primary" mat-raised-button type="submit">
                     <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
                 </button>
             </div>

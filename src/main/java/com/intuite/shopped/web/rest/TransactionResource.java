@@ -1,5 +1,6 @@
 package com.intuite.shopped.web.rest;
 
+import com.intuite.shopped.service.MailService;
 import com.intuite.shopped.service.TransactionService;
 import com.intuite.shopped.web.rest.errors.BadRequestAlertException;
 import com.intuite.shopped.service.dto.TransactionDTO;
@@ -44,9 +45,12 @@ public class TransactionResource {
 
     private final TransactionQueryService transactionQueryService;
 
-    public TransactionResource(TransactionService transactionService, TransactionQueryService transactionQueryService) {
+    private final MailService mailService;
+
+    public TransactionResource(TransactionService transactionService, TransactionQueryService transactionQueryService, MailService mailService) {
         this.transactionService = transactionService;
         this.transactionQueryService = transactionQueryService;
+        this.mailService = mailService;
     }
 
     /**
@@ -140,5 +144,13 @@ public class TransactionResource {
         log.debug("REST request to delete Transaction : {}", id);
         transactionService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
+    }
+
+    @PostMapping("/transations/email/{id}")
+    public ResponseEntity<Void> sendToEmail(@PathVariable Long id) {
+        log.debug("REST request to send Transaction to email: {}", id);
+        // TODO add email integration;
+        mailService;
+        return ResponseEntity.noContent().headers(HeaderUtil.createAlert(applicationName, ENTITY_NAME, id.toString())).build();
     }
 }

@@ -10,6 +10,7 @@ import { IAward } from 'app/shared/model/award.model';
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { AwardService } from './award.service';
 import { AwardDeleteDialogComponent } from './award-delete-dialog.component';
+import { Status } from 'app/shared/model/enumerations/status.model';
 @Component({
   selector: 'jhi-award',
   templateUrl: './award.component.html',
@@ -145,5 +146,16 @@ export class AwardComponent implements OnInit, OnDestroy {
     if (pageSize !== this.itemsPerPage) {
       this.itemsPerPage = pageSize;
     }
+  }
+
+  setStatus(element: IAward, newStatus: boolean): void {
+    this.awardService
+      .update({
+        ...element,
+        status: !newStatus ? (Status.ACTIVE.toUpperCase() as Status) : (Status.INACTIVE.toUpperCase() as Status),
+      })
+      .subscribe(() => {
+        this.loadPage(this.page);
+      });
   }
 }
