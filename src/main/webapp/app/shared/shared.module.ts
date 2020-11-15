@@ -34,6 +34,7 @@ import { BuyCookieComponent } from './components/buy-cookie/buy-cookie.component
 import { BundlePickerDialogComponent } from './components/buy-cookie/bundle-picker-dialog/bundle-picker-dialog.component';
 import { CheckOutComponent } from './components/check-out/check-out.component';
 import { FilterPipe } from './components/pickers/pipes/filter.pipe';
+import { GridLayoutComponent } from './components/grid-layout/grid-layout.component';
 @NgModule({
   imports: [JhMaterialModule, ShoppedSharedLibsModule, FlexModule, RouterModule, ExtendedModule],
   declarations: [
@@ -65,6 +66,8 @@ import { FilterPipe } from './components/pickers/pipes/filter.pipe';
     BundlePickerDialogComponent,
     CheckOutComponent,
     FilterPipe,
+    GridLayoutComponent,
+    GridLayoutComponent,
   ],
   entryComponents: [LoginModalComponent],
   exports: [
@@ -94,6 +97,7 @@ import { FilterPipe } from './components/pickers/pipes/filter.pipe';
     IngredientPKSelectionComponent,
     IngredientPKDialogComponent,
     BuyCookieComponent,
+    GridLayoutComponent,
   ],
 })
 export class ShoppedSharedModule {}
