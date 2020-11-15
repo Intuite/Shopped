@@ -1,19 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-
-import { ITagType } from 'app/shared/model/tag-type.model';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { TagTypeService } from 'app/entities/tag-type/tag-type.service';
 
 @Component({
   selector: 'jhi-tag-type-detail',
   templateUrl: './tag-type-detail.component.html',
 })
 export class TagTypeDetailComponent implements OnInit {
-  tagType: ITagType | null = null;
+  element: any;
 
-  constructor(protected activatedRoute: ActivatedRoute) {}
+  constructor(@Inject(MAT_DIALOG_DATA) public data: number, private tagTypeService: TagTypeService) {}
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ tagType }) => (this.tagType = tagType));
+    this.tagTypeService.find(this.data).subscribe(res => {
+      this.element = res.body;
+    });
   }
 
   previousState(): void {

@@ -2,21 +2,21 @@ import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/cor
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
-import { TagType } from 'app/shared/model/tag-type.model';
-import { TagTypeComponent } from 'app/entities/tag-type/tag-type.component';
+import { IIngredientTag } from 'app/shared/model/ingredient-tag.model';
+import { IngredientTagComponent } from 'app/entities/ingredient-tag/ingredient-tag.component';
 
 @Component({
-  selector: 'jhi-tag-type-table',
-  templateUrl: './tag-type-table.component.html',
-  styleUrls: ['./tag-type-table.component.scss'],
+  selector: 'jhi-ingredient-tag-table',
+  templateUrl: './ingredient-tag-table.component.html',
+  styleUrls: ['./ingredient-tag-table.component.scss'],
 })
-export class TagTypeTableComponent implements OnInit, AfterViewInit {
-  @Input() data!: TagType[];
-  @Input() managementComponent!: TagTypeComponent;
+export class IngredientTagTableComponent implements OnInit, AfterViewInit {
+  @Input() data!: IIngredientTag[];
+  @Input() managementComponent!: IngredientTagComponent;
 
-  displayedColumns: string[] = ['name', 'description', 'status', 'options'];
+  displayedColumns: string[] = ['name', 'typeName', 'description', 'status', 'options'];
 
-  dataSource = new MatTableDataSource<TagType>();
+  dataSource = new MatTableDataSource<IIngredientTag>();
 
   @ViewChild('sort') sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -39,7 +39,7 @@ export class TagTypeTableComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = (e.target as HTMLInputElement).value.trim().toLocaleLowerCase();
   };
 
-  public reloadSource(data: TagType[]): void {
+  public reloadSource(data: IIngredientTag[]): void {
     this.data = data;
     this.dataSource.data = data;
   }

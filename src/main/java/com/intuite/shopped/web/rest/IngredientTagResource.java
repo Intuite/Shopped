@@ -1,11 +1,10 @@
 package com.intuite.shopped.web.rest;
 
-import com.intuite.shopped.service.IngredientTagService;
-import com.intuite.shopped.web.rest.errors.BadRequestAlertException;
-import com.intuite.shopped.service.dto.IngredientTagDTO;
-import com.intuite.shopped.service.dto.IngredientTagCriteria;
 import com.intuite.shopped.service.IngredientTagQueryService;
-
+import com.intuite.shopped.service.IngredientTagService;
+import com.intuite.shopped.service.dto.IngredientTagCriteria;
+import com.intuite.shopped.service.dto.IngredientTagDTO;
+import com.intuite.shopped.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -15,10 +14,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -33,16 +31,12 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class IngredientTagResource {
 
-    private final Logger log = LoggerFactory.getLogger(IngredientTagResource.class);
-
     private static final String ENTITY_NAME = "ingredientTag";
-
+    private final Logger log = LoggerFactory.getLogger(IngredientTagResource.class);
+    private final IngredientTagService ingredientTagService;
+    private final IngredientTagQueryService ingredientTagQueryService;
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
-
-    private final IngredientTagService ingredientTagService;
-
-    private final IngredientTagQueryService ingredientTagQueryService;
 
     public IngredientTagResource(IngredientTagService ingredientTagService, IngredientTagQueryService ingredientTagQueryService) {
         this.ingredientTagService = ingredientTagService;
@@ -102,6 +96,19 @@ public class IngredientTagResource {
         Page<IngredientTagDTO> page = ingredientTagQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * {@code GET  /ingredient-tags} : get all the ingredientTags.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of ingredientTags in body.
+     */
+    @GetMapping("/ingredient-tags/all")
+    public ResponseEntity<List<IngredientTagDTO>> getAllingredientTags(IngredientTagCriteria criteria) {
+        log.debug("REST request to get ingredientTags by criteria: {}", criteria);
+        List<IngredientTagDTO> list = ingredientTagQueryService.findByCriteria(criteria);
+        return ResponseEntity.ok().body(list);
     }
 
     /**

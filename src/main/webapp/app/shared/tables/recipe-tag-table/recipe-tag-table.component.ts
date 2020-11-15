@@ -14,7 +14,7 @@ export class RecipeTagTableComponent implements OnInit, AfterViewInit {
   @Input() data!: RecipeTag[];
   @Input() managementComponent!: RecipeTagComponent;
 
-  displayedColumns: string[] = ['id', 'typeName', 'name', 'description', 'status', 'options'];
+  displayedColumns: string[] = ['name', 'typeName', 'description', 'status', 'options'];
 
   dataSource = new MatTableDataSource<RecipeTag>();
 
