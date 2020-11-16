@@ -64,4 +64,7 @@ export class BundlePickerDialogComponent implements OnInit {
     this.service.find(id).subscribe((res: any) => this.bundle = res.body || new Bundle());
 
   }*/
+  payed(): void {
+    console.warn('pay');
+  }
 }
