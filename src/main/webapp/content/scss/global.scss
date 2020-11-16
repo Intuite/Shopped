@@ -187,49 +187,196 @@ Post and Recipe styles
 }
 
 .recipe-subtitle {
-  font-size: 15px;
+  font-size: 18px;
   font-weight: bold;
 }
 
 .recipe-bite {
-  background-color: black;
+  background-color: #87643e;
   font-size: 18px;
   font-weight: bold;
   color: white;
-  padding: 5px;
+  padding-top: 15px;
 }
 
-.recipe-bite-text {
+.container-bite {
+  height: 65px;
+  width: 250px;
+  padding: 0;
+  margin: 0;
+}
+
+.recipe-bite-div {
+  display: inline-block;
+  float: left;
+}
+
+.recipe-bite-text-above {
+  font-size: 20px;
+  color: white;
+  float: left;
+  clear: left;
+}
+
+.recipe-bite-text-below {
   font-size: 14px;
   color: white;
-}
-
-.recipe-icon-duration {
+  float: left;
+  clear: left;
 }
 
 .recipe-instructions {
   border-style: groove;
-  padding: 5px;
+  padding: 15px;
+  font-size: 15px;
 }
 
 .recipe-save-buttons {
-  font-size: 12px;
+  font-size: 10px;
   margin-right: 2px;
   border: none;
   background-color: white;
-  width: 70px;
+  width: 60px;
 }
 
 .recipe-reply {
-  font-size: 20px;
+  font-size: 24px;
   font-weight: bold;
 }
 
 .recipe-picture {
-  background-color: #aaa;
+  background: url('../images/placeholder-image.png') no-repeat center center;
   height: 250px;
+  width: auto;
+  display: inline-block;
+  vertical-align: middle;
+  background-size: contain;
 }
 
+.recipe-bite-button {
+  border: none;
+  background: none;
+}
+
+.recipe-cart-button {
+  margin: 5px;
+  height: 35px;
+  border-radius: 25px;
+  background-color: #fea201;
+  color: white;
+}
+
+.recipe-icon-bite {
+  height: 24px;
+  width: 24px;
+  display: inline-block;
+  vertical-align: middle;
+  background: url('../images/bite-icon.png') no-repeat center center;
+  background-size: contain;
+  margin-right: 3px;
+}
+
+.recipe-icon-duration {
+  height: 20px;
+  width: 20px;
+  display: inline-block;
+  vertical-align: middle;
+  background: url('../images/duration-icon.png') no-repeat center center;
+  background-size: contain;
+  margin-right: 3px;
+}
+
+.recipe-icon-comment {
+  height: 24px;
+  width: 24px;
+  display: inline-block;
+  vertical-align: middle;
+  background: url('../images/comment-icon.png') no-repeat center center;
+  background-size: contain;
+  margin-right: 8px;
+}
+
+.recipe-icon-view {
+  height: 24px;
+  width: 24px;
+  display: inline-block;
+  vertical-align: middle;
+  background: url('../images/view-icon.png') no-repeat center center;
+  background-size: contain;
+  margin-right: 8px;
+}
+
+.recipe-icon-portion {
+  height: 20px;
+  width: 20px;
+  display: inline-block;
+  vertical-align: middle;
+  background: url('../images/portion-icon.png') no-repeat center center;
+  background-size: contain;
+  margin-right: 3px;
+}
+
+.recipe-icon-cart {
+  height: 20px;
+  width: 20px;
+  display: inline-block;
+  vertical-align: middle;
+  background: url('../images/shopcart-white-icon.png') no-repeat center center;
+  background-size: contain;
+  margin-right: 3px;
+}
+
+.recipe-icon-heart-white {
+  height: 48px;
+  width: 48px;
+  display: inline-block;
+  vertical-align: middle;
+  background: url('../images/heart-white-icon.png') no-repeat center center;
+  background-size: contain;
+  margin-top: 5px;
+  margin-right: 8px;
+  margin-lef: 5px;
+}
+
+.recipe-icon-bite-white {
+  height: 48px;
+  width: 48px;
+  display: inline-block;
+  vertical-align: middle;
+  background: url('../images/bite-white-icon.png') no-repeat center center;
+  background-size: contain;
+  margin-right: 8px;
+}
+
+.recipe-icon-email {
+  height: 24px;
+  width: 24px;
+  display: inline-block;
+  vertical-align: middle;
+  background: url('../images/email-grey-icon.png') no-repeat center center;
+  background-size: contain;
+  margin-right: 5px;
+}
+
+.recipe-icon-pdf {
+  height: 24px;
+  width: 24px;
+  display: inline-block;
+  vertical-align: middle;
+  background: url('../images/pdf-grey-icon.png') no-repeat center center;
+  background-size: contain;
+  margin-right: 5px;
+}
+
+.recipe-icon-bookmark {
+  height: 24px;
+  width: 24px;
+  display: inline-block;
+  vertical-align: middle;
+  background: url('../images/bookmark-icon.png') no-repeat center center;
+  background-size: contain;
+  margin-right: 5px;
+}
 //
 
 /* jhipster-needle-scss-add-main JHipster will add new css style */

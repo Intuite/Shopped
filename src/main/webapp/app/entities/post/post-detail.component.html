@@ -53,8 +53,12 @@
                             gdGap.gt-sm="20px"
                             [ngStyle]="{ 'max-width': 'auto' }"
                             [ngStyle.gt-sm]="{ 'max-width': '900px' }">
-                            <div class="blocks-1 recipe-element-center recipe-picture" gdArea="recipePicture">recipePicture</div>
-                            <div class="blocks-2 recipe-element-left" gdArea="socialInfo">Bites/Comments/Views</div>
+                            <div class="blocks-1 recipe-element-center recipe-picture" gdArea="recipePicture"></div>
+                            <div class="blocks-2 recipe-element-left" gdArea="socialInfo">
+                                <span class="recipe-icon-bite"></span>
+                                <span class="recipe-icon-comment"></span>
+                                <span class="recipe-icon-view"></span>
+                            </div>
                             <div class="blocks-3 recipe-element-right" gdArea="awardsButtons">Awards</div>
                             <div class="blocks-4 recipe-element-center" gdArea="userInfo">
                                 <dd> By {{ post.userLogin }} <br/></dd>
@@ -69,37 +73,54 @@
                             </div>
 
                             <div class="blocks-6 recipe-element-left recipe-subtitle" gdArea="ingredientsTitle">Ingredients:</div>
-                            <div class="blocks-7 recipe-element-right" gdArea="portions">Portions</div>
-                            <hr>
-                            <div class="blocks-8 recipe-element-center" gdArea="ingredientsList">ingredients list</div>
+                            <div class="blocks-7 recipe-element-right" gdArea="portions">
+                                <span class="recipe-icon-portion"></span> Portion
+                            </div>
 
-                            <hr>
-                            <div class="blocks-9 recipe-element-center" gdArea="addToCart">Add to Shopping Cart</div>
+                            <div class="blocks-8 recipe-element-center" gdArea="ingredientsList">
+                                ingredients list
+                            </div>
+
+                            <div class="blocks-9 recipe-element-center" gdArea="addToCart">
+                                <button class="recipe-cart-button" type="submit">
+                                    <span class="recipe-icon-cart" style="background-color: primary"></span> ADD TO SHOPPING CART
+                                </button>
+                            </div>
 
                             <div class="blocks-10 recipe-element-left recipe-subtitle" gdArea="instructionsTitle">Instructions:</div>
-                            <div class="blocks-11 recipe-element-right" gdArea="duration">Duration</div>
+                            <div class="blocks-11 recipe-element-right" gdArea="duration">
+                                <span class="recipe-icon-duration"></span> Duration
+                            </div>
 
                             <div class="blocks-12 recipe-element-center recipe-instructions" gdArea="instructionsList">instructions list</div>
 
                             <div class="blocks-13 recipe-element-right" gdArea="exportButtons">
                                 <button class="recipe-save-buttons" type="submit">
-                                    <fa-icon icon="envelope"></fa-icon> Email
+                                    <span class="recipe-icon-email"></span> Email
                                 </button>
                                 <button class="recipe-save-buttons" type="submit">
-                                    <fa-icon icon="file-pdf"></fa-icon> PDF
+                                    <span class="recipe-icon-pdf"></span> PDF
                                 </button>
                                 <button class="recipe-save-buttons" type="submit">
-                                    <fa-icon icon="bookmark"></fa-icon> Bookmark
+                                    <span class="recipe-icon-bookmark"></span> Bookmark
                                 </button>
                             </div>
 
                             <div class="blocks-14 recipe-element-center recipe-bite" gdArea="biteButton">
-                                Tried this recipe? <br>
-                                <span class="recipe-bite-text">Leave a bite if you like it!</span>
+                                <button class="recipe-bite-button" type="submit">
+                                    <div class="container-bite">
+                                        <div class="recipe-bite-div">
+                                            <span class="recipe-icon-heart-white"></span>
+                                        </div>
+                                        <div class="recipe-bite-div" >
+                                            <span class="recipe-bite-text-above">Tried this recipe?</span>
+                                            <span class="recipe-bite-text-below">Leave a bite if you like it!</span>
+                                        </div>
+                                    </div>
+                                </button>
                             </div>
 
                             <div class="blocks-15 recipe-element-left recipe-subtitle" gdArea="tagsList">
-                                <hr>
                                 Tags:
                                 <br><hr>
                             </div>
