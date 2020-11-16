@@ -1,6 +1,6 @@
 <div class="row justify-content-center">
     <div class="col-10">
-        <button type="submit" class="btn btn-secondary" (click)="previousState()">
+        <button (click)="previousState()" class="btn btn-secondary" type="submit">
             <fa-icon icon="arrow-left"></fa-icon>
         </button>
     </div>
@@ -9,15 +9,25 @@
         <div *ngIf="post">
             <jhi-alert-error></jhi-alert-error>
             <mat-card>
-                <mat-card-content>
+                <mat-card-content *ngIf="recipe">
                     <div style="height: auto;">
                         <div
-                            gdAreas.xs="recipePicture | socialInfo | userInfo | awardsButtons |
-                                        caption | portions | ingredientsTitle| ingredientsList | addToCart | duration |
-                                        instructionsTitle | instructionsList | exportButtons | biteButton | tagsList |
-                                        reply | horizontalLine | commentsTitle | commentsList"
-                            gdGap="1em"
-                            gdColumns.xs="none"
+                            [ngStyle.gt-sm]="{ 'max-width': '900px' }"
+                            [ngStyle]="{ 'max-width': 'auto' }"
+                            gdAreas.gt-sm="recipePicture recipePicture recipePicture |
+                                           socialInfo userInfo awardsButtons |
+                                           caption caption caption |
+                                           ingredientsTitle ingredientsTitle portions |
+                                           ingredientsList ingredientsList ingredientsList |
+                                           addToCart addToCart addToCart |
+                                           instructionsTitle instructionsTitle duration |
+                                           instructionsList instructionsList instructionsList |
+                                           exportButtons exportButtons exportButtons |
+                                           biteButton biteButton biteButton |
+                                           tagsList tagsList tagsList |
+                                           reply reply reply |
+                                           commentsTitle commentsTitle commentsTitle |
+                                           commentsList commentsList commentsList"
                             gdAreas.sm="recipePicture recipePicture |
                                         socialInfo awardsButtons |
                                         userInfo userInfo |
@@ -33,31 +43,21 @@
                                         reply reply |
                                         commentsTitle commentsTitle |
                                         commentsList commentsList"
-                            gdColumns.sm="50%!"
-                            gdAreas.gt-sm="recipePicture recipePicture recipePicture |
-                                           socialInfo userInfo awardsButtons |
-                                           caption caption caption |
-                                           ingredientsTitle ingredientsTitle portions |
-                                           ingredientsList ingredientsList ingredientsList |
-                                           addToCart addToCart addToCart |
-                                           instructionsTitle instructionsTitle duration |
-                                           instructionsList instructionsList instructionsList |
-                                           exportButtons exportButtons exportButtons |
-                                           biteButton biteButton biteButton |
-                                           tagsList tagsList tagsList |
-                                           reply reply reply |
-                                           commentsTitle commentsTitle commentsTitle |
-                                           commentsList commentsList commentsList"
+                            gdAreas.xs="recipePicture | socialInfo | userInfo | awardsButtons |
+                                        caption | portions | ingredientsTitle| ingredientsList | addToCart | duration |
+                                        instructionsTitle | instructionsList | exportButtons | biteButton | tagsList |
+                                        reply | horizontalLine | commentsTitle | commentsList"
                             gdColumns.gt-sm="200px auto 200px"
-                            gdGap.gt-sm="20px"
-                            [ngStyle]="{ 'max-width': 'auto' }"
-                            [ngStyle.gt-sm]="{ 'max-width': '900px' }">
+                            gdColumns.sm="50%!"
+                            gdColumns.xs="none"
+                            gdGap="1em"
+                            gdGap.gt-sm="20px">
 
-                            <div class="blocks-1 post-picture" gdArea="recipePicture">
+                            <div class="blocks-1 post-picture" gdArea="recipePicture"
+                                 style="background-image: url({{'data:' + recipe.imageContentType + ';base64,' + recipe.image}})">
 
-                                    <img [src]="'data:' + recipe.imageContentType + ';base64,' + recipe.image"
-                                         *ngIf="recipe.image"  alt="recipe image"/>
-                                </div>
+                                <img *ngIf="recipe.image" [src]="" alt="recipe image"/>
+                            </div>
 
                             <div class="blocks-2 post-element-left" gdArea="socialInfo">
                                 <span class="post-icon-bite"></span>
