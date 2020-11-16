@@ -53,10 +53,11 @@
                             gdGap="1em"
                             gdGap.gt-sm="20px">
 
-                            <div class="blocks-1 post-picture" gdArea="recipePicture"
-                                 style="background-image: url({{'data:' + recipe.imageContentType + ';base64,' + recipe.image}})">
-
-                                <img *ngIf="recipe.image" [src]="" alt="recipe image"/>
+                            <div class="blocks-1 post-picture" gdArea="recipePicture">
+                                <img *ngIf="recipe.image"
+                                     [src]="'data:' + recipe.imageContentType + ';base64,' + recipe.image"
+                                     alt="recipe image"
+                                     class="post-image"/>
                             </div>
 
                             <div class="blocks-2 post-element-left" gdArea="socialInfo">
