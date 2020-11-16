@@ -1,0 +1,206 @@
+/* ==========================================================================
+Post and Recipe styles
+========================================================================== */
+.post-element-center {
+  text-align: center;
+}
+
+.post-element-left {
+  text-align: left;
+}
+
+.post-element-right {
+  text-align: right;
+}
+
+.post-subtitle {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.post-bite {
+  background-color: #87643e;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  padding-top: 15px;
+}
+
+.container-bite {
+  height: 65px;
+  width: 250px;
+  padding: 0;
+  margin: 0;
+}
+
+.post-bite-div {
+  display: inline-block;
+  float: left;
+}
+
+.post-bite-text-above {
+  font-size: 20px;
+  color: white;
+  float: left;
+  clear: left;
+}
+
+.post-bite-text-below {
+  font-size: 14px;
+  color: white;
+  float: left;
+  clear: left;
+}
+
+.post-instructions {
+  border-style: groove;
+  padding: 15px;
+  font-size: 15px;
+}
+
+.post-save-buttons {
+  font-size: 10px;
+  margin-right: 2px;
+  border: none;
+  background-color: white;
+  width: 60px;
+}
+
+.post-reply {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.post-picture {
+  background: url('../../../../content/images/placeholder-image.png') no-repeat center center;
+  height: 250px;
+  width: auto;
+  display: inline-block;
+  vertical-align: middle;
+  background-size: cover;
+}
+
+.post-bite-button {
+  border: none;
+  background: none;
+}
+
+.post-cart-button {
+  margin: 5px;
+  height: 35px;
+  border-radius: 25px;
+  background-color: #fea201;
+  color: white;
+}
+
+.post-icon-bite {
+  height: 24px;
+  width: 24px;
+  display: inline-block;
+  vertical-align: middle;
+  background: url('../../../../content/images/bite-icon.png') no-repeat center center;
+  background-size: contain;
+  margin-right: 3px;
+}
+
+.post-icon-duration {
+  height: 20px;
+  width: 20px;
+  display: inline-block;
+  vertical-align: middle;
+  background: url('../../../../content/images/duration-icon.png') no-repeat center center;
+  background-size: contain;
+  margin-right: 3px;
+}
+
+.post-icon-comment {
+  height: 24px;
+  width: 24px;
+  display: inline-block;
+  vertical-align: middle;
+  background: url('../../../../content/images/comment-icon.png') no-repeat center center;
+  background-size: contain;
+  margin-right: 8px;
+}
+
+.post-icon-view {
+  height: 24px;
+  width: 24px;
+  display: inline-block;
+  vertical-align: middle;
+  background: url('../../../../content/images/view-icon.png') no-repeat center center;
+  background-size: contain;
+  margin-right: 8px;
+}
+
+.post-icon-portion {
+  height: 20px;
+  width: 20px;
+  display: inline-block;
+  vertical-align: middle;
+  background: url('../../../../content/images/portion-icon.png') no-repeat center center;
+  background-size: contain;
+  margin-right: 3px;
+}
+
+.post-icon-cart {
+  height: 20px;
+  width: 20px;
+  display: inline-block;
+  vertical-align: middle;
+  background: url('../../../../content/images/shopcart-white-icon.png') no-repeat center center;
+  background-size: contain;
+  margin-right: 3px;
+}
+
+.post-icon-heart-white {
+  height: 48px;
+  width: 48px;
+  display: inline-block;
+  vertical-align: middle;
+  background: url('../../../../content/images/heart-white-icon.png') no-repeat center center;
+  background-size: contain;
+  margin-top: 5px;
+  margin-right: 8px;
+  margin-lef: 5px;
+}
+
+.post-icon-bite-white {
+  height: 48px;
+  width: 48px;
+  display: inline-block;
+  vertical-align: middle;
+  background: url('../../../../content/images/bite-white-icon.png') no-repeat center center;
+  background-size: contain;
+  margin-right: 8px;
+}
+
+.post-icon-email {
+  height: 24px;
+  width: 24px;
+  display: inline-block;
+  vertical-align: middle;
+  background: url('../../../../content/images/email-grey-icon.png') no-repeat center center;
+  background-size: contain;
+  margin-right: 5px;
+}
+
+.post-icon-pdf {
+  height: 24px;
+  width: 24px;
+  display: inline-block;
+  vertical-align: middle;
+  background: url('../../../../content/images/pdf-grey-icon.png') no-repeat center center;
+  background-size: contain;
+  margin-right: 5px;
+}
+
+.post-icon-bookmark {
+  height: 24px;
+  width: 24px;
+  display: inline-block;
+  vertical-align: middle;
+  background: url('../../../../content/images/bookmark-icon.png') no-repeat center center;
+  background-size: contain;
+  margin-right: 5px;
+}

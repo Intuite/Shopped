@@ -174,24 +174,24 @@ button.active:focus {
 /* ==========================================================================
 Post and Recipe styles
 ========================================================================== */
-.recipe-element-center {
+.post-element-center {
   text-align: center;
 }
 
-.recipe-element-left {
+.post-element-left {
   text-align: left;
 }
 
-.recipe-element-right {
+.post-element-right {
   text-align: right;
 }
 
-.recipe-subtitle {
+.post-subtitle {
   font-size: 18px;
   font-weight: bold;
 }
 
-.recipe-bite {
+.post-bite {
   background-color: #87643e;
   font-size: 18px;
   font-weight: bold;
@@ -206,32 +206,32 @@ Post and Recipe styles
   margin: 0;
 }
 
-.recipe-bite-div {
+.post-bite-div {
   display: inline-block;
   float: left;
 }
 
-.recipe-bite-text-above {
+.post-bite-text-above {
   font-size: 20px;
   color: white;
   float: left;
   clear: left;
 }
 
-.recipe-bite-text-below {
+.post-bite-text-below {
   font-size: 14px;
   color: white;
   float: left;
   clear: left;
 }
 
-.recipe-instructions {
+.post-instructions {
   border-style: groove;
   padding: 15px;
   font-size: 15px;
 }
 
-.recipe-save-buttons {
+.post-save-buttons {
   font-size: 10px;
   margin-right: 2px;
   border: none;
@@ -239,12 +239,12 @@ Post and Recipe styles
   width: 60px;
 }
 
-.recipe-reply {
+.post-reply {
   font-size: 24px;
   font-weight: bold;
 }
 
-.recipe-picture {
+.post-picture {
   background: url('../images/placeholder-image.png') no-repeat center center;
   height: 250px;
   width: auto;
@@ -253,12 +253,18 @@ Post and Recipe styles
   background-size: cover;
 }
 
-.recipe-bite-button {
+.post-picture img {
+  height: auto;
+  width: auto;
+  overflow: hidden;
+}
+
+.post-bite-button {
   border: none;
   background: none;
 }
 
-.recipe-cart-button {
+.post-cart-button {
   margin: 5px;
   height: 35px;
   border-radius: 25px;
@@ -266,7 +272,7 @@ Post and Recipe styles
   color: white;
 }
 
-.recipe-icon-bite {
+.post-icon-bite {
   height: 24px;
   width: 24px;
   display: inline-block;
@@ -276,7 +282,7 @@ Post and Recipe styles
   margin-right: 3px;
 }
 
-.recipe-icon-duration {
+.post-icon-duration {
   height: 20px;
   width: 20px;
   display: inline-block;
@@ -286,7 +292,7 @@ Post and Recipe styles
   margin-right: 3px;
 }
 
-.recipe-icon-comment {
+.post-icon-comment {
   height: 24px;
   width: 24px;
   display: inline-block;
@@ -296,7 +302,7 @@ Post and Recipe styles
   margin-right: 8px;
 }
 
-.recipe-icon-view {
+.post-icon-view {
   height: 24px;
   width: 24px;
   display: inline-block;
@@ -306,7 +312,7 @@ Post and Recipe styles
   margin-right: 8px;
 }
 
-.recipe-icon-portion {
+.post-icon-portion {
   height: 20px;
   width: 20px;
   display: inline-block;
@@ -316,7 +322,7 @@ Post and Recipe styles
   margin-right: 3px;
 }
 
-.recipe-icon-cart {
+.post-icon-cart {
   height: 20px;
   width: 20px;
   display: inline-block;
@@ -326,7 +332,7 @@ Post and Recipe styles
   margin-right: 3px;
 }
 
-.recipe-icon-heart-white {
+.post-icon-heart-white {
   height: 48px;
   width: 48px;
   display: inline-block;
@@ -338,7 +344,7 @@ Post and Recipe styles
   margin-lef: 5px;
 }
 
-.recipe-icon-bite-white {
+.post-icon-bite-white {
   height: 48px;
   width: 48px;
   display: inline-block;
@@ -348,7 +354,7 @@ Post and Recipe styles
   margin-right: 8px;
 }
 
-.recipe-icon-email {
+.post-icon-email {
   height: 24px;
   width: 24px;
   display: inline-block;
@@ -358,7 +364,7 @@ Post and Recipe styles
   margin-right: 5px;
 }
 
-.recipe-icon-pdf {
+.post-icon-pdf {
   height: 24px;
   width: 24px;
   display: inline-block;
@@ -368,7 +374,7 @@ Post and Recipe styles
   margin-right: 5px;
 }
 
-.recipe-icon-bookmark {
+.post-icon-bookmark {
   height: 24px;
   width: 24px;
   display: inline-block;
