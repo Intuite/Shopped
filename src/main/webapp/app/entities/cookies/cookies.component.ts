@@ -41,7 +41,6 @@ export class CookiesComponent implements OnInit, OnDestroy {
         page: pageToLoad - 1,
         size: this.itemsPerPage,
         sort: this.sort(),
-        ...(3 && { 'userId.equals': 3 }),
       })
       .subscribe(
         (res: HttpResponse<ICookies[]>) => this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate),

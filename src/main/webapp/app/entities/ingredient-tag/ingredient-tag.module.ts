@@ -11,6 +11,6 @@ import { ingredientTagRoute } from './ingredient-tag.route';
 @NgModule({
   imports: [ShoppedSharedModule, RouterModule.forChild(ingredientTagRoute)],
   declarations: [IngredientTagComponent, IngredientTagDetailComponent, IngredientTagUpdateComponent, IngredientTagDeleteDialogComponent],
-  entryComponents: [IngredientTagDeleteDialogComponent],
+  entryComponents: [IngredientTagDetailComponent, IngredientTagDeleteDialogComponent],
 })
 export class ShoppedIngredientTagModule {}

@@ -25,15 +25,6 @@
                             [columns]="displayedColumns"
                             [dataSource]="dataSource"
                             matSort>
-    <ng-container matColumnDef="id">
-        <th *matHeaderCellDef mat-header-cell mat-sort-header>ID</th>
-        <td *matCellDef="let element" mat-cell>
-            <span>
-                <a [routerLink]="['./', element.id, 'view']">{{ element.id }}</a>
-            </span>
-        </td>
-    </ng-container>
-
     <ng-container matColumnDef="name">
         <th *matHeaderCellDef mat-header-cell mat-sort-header>Name</th>
         <td *matCellDef="let element" mat-cell>
@@ -55,24 +46,24 @@
     <ng-container matColumnDef="status">
         <th *matHeaderCellDef mat-header-cell mat-sort-header>Status</th>
         <td *matCellDef="let element" mat-cell>
-            <span>
-                {{ element.status | capitalize }}
-            </span>
+            <div [ngSwitch]="element.status">
+                <button (click)="managementComponent.setStatus(element, true)" *ngSwitchCase="'ACTIVE'"
+                        class="text-white" jhiMaterialColor="success"
+                        mat-mini-fab>
+                    <mat-icon>toggle_on</mat-icon>
+                </button>
+                <button (click)="managementComponent.setStatus(element, false)" *ngSwitchDefault class="text-white"
+                        color="warn"
+                        mat-mini-fab>
+                    <mat-icon>toggle_off</mat-icon>
+                </button>
+            </div>
         </td>
     </ng-container>
-
     <ng-container class="text-right" matColumnDef="options">
         <th *matHeaderCellDef class="text-center" mat-header-cell>Options</th>
         <td *matCellDef="let element" mat-cell>
             <div class="w-100" fxLayout="row" fxLayoutAlign="center center">
-                <button [routerLink]="['/tag-type/', element.id, 'view']"
-                        class="text-white"
-                        jhiMaterialColor="secondary"
-                        mat-mini-fab
-                        type="submit">
-                    <mat-icon>launch</mat-icon>
-                </button>
-
                 <button [routerLink]="['/tag-type/', element.id, 'edit']"
                         class="text-white mx-3"
                         color="primary"
@@ -82,6 +73,7 @@
                 </button>
 
                 <button (click)="managementComponent.delete(element)"
+                        [hidden]="true"
                         class="text-white"
                         color="warn"
                         mat-mini-fab

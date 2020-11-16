@@ -4,7 +4,10 @@
             Search
         </mat-label>
         <mat-icon matSuffix>search</mat-icon>
-        <input (keyup)="filter($event)" matInput placeholder="Type a text filter" type="text">
+        <input (keyup)="filter($event)"
+               matInput
+               placeholder="Type a text filter"
+               type="text">
     </mat-form-field>
     <button
         [matTooltipHideDelay]="0"
@@ -18,17 +21,9 @@
         <mat-icon>add</mat-icon>
     </button>
 </div>
-<jhi-wrapper-material-table #sort="matSort" [columns]="displayedColumns"
-                            [dataSource]="dataSource" matSort>
-    <ng-container matColumnDef="id">
-        <th *matHeaderCellDef mat-header-cell mat-sort-header>ID</th>
-        <td *matCellDef="let element" mat-cell>
-            <span>
-                <a [routerLink]="['./', element.id, 'view']">{{ element.id }}</a>
-            </span>
-        </td>
-    </ng-container>
-
+<jhi-wrapper-material-table #sort="matSort"
+                            [columns]="displayedColumns" [dataSource]="dataSource"
+                            matSort>
     <ng-container matColumnDef="name">
         <th *matHeaderCellDef mat-header-cell mat-sort-header>Name</th>
         <td *matCellDef="let element" mat-cell>
@@ -49,11 +44,11 @@
     </ng-container>
 
     <ng-container matColumnDef="typeName">
-        <th *matHeaderCellDef mat-header-cell mat-sort-header>TypeName</th>
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>Type</th>
         <td *matCellDef="let element" mat-cell>
-            <span>
+            <a (click)="managementComponent.viewType(element.typeId)" class="text-primary" style="cursor: pointer">
                 {{ element.typeName }}
-            </span>
+            </a>
         </td>
     </ng-container>
 
