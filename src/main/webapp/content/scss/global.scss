@@ -174,3 +174,26 @@ button.active:focus {
 //
 
 /* jhipster-needle-scss-add-main JHipster will add new css style */
+.recipe-element-center {
+  border-style: solid;
+  text-align: center;
+}
+
+.recipe-element-left {
+  border-style: solid;
+  text-align: left;
+}
+
+.recipe-element-right {
+  border-style: solid;
+  text-align: right;
+}
+.recipe-subtitle {
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.recipe-picture {
+  background-color: #aaa;
+  height: 250px;
+}
