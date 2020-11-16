@@ -7,7 +7,6 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IBundle } from 'app/shared/model/bundle.model';
 import { BundleService } from './bundle.service';
 import { BundleDeleteDialogComponent } from './bundle-delete-dialog.component';
-
 @Component({
   selector: 'jhi-bundle',
   templateUrl: './bundle.component.html',

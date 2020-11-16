@@ -20,14 +20,14 @@
 </div>
 <jhi-wrapper-material-table #sort="matSort" [columns]="displayedColumns"
                             [dataSource]="dataSource" matSort>
-    <ng-container matColumnDef="id">
-        <th *matHeaderCellDef mat-header-cell mat-sort-header>ID</th>
-        <td *matCellDef="let element" mat-cell>
-            <span>
-                <a [routerLink]="['./', element.id, 'view']">{{ element.id }}</a>
-            </span>
-        </td>
-    </ng-container>
+<!--    <ng-container matColumnDef="id">-->
+<!--        <th *matHeaderCellDef mat-header-cell mat-sort-header>ID</th>-->
+<!--        <td *matCellDef="let element" mat-cell>-->
+<!--            <span>-->
+<!--                <a [routerLink]="['./', element.id, 'view']">{{ element.id }}</a>-->
+<!--            </span>-->
+<!--        </td>-->
+<!--    </ng-container>-->
 
     <ng-container matColumnDef="idCatalogue">
         <th *matHeaderCellDef mat-header-cell mat-sort-header>Name</th>
@@ -96,61 +96,3 @@
 </div>
 
 
-<!--<div fxLayout fxLayoutAlign="left left">-->
-<!--    <mat-form-field fxFlex="40%">-->
-<!--        <input (keyup)="filter($event)" matInput placeholder="Search" type="text">-->
-<!--    </mat-form-field>-->
-<!--</div>-->
-<!--<jhi-wrapper-material-table #sort="matSort" [columns]="displayedColumns"-->
-<!--                            [dataSource]="dataSource" matSort>-->
-<!--    <ng-container matColumnDef="id">-->
-<!--        <th *matHeaderCellDef mat-header-cell mat-sort-header>ID</th>-->
-<!--        <td *matCellDef="let element" mat-cell>-->
-<!--            <span>-->
-<!--                <a [routerLink]="['./', element.id, 'view']">{{ element.id }}</a>-->
-<!--            </span>-->
-<!--        </td>-->
-<!--    </ng-container>-->
-
-<!--    <ng-container matColumnDef="idCatalogue">-->
-<!--        <th *matHeaderCellDef mat-header-cell mat-sort-header>Name</th>-->
-<!--        <td *matCellDef="let element" mat-cell>-->
-<!--            <span>-->
-<!--                {{ element.idCatalogue }}-->
-<!--            </span>-->
-<!--        </td>-->
-<!--    </ng-container>-->
-
-<!--    <ng-container matColumnDef="value">-->
-<!--        <th *matHeaderCellDef mat-header-cell mat-sort-header>Value</th>-->
-<!--        <td *matCellDef="let element" mat-cell>-->
-<!--            <span>-->
-<!--                {{ element.value }}-->
-<!--            </span>-->
-<!--        </td>-->
-<!--    </ng-container>-->
-
-<!--    <ng-container class="text-right" matColumnDef="options">-->
-<!--        <th *matHeaderCellDef mat-header-cell mat-sort-header> Options</th>-->
-<!--        <td *matCellDef="let catalogue" mat-cell>-->
-<!--            <div class="btn-group">-->
-<!--                <button type="submit"-->
-<!--                        [routerLink]="['/catalogue', catalogue.id, 'edit']"-->
-<!--                        class="btn btn-primary btn-sm">-->
-<!--                    <fa-icon icon="pencil-alt"></fa-icon>-->
-<!--                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>-->
-<!--                </button>-->
-
-<!--                <button type="submit" (click)="managementComponent.delete(catalogue)"-->
-<!--                        class="btn btn-danger btn-sm ml-2">-->
-<!--                    <fa-icon icon="times"></fa-icon>-->
-<!--                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>-->
-<!--                </button>-->
-<!--            </div>-->
-<!--        </td>-->
-<!--    </ng-container>-->
-<!--    &lt;!&ndash; Custom row definitions to be provided to the wrapper table. &ndash;&gt;-->
-<!--    <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>-->
-<!--    <tr *matRowDef="let row; columns: displayedColumns; " mat-row></tr>-->
-<!--</jhi-wrapper-material-table>-->
-<!--<mat-paginator [pageSizeOptions]="[5, 10, 20, 50, 100]" [pageSize]="20"></mat-paginator>-->
