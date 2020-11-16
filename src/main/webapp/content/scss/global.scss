@@ -171,25 +171,57 @@ button.active:focus {
   outline-style: none !important;
 }
 
-//
-
-/* jhipster-needle-scss-add-main JHipster will add new css style */
+/* ==========================================================================
+Post and Recipe styles
+========================================================================== */
 .recipe-element-center {
-  border-style: solid;
   text-align: center;
 }
 
 .recipe-element-left {
-  border-style: solid;
   text-align: left;
 }
 
 .recipe-element-right {
-  border-style: solid;
   text-align: right;
 }
+
 .recipe-subtitle {
   font-size: 15px;
+  font-weight: bold;
+}
+
+.recipe-bite {
+  background-color: black;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  padding: 5px;
+}
+
+.recipe-bite-text {
+  font-size: 14px;
+  color: white;
+}
+
+.recipe-icon-duration {
+}
+
+.recipe-instructions {
+  border-style: groove;
+  padding: 5px;
+}
+
+.recipe-save-buttons {
+  font-size: 12px;
+  margin-right: 2px;
+  border: none;
+  background-color: white;
+  width: 70px;
+}
+
+.recipe-reply {
+  font-size: 20px;
   font-weight: bold;
 }
 
@@ -197,3 +229,7 @@ button.active:focus {
   background-color: #aaa;
   height: 250px;
 }
+
+//
+
+/* jhipster-needle-scss-add-main JHipster will add new css style */

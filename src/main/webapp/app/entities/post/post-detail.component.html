@@ -8,7 +8,7 @@
 
         <div *ngIf="post">
             <jhi-alert-error></jhi-alert-error>
-            
+
             <mat-card class="card-recipe-profile">
                 <mat-card-content class="containerX">
                     <div class="colorNested box" style="height: auto;">
@@ -16,7 +16,7 @@
                             gdAreas.xs="recipePicture | socialInfo | userInfo | awardsButtons |
                                         caption | portions | ingredientsTitle| ingredientsList | addToCart | duration |
                                         instructionsTitle | instructionsList | exportButtons | biteButton | tagsList |
-                                        reply | commentsTitle | commentsList"
+                                        reply | horizontalLine | commentsTitle | commentsList"
                             gdGap="1em"
                             gdColumns.xs="none"
                             gdAreas.sm="recipePicture recipePicture |
@@ -26,8 +26,7 @@
                                         ingredientsTitle portions |
                                         ingredientsList ingredientsList |
                                         addToCart addToCart |
-                                        instructionsTitle instructionsTitle |
-                                        duration duration|
+                                        instructionsTitle duration|
                                         instructionsList  instructionsList |
                                         exportButtons exportButtons |
                                         biteButton biteButton |
@@ -42,8 +41,7 @@
                                            ingredientsTitle ingredientsTitle portions |
                                            ingredientsList ingredientsList ingredientsList |
                                            addToCart addToCart addToCart |
-                                           instructionsTitle instructionsTitle instructionsTitle |
-                                           duration duration duration |
+                                           instructionsTitle instructionsTitle duration |
                                            instructionsList instructionsList instructionsList |
                                            exportButtons exportButtons exportButtons |
                                            biteButton biteButton biteButton |
@@ -55,7 +53,6 @@
                             gdGap.gt-sm="20px"
                             [ngStyle]="{ 'max-width': 'auto' }"
                             [ngStyle.gt-sm]="{ 'max-width': '900px' }">
-
                             <div class="blocks-1 recipe-element-center recipe-picture" gdArea="recipePicture">recipePicture</div>
                             <div class="blocks-2 recipe-element-left" gdArea="socialInfo">Bites/Comments/Views</div>
                             <div class="blocks-3 recipe-element-right" gdArea="awardsButtons">Awards</div>
@@ -81,24 +78,47 @@
 
                             <div class="blocks-10 recipe-element-left recipe-subtitle" gdArea="instructionsTitle">Instructions:</div>
                             <div class="blocks-11 recipe-element-right" gdArea="duration">Duration</div>
-                            <div class="blocks-12 recipe-element-center" gdArea="instructionsList">instructions list</div>
-                            <div class="blocks-13 recipe-element-right" gdArea="exportButtons">Email / PDF / Bookmark</div>
-                            <div class="blocks-14 recipe-element-center" gdArea="biteButton">Bite</div>
-                            <br>
-                            <hr>
-                            <div class="blocks-15 recipe-element-left recipe-subtitle" gdArea="tagsList">Tags:</div>
-                            <br>
-                            <div class="blocks-16 recipe-element-left recipe-subtitle" gdArea="reply">Leave a reply:</div>
-                            <hr>
-                            <div class="blocks-17 recipe-element-left recipe-subtitle" gdArea="commentsTitle">Comments:</div>
+
+                            <div class="blocks-12 recipe-element-center recipe-instructions" gdArea="instructionsList">instructions list</div>
+
+                            <div class="blocks-13 recipe-element-right" gdArea="exportButtons">
+                                <button class="recipe-save-buttons" type="submit">
+                                    <fa-icon icon="envelope"></fa-icon> Email
+                                </button>
+                                <button class="recipe-save-buttons" type="submit">
+                                    <fa-icon icon="file-pdf"></fa-icon> PDF
+                                </button>
+                                <button class="recipe-save-buttons" type="submit">
+                                    <fa-icon icon="bookmark"></fa-icon> Bookmark
+                                </button>
+                            </div>
+
+                            <div class="blocks-14 recipe-element-center recipe-bite" gdArea="biteButton">
+                                Tried this recipe? <br>
+                                <span class="recipe-bite-text">Leave a bite if you like it!</span>
+                            </div>
+
+                            <div class="blocks-15 recipe-element-left recipe-subtitle" gdArea="tagsList">
+                                <hr>
+                                Tags:
+                                <br><hr>
+                            </div>
+
+                            <div class="blocks-16 recipe-element-left recipe-reply" gdArea="reply">
+                                Leave a reply:
+                                <hr>
+                            </div>
+
+                            <div class="blocks-17 recipe-element-left recipe-subtitle" gdArea="commentsTitle">
+                                Comments:
+                                <br><hr>
+                            </div>
                             <div class="blocks-18 recipe-element-center" gdArea="commentsList">Comments List</div>
 
                         </div>
                     </div>
                 </mat-card-content>
             </mat-card>
-            <hr>
-
         </div>
     </div>
 </div>
