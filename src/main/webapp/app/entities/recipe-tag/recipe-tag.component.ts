@@ -30,6 +30,7 @@ export class RecipeTagComponent implements OnInit, OnDestroy {
   ascending!: boolean;
   ngbPaginationPage = 1;
   tableLoaded = false;
+  requesting = false;
 
   constructor(
     protected recipeTagService: RecipeTagService,
@@ -87,7 +88,7 @@ export class RecipeTagComponent implements OnInit, OnDestroy {
   }
 
   navigate(): void {
-    this.router.navigate(['/recipe-tag'], {
+    this.router.navigate(['/'], {
       queryParams: {
         page: this.page,
         size: this.itemsPerPage,
@@ -142,19 +143,23 @@ export class RecipeTagComponent implements OnInit, OnDestroy {
     this.recipeTags = data || [];
     this.ngbPaginationPage = this.page;
     this.tableLoaded = true;
+    this.requesting = false;
   }
 
   protected onError(): void {
     this.ngbPaginationPage = this.page ?? 1;
+    this.requesting = false;
   }
 
   protected refresh(page: number): void {
     this.page = page;
+    this.navigate();
   }
 
   private loadPage(page?: number): void {
     const pageToLoad: number = page || this.page || 0;
     if (this.totalItems === 0) {
+      this.requesting = true;
       this.recipeTagService
         .queryAll({
           // page: pageToLoad - 1,

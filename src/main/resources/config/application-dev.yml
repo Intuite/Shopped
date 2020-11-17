@@ -55,8 +55,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: nicolas01001110@gmail.com
-    password: 9p2MU@C2$^9e
+    username: teamintuite@gmail.com
+    password: DreamTeam-p3
     protocol: smtp
     tls: true
     properties.mail.smtp:
