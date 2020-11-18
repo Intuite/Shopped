@@ -19,7 +19,7 @@
     <jhi-alert></jhi-alert>
 
     <div *ngIf="recipeTags && recipeTags.length > 0" class="table-responsive table-hover" id="entities">
-        <jhi-recipe-tag-table [data]="recipeTags" [managementComponent]="this"></jhi-recipe-tag-table>
+        <jhi-recipe-tag-table #table [data]="recipeTags" [managementComponent]="this"></jhi-recipe-tag-table>
     </div>
 
     <div *ngIf="recipeTags?.length === 0 || !recipeTags" class="alert alert-warning" id="no-result">
