@@ -28,6 +28,7 @@ export class UserManagementComponent implements OnInit, OnDestroy {
   ascending!: boolean;
   @ViewChild('tableComponent', { static: false }) table!: UserTableComponent;
   tableLoaded = false;
+  requesting = false;
 
   constructor(
     private userService: UserService,
@@ -125,5 +126,6 @@ export class UserManagementComponent implements OnInit, OnDestroy {
     this.users = users;
     if (this.tableLoaded) this.table.reloadSource(users as User[]);
     this.tableLoaded = true;
+    this.requesting = false;
   }
 }
