@@ -13,7 +13,7 @@ import { RecipeService } from 'app/entities/recipe/recipe.service';
 })
 export class PostDetailComponent implements OnInit {
   post: IPost | null = null;
-  recipe?: IRecipe | null;
+  recipe: IRecipe | null = null;
   eventSubscriber?: Subscription;
 
   constructor(protected recipeService: RecipeService, protected dataUtils: JhiDataUtils, protected activatedRoute: ActivatedRoute) {}
@@ -33,10 +33,6 @@ export class PostDetailComponent implements OnInit {
 
   previousState(): void {
     window.history.back();
-  }
-
-  protected onSuccess(data: Recipe[] | null): void {
-    // this.recipe = data[0] || [];
   }
 
   protected onError(): void {
