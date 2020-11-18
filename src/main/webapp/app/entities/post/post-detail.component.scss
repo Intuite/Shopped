@@ -103,6 +103,13 @@
   background: url('../../../content/images/placeholder-image.png') no-repeat center center;
 }
 
+.post-picture img {
+  height: 250px;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
 .post-icon-bite {
   height: 24px;
   width: 24px;
