@@ -25,15 +25,6 @@
 <jhi-wrapper-material-table #sort="matSort"
                             [columns]="displayedColumns" [dataSource]="dataSource"
                             matSort>
-    <ng-container matColumnDef="id">
-        <th *matHeaderCellDef mat-header-cell mat-sort-header>ID</th>
-        <td *matCellDef="let element" mat-cell>
-            <span>
-                <a [routerLink]="['./', element.id, 'view']">{{ element.id }}</a>
-            </span>
-        </td>
-    </ng-container>
-
     <ng-container matColumnDef="image">
         <th *matHeaderCellDef mat-header-cell mat-sort-header>Image</th>
         <td *matCellDef="let element" mat-cell>
@@ -83,9 +74,9 @@
     <ng-container matColumnDef="unitAbbrev">
         <th *matHeaderCellDef mat-header-cell mat-sort-header>Unit</th>
         <td *matCellDef="let element" mat-cell>
-            <span>
+            <a (click)="managementComponent.viewType(element.unitId)" class="text-primary" style="cursor: pointer">
                 {{ element.unitAbbrev }}
-            </span>
+            </a>
         </td>
     </ng-container>
 
@@ -93,13 +84,14 @@
         <th *matHeaderCellDef class="text-center" mat-header-cell>Options</th>
         <td *matCellDef="let element" mat-cell>
             <div class="w-100" fxLayout="row" fxLayoutAlign="center center">
-                <button [routerLink]="['/ingredient/', element.id, 'view']"
+                <button (click)="managementComponent.view(element)"
                         class="text-white"
                         jhiMaterialColor="secondary"
                         mat-mini-fab
                         type="submit">
                     <mat-icon>launch</mat-icon>
                 </button>
+
 
                 <button [routerLink]="['/ingredient/', element.id, 'edit']"
                         class="text-white ml-3"

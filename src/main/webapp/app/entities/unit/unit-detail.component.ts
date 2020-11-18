@@ -1,19 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-
-import { IUnit } from 'app/shared/model/unit.model';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { UnitService } from 'app/entities/unit/unit.service';
 
 @Component({
   selector: 'jhi-unit-detail',
   templateUrl: './unit-detail.component.html',
 })
 export class UnitDetailComponent implements OnInit {
-  unit: IUnit | null = null;
+  element: any;
 
-  constructor(protected activatedRoute: ActivatedRoute) {}
+  constructor(@Inject(MAT_DIALOG_DATA) public data: number, private elementService: UnitService) {}
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ unit }) => (this.unit = unit));
+    this.elementService.find(this.data).subscribe(res => {
+      this.element = res.body;
+    });
   }
 
   previousState(): void {

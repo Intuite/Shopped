@@ -2,6 +2,7 @@ package com.intuite.shopped.service;
 
 import com.intuite.shopped.domain.User;
 
+import com.intuite.shopped.service.dto.TransactionDTO;
 import io.github.jhipster.config.JHipsterProperties;
 
 import java.nio.charset.StandardCharsets;
@@ -102,5 +103,22 @@ public class MailService {
     public void sendPasswordResetMail(User user) {
         log.debug("Sending password reset email to '{}'", user.getEmail());
         sendEmailFromTemplate(user, "mail/passwordResetEmail", "email.reset.title");
+    }
+
+    @Async
+    public void sendInvoiceEmail(User user, TransactionDTO transac) {
+        log.debug("Sending Invoice email to '{}", user.getEmail());
+        if (user.getEmail() == null) {
+            log.debug("Email doesn't exist for user '{}'", user.getLogin());
+            return;
+        }
+        Locale locale = Locale.forLanguageTag(user.getLangKey());
+        Context context = new Context(locale);
+        context.setVariable(USER, user);
+        context.setVariable("transac",transac);
+        context.setVariable(BASE_URL, jHipsterProperties.getMail().getBaseUrl());
+        String content = templateEngine.process("mail/invoiceEmail", context);
+        String subject = messageSource.getMessage("email.invoice.title", null, locale);
+        sendEmail(user.getEmail(), subject, content, false, true);
     }
 }

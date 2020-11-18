@@ -10,6 +10,7 @@ import { RecipeTagService } from './recipe-tag.service';
 import { ITagType } from 'app/shared/model/tag-type.model';
 import { TagTypeService } from 'app/entities/tag-type/tag-type.service';
 import { JhiAlertService } from 'ng-jhipster';
+import { Status } from 'app/shared/model/enumerations/status.model';
 
 @Component({
   selector: 'jhi-recipe-tag-update',
@@ -18,7 +19,6 @@ import { JhiAlertService } from 'ng-jhipster';
 export class RecipeTagUpdateComponent implements OnInit {
   isSaving = false;
   tagtypes: ITagType[] = [];
-  statusOptions = ['ACTIVE', 'INACTIVE'];
 
   editForm = this.fb.group({
     id: [],
@@ -71,6 +71,7 @@ export class RecipeTagUpdateComponent implements OnInit {
           if (recipeTag.id !== undefined) {
             this.subscribeToSaveResponse(this.recipeTagService.update(recipeTag));
           } else {
+            recipeTag.status = Status.ACTIVE.toUpperCase() as Status;
             this.subscribeToSaveResponse(this.recipeTagService.create(recipeTag));
           }
         } else {

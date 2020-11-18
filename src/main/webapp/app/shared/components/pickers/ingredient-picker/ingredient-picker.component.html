@@ -1,17 +1,27 @@
 <form [formGroup]="ingredientForm">
     <mat-expansion-panel (closed)="panelOpenState = false"
                          (opened)="panelOpenState = true">
-        <mat-expansion-panel-header>
+        <mat-expansion-panel-header fxLayoutAlign="space-between center" fxlayout="row">
             <mat-panel-title>
-                Ingredients
+                <span *ngIf="!panelOpenState">
+                    Ingredients
+                </span>
             </mat-panel-title>
             <mat-panel-description>
-                {{ getSelectedControls().length }} ingredients selected
+                Selected {{ getSelectedControls().length }}
             </mat-panel-description>
         </mat-expansion-panel-header>
-        <button (click)="addIngredient()" class="align-self-center mb-3 corner-add" color="primary" mat-raised-button>
+        <button
+            (click)="addIngredient()"
+            *ngIf="panelOpenState"
+            [matTooltipHideDelay]="0"
+            [matTooltipShowDelay]="1000"
+            aria-label="Select a new ingredient"
+            class="align-self-center mb-3 corner-add"
+            jhiMaterialColor="accent"
+            mat-mini-fab
+            matTooltip="Select a new ingredient">
             <mat-icon>add</mat-icon>
-            Select Ingredients
         </button>
         <div fxLayout="row wrap" fxLayoutGap="16px grid">
             <jhi-ingredient-selection (deselect)="deleteIngredient($event)"

@@ -1,21 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, Inject, OnInit } from '@angular/core';
 import { JhiDataUtils } from 'ng-jhipster';
-
-import { IIngredient } from 'app/shared/model/ingredient.model';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'jhi-ingredient-detail',
   templateUrl: './ingredient-detail.component.html',
 })
 export class IngredientDetailComponent implements OnInit {
-  ingredient: IIngredient | null = null;
+  constructor(protected dataUtils: JhiDataUtils, @Inject(MAT_DIALOG_DATA) public element: any) {}
 
-  constructor(protected dataUtils: JhiDataUtils, protected activatedRoute: ActivatedRoute) {}
-
-  ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ ingredient }) => (this.ingredient = ingredient));
-  }
+  ngOnInit(): void {}
 
   byteSize(base64String: string): string {
     return this.dataUtils.byteSize(base64String);

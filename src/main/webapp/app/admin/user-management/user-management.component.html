@@ -1,6 +1,17 @@
 <div>
     <h2>
         <span id="user-management-page-heading" jhiTranslate="userManagement.home.title">Users</span>
+        <button *ngIf="!requesting && (!users || users.length == 0)"
+                [matTooltipHideDelay]="0"
+                [matTooltipShowDelay]="1000"
+                [routerLink]="['/recipe-tag/new']"
+                aria-label="Create a new recipe tag"
+                class="float-right jh-create-entity create-recipe-tag mx-4 mb-3"
+                jhiMaterialColor="accent"
+                mat-mini-fab
+                matTooltip="Create a new recipe tag">
+            <mat-icon>add</mat-icon>
+        </button>
     </h2>
 
     <jhi-alert-error></jhi-alert-error>

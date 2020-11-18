@@ -11,6 +11,7 @@ import { isPlatformBrowser } from '@angular/common';
 export class PasswordResetInitComponent implements AfterViewInit {
   @ViewChild('email', { static: false })
   email?: ElementRef;
+  requesting = false;
 
   success = false;
   resetRequestForm = this.fb.group({
@@ -34,6 +35,10 @@ export class PasswordResetInitComponent implements AfterViewInit {
   }
 
   requestReset(): void {
-    this.passwordResetInitService.save(this.resetRequestForm.get(['email'])!.value).subscribe(() => (this.success = true));
+    this.requesting = true;
+    this.passwordResetInitService.save(this.resetRequestForm.get(['email'])!.value).subscribe(() => {
+      this.success = true;
+      this.requesting = false;
+    });
   }
 }

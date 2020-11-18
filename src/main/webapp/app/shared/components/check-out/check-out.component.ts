@@ -1,8 +1,10 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { TransactionService } from 'app/entities/transaction/transaction.service';
 import { ITransaction, Transaction } from 'app/shared/model/transaction.model';
 import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
+import { TransactionLogicService } from 'app/shared/services/transaction-logic.service';
+import { MatDialogRef } from '@angular/material/dialog';
+import { BundlePickerDialogComponent } from 'app/shared/components/buy-cookie/bundle-picker-dialog/bundle-picker-dialog.component';
 
 declare let paypal: any;
 
@@ -23,23 +25,23 @@ export class CheckOutComponent implements OnInit {
     description: 'Shopped, Cookies',
   };
 
-  constructor(private transactionService: TransactionService) {}
+  constructor(private transactionLogicService: TransactionLogicService, public dialogRef: MatDialogRef<BundlePickerDialogComponent>) {}
 
   ngOnInit(): void {
+    const dialog = this.dialogRef;
     const cookie = this.cookies;
-    const transactionService = this.transactionService;
+    const transactionLogicService = this.transactionLogicService;
     const userId = this.userId;
     /* eslint-disable @typescript-eslint/camelcase */
     this.product.price = this.price || 0;
 
-    function saveThings(transac: ITransaction): void {
-      console.warn(transac);
+    function processTransaction(transac: ITransaction): void {
       transac.userId = userId;
       transac.cookiesAmount = cookie;
-      transactionService.create(transac).subscribe(
-        () => console.warn('success'),
-        () => console.warn('error')
-      );
+
+      transactionLogicService.processTransactionBuy(transac);
+      dialog.close();
+      // TODO llamar transaction-logic-service con transac ya armado.
     }
 
     paypal
@@ -73,7 +75,7 @@ export class CheckOutComponent implements OnInit {
             };
           };
           transaction(order);
-          saveThings(this.transac);
+          processTransaction(this.transac);
           console.warn(this.transac);
         },
         onError(err: any): any {

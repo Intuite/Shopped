@@ -9,59 +9,43 @@
     <button
         [matTooltipHideDelay]="0"
         [matTooltipShowDelay]="1000"
-        [routerLink]="['/post/new']"
-        aria-label="Create a new post"
-        class="float-right jh-create-entity create-post mx-4 mb-3"
+        [routerLink]="['/ingredient-tag/new']"
+        aria-label="Create a new ingredient tag"
+        class="float-right jh-create-entity create-ingredient-tag mx-4 mb-3"
         jhiMaterialColor="accent"
         mat-mini-fab
-        matTooltip="Create a new post">
+        matTooltip="Create a new ingredient tag">
         <mat-icon>add</mat-icon>
     </button>
 </div>
 <jhi-wrapper-material-table #sort="matSort" [columns]="displayedColumns"
                             [dataSource]="dataSource" matSort>
-    <ng-container matColumnDef="id">
-        <th *matHeaderCellDef mat-header-cell mat-sort-header>ID</th>
+
+    <ng-container matColumnDef="name">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>Name</th>
         <td *matCellDef="let element" mat-cell>
             <span>
-                <a [routerLink]="['./', element.id, 'view']">{{ element.id }}</a>
+                {{ element.name }}
             </span>
         </td>
     </ng-container>
 
-    <ng-container matColumnDef="recipeName">
-        <th *matHeaderCellDef mat-header-cell mat-sort-header>Recipe Name</th>
+
+    <ng-container matColumnDef="description">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>Description</th>
         <td *matCellDef="let element" mat-cell>
             <span>
-                {{ element.recipeName }}
+                {{ element.description }}
             </span>
         </td>
     </ng-container>
 
-    <ng-container matColumnDef="caption">
-        <th *matHeaderCellDef mat-header-cell mat-sort-header>Caption</th>
+    <ng-container matColumnDef="typeName">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>Type</th>
         <td *matCellDef="let element" mat-cell>
-            <span>
-                {{ element.caption }}
-            </span>
-        </td>
-    </ng-container>
-
-    <ng-container matColumnDef="userLogin">
-        <th *matHeaderCellDef mat-header-cell mat-sort-header>User</th>
-        <td *matCellDef="let element" mat-cell>
-            <span>
-                {{ element.userLogin }}
-            </span>
-        </td>
-    </ng-container>
-
-    <ng-container matColumnDef="date">
-        <th *matHeaderCellDef mat-header-cell mat-sort-header>Date</th>
-        <td *matCellDef="let element" mat-cell>
-            <span>
-                {{ element.date | date:'short' }}
-            </span>
+            <a (click)="managementComponent.viewType(element.typeId)" class="text-primary" style="cursor: pointer">
+                {{ element.typeName }}
+            </a>
         </td>
     </ng-container>
 
@@ -87,7 +71,7 @@
         <th *matHeaderCellDef class="text-center" mat-header-cell>Options</th>
         <td *matCellDef="let element" mat-cell>
             <div class="w-100" fxLayout="row" fxLayoutAlign="center center">
-                <button [routerLink]="['/post/', element.id, 'view']"
+                <button (click)="managementComponent.view(element)"
                         class="text-white"
                         jhiMaterialColor="secondary"
                         mat-mini-fab
@@ -95,15 +79,15 @@
                     <mat-icon>launch</mat-icon>
                 </button>
 
-                <button [routerLink]="['/post/', element.id, 'edit']"
-                        class="text-white ml-3"
+                <button [routerLink]="['/ingredient-tag/', element.id, 'edit']"
+                        class="text-white mx-3"
                         color="primary"
                         mat-mini-fab
                         type="submit">
                     <mat-icon>create</mat-icon>
                 </button>
 
-                <button [hidden]="true" (click)="managementComponent.delete(element)"
+                <button (click)="managementComponent.delete(element)" [hidden]="true"
                         class="text-white"
                         color="warn"
                         mat-mini-fab
@@ -113,7 +97,6 @@
             </div>
         </td>
     </ng-container>
-
     <!-- Custom row definitions to be provided to the wrapper table. -->
     <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
     <tr *matRowDef="let row; columns: displayedColumns; " mat-row></tr>
