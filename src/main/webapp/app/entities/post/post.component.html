@@ -1,21 +1,35 @@
 <div>
     <h2 id="page-heading">
-        <span jhiTranslate="shoppedApp.post.home.title">Posts</span>
+        <span jhiTranslate="shoppedApp.post.home.title">Post</span>
+        <button *ngIf="!requesting && (!posts || posts.length == 0)"
+                [matTooltipHideDelay]="0"
+                [matTooltipShowDelay]="1000"
+                [routerLink]="['/post/new']"
+                aria-label="Create a new post"
+                class="float-right jh-create-entity create-post mx-4 mb-3"
+                jhiMaterialColor="accent"
+                mat-mini-fab
+                matTooltip="Create a new post">
+            <mat-icon>add</mat-icon>
+        </button>
     </h2>
+
     <jhi-alert-error></jhi-alert-error>
 
     <jhi-alert></jhi-alert>
 
     <div *ngIf="posts && posts.length > 0" class="table-responsive table-hover" id="entities">
-        <jhi-post-table #tbl [data]="posts" [managementComponent]="this"></jhi-post-table>
+        <jhi-post-table #table [data]="posts" [managementComponent]="this"></jhi-post-table>
     </div>
 
     <div *ngIf="posts?.length === 0 || !posts" class="alert alert-warning" id="no-result">
-        <span jhiTranslate="shoppedApp.post.home.notFound">No Posts found</span>
+        <div>
+            <span jhiTranslate="shoppedApp.ingredient.home.notFound">No Posts found</span>
+        </div>
     </div>
-
-    <div class="w-100" fxLayout="row" fxLayoutAlign="space-around center">
-        <mat-spinner *ngIf="!posts || posts.length == 0" diameter="50" strokeWidth="5"></mat-spinner>
+    <div *ngIf="requesting">
+        <div class="w-100" fxLayout="row" fxLayoutAlign="space-around center">
+            <mat-spinner diameter="50" strokeWidth="5"></mat-spinner>
+        </div>
     </div>
-
 </div>

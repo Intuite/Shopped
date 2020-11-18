@@ -14,6 +14,7 @@ import { IRecipe } from 'app/shared/model/recipe.model';
 import { RecipeService } from 'app/entities/recipe/recipe.service';
 import { IUser } from 'app/core/user/user.model';
 import { UserService } from 'app/core/user/user.service';
+import { AccountService } from 'app/core/auth/account.service';
 
 type SelectableEntity = IRecipe | IUser;
 
@@ -24,8 +25,10 @@ type SelectableEntity = IRecipe | IUser;
 export class PostUpdateComponent implements OnInit {
   isSaving = false;
   recipes: IRecipe[] = [];
-  users: IUser[] = [];
   statusOptions = ['ACTIVE', 'INACTIVE'];
+  user!: IUser;
+
+  // continue with the user
 
   editForm = this.fb.group({
     id: [],
@@ -33,7 +36,7 @@ export class PostUpdateComponent implements OnInit {
     date: [null, [Validators.required]],
     status: [],
     recipeId: [null, Validators.required],
-    userId: [null, Validators.required],
+    userId: [],
   });
 
   constructor(
@@ -41,7 +44,8 @@ export class PostUpdateComponent implements OnInit {
     protected recipeService: RecipeService,
     protected userService: UserService,
     protected activatedRoute: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private accountService: AccountService
   ) {}
 
   ngOnInit(): void {
@@ -50,6 +54,12 @@ export class PostUpdateComponent implements OnInit {
         const today = moment().startOf('minute');
         post.date = today;
       }
+
+      this.accountService.getAuthenticationState().subscribe(account => {
+        if (account) {
+          this.userService.find(account.login).subscribe(user => (this.user = user));
+        }
+      });
 
       this.updateForm(post);
 
@@ -74,8 +84,6 @@ export class PostUpdateComponent implements OnInit {
               .subscribe((concatRes: IRecipe[]) => (this.recipes = concatRes));
           }
         });
-
-      this.userService.query().subscribe((res: HttpResponse<IUser[]>) => (this.users = res.body || []));
     });
   }
 
@@ -112,7 +120,7 @@ export class PostUpdateComponent implements OnInit {
       date: this.editForm.get(['date'])!.value ? moment(this.editForm.get(['date'])!.value, DATE_TIME_FORMAT) : undefined,
       status: this.editForm.get(['status'])!.value,
       recipeId: this.editForm.get(['recipeId'])!.value,
-      userId: this.editForm.get(['userId'])!.value,
+      userId: this.user.id,
     };
   }
 

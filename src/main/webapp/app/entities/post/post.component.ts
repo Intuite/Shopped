@@ -12,6 +12,7 @@ import { PostService } from './post.service';
 import { PostDeleteDialogComponent } from './post-delete-dialog.component';
 import { Status } from 'app/shared/model/enumerations/status.model';
 import { PostTableComponent } from 'app/shared/tables/post-table/post-table.component';
+import { IRecipeTag } from 'app/shared/model/recipe-tag.model';
 
 @Component({
   selector: 'jhi-post',
@@ -21,12 +22,14 @@ export class PostComponent implements OnInit, OnDestroy {
   posts?: IPost[];
   eventSubscriber?: Subscription;
   totalItems = 0;
-  itemsPerPage = 20;
+  itemsPerPage = ITEMS_PER_PAGE;
   page!: number;
   predicate!: string;
   ascending!: boolean;
-  ngbPaginationPage = 0;
+  ngbPaginationPage = 1;
   tableLoaded = false;
+  requesting = false;
+  @ViewChild('table', { static: false }) table!: PostTableComponent;
 
   @ViewChild('tbl', { static: false }) tbl!: PostTableComponent;
 
@@ -44,9 +47,9 @@ export class PostComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.eventSubscriber) {
-      this.eventManager.destroy(this.eventSubscriber);
-    }
+    // if (this.eventSubscriber) {
+    //   this.eventManager.destroy(this.eventSubscriber);
+    // }
   }
 
   trackId(index: number, item: IPost): number {
@@ -55,7 +58,7 @@ export class PostComponent implements OnInit, OnDestroy {
   }
 
   registerChangeInPosts(): void {
-    this.eventSubscriber = this.eventManager.subscribe('postListModification', () => this.loadPage());
+    // this.eventSubscriber = this.eventManager.subscribe('postListModification', () => this.loadPage());
   }
 
   delete(post: IPost): void {
@@ -122,35 +125,38 @@ export class PostComponent implements OnInit, OnDestroy {
     }).subscribe();
   }
 
-  protected onSuccess(data: IPost[] | null, headers: HttpHeaders, page: number): void {
-    this.totalItems = Number(headers.get('X-Total-Count'));
+  protected onSuccess(data: IRecipeTag[] | null, headers: HttpHeaders, page: number): void {
     this.page = page;
     this.posts = data || [];
+    this.totalItems = this.posts?.length ?? 0;
     this.ngbPaginationPage = this.page;
+    this.requesting = false;
+    if (this.tableLoaded) {
+      this.refresh();
+    }
     this.tableLoaded = true;
   }
 
   protected onError(): void {
     this.ngbPaginationPage = this.page ?? 1;
+    this.requesting = false;
   }
 
-  protected refresh(page: number): void {
-    this.page = page;
+  protected refresh(): void {
+    this.table.reloadSource(this.posts as IPost[]);
+    this.navigate();
   }
 
   private loadPage(page?: number): void {
     const pageToLoad: number = page || this.page || 0;
-    if (this.totalItems === 0) {
-      this.postService
-        .queryAll({
-          sort: this.sort(),
-        })
-        .subscribe(
-          (res: HttpResponse<IPost[]>) => this.onSuccess(res.body, res.headers, pageToLoad),
-          () => this.onError()
-        );
-    } else {
-      this.refresh(pageToLoad);
-    }
+    this.requesting = true;
+    this.postService
+      .queryAll({
+        sort: this.sort(),
+      })
+      .subscribe(
+        (res: HttpResponse<IPost[]>) => this.onSuccess(res.body, res.headers, pageToLoad),
+        () => this.onError()
+      );
   }
 }

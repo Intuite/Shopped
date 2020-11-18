@@ -11,6 +11,7 @@
                 the public post for your recipe</h2>
 
             <br>
+            {{ user | json }}
             <br>
 
             <div>
@@ -67,20 +68,6 @@
                         This field is required.
                     </mat-error>
                 </mat-form-field>
-
-                <mat-form-field appearance="fill" class="form-group w-100">
-                    <mat-label jhiTranslate="shoppedApp.post.user"></mat-label>
-                    <mat-select formControlName="userId" id="field_user" name="user">
-                        <mat-option *ngFor="let userOption of users; trackBy: trackById" [value]="userOption.id">
-                            {{userOption.login }}
-                        </mat-option>
-                    </mat-select>
-                    <mat-error
-                        *ngIf="editForm.get('userId')!.invalid && (editForm.get('userId')!.dirty || editForm.get('userId')!.touched)"
-                        jhiTranslate="entity.validation.required">
-                    </mat-error>
-                </mat-form-field>
-
 
                 <mat-form-field [hidden]="true" appearance="fill" class="form-group w-100" >
                     <mat-label jhiTranslate="shoppedApp.post.status"></mat-label>
