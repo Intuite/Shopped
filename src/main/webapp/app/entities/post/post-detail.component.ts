@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { JhiDataUtils } from 'ng-jhipster';
 import { IPost } from 'app/shared/model/post.model';
-import { IRecipe, Recipe } from 'app/shared/model/recipe.model';
+import { IRecipe } from 'app/shared/model/recipe.model';
 import { RecipeService } from 'app/entities/recipe/recipe.service';
 
 @Component({
@@ -13,14 +13,18 @@ import { RecipeService } from 'app/entities/recipe/recipe.service';
 })
 export class PostDetailComponent implements OnInit {
   post: IPost | null = null;
-  recipe: IRecipe | null = null;
+  recipe: IRecipe | null | undefined;
   eventSubscriber?: Subscription;
 
   constructor(protected recipeService: RecipeService, protected dataUtils: JhiDataUtils, protected activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ post }) => (this.post = post));
-    this.recipeService.find(1).subscribe(response => (this.recipe = response.body || null));
+
+    this.recipeService.query().subscribe(
+      () => this.onSuccess(),
+      () => this.onError()
+    );
   }
 
   byteSize(base64String: string): string {
@@ -33,6 +37,10 @@ export class PostDetailComponent implements OnInit {
 
   previousState(): void {
     window.history.back();
+  }
+
+  protected onSuccess(): void {
+    this.recipeService.find(this.post?.recipeId).subscribe(response => (this.recipe = response.body || null));
   }
 
   protected onError(): void {
