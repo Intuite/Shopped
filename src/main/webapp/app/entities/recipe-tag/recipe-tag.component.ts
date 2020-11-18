@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
 import { combineLatest, Subscription } from 'rxjs';
@@ -15,6 +15,7 @@ import { Status } from 'app/shared/model/enumerations/status.model';
 import { MatDialog } from '@angular/material/dialog';
 import { RecipeTagDetailComponent } from 'app/entities/recipe-tag/recipe-tag-detail.component';
 import { TagTypeDetailComponent } from 'app/entities/tag-type/tag-type-detail.component';
+import { RecipeTagTableComponent } from 'app/shared/tables/recipe-tag-table/recipe-tag-table.component';
 
 @Component({
   selector: 'jhi-recipe-tag',
@@ -31,6 +32,7 @@ export class RecipeTagComponent implements OnInit, OnDestroy {
   ngbPaginationPage = 1;
   tableLoaded = false;
   requesting = false;
+  @ViewChild('table', { static: false }) table!: RecipeTagTableComponent;
 
   constructor(
     protected recipeTagService: RecipeTagService,
@@ -47,9 +49,9 @@ export class RecipeTagComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.eventSubscriber) {
-      this.eventManager.destroy(this.eventSubscriber);
-    }
+    // if (this.eventSubscriber) {
+    //   this.eventManager.destroy(this.eventSubscriber);
+    // }
   }
 
   trackId(index: number, item: IRecipeTag): number {
@@ -58,7 +60,7 @@ export class RecipeTagComponent implements OnInit, OnDestroy {
   }
 
   registerChangeInRecipeTags(): void {
-    this.eventSubscriber = this.eventManager.subscribe('recipeTagListModification', () => this.loadPage());
+    // this.eventSubscriber = this.eventManager.subscribe('recipeTagListModification', () => this.loadPage());
   }
 
   delete(recipeTag: IRecipeTag): void {
@@ -88,7 +90,7 @@ export class RecipeTagComponent implements OnInit, OnDestroy {
   }
 
   navigate(): void {
-    this.router.navigate(['/'], {
+    this.router.navigate(['./recipe-tag'], {
       queryParams: {
         page: this.page,
         size: this.itemsPerPage,
@@ -138,12 +140,15 @@ export class RecipeTagComponent implements OnInit, OnDestroy {
   }
 
   protected onSuccess(data: IRecipeTag[] | null, headers: HttpHeaders, page: number): void {
-    this.totalItems = Number(headers.get('X-Total-Count'));
     this.page = page;
     this.recipeTags = data || [];
+    this.totalItems = this.recipeTags?.length ?? 0;
     this.ngbPaginationPage = this.page;
-    this.tableLoaded = true;
     this.requesting = false;
+    if (this.tableLoaded) {
+      this.refresh();
+    }
+    this.tableLoaded = true;
   }
 
   protected onError(): void {
@@ -151,27 +156,23 @@ export class RecipeTagComponent implements OnInit, OnDestroy {
     this.requesting = false;
   }
 
-  protected refresh(page: number): void {
-    this.page = page;
+  protected refresh(): void {
+    this.table.reloadSource(this.recipeTags as IRecipeTag[]);
     this.navigate();
   }
 
   private loadPage(page?: number): void {
     const pageToLoad: number = page || this.page || 0;
-    if (this.totalItems === 0) {
-      this.requesting = true;
-      this.recipeTagService
-        .queryAll({
-          // page: pageToLoad - 1,
-          // size: 439,
-          sort: this.sort(),
-        })
-        .subscribe(
-          (res: HttpResponse<IRecipeTag[]>) => this.onSuccess(res.body, res.headers, pageToLoad),
-          () => this.onError()
-        );
-    } else {
-      this.refresh(pageToLoad);
-    }
+    this.requesting = true;
+    this.recipeTagService
+      .queryAll({
+        // page: pageToLoad - 1,
+        // size: 439,
+        sort: this.sort(),
+      })
+      .subscribe(
+        (res: HttpResponse<IRecipeTag[]>) => this.onSuccess(res.body, res.headers, pageToLoad),
+        () => this.onError()
+      );
   }
 }
