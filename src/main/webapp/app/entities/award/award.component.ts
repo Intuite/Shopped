@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, ParamMap, Router, Data } from '@angular/router';
 import { Subscription, combineLatest } from 'rxjs';
@@ -11,6 +11,7 @@ import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { AwardService } from './award.service';
 import { AwardDeleteDialogComponent } from './award-delete-dialog.component';
 import { Status } from 'app/shared/model/enumerations/status.model';
+import { AwardTableComponent } from 'app/shared/tables/award-table/award-table.component';
 @Component({
   selector: 'jhi-award',
   templateUrl: './award.component.html',
@@ -24,7 +25,9 @@ export class AwardComponent implements OnInit, OnDestroy {
   predicate!: string;
   ascending!: boolean;
   ngbPaginationPage = 1;
-  tableLoaded: any;
+  tableLoaded = false;
+  requesting = false;
+  @ViewChild('table', { static: false }) table!: AwardTableComponent;
 
   constructor(
     protected awardService: AwardService,
@@ -37,18 +40,15 @@ export class AwardComponent implements OnInit, OnDestroy {
 
   loadPage(page?: number): void {
     const pageToLoad: number = page || this.page || 0;
-    if (this.totalItems === 0) {
-      this.awardService
-        .queryAll({
-          sort: this.sort(),
-        })
-        .subscribe(
-          (res: HttpResponse<IAward[]>) => this.onSuccess(res.body, res.headers, pageToLoad),
-          () => this.onError()
-        );
-    } else {
-      this.refresh(pageToLoad);
-    }
+    this.requesting = true;
+    this.awardService
+      .queryAll({
+        sort: this.sort(),
+      })
+      .subscribe(
+        (res: HttpResponse<IAward[]>) => this.onSuccess(res.body, res.headers, pageToLoad),
+        () => this.onError()
+      );
   }
 
   ngOnInit(): void {
@@ -110,10 +110,14 @@ export class AwardComponent implements OnInit, OnDestroy {
   }
 
   protected onSuccess(data: IAward[] | null, headers: HttpHeaders, page: number): void {
-    this.totalItems = Number(headers.get('X-Total-Count'));
+    this.totalItems = this.awards?.length ?? 0;
     this.page = page;
     this.awards = data || [];
     this.ngbPaginationPage = this.page;
+    this.requesting = false;
+    if (this.tableLoaded) {
+      this.refresh();
+    }
     this.tableLoaded = true;
   }
 
@@ -121,8 +125,9 @@ export class AwardComponent implements OnInit, OnDestroy {
     this.ngbPaginationPage = this.page ?? 1;
   }
 
-  protected refresh(page: number): void {
-    this.page = page;
+  protected refresh(): void {
+    this.table.reloadSource(this.awards as IAward[]);
+    this.navigate();
   }
 
   navigate(): void {
