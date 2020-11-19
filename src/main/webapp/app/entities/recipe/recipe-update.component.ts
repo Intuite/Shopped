@@ -18,6 +18,7 @@ import { AccountService } from 'app/core/auth/account.service';
 @Component({
   selector: 'jhi-recipe-update',
   templateUrl: './recipe-update.component.html',
+  styleUrls: ['../../../content/scss/image_Select.scss'],
 })
 export class RecipeUpdateComponent implements OnInit {
   isSaving = false;
@@ -29,8 +30,8 @@ export class RecipeUpdateComponent implements OnInit {
     id: [],
     name: [null, [Validators.required]],
     portion: [null, [Validators.min(1)]],
-    description: [null, [Validators.required]],
-    duration: [],
+    description: [null, [Validators.required, Validators.min(5), Validators.max(1000)]],
+    duration: [null, [Validators.min(1)]],
     creation: [],
     image: [],
     imageContentType: [],
