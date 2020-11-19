@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, Routes, Router } from '@angular/router';
-import { Observable, of, EMPTY } from 'rxjs';
+import { ActivatedRouteSnapshot, Resolve, Router, Routes } from '@angular/router';
+import { EMPTY, Observable, of } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
 
 import { Authority } from 'app/shared/constants/authority.constants';
@@ -9,7 +9,6 @@ import { UserRouteAccessService } from 'app/core/auth/user-route-access-service'
 import { IRecipeTag, RecipeTag } from 'app/shared/model/recipe-tag.model';
 import { RecipeTagService } from './recipe-tag.service';
 import { RecipeTagComponent } from './recipe-tag.component';
-import { RecipeTagDetailComponent } from './recipe-tag-detail.component';
 import { RecipeTagUpdateComponent } from './recipe-tag-update.component';
 
 @Injectable({ providedIn: 'root' })
@@ -41,18 +40,6 @@ export const recipeTagRoute: Routes = [
     data: {
       authorities: [Authority.USER],
       defaultSort: 'id,asc',
-      pageTitle: 'shoppedApp.recipeTag.home.title',
-    },
-    canActivate: [UserRouteAccessService],
-  },
-  {
-    path: ':id/view',
-    component: RecipeTagDetailComponent,
-    resolve: {
-      recipeTag: RecipeTagResolve,
-    },
-    data: {
-      authorities: [Authority.USER],
       pageTitle: 'shoppedApp.recipeTag.home.title',
     },
     canActivate: [UserRouteAccessService],

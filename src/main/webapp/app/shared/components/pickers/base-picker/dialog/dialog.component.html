@@ -1,0 +1,37 @@
+<div *ngIf="options !== null && options.length > 0; else noOptions">
+  <div matDialogTitle>
+    <h2>{{ data.title | titlecase }}</h2>
+    <mat-form-field appearance="fill" fxFill="100%">
+      <mat-label>Search</mat-label>
+      <input autocomplete="off" [(ngModel)]="searchText" [disabled]="options.length === 0" matInput type="text" />
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </div>
+  <mat-dialog-content>
+    <jhi-base-picker-list (selectionOutput)="addTag($event)" [options]="options" [searchText]="searchText"></jhi-base-picker-list>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button [mat-dialog-close]="[]" mat-button>Cancel</button>
+    <button [mat-dialog-close]="getSelections()" color="accent" mat-raised-button>Add Tags</button>
+  </mat-dialog-actions>
+</div>
+<ng-template #noOptions>
+  <div matDialogTitle>
+    <h2>{{ data.title | titlecase }}</h2>
+  </div>
+  <mat-dialog-content>
+    <mat-list>
+      <div>
+        <mat-list-item>
+          <mat-icon color="primary" matListIcon>layers</mat-icon>
+          <div matLine>There is nothing to see here.</div>
+          <div matLine>Come back later!</div>
+        </mat-list-item>
+      </div>
+    </mat-list>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button [mat-dialog-close]="[]" mat-button>Cancel</button>
+    <button [mat-dialog-close]="getSelections()" color="accent" mat-raised-button>Add Tags</button>
+  </mat-dialog-actions>
+</ng-template>

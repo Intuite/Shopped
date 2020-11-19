@@ -14,7 +14,7 @@ export class AwardTableComponent implements OnInit, AfterViewInit {
   @Input() data!: Award[];
   @Input() managementComponent!: AwardComponent;
 
-  displayedColumns: string[] = ['id', 'name', 'description', 'cost', 'image', 'status', 'options'];
+  displayedColumns: string[] = ['name', 'description', 'cost', 'image', 'status', 'options'];
 
   dataSource = new MatTableDataSource<Award>();
 
@@ -29,7 +29,8 @@ export class AwardTableComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.dataSource.filterPredicate = (data: any, filter) => {
-      const dataStr = JSON.stringify(data).toLowerCase();
+      let dataStr = JSON.stringify(data).toLowerCase();
+      dataStr = dataStr.replace(/({|,)\s(.+?)\s:/g, '');
       return dataStr.includes(filter);
     };
   }
@@ -38,8 +39,8 @@ export class AwardTableComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = (e.target as HTMLInputElement).value.trim().toLocaleLowerCase();
   };
 
-  public reloadSource(): void {
-    this.data = this.managementComponent.awards as Award[];
-    this.dataSource = new MatTableDataSource<Award>(this.data);
+  public reloadSource(data: Award[]): void {
+    this.data = data;
+    this.dataSource.data = data;
   }
 }

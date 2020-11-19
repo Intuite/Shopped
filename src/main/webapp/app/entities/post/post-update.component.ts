@@ -14,6 +14,7 @@ import { IRecipe } from 'app/shared/model/recipe.model';
 import { RecipeService } from 'app/entities/recipe/recipe.service';
 import { IUser } from 'app/core/user/user.model';
 import { UserService } from 'app/core/user/user.service';
+import { AccountService } from 'app/core/auth/account.service';
 
 type SelectableEntity = IRecipe | IUser;
 
@@ -24,7 +25,11 @@ type SelectableEntity = IRecipe | IUser;
 export class PostUpdateComponent implements OnInit {
   isSaving = false;
   recipes: IRecipe[] = [];
-  users: IUser[] = [];
+  userRecipes: IRecipe[] = [];
+  statusOptions = ['ACTIVE', 'INACTIVE'];
+  user!: IUser;
+
+  // continue with the user
 
   editForm = this.fb.group({
     id: [],
@@ -32,7 +37,7 @@ export class PostUpdateComponent implements OnInit {
     date: [null, [Validators.required]],
     status: [],
     recipeId: [null, Validators.required],
-    userId: [null, Validators.required],
+    userId: [],
   });
 
   constructor(
@@ -40,15 +45,22 @@ export class PostUpdateComponent implements OnInit {
     protected recipeService: RecipeService,
     protected userService: UserService,
     protected activatedRoute: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private accountService: AccountService
   ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ post }) => {
       if (!post.id) {
-        const today = moment().startOf('day');
+        const today = moment().startOf('minute');
         post.date = today;
       }
+
+      this.accountService.getAuthenticationState().subscribe(account => {
+        if (account) {
+          this.userService.find(account.login).subscribe(user => (this.user = user));
+        }
+      });
 
       this.updateForm(post);
 
@@ -72,10 +84,20 @@ export class PostUpdateComponent implements OnInit {
               )
               .subscribe((concatRes: IRecipe[]) => (this.recipes = concatRes));
           }
+          this.cleanRecipes();
         });
-
-      this.userService.query().subscribe((res: HttpResponse<IUser[]>) => (this.users = res.body || []));
     });
+  }
+
+  cleanRecipes(): void {
+    let i = 0;
+    while (i < this.recipes.length) {
+      if (this.recipes[i].userId !== this.user.id || this.recipes[i].status === this.statusOptions[1]) {
+        this.recipes.splice(i, 1);
+      } else {
+        i++;
+      }
+    }
   }
 
   updateForm(post: IPost): void {
@@ -111,7 +133,7 @@ export class PostUpdateComponent implements OnInit {
       date: this.editForm.get(['date'])!.value ? moment(this.editForm.get(['date'])!.value, DATE_TIME_FORMAT) : undefined,
       status: this.editForm.get(['status'])!.value,
       recipeId: this.editForm.get(['recipeId'])!.value,
-      userId: this.editForm.get(['userId'])!.value,
+      userId: this.user.id,
     };
   }
 

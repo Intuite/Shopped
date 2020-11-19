@@ -6,6 +6,7 @@ import { JhiLanguageService } from 'ng-jhipster';
 import { EMAIL_ALREADY_USED_TYPE, LOGIN_ALREADY_USED_TYPE } from 'app/shared/constants/error.constants';
 import { LoginModalService } from 'app/core/login/login-modal.service';
 import { RegisterService } from './register.service';
+import { PasswordStrengthBarComponent } from 'app/account/password/password-strength-bar.component';
 
 @Component({
   selector: 'jhi-register',
@@ -14,6 +15,9 @@ import { RegisterService } from './register.service';
 export class RegisterComponent implements AfterViewInit {
   @ViewChild('login', { static: false })
   login?: ElementRef;
+  unacceptablePassword = false;
+  requesting = false;
+  @ViewChild('strengthBarComponent', { static: false }) stBar!: PasswordStrengthBarComponent;
 
   doNotMatch = false;
   error = false;
@@ -32,8 +36,8 @@ export class RegisterComponent implements AfterViewInit {
       ],
     ],
     email: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(254), Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
-    confirmPassword: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
+    password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(64)]],
+    confirmPassword: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(64)]],
   });
 
   constructor(
@@ -58,11 +62,19 @@ export class RegisterComponent implements AfterViewInit {
     const password = this.registerForm.get(['password'])!.value;
     if (password !== this.registerForm.get(['confirmPassword'])!.value) {
       this.doNotMatch = true;
-    } else {
+    }
+
+    this.unacceptablePassword = !this.isPasswordAcceptable();
+
+    if (!this.doNotMatch && !this.unacceptablePassword) {
       const login = this.registerForm.get(['login'])!.value;
       const email = this.registerForm.get(['email'])!.value;
+      this.requesting = true;
       this.registerService.save({ login, email, password, langKey: this.languageService.getCurrentLanguage() }).subscribe(
-        () => (this.success = true),
+        () => {
+          this.success = true;
+          this.requesting = false;
+        },
         response => this.processError(response)
       );
     }
@@ -80,5 +92,10 @@ export class RegisterComponent implements AfterViewInit {
     } else {
       this.error = true;
     }
+    this.requesting = false;
+  }
+
+  isPasswordAcceptable(): boolean {
+    return this.stBar.curIdx === 5;
   }
 }

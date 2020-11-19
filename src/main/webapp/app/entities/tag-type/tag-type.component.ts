@@ -10,6 +10,7 @@ import { ITagType } from 'app/shared/model/tag-type.model';
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { TagTypeService } from './tag-type.service';
 import { TagTypeDeleteDialogComponent } from './tag-type-delete-dialog.component';
+import { Status } from 'app/shared/model/enumerations/status.model';
 
 @Component({
   selector: 'jhi-tag-type',
@@ -88,6 +89,17 @@ export class TagTypeComponent implements OnInit, OnDestroy {
         sort: this.predicate + ',' + (this.ascending ? 'asc' : 'desc'),
       },
     });
+  }
+
+  setStatus(element: ITagType, newStatus: boolean): void {
+    this.tagTypeService
+      .update({
+        ...element,
+        status: !newStatus ? (Status.ACTIVE.toUpperCase() as Status) : (Status.INACTIVE.toUpperCase() as Status),
+      })
+      .subscribe(() => {
+        this.loadPage(this.page);
+      });
   }
 
   protected handleNavigation(): void {

@@ -1,6 +1,8 @@
 package com.intuite.shopped.web.rest;
 
 import com.intuite.shopped.service.BundleService;
+import com.intuite.shopped.service.dto.AwardCriteria;
+import com.intuite.shopped.service.dto.AwardDTO;
 import com.intuite.shopped.web.rest.errors.BadRequestAlertException;
 import com.intuite.shopped.service.dto.BundleDTO;
 

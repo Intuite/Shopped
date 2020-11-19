@@ -27,6 +27,9 @@ export class UserManagementComponent implements OnInit, OnDestroy {
   predicate!: string;
   ascending!: boolean;
   @ViewChild('tableComponent', { static: false }) table!: UserTableComponent;
+  tableLoaded = false;
+  requesting = false;
+
   constructor(
     private userService: UserService,
     private accountService: AccountService,
@@ -52,6 +55,19 @@ export class UserManagementComponent implements OnInit, OnDestroy {
     }
   }
 
+  changePage(pageIndex: number): void {
+    const page = pageIndex;
+    if (page !== this.page) {
+      this.page = page;
+    }
+  }
+
+  changePageSize(pageSize: number): void {
+    if (pageSize !== this.itemsPerPage) {
+      this.itemsPerPage = pageSize;
+    }
+  }
+
   setActive(user: User, isActivated: boolean): void {
     this.userService.update({ ...user, activated: isActivated }).subscribe(() => {
       this.loadAll();
@@ -72,6 +88,7 @@ export class UserManagementComponent implements OnInit, OnDestroy {
       relativeTo: this.activatedRoute.parent,
       queryParams: {
         page: this.page,
+        size: this.itemsPerPage,
         sort: this.predicate + ',' + (this.ascending ? 'asc' : 'desc'),
       },
     });
@@ -81,6 +98,8 @@ export class UserManagementComponent implements OnInit, OnDestroy {
     combineLatest(this.activatedRoute.data, this.activatedRoute.queryParamMap, (data: Data, params: ParamMap) => {
       const page = params.get('page');
       this.page = page !== null ? +page : 1;
+      const pageSize = params.get('size');
+      this.itemsPerPage = pageSize !== null ? +pageSize : ITEMS_PER_PAGE;
       const sort = (params.get('sort') ?? data['defaultSort']).split(',');
       this.predicate = sort[0];
       this.ascending = sort[1] === 'asc';
@@ -89,26 +108,25 @@ export class UserManagementComponent implements OnInit, OnDestroy {
   }
 
   private loadAll(): void {
-    this.userService
-      .query({
-        page: this.page - 1,
-        size: this.itemsPerPage,
-        sort: this.sort(),
-      })
-      .subscribe((res: HttpResponse<User[]>) => this.onSuccess(res.body, res.headers));
+    this.requesting = true;
+    this.userService.queryAll().subscribe((res: HttpResponse<User[]>) => {
+      this.onSuccess(res.body, res.headers);
+    });
   }
 
-  private sort(): string[] {
-    const result = [this.predicate + ',' + (this.ascending ? 'asc' : 'desc')];
-    if (this.predicate !== 'id') {
-      result.push('id');
-    }
-    return result;
-  }
+  // private sort(): string[] {
+  //   const result = [this.predicate + ',' + (this.ascending ? 'asc' : 'desc')];
+  //   if (this.predicate !== 'id') {
+  //     result.push('id');
+  //   }
+  //   return result;
+  // }
 
   private onSuccess(users: User[] | null, headers: HttpHeaders): void {
     this.totalItems = Number(headers.get('X-Total-Count'));
     this.users = users;
-    this.table.reloadSource(users as User[]);
+    if (this.tableLoaded) this.table.reloadSource(users as User[]);
+    this.tableLoaded = true;
+    this.requesting = false;
   }
 }

@@ -14,7 +14,7 @@ export class CatalogueTableComponent implements OnInit, AfterViewInit {
   @Input() data!: Catalogue[];
   @Input() managementComponent!: CatalogueComponent;
 
-  displayedColumns: string[] = ['id', 'idCatalogue', 'value', 'options'];
+  displayedColumns: string[] = ['idCatalogue', 'value', 'options'];
 
   dataSource = new MatTableDataSource<Catalogue>();
 
@@ -29,7 +29,8 @@ export class CatalogueTableComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.dataSource.filterPredicate = (data: any, filter) => {
-      const dataStr = JSON.stringify(data).toLowerCase();
+      let dataStr = JSON.stringify(data).toLowerCase();
+      dataStr = dataStr.replace(/({|,)\s(.+?)\s:/g, '');
       return dataStr.includes(filter);
     };
   }
@@ -38,8 +39,8 @@ export class CatalogueTableComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = (e.target as HTMLInputElement).value.trim().toLocaleLowerCase();
   };
 
-  public reloadSource(): void {
-    this.data = this.managementComponent.catalogues as Catalogue[];
-    this.dataSource = new MatTableDataSource<Catalogue>(this.data);
+  public reloadSource(data: Catalogue[]): void {
+    this.data = data;
+    this.dataSource.data = data;
   }
 }

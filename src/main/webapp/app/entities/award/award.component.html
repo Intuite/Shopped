@@ -2,16 +2,20 @@
     <h2 id="page-heading">
         <span jhiTranslate="shoppedApp.award.home.title">Awards</span>
 
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-award" [routerLink]="['/award/new']">
+       <!-- <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-award" [routerLink]="['/award/new']">
             <fa-icon icon="plus"></fa-icon>
             <span  jhiTranslate="shoppedApp.award.home.createLabel">
             Create a new Award
             </span>
-        </button>
+        </button>-->
     </h2>
     <jhi-alert-error></jhi-alert-error>
 
     <jhi-alert></jhi-alert>
+    <jhi-give-award [data]=1></jhi-give-award>
+    <div class="w-100" fxLayout="row" fxLayoutAlign="space-around center">
+        <mat-spinner *ngIf="!awards || awards.length == 0" diameter="50" strokeWidth="5"></mat-spinner>
+    </div>
     <div class="alert alert-warning" id="no-result" *ngIf="awards?.length === 0">
         <span jhiTranslate="shoppedApp.award.home.notFound">No awards found</span>
     </div>
@@ -20,13 +24,4 @@
         <jhi-award-table [data]="awards" [managementComponent]="this"></jhi-award-table>
     </div>
 
-    <div *ngIf="awards && awards.length > 0">
-        <div class="row justify-content-center">
-            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
-        </div>
-
-        <div class="row justify-content-center">
-            <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
-        </div>
-    </div>
 </div>

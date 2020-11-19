@@ -4,7 +4,7 @@ import {
   IngredientPKForm,
   IngredientPKSelection,
   IngredientPKSelectionForm,
-} from 'app/shared/components/pickers/forms/ingredient-picker.model';
+} from 'app/shared/components/pickers/ingredient-picker/ingredient-picker.model';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { IIngredient } from 'app/shared/model/ingredient.model';

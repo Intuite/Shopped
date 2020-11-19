@@ -1,84 +1,88 @@
 <div class="row justify-content-center">
+    <div class="col-10">
+        <button type="submit" class="btn btn-secondary" (click)="previousState()">
+            <fa-icon icon="arrow-left"></fa-icon>
+        </button>
+    </div>
+
     <div class="col-8">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-            <h2 id="jhi-post-heading" jhiTranslate="shoppedApp.post.home.createOrEditLabel">Create or edit a Post</h2>
+            <h2 id="jhi-post-heading">{{ editForm.get('id')!.value !== undefined ? "Edit" : "Create" }}
+                the public post for your recipe</h2>
+
+            <br>
 
             <div>
                 <jhi-alert-error></jhi-alert-error>
 
-                <div class="form-group" [hidden]="!editForm.get('id')!.value">
-                    <label for="id" jhiTranslate="global.field.id">ID</label>
-                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
-                </div>
+                <jhi-alert></jhi-alert>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="shoppedApp.post.caption" for="field_caption">Caption</label>
-                    <input type="text" class="form-control" name="caption" id="field_caption"
-                           formControlName="caption"/>
-                </div>
+                <mat-form-field [hidden]="!editForm.get('id')!.value" appearance="fill" class="form-group w-100">
+                    <mat-label jhiTranslate="global.field.id"></mat-label>
+                    <input formControlName="id" id="id" matInput name="id" readonly type="text"/>
+                </mat-form-field>
 
-                <div class="form-group">
+                <div [hidden]="true" class="form-group">
                     <label class="form-control-label" jhiTranslate="shoppedApp.post.date" for="field_date">Date</label>
                     <div class="d-flex">
-                        <input id="field_date" type="datetime-local" class="form-control" name="date" formControlName="date" placeholder="YYYY-MM-DD HH:mm"/>
+                        <input id="field_date" type="datetime-local" class="form-control" name="date"
+                               formControlName="date"
+                               placeholder="YYYY-MM-DD HH:mm"/>
                     </div>
-                    <div *ngIf="editForm.get('date')!.invalid && (editForm.get('date')!.dirty || editForm.get('date')!.touched)">
+                    <div
+                        *ngIf="editForm.get('date')!.invalid && (editForm.get('date')!.dirty || editForm.get('date')!.touched)">
                         <small class="form-text text-danger"
                                *ngIf="editForm.get('date')?.errors?.required" jhiTranslate="entity.validation.required">
-                        This field is required.
+                            This field is required.
                         </small>
                         <small class="form-text text-danger"
-                            [hidden]="!editForm.get('date')?.errors?.ZonedDateTimelocal" jhiTranslate="entity.validation.ZonedDateTimelocal">
+                               [hidden]="!editForm.get('date')?.errors?.ZonedDateTimelocal"
+                               jhiTranslate="entity.validation.ZonedDateTimelocal">
                             This field should be a date and time.
                         </small>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="shoppedApp.post.status" for="field_status">Status</label>
-                    <select class="form-control" name="status" formControlName="status" id="field_status">
-                        <option value="ACTIVE">{{ 'shoppedApp.Status.ACTIVE' | translate }}</option>
-                        <option value="INACTIVE">{{ 'shoppedApp.Status.INACTIVE' | translate }}</option>
-                        <option value="BLOCKED">{{ 'shoppedApp.Status.BLOCKED' | translate }}</option>
-                        <option value="PENDING">{{ 'shoppedApp.Status.PENDING' | translate }}</option>
-                    </select>
-                </div>
+                <mat-form-field appearance="fill" class="form-group w-100">
+                    <mat-label>Recipe*</mat-label>
+                    <mat-select formControlName="recipeId" id="field_recipe" name="recipe">
+                        <mat-option *ngFor="let recipeOption of recipes; trackBy: trackById" [value]="recipeOption.id">
+                            {{recipeOption.name }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error
+                        *ngIf="editForm.get('recipeId')!.invalid && (editForm.get('recipeId')!.dirty || editForm.get('recipeId')!.touched)"
+                        jhiTranslate="entity.validation.required">
+                    </mat-error>
+                </mat-form-field>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="shoppedApp.post.recipe" for="field_recipe">Recipe</label>
-                    <select class="form-control" id="field_recipe" name="recipe" formControlName="recipeId">
-                        <option *ngIf="!editForm.get('recipeId')!.value" [ngValue]="null" selected></option>
-                        <option [ngValue]="recipeOption.id" *ngFor="let recipeOption of recipes; trackBy: trackById">{{ recipeOption.name }}</option>
-                    </select>
-                </div>
-                <div *ngIf="editForm.get('recipeId')!.invalid && (editForm.get('recipeId')!.dirty || editForm.get('recipeId')!.touched)">
-                    <small class="form-text text-danger"
-                           *ngIf="editForm.get('recipeId')?.errors?.required" jhiTranslate="entity.validation.required">
+                <mat-form-field appearance="fill" class="form-group w-100">
+                    <mat-label jhiTranslate="shoppedApp.post.caption"></mat-label>
+                    <input formControlName="caption" id="field_caption" matInput name="caption"
+                           type="text"/>
+                    <mat-error
+                        *ngIf="(editForm.get('caption')!.invalid && (editForm.get('caption')!.dirty ||
+                         editForm.get('caption')!.touched)) && editForm.get('caption')?.errors?.required"
+                        jhiTranslate="entity.validation.required">
                         This field is required.
-                    </small>
-                </div>
+                    </mat-error>
+                </mat-form-field>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="shoppedApp.post.user" for="field_user">User</label>
-                    <select class="form-control" id="field_user" name="user" formControlName="userId">
-                        <option *ngIf="!editForm.get('userId')!.value" [ngValue]="null" selected></option>
-                        <option [ngValue]="userOption.id" *ngFor="let userOption of users; trackBy: trackById">{{ userOption.login }}</option>
-                    </select>
-                </div>
-                <div *ngIf="editForm.get('userId')!.invalid && (editForm.get('userId')!.dirty || editForm.get('userId')!.touched)">
-                    <small class="form-text text-danger"
-                           *ngIf="editForm.get('userId')?.errors?.required" jhiTranslate="entity.validation.required">
-                        This field is required.
-                    </small>
-                </div>
+                <mat-form-field [hidden]="true" appearance="fill" class="form-group w-100" >
+                    <mat-label jhiTranslate="shoppedApp.post.status"></mat-label>
+                    <mat-select [(ngModel)]="statusOptions[0]" formControlName="status" id="status" name="status">
+                        <mat-option *ngFor="let status of statusOptions" [value]="status">
+                            {{status | capitalize }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
             </div>
 
             <div>
-                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
-                    <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
-                </button>
 
-                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                <button [disabled]="editForm.invalid || isSaving" id="save-entity" jhiMaterialColor="primary"
+                        mat-raised-button
+                        type="submit">
                     <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
                 </button>
             </div>
