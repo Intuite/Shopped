@@ -29,7 +29,9 @@ export class PanelComponent implements OnInit {
 
   launchDialog(): void {
     const dialogRef = this.dialog.open(DialogComponent, {
-      minWidth: '900px',
+      maxWidth: '1000px',
+      height: '90%',
+      width: '90%',
       data: {
         title: this.title,
         options: this.options,
