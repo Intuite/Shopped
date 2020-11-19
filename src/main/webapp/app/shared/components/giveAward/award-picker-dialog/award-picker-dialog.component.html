@@ -1,14 +1,12 @@
 <mat-grid-list cols="5" rowHeight="60px" rowWidth="100%">
     <mat-grid-tile [colspan]="3">
         <div class="d-flex flex-row w-100 ml-3">
-            <h2 mat-dialog-title>Awards to {{data}}</h2>
+            <h2 mat-dialog-title>Awards</h2>
         </div>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="2">
         <div class="d-flex flex-row-reverse w-100 mb-3 align-items-stretch">
-            <!-- TODO -->
-            <button class="d-flex border-0"
-                    style="border-radius: 20px 0 0 20px;color: #ff8830; background-color: #ffeeea">
+            <button class="d-flex border-0 btn-cookies">
                 <div class="pr-2">
                     <fa-icon icon="cookie-bite"></fa-icon>
                     {{cookie.amount}}
@@ -26,18 +24,16 @@
 
 <mat-dialog-content class="mat-typography">
     <div class="container">
-        <div class="row" style="overflow-y: hidden;">
+        <div class="row row-no-overflow">
             <div class="col-md-7 mt-3">
-                <!-- TODO -->
-                <div class="row" style="overflow-y: auto; max-height: 300px;">
+                <div class="row row-overflow award-list">
                     <div *ngFor="let item of awards">
                         <div class="w-33 d-flex">
                             <button mat-button jhiMaterialColor="primary" (click)="chargeAward(item)">
                                     <span>
-                                        <!-- TODO -->
                                         <img [src]="'data:' + item.imageContentType + ';base64,' + item.image"
-                                             style="height: 65px; width: 65px" alt="award image"
-                                             class="rounded-circle mt-2"/>
+                                             alt="award image"
+                                             class="rounded-circle mt-2 img-award-list"/>
                                     </span><br>
                                 <fa-icon icon="cookie-bite"></fa-icon>
                                 {{item.cost}}
@@ -54,17 +50,19 @@
                 <div class="justify-content-center" align="center">
                     <!-- TODO -->
                     <img [src]="'data:' + award.imageContentType + ';base64,' + award.image"
-                         style="height: 120px; width: 120px" alt="award image" class="rounded-circle mt-2"
+                         alt="award image" class="rounded-circle mt-2 img-award-details"
                          align="center"/>
                     <h3 class="text-center">{{award.name}}</h3>
                     <p class="text-center">{{award.description}}</p>
                     <h2 class="text-center primary">
                         <fa-icon icon="cookie-bite"></fa-icon>
                         {{award.cost}}</h2>
-                    <div *ngIf="cookie.amount >= award.cost">
-                        <button mat-raised-button jhiMaterialColor="primary" align="center">Next</button>
+                    <div *ngIf="(cookie.amount || -1) >= (award.cost || 0)">
+                        <button mat-raised-button jhiMaterialColor="primary" align="center" (click)="
+                            awardPost(award)">Next
+                        </button>
                     </div>
-                    <div *ngIf="cookie.amount < award.cost">
+                    <div *ngIf="(cookie.amount || -1) < (award.cost || 0)">
                         <button mat-raised-button jhiMaterialColor="accent" align="center" disabled>Next</button>
                     </div>
 
