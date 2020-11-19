@@ -8,7 +8,6 @@ import { HasAnyAuthorityDirective } from './auth/has-any-authority.directive';
 
 import { JhMaterialModule } from 'app/shared/jh-material.module';
 import { ColorDirective } from './material-color/color.directive';
-import { ListComponent } from './components/list/list.component';
 import { TabsComponent } from './components/tabs/tabs.component';
 import { UserTableComponent } from './tables/material-table/user-table.component';
 import { WrapperMaterialTableComponent } from './tables/wrapper-material-table/wrapper-material-table.component';
@@ -38,6 +37,8 @@ import { BasePickerComponent } from './components/pickers/base-picker/base-picke
 import { DialogComponent } from './components/pickers/base-picker/dialog/dialog.component';
 import { PanelComponent } from './components/pickers/base-picker/panel/panel.component';
 import { ChipsComponent } from './components/pickers/base-picker/chips/chips.component';
+import { ListComponent } from './components/pickers/base-picker/list/list.component';
+import { TagFilterPipe } from './components/pickers/pipes/tag-filter.pipe';
 
 @NgModule({
   imports: [JhMaterialModule, ShoppedSharedLibsModule, FlexModule, RouterModule, ExtendedModule],
@@ -74,6 +75,7 @@ import { ChipsComponent } from './components/pickers/base-picker/chips/chips.com
     BasePickerComponent,
     DialogComponent,
     PanelComponent,
+    TagFilterPipe,
   ],
   entryComponents: [LoginModalComponent],
   exports: [

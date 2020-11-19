@@ -1,1 +1,32 @@
-<p>panel works!</p>
+<div fxLayout="row">
+    <mat-expansion-panel
+        #panel
+        (closed)="panelStatus = false"
+        (opened)="checkSelections()"
+        fxFlex="100%"
+    >
+        <mat-expansion-panel-header>
+            <mat-panel-title *ngIf="!panelStatus">{{
+                title | titlecase
+                }}</mat-panel-title>
+            <mat-panel-title *ngIf="panelStatus">
+                <button
+                    (click)="launchDialog()"
+                    class="corner-add"
+                    color="accent"
+                    mat-mini-fab
+                >
+                    <mat-icon>add</mat-icon>
+                </button>
+            </mat-panel-title>
+            <mat-panel-description style="justify-content: end">
+                {{ this.selections.length }}
+                <mat-icon>local_offer</mat-icon>
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <jhi-base-picker-chips
+            (isEmpty)="togglePanel($event)"
+            [list]="this.selections"
+        ></jhi-base-picker-chips>
+    </mat-expansion-panel>
+</div>

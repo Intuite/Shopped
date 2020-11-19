@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'jhi-base-picker',
@@ -6,6 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./base-picker.component.scss'],
 })
 export class BasePickerComponent implements OnInit {
+  @Input() options!: any;
+  @Input() title!: string;
+  selections: any[] = [];
+
   constructor() {}
 
   ngOnInit(): void {}
