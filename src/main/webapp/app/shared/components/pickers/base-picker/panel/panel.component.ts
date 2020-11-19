@@ -30,11 +30,19 @@ export class PanelComponent implements OnInit {
   launchDialog(): void {
     const dialogRef = this.dialog.open(DialogComponent, {
       maxWidth: '1000px',
-      height: '90%',
+      maxHeight: '90%',
       width: '90%',
       data: {
         title: this.title,
-        options: this.options,
+        options: this.options
+          .sort((a: any, b: any) => {
+            const x = a.name.toUpperCase(),
+              y = b.name.toUpperCase();
+            return x === y ? 0 : x > y ? 1 : -1;
+          })
+          .sort((a: any, b: any) => {
+            return a.typeId === b.typeId ? 0 : a.typeId > b.typeId ? 1 : -1;
+          }),
         selections: this.selections,
       },
     });
