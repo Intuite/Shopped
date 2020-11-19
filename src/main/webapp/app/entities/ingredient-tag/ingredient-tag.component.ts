@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
 import { combineLatest, Subscription } from 'rxjs';
@@ -11,11 +11,11 @@ import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { IngredientTagService } from './ingredient-tag.service';
 import { IngredientTagDeleteDialogComponent } from './ingredient-tag-delete-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { IRecipeTag } from 'app/shared/model/recipe-tag.model';
 import { IngredientTagDetailComponent } from 'app/entities/ingredient-tag/ingredient-tag-detail.component';
 import { IIngredient } from 'app/shared/model/ingredient.model';
 import { Status } from 'app/shared/model/enumerations/status.model';
 import { TagTypeDetailComponent } from 'app/entities/tag-type/tag-type-detail.component';
+import { IngredientTableComponent } from 'app/shared/tables/ingredient-table/ingredient-table.component';
 
 @Component({
   selector: 'jhi-ingredient-tag',
@@ -31,6 +31,8 @@ export class IngredientTagComponent implements OnInit, OnDestroy {
   ascending!: boolean;
   ngbPaginationPage = 1;
   tableLoaded = false;
+  requesting = false;
+  @ViewChild('table', { static: false }) table!: IngredientTableComponent;
 
   constructor(
     protected ingredientTagService: IngredientTagService,
@@ -88,7 +90,7 @@ export class IngredientTagComponent implements OnInit, OnDestroy {
   }
 
   navigate(): void {
-    this.router.navigate(['/recipe-tag'], {
+    this.router.navigate(['/ingredient-tag'], {
       queryParams: {
         page: this.page,
         size: this.itemsPerPage,
@@ -137,11 +139,14 @@ export class IngredientTagComponent implements OnInit, OnDestroy {
     }).subscribe();
   }
 
-  protected onSuccess(data: IRecipeTag[] | null, headers: HttpHeaders, page: number): void {
+  protected onSuccess(data: IIngredientTag[] | null, headers: HttpHeaders, page: number): void {
     this.totalItems = Number(headers.get('X-Total-Count'));
     this.page = page;
     this.ingredientTags = data || [];
     this.ngbPaginationPage = this.page;
+    this.requesting = false;
+    if (this.tableLoaded) this.refresh();
+
     this.tableLoaded = true;
   }
 
@@ -149,25 +154,21 @@ export class IngredientTagComponent implements OnInit, OnDestroy {
     this.ngbPaginationPage = this.page ?? 1;
   }
 
-  protected refresh(page: number): void {
-    this.page = page;
+  protected refresh(): void {
+    this.table.reloadSource(this.ingredientTags as IIngredientTag[]);
+    this.navigate();
   }
 
   private loadPage(page?: number): void {
     const pageToLoad: number = page || this.page || 0;
-    if (this.totalItems === 0) {
-      this.ingredientTagService
-        .queryAll({
-          // page: pageToLoad - 1,
-          // size: 439,
-          sort: this.sort(),
-        })
-        .subscribe(
-          (res: HttpResponse<IRecipeTag[]>) => this.onSuccess(res.body, res.headers, pageToLoad),
-          () => this.onError()
-        );
-    } else {
-      this.refresh(pageToLoad);
-    }
+    this.requesting = true;
+    this.ingredientTagService
+      .queryAll({
+        sort: this.sort(),
+      })
+      .subscribe(
+        (res: HttpResponse<IIngredientTag[]>) => this.onSuccess(res.body, res.headers, pageToLoad),
+        () => this.onError()
+      );
   }
 }
