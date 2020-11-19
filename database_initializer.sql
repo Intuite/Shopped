@@ -530,3 +530,10 @@ values ('Vanilla', 1, 'ACTIVE'),
        ('Yoghurt', 8, 'ACTIVE'),
        ('Yogurt', 8, 'ACTIVE'),
        ('Red onion', 8, 'ACTIVE');
+
+insert into bundles (name, cost, cookie_amount)
+values ('cookies',4.99,100),
+        ('cookie tray',9.99,205),
+        ('cookie box',19.99,420);
+
+
