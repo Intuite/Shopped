@@ -11,11 +11,10 @@
                 the public post for your recipe</h2>
 
             <br>
-            {{ user | json }}
-            <br>
 
             <div>
                 <jhi-alert-error></jhi-alert-error>
+
                 <jhi-alert></jhi-alert>
 
                 <mat-form-field [hidden]="!editForm.get('id')!.value" appearance="fill" class="form-group w-100">
@@ -45,7 +44,7 @@
                 </div>
 
                 <mat-form-field appearance="fill" class="form-group w-100">
-                    <mat-label jhiTranslate="shoppedApp.post.recipe"></mat-label>
+                    <mat-label>Recipe*</mat-label>
                     <mat-select formControlName="recipeId" id="field_recipe" name="recipe">
                         <mat-option *ngFor="let recipeOption of recipes; trackBy: trackById" [value]="recipeOption.id">
                             {{recipeOption.name }}

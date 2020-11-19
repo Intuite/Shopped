@@ -25,6 +25,7 @@ type SelectableEntity = IRecipe | IUser;
 export class PostUpdateComponent implements OnInit {
   isSaving = false;
   recipes: IRecipe[] = [];
+  userRecipes: IRecipe[] = [];
   statusOptions = ['ACTIVE', 'INACTIVE'];
   user!: IUser;
 
@@ -83,8 +84,20 @@ export class PostUpdateComponent implements OnInit {
               )
               .subscribe((concatRes: IRecipe[]) => (this.recipes = concatRes));
           }
+          this.cleanRecipes();
         });
     });
+  }
+
+  cleanRecipes(): void {
+    let i = 0;
+    while (i < this.recipes.length) {
+      if (this.recipes[i].userId !== this.user.id || this.recipes[i].status === this.statusOptions[1]) {
+        this.recipes.splice(i, 1);
+      } else {
+        i++;
+      }
+    }
   }
 
   updateForm(post: IPost): void {

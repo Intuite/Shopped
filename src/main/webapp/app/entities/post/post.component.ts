@@ -12,7 +12,6 @@ import { PostService } from './post.service';
 import { PostDeleteDialogComponent } from './post-delete-dialog.component';
 import { Status } from 'app/shared/model/enumerations/status.model';
 import { PostTableComponent } from 'app/shared/tables/post-table/post-table.component';
-import { IRecipeTag } from 'app/shared/model/recipe-tag.model';
 
 @Component({
   selector: 'jhi-post',
@@ -125,7 +124,7 @@ export class PostComponent implements OnInit, OnDestroy {
     }).subscribe();
   }
 
-  protected onSuccess(data: IRecipeTag[] | null, headers: HttpHeaders, page: number): void {
+  protected onSuccess(data: IPost[] | null, headers: HttpHeaders, page: number): void {
     this.page = page;
     this.posts = data || [];
     this.totalItems = this.posts?.length ?? 0;
