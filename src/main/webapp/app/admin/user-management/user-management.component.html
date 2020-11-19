@@ -18,11 +18,12 @@
 
     <jhi-alert></jhi-alert>
 
+    <div *ngIf="requesting"
+         class="w-100" fxLayout="row" fxLayoutAlign="space-around center">
+        <mat-spinner diameter="50" strokeWidth="5"></mat-spinner>
+    </div>
+
     <div class="table-responsive table-hover" *ngIf="users">
         <jhi-material-table #tableComponent [data]="users" [managementComponent]="this"></jhi-material-table>
     </div>
-
-    <div class="w-100" fxLayout="row" fxLayoutAlign="space-around center">
-        <mat-spinner *ngIf="!users || users.length == 0" diameter="50" strokeWidth="5"></mat-spinner>
-    </div>
-</div><!-- -->
+</div>

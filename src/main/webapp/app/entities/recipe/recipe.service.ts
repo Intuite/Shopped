@@ -31,7 +31,7 @@ export class RecipeService {
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
-  find(id: number): Observable<EntityResponseType> {
+  find(id: number | undefined): Observable<EntityResponseType> {
     return this.http
       .get<IRecipe>(`${this.resourceUrl}/${id}`, { observe: 'response' })
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));

@@ -108,6 +108,7 @@ export class UserManagementComponent implements OnInit, OnDestroy {
   }
 
   private loadAll(): void {
+    this.requesting = true;
     this.userService.queryAll().subscribe((res: HttpResponse<User[]>) => {
       this.onSuccess(res.body, res.headers);
     });
