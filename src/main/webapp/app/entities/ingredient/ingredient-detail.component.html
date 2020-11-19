@@ -1,53 +1,15 @@
-<div class="row justify-content-center">
-    <div class="col-8">
-        <div *ngIf="ingredient">
-            <h2><span jhiTranslate="shoppedApp.ingredient.detail.title">Ingredient</span> {{ ingredient.id }}</h2>
-
-            <hr>
-
-            <jhi-alert-error></jhi-alert-error>
-
-            <dl class="row-md jh-entity-details">
-                <dt><span jhiTranslate="shoppedApp.ingredient.name">Name</span></dt>
-                <dd>
-                    <span>{{ ingredient.name }}</span>
-                </dd>
-                <dt><span jhiTranslate="shoppedApp.ingredient.image">Image</span></dt>
-                <dd>
-                    <div *ngIf="ingredient.image">
-                        <a (click)="openFile(ingredient.imageContentType, ingredient.image)">
-                            <img [src]="'data:' + ingredient.imageContentType + ';base64,' + ingredient.image" style="max-width: 100%;" alt="ingredient image"/>
-                        </a>
-                        {{ ingredient.imageContentType }}, {{ byteSize(ingredient.image) }}
-                    </div>
-                </dd>
-                <dt><span jhiTranslate="shoppedApp.ingredient.status">Status</span></dt>
-                <dd>
-                    <span jhiTranslate="{{ 'shoppedApp.Status.' + ingredient.status }}">{{ ingredient.status }}</span>
-                </dd>
-                <dt><span jhiTranslate="shoppedApp.ingredient.description">Description</span></dt>
-                <dd>
-                    <span>{{ ingredient.description }}</span>
-                </dd>
-                <dt><span jhiTranslate="shoppedApp.ingredient.unit">Unit</span></dt>
-                <dd>
-                    <div *ngIf="ingredient.unitId">
-                        <a [routerLink]="['/unit', ingredient.unitId, 'view']">{{ ingredient.unitAbbrev }}</a>
-                    </div>
-                </dd>
-            </dl>
-
-            <button type="submit"
-                    (click)="previousState()"
-                    class="btn btn-info">
-                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
-            </button>
-
-            <button type="button"
-                    [routerLink]="['/ingredient', ingredient.id, 'edit']"
-                    class="btn btn-primary">
-                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
-            </button>
-        </div>
-    </div>
-</div>
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>
+            {{ element.name }}
+        </mat-card-title>
+        <mat-card-subtitle>
+            {{element.unitAbbrev}}
+        </mat-card-subtitle>
+    </mat-card-header>
+    <img *ngIf="element.imageContentType" [src]="'data:' + element.imageContentType + ';base64,' + element.image"
+         alt="ingredient image" matCardImage/>
+    <mat-card-content>
+        <p>{{ element.description }}</p>
+    </mat-card-content>
+</mat-card>
