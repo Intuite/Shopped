@@ -1,23 +1,28 @@
 <div class="row justify-content-center">
     <div class="col-8">
-        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+        <div class="w-100" fxLayout="row" fxLayoutAlign="space-around center">
+            <mat-spinner *ngIf="loadingUser || isSaving" diameter="50" strokeWidth="5"></mat-spinner>
+        </div>
+        <form name="editForm" *ngIf="!loadingUser" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
             <h2 id="myUserLabel">
                 {{ editForm.get('id')!.value !== undefined ? "Edit" : "Create" }} a User
             </h2>
 
             <div *ngIf="user">
                 <jhi-alert-error></jhi-alert-error>
-                <mat-form-field class="form-group w-100 mat-form-field-disabled" appearance="fill" [hidden]="!user.id">
+                <mat-form-field class="form-group w-100 mat-form-field-disabled"
+                                appearance="fill" [hidden]="true">
                     <mat-label jhiTranslate="global.field.id">ID</mat-label>
                     <input matInput type="text" name="id" formControlName="id" readonly>
-                    <mat-hint>Readonly</mat-hint>
                 </mat-form-field>
 
-                <mat-form-field class="form-group w-100" appearance="fill">
+                <mat-form-field [ngClass]="{'mat-form-field-disabled': (editing)}"
+                                class="form-group w-100"
+                                appearance="fill">
                     <mat-label jhiTranslate="userManagement.login">Login</mat-label>
-                    <input matInput type="text"  name="login"
-                           formControlName="login">
-                    <mat-hint>Required</mat-hint>
+                    <input matInput type="text" name="login"
+                           formControlName="login" [readonly]="editing">
+                    <mat-hint></mat-hint>
                     <mat-error *ngIf="editForm.get('login')!.invalid && (editForm.get('login')!.dirty || editForm.get('login')!.touched)">
                         <span class="text-danger"
                                *ngIf="editForm.get('login')?.errors?.required"
@@ -40,11 +45,12 @@
                     </mat-error>
                 </mat-form-field>
                 <div class="form-group row">
-                    <mat-form-field class="col-sm-12 col-md-6 col-lg-6" appearance="fill">
+                    <mat-form-field [ngClass]="{'mat-form-field-disabled': (editing)}"
+                                    class="col-sm-12 col-md-6 col-lg-6"
+                                    appearance="fill">
                         <mat-label jhiTranslate="userManagement.firstName">First Name</mat-label>
-                        <input matInput type="text"  name="firstName"
+                        <input matInput type="text"  name="firstName" [readonly]="editing"
                                formControlName="firstName">
-
                         <mat-error *ngIf="editForm.get('firstName')!.invalid && (editForm.get('firstName')!.dirty || editForm.get('firstName')!.touched)">
                         <span
                             *ngIf="editForm.get('firstName')?.errors?.maxlength"
@@ -54,11 +60,12 @@
                         </span>
                         </mat-error>
                     </mat-form-field>
-                    <mat-form-field class="col-sm-12 col-md-6 col-lg-6" appearance="fill">
-
+                    <mat-form-field [ngClass]="{'mat-form-field-disabled': (editing)}"
+                                    class="col-sm-12 col-md-6 col-lg-6"
+                                    appearance="fill">
                         <mat-label jhiTranslate="userManagement.lastName">Last Name</mat-label>
                         <input matInput type="text"  name="lastName"
-                               formControlName="lastName">
+                               formControlName="lastName" [readonly]="editing">
 
                         <mat-error *ngIf="editForm.get('lastName')!.invalid && (editForm.get('lastName')!.dirty || editForm.get('lastName')!.touched)">
                         <span class="form-text text-danger"
@@ -71,11 +78,14 @@
                     </mat-form-field>
                 </div>
 
-                <mat-form-field class="form-group w-100" appearance="fill">
+                <mat-form-field [ngClass]="{'mat-form-field-disabled': (editing)}"
+                                class="form-group w-100"
+                                appearance="fill">
                     <mat-label jhiTranslate="userManagement.email">Email</mat-label>
-                    <input matInput type="email" required name="email" formControlName="email">
+                    <input matInput type="email" required name="email" formControlName="email" [readonly]="editing">
                     <mat-hint></mat-hint>
-                    <mat-error *ngIf="editForm.get('email')!.invalid && (editForm.get('email')!.dirty || editForm.get('email')!.touched)">
+                    <mat-error *ngIf="editForm.get('email')!.invalid &&
+                                     (editForm.get('email')!.dirty || editForm.get('email')!.touched)">
                         <span class="text-danger"
                                *ngIf="editForm.get('email')?.errors?.required"
                                jhiTranslate="entity.validation.required">
@@ -104,11 +114,15 @@
                     </mat-error>
                 </mat-form-field>
 
-                <mat-form-field class="form-group w-100" appearance="fill" *ngIf="languages && languages.length > 0">
+                <mat-form-field [ngClass]="{'mat-form-field-disabled': (editing)}"
+                                class="form-group w-100"
+                                appearance="fill"
+                                *ngIf="languages && languages.length > 0">
                     <mat-label jhiTranslate="userManagement.langKey">Lang Key</mat-label>
-                    <mat-select id="langKey" name="langKey" formControlName="langKey">
+                    <mat-select *ngIf="!editing" id="langKey" name="langKey" formControlName="langKey" >
                         <mat-option *ngFor="let language of languages" [value]="language">{{ language | findLanguageFromKey }}</mat-option>
                     </mat-select>
+                    <input *ngIf="editing" matInput id="langKeyInput" name="langKey" formControlName="langKey" [readonly]="true">
                     <mat-hint></mat-hint>
                 </mat-form-field>
 
@@ -135,3 +149,4 @@
         </form>
     </div>
 </div>
+

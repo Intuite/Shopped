@@ -1,6 +1,9 @@
 package com.intuite.shopped.web.rest;
 
+import com.intuite.shopped.domain.User;
+import com.intuite.shopped.service.MailService;
 import com.intuite.shopped.service.TransactionService;
+import com.intuite.shopped.service.UserService;
 import com.intuite.shopped.web.rest.errors.BadRequestAlertException;
 import com.intuite.shopped.service.dto.TransactionDTO;
 import com.intuite.shopped.service.dto.TransactionCriteria;
@@ -15,11 +18,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transaction;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -44,9 +47,15 @@ public class TransactionResource {
 
     private final TransactionQueryService transactionQueryService;
 
-    public TransactionResource(TransactionService transactionService, TransactionQueryService transactionQueryService) {
+    private final MailService mailService;
+
+    private final UserService userService;
+
+    public TransactionResource(TransactionService transactionService, TransactionQueryService transactionQueryService, MailService mailService, UserService userService) {
         this.transactionService = transactionService;
         this.transactionQueryService = transactionQueryService;
+        this.mailService = mailService;
+        this.userService = userService;
     }
 
     /**
@@ -63,6 +72,16 @@ public class TransactionResource {
             throw new BadRequestAlertException("A new transaction cannot already have an ID", ENTITY_NAME, "idexists");
         }
         TransactionDTO result = transactionService.save(transactionDTO);
+        // send email
+        log.debug("SENDING EMAIL");
+        final Optional<User> isUser = userService.getUserWithAuthorities();
+        log.debug(String.valueOf(isUser.get()));
+        if (isUser.isPresent()){
+            log.debug(isUser.toString());
+            mailService.sendInvoiceEmail(isUser.get(), result);
+        } else {
+            log.warn("user was not found");
+        }
         return ResponseEntity.created(new URI("/api/transactions/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);

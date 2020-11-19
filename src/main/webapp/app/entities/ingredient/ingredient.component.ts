@@ -12,6 +12,9 @@ import { IngredientService } from './ingredient.service';
 import { IngredientDeleteDialogComponent } from './ingredient-delete-dialog.component';
 import { Status } from 'app/shared/model/enumerations/status.model';
 import { IngredientTableComponent } from 'app/shared/tables/ingredient-table/ingredient-table.component';
+import { MatDialog } from '@angular/material/dialog';
+import { UnitDetailComponent } from 'app/entities/unit/unit-detail.component';
+import { IngredientDetailComponent } from 'app/entities/ingredient/ingredient-detail.component';
 
 @Component({
   selector: 'jhi-ingredient',
@@ -36,7 +39,8 @@ export class IngredientComponent implements OnInit, OnDestroy {
     protected dataUtils: JhiDataUtils,
     protected router: Router,
     protected eventManager: JhiEventManager,
-    protected modalService: NgbModal
+    protected modalService: NgbModal,
+    protected dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -112,6 +116,21 @@ export class IngredientComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.loadPage(this.page);
       });
+  }
+
+  view(element: any): void {
+    this.dialog.open(IngredientDetailComponent, {
+      maxWidth: '600px',
+      maxHeight: '90%',
+      width: '60%',
+      data: element,
+    });
+  }
+
+  viewType(id: number): void {
+    this.dialog.open(UnitDetailComponent, {
+      data: id,
+    });
   }
 
   protected handleNavigation(): void {

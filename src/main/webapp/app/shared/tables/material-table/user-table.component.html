@@ -131,7 +131,7 @@
                     <mat-icon>create</mat-icon>
                 </button>
 
-                <button (click)="managementComponent.deleteUser(element)"
+                <button [hidden]="true" (click)="managementComponent.deleteUser(element)"
                         class="text-white"
                         color="warn"
                         mat-mini-fab
