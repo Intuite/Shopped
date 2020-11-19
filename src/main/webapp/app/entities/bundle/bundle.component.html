@@ -2,11 +2,22 @@
     <h2 id="page-heading">
         <span jhiTranslate="shoppedApp.bundle.home.title">Bundles</span>
 
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-bundle" [routerLink]="['/bundle/new']">
-            <fa-icon icon="plus"></fa-icon>
-            <span  jhiTranslate="shoppedApp.bundle.home.createLabel">
-            Create a new Bundle
-            </span>
+<!--        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-bundle" [routerLink]="['/bundle/new']">-->
+<!--            <fa-icon icon="plus"></fa-icon>-->
+<!--            <span  jhiTranslate="shoppedApp.bundle.home.createLabel">-->
+<!--            Create a new Bundle-->
+<!--            </span>-->
+<!--        </button>-->
+        <button
+            [matTooltipHideDelay]="0"
+            [matTooltipShowDelay]="1000"
+            [routerLink]="['/bundle/new']"
+            aria-label="Create a new catalogue tag"
+            class="float-right jh-create-entity create-recipe-tag mx-4 mb-3"
+            jhiMaterialColor="accent"
+            mat-mini-fab
+            matTooltip="Create a new bundle tag">
+            <mat-icon>add</mat-icon>
         </button>
     </h2>
 

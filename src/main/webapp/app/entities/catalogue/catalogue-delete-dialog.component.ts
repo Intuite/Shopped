@@ -22,5 +22,6 @@ export class CatalogueDeleteDialogComponent {
       this.eventManager.broadcast('catalogueListModification');
       this.activeModal.close();
     });
+    window.location.reload();
   }
 }
