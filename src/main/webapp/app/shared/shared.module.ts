@@ -8,7 +8,6 @@ import { HasAnyAuthorityDirective } from './auth/has-any-authority.directive';
 
 import { JhMaterialModule } from 'app/shared/jh-material.module';
 import { ColorDirective } from './material-color/color.directive';
-import { ChipsComponent } from './components/chips/chips.component';
 import { ListComponent } from './components/list/list.component';
 import { TabsComponent } from './components/tabs/tabs.component';
 import { UserTableComponent } from './tables/material-table/user-table.component';
@@ -35,6 +34,10 @@ import { BundlePickerDialogComponent } from './components/buy-cookie/bundle-pick
 import { CheckOutComponent } from './components/check-out/check-out.component';
 import { FilterPipe } from './components/pickers/pipes/filter.pipe';
 import { IngredientTagTableComponent } from './components/tables/ingredient-tag-table/ingredient-tag-table.component';
+import { BasePickerComponent } from './components/pickers/base-picker/base-picker.component';
+import { DialogComponent } from './components/pickers/base-picker/dialog/dialog.component';
+import { PanelComponent } from './components/pickers/base-picker/panel/panel.component';
+import { ChipsComponent } from './components/pickers/base-picker/chips/chips.component';
 
 @NgModule({
   imports: [JhMaterialModule, ShoppedSharedLibsModule, FlexModule, RouterModule, ExtendedModule],
@@ -68,6 +71,9 @@ import { IngredientTagTableComponent } from './components/tables/ingredient-tag-
     CheckOutComponent,
     FilterPipe,
     IngredientTagTableComponent,
+    BasePickerComponent,
+    DialogComponent,
+    PanelComponent,
   ],
   entryComponents: [LoginModalComponent],
   exports: [
