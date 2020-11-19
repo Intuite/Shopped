@@ -33,6 +33,8 @@ import { BundlePickerDialogComponent } from './components/buy-cookie/bundle-pick
 import { CheckOutComponent } from './components/check-out/check-out.component';
 import { FilterPipe } from './components/pickers/pipes/filter.pipe';
 import { IngredientTagTableComponent } from './components/tables/ingredient-tag-table/ingredient-tag-table.component';
+import { GiveAwardComponent } from './components/give-award/give-award.component';
+import { AwardPickerDialogComponent } from './components/giveAward/award-picker-dialog/award-picker-dialog.component';
 import { BasePickerComponent } from './components/pickers/base-picker/base-picker.component';
 import { DialogComponent } from './components/pickers/base-picker/dialog/dialog.component';
 import { PanelComponent } from './components/pickers/base-picker/panel/panel.component';
@@ -75,6 +77,8 @@ import { RecipeTableComponent } from './tables/recipe-table/recipe-table.compone
     CheckOutComponent,
     FilterPipe,
     IngredientTagTableComponent,
+    GiveAwardComponent,
+    AwardPickerDialogComponent,
     BasePickerComponent,
     DialogComponent,
     PanelComponent,
@@ -111,6 +115,8 @@ import { RecipeTableComponent } from './tables/recipe-table/recipe-table.compone
     IngredientPKDialogComponent,
     BuyCookieComponent,
     IngredientTagTableComponent,
+    AwardPickerDialogComponent,
+    GiveAwardComponent,
     RecipeTableComponent,
   ],
 })
