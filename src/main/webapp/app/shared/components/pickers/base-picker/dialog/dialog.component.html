@@ -14,7 +14,7 @@
     </div>
     <mat-dialog-content>
         <jhi-base-picker-list
-            (selectionsOutput)="addTag($event)"
+            (selectionOutput)="addTag($event)"
             [options]="options"
             [searchText]="searchText"
         ></jhi-base-picker-list>
@@ -45,4 +45,14 @@
             </div>
         </mat-list>
     </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button [mat-dialog-close]="[]" mat-button>Cancel</button>
+        <button
+            [mat-dialog-close]="getSelections()"
+            color="accent"
+            mat-raised-button
+        >
+            Add Tags
+        </button>
+    </mat-dialog-actions>
 </ng-template>
