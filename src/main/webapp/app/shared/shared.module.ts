@@ -8,8 +8,6 @@ import { HasAnyAuthorityDirective } from './auth/has-any-authority.directive';
 
 import { JhMaterialModule } from 'app/shared/jh-material.module';
 import { ColorDirective } from './material-color/color.directive';
-import { ChipsComponent } from './components/chips/chips.component';
-import { ListComponent } from './components/list/list.component';
 import { TabsComponent } from './components/tabs/tabs.component';
 import { UserTableComponent } from './tables/material-table/user-table.component';
 import { WrapperMaterialTableComponent } from './tables/wrapper-material-table/wrapper-material-table.component';
@@ -35,6 +33,13 @@ import { BundlePickerDialogComponent } from './components/buy-cookie/bundle-pick
 import { CheckOutComponent } from './components/check-out/check-out.component';
 import { FilterPipe } from './components/pickers/pipes/filter.pipe';
 import { IngredientTagTableComponent } from './components/tables/ingredient-tag-table/ingredient-tag-table.component';
+import { BasePickerComponent } from './components/pickers/base-picker/base-picker.component';
+import { DialogComponent } from './components/pickers/base-picker/dialog/dialog.component';
+import { PanelComponent } from './components/pickers/base-picker/panel/panel.component';
+import { ChipsComponent } from './components/pickers/base-picker/chips/chips.component';
+import { ListComponent } from './components/pickers/base-picker/list/list.component';
+import { TagFilterPipe } from './components/pickers/pipes/tag-filter.pipe';
+import { RecipeTagPickerComponent } from 'app/shared/components/pickers/recipe-tag-picker/recipe-tag-picker.component';
 
 @NgModule({
   imports: [JhMaterialModule, ShoppedSharedLibsModule, FlexModule, RouterModule, ExtendedModule],
@@ -57,6 +62,7 @@ import { IngredientTagTableComponent } from './components/tables/ingredient-tag-
     AwardTableComponent,
     IngredientTableComponent,
     RecipeTagTableComponent,
+    RecipeTagPickerComponent,
     DatepickerComponent,
     CheckboxComponent,
     PostTableComponent,
@@ -68,6 +74,10 @@ import { IngredientTagTableComponent } from './components/tables/ingredient-tag-
     CheckOutComponent,
     FilterPipe,
     IngredientTagTableComponent,
+    BasePickerComponent,
+    DialogComponent,
+    PanelComponent,
+    TagFilterPipe,
   ],
   entryComponents: [LoginModalComponent],
   exports: [
@@ -90,6 +100,7 @@ import { IngredientTagTableComponent } from './components/tables/ingredient-tag-
     AwardTableComponent,
     IngredientTableComponent,
     RecipeTagTableComponent,
+    RecipeTagPickerComponent,
     DatepickerComponent,
     CheckboxComponent,
     PostTableComponent,

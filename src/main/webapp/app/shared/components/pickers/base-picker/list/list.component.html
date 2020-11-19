@@ -1,0 +1,25 @@
+<mat-list>
+    <div *ngFor=" let rt of options | tagFilter: searchText; let i = index; first as first">
+        <div *ngIf="!searchText && (i === 0 || options[i - 1].typeId !== rt.typeId)">
+            <div matSubheader>{{ rt.typeName | titlecase }}</div>
+            <mat-divider></mat-divider>
+        </div>
+        <mat-list-item>
+            <mat-icon color="primary" matListIcon>local_offer</mat-icon>
+            <mat-chip-list *ngIf="searchText" [selectable]="false">
+                <mat-chip [disableRipple]="true" color="primary" selected>
+                    {{ rt.typeName | titlecase }}
+                </mat-chip>
+            </mat-chip-list>
+            <button (click)="add(rt)" mat-icon-button>
+                <mat-icon color="accent">add</mat-icon>
+            </button>
+            <div matLine>
+                {{ rt.name }}
+            </div>
+            <div matLine>
+                {{ rt.description }}
+            </div>
+        </mat-list-item>
+    </div>
+</mat-list>
