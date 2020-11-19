@@ -35,6 +35,7 @@ import { BundlePickerDialogComponent } from './components/buy-cookie/bundle-pick
 import { CheckOutComponent } from './components/check-out/check-out.component';
 import { FilterPipe } from './components/pickers/pipes/filter.pipe';
 import { IngredientTagTableComponent } from './components/tables/ingredient-tag-table/ingredient-tag-table.component';
+import { RecipeTableComponent } from './tables/recipe-table/recipe-table.component';
 
 @NgModule({
   imports: [JhMaterialModule, ShoppedSharedLibsModule, FlexModule, RouterModule, ExtendedModule],
@@ -68,6 +69,7 @@ import { IngredientTagTableComponent } from './components/tables/ingredient-tag-
     CheckOutComponent,
     FilterPipe,
     IngredientTagTableComponent,
+    RecipeTableComponent,
   ],
   entryComponents: [LoginModalComponent],
   exports: [
@@ -98,6 +100,7 @@ import { IngredientTagTableComponent } from './components/tables/ingredient-tag-
     IngredientPKDialogComponent,
     BuyCookieComponent,
     IngredientTagTableComponent,
+    RecipeTableComponent,
   ],
 })
 export class ShoppedSharedModule {}

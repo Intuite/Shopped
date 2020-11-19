@@ -21,6 +21,7 @@ import { UserService } from 'app/core/user/user.service';
 export class RecipeUpdateComponent implements OnInit {
   isSaving = false;
   users: IUser[] = [];
+  statusOptions = ['ACTIVE', 'INACTIVE'];
 
   editForm = this.fb.group({
     id: [],
