@@ -160,19 +160,4 @@ public class TransactionResource {
         transactionService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
-
-//    @PostMapping("/transactions/email/{id}")
-//    public ResponseEntity<Void> sendToEmail(@PathVariable Long id) {
-//        log.debug("REST request to send Transaction to email: {}", id);
-//        // TODO add email integration;
-//        final Optional<User> isUser = userService.getUserWithAuthorities();
-//        if (isUser.isPresent()){
-//            log.debug(isUser.toString());
-//            mailService.sendInvoiceEmail(isUser.get(), (Transaction) transactionService.findOne(id).get());
-//        } else {
-//            log.warn("user was not found");
-//        }
-//
-//        return ResponseEntity.noContent().headers(HeaderUtil.createAlert(applicationName, ENTITY_NAME, id.toString())).build();
-//    }
 }

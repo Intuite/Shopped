@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
@@ -10,12 +10,13 @@ import { UserService } from 'app/core/user/user.service';
   selector: 'jhi-user-mgmt-update',
   templateUrl: './user-management-update.component.html',
 })
-export class UserManagementUpdateComponent implements OnInit {
+export class UserManagementUpdateComponent implements OnInit, AfterViewInit {
   user!: User;
   languages = LANGUAGES;
   authorities: string[] = [];
   isSaving = false;
-
+  editing = false;
+  loadingUser = true;
   editForm = this.fb.group({
     id: [],
     login: [
@@ -38,6 +39,9 @@ export class UserManagementUpdateComponent implements OnInit {
   constructor(private userService: UserService, private route: ActivatedRoute, private fb: FormBuilder) {}
 
   ngOnInit(): void {
+    this.userService.authorities().subscribe(authorities => {
+      this.authorities = authorities;
+    });
     this.route.data.subscribe(({ user }) => {
       if (user) {
         this.user = user;
@@ -47,9 +51,10 @@ export class UserManagementUpdateComponent implements OnInit {
         this.updateForm(user);
       }
     });
-    this.userService.authorities().subscribe(authorities => {
-      this.authorities = authorities;
-    });
+  }
+
+  ngAfterViewInit(): void {
+    this.editing = this.isEditing();
   }
 
   previousState(): void {
@@ -83,6 +88,7 @@ export class UserManagementUpdateComponent implements OnInit {
       langKey: user.langKey,
       authorities: user.authorities,
     });
+    this.loadingUser = false;
   }
 
   private updateUser(user: User): void {
@@ -102,5 +108,9 @@ export class UserManagementUpdateComponent implements OnInit {
 
   private onSaveError(): void {
     this.isSaving = false;
+  }
+
+  isEditing(): boolean {
+    return this.editForm.get('id')!.value !== undefined;
   }
 }

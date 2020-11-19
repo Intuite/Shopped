@@ -120,8 +120,9 @@ export class IngredientComponent implements OnInit, OnDestroy {
 
   view(element: any): void {
     this.dialog.open(IngredientDetailComponent, {
+      maxWidth: '600px',
+      maxHeight: '90%',
       width: '60%',
-      maxHeight: '80%',
       data: element,
     });
   }
