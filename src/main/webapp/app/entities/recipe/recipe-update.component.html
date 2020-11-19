@@ -1,27 +1,65 @@
 <div class="row justify-content-center">
+    <div class="col-10">
+        <button type="submit" class="btn btn-secondary" (click)="previousState()">
+            <fa-icon icon="arrow-left"></fa-icon>
+        </button>
+    </div>
     <div class="col-8">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-            <h2 id="jhi-recipe-heading" jhiTranslate="shoppedApp.recipe.home.createOrEditLabel">Create or edit a Recipe</h2>
+            <h2 id="jhi-recipe-heading" jhiTranslate="shoppedApp.recipe.home.createOrEditLabel">
+                Create or edit a recipe</h2>
 
             <div>
                 <jhi-alert-error></jhi-alert-error>
 
-                <div class="form-group" [hidden]="!editForm.get('id')!.value">
-                    <label for="id" jhiTranslate="global.field.id">ID</label>
-                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
-                </div>
+                <jhi-alert></jhi-alert>
+
+                <mat-form-field [hidden]="!editForm.get('id')!.value" appearance="fill" class="form-group w-100">
+                    <mat-label jhiTranslate="global.field.id"></mat-label>
+                    <input formControlName="id" id="id" matInput name="id" readonly type="text"/>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="form-group w-100">
+                    <mat-label>Name*</mat-label>
+                    <input formControlName="name" id="field_name" matInput name="name"
+                           type="text"/>
+                    <mat-error
+                        *ngIf="(editForm.get('name')!.invalid && (editForm.get('name')!.dirty ||
+                         editForm.get('name')!.touched)) && editForm.get('name')?.errors?.required"
+                        jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </mat-error>
+                </mat-form-field>
+
+                <hr>
 
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="shoppedApp.recipe.name" for="field_name">Name</label>
-                    <input type="text" class="form-control" name="name" id="field_name"
-                           formControlName="name"/>
-                    <div *ngIf="editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)">
-                        <small class="form-text text-danger"
-                               *ngIf="editForm.get('name')?.errors?.required" jhiTranslate="entity.validation.required">
-                        This field is required.
-                        </small>
+                    <label class="form-control-label" jhiTranslate="shoppedApp.recipe.image"
+                           for="">Image</label>
+                    <div>
+                        <img
+                            [src]="'data:' + editForm.get('imageContentType')!.value + ';base64,' + editForm.get('image')!.value"
+                            style="max-height: 100px;" *ngIf="editForm.get('image')!.value" alt="award image"/>
+                        <div *ngIf="editForm.get('image')!.value" class="form-text text-danger clearfix">
+                            <span class="pull-left">{{ editForm.get('imageContentType')!.value }}
+                                , {{ byteSize(editForm.get('image')!.value) }}</span>
+                            <button type="button" (click)="clearInputImage('image', 'imageContentType', 'file_image')"
+                                    class="btn btn-secondary btn-xs pull-right">
+                                <fa-icon icon="times"></fa-icon>
+                            </button>
+                        </div>
+                        <input type="file" id="file_image" (change)="setFileData($event, 'image', true)"
+                               accept="image/*" jhiTranslate="entity.action.addimage" class="inputfile"/>
+                        <label for="file_image">
+                            <a type="button" mat-flat-button jhiMaterialColor="primary">
+                                <fa-icon icon="image"></fa-icon>
+                                Add Image
+                            </a>
+                        </label>
                     </div>
                 </div>
+
+                <hr>
 
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="shoppedApp.recipe.portion" for="field_portion">Portion</label>
@@ -40,6 +78,18 @@
                 </div>
 
                 <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="shoppedApp.recipe.duration" for="field_duration">Duration</label>
+                    <input type="number" class="form-control" name="duration" id="field_duration"
+                           formControlName="duration"/>
+                </div>
+
+
+                <hr>
+                <h2>Ingredients</h2>
+                <jhi-ingredient-picker></jhi-ingredient-picker>
+                <hr>
+
+                <div class="form-group">
                     <label class="form-control-label" jhiTranslate="shoppedApp.recipe.description" for="field_description">Description</label>
                     <textarea class="form-control" name="description" id="field_description"
                               formControlName="description"></textarea>
@@ -51,61 +101,43 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="shoppedApp.recipe.duration" for="field_duration">Duration</label>
-                    <input type="number" class="form-control" name="duration" id="field_duration"
-                           formControlName="duration"/>
-                </div>
+                <hr>
+                <h2>Tags</h2>
+                <hr>
 
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="shoppedApp.recipe.creation" for="field_creation">Creation</label>
+                    <label [hidden]="true" class="form-control-label" jhiTranslate="shoppedApp.recipe.creation" for="field_creation">Creation</label>
                     <div class="d-flex">
-                        <input id="field_creation" type="datetime-local" class="form-control" name="creation" formControlName="creation" placeholder="YYYY-MM-DD HH:mm"/>
+                        <input id="field_creation" type="datetime-local" class="form-control" name="creation"
+                               formControlName="creation"
+                               placeholder="YYYY-MM-DD HH:mm"/>
+                    </div>
+                    <div
+                        *ngIf="editForm.get('creation')!.invalid && (editForm.get('creation')!.dirty || editForm.get('creation')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('creation')?.errors?.required" jhiTranslate="entity.validation.required">
+                            This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               [hidden]="!editForm.get('creation')?.errors?.ZonedDateTimelocal"
+                               jhiTranslate="entity.validation.ZonedDateTimelocal">
+                            This field should be a date and time.
+                        </small>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="shoppedApp.recipe.image" for="field_image">Image</label>
-                    <div>
-                        <img [src]="'data:' + editForm.get('imageContentType')!.value + ';base64,' + editForm.get('image')!.value" style="max-height: 100px;" *ngIf="editForm.get('image')!.value" alt="recipe image"/>
-                        <div *ngIf="editForm.get('image')!.value" class="form-text text-danger clearfix">
-                            <span class="pull-left">{{ editForm.get('imageContentType')!.value }}, {{ byteSize(editForm.get('image')!.value) }}</span>
-                            <button type="button" (click)="clearInputImage('image', 'imageContentType', 'file_image')" class="btn btn-secondary btn-xs pull-right">
-                                <fa-icon icon="times"></fa-icon>
-                            </button>
-                        </div>
-                        <input type="file" id="file_image" (change)="setFileData($event, 'image', true)" accept="image/*" jhiTranslate="entity.action.addimage"/>
-                    </div>
-                    <input type="hidden" class="form-control" name="image" id="field_image"
-                           formControlName="image"/>
-                    <input type="hidden" class="form-control" name="imageContentType" id="field_imageContentType"
-                           formControlName="imageContentType" />
-                </div>
+                <mat-form-field [hidden]="true" appearance="fill" class="form-group w-100" >
+                    <mat-label jhiTranslate="shoppedApp.post.status"></mat-label>
+                    <mat-select [(ngModel)]="statusOptions[0]" formControlName="status" id="status" name="status">
+                        <mat-option *ngFor="let status of statusOptions" [value]="status">
+                            {{status | capitalize }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="shoppedApp.recipe.status" for="field_status">Status</label>
-                    <select class="form-control" name="status" formControlName="status" id="field_status">
-                        <option value="ACTIVE">{{ 'shoppedApp.Status.ACTIVE' | translate }}</option>
-                        <option value="INACTIVE">{{ 'shoppedApp.Status.INACTIVE' | translate }}</option>
-                        <option value="BLOCKED">{{ 'shoppedApp.Status.BLOCKED' | translate }}</option>
-                        <option value="PENDING">{{ 'shoppedApp.Status.PENDING' | translate }}</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="shoppedApp.recipe.user" for="field_user">User</label>
-                    <select class="form-control" id="field_user" name="user" formControlName="userId">
-                        <option *ngIf="!editForm.get('userId')!.value" [ngValue]="null" selected></option>
-                        <option [ngValue]="userOption.id" *ngFor="let userOption of users; trackBy: trackById">{{ userOption.login }}</option>
-                    </select>
-                </div>
-                <div *ngIf="editForm.get('userId')!.invalid && (editForm.get('userId')!.dirty || editForm.get('userId')!.touched)">
-                    <small class="form-text text-danger"
-                           *ngIf="editForm.get('userId')?.errors?.required" jhiTranslate="entity.validation.required">
-                        This field is required.
-                    </small>
-                </div>
             </div>
+
+            <hr>
 
             <div>
                 <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">

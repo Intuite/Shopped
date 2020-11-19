@@ -13,6 +13,7 @@ import { RecipeService } from './recipe.service';
 import { AlertError } from 'app/shared/alert/alert-error.model';
 import { IUser } from 'app/core/user/user.model';
 import { UserService } from 'app/core/user/user.service';
+import { AccountService } from 'app/core/auth/account.service';
 
 @Component({
   selector: 'jhi-recipe-update',
@@ -22,6 +23,7 @@ export class RecipeUpdateComponent implements OnInit {
   isSaving = false;
   users: IUser[] = [];
   statusOptions = ['ACTIVE', 'INACTIVE'];
+  user!: IUser;
 
   editForm = this.fb.group({
     id: [],
@@ -33,7 +35,7 @@ export class RecipeUpdateComponent implements OnInit {
     image: [],
     imageContentType: [],
     status: [],
-    userId: [null, Validators.required],
+    userId: [],
   });
 
   constructor(
@@ -43,15 +45,22 @@ export class RecipeUpdateComponent implements OnInit {
     protected userService: UserService,
     protected elementRef: ElementRef,
     protected activatedRoute: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private accountService: AccountService
   ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ recipe }) => {
       if (!recipe.id) {
-        const today = moment().startOf('day');
+        const today = moment().startOf('minute');
         recipe.creation = today;
       }
+
+      this.accountService.getAuthenticationState().subscribe(account => {
+        if (account) {
+          this.userService.find(account.login).subscribe(user => (this.user = user));
+        }
+      });
 
       this.updateForm(recipe);
 
@@ -126,7 +135,7 @@ export class RecipeUpdateComponent implements OnInit {
       imageContentType: this.editForm.get(['imageContentType'])!.value,
       image: this.editForm.get(['image'])!.value,
       status: this.editForm.get(['status'])!.value,
-      userId: this.editForm.get(['userId'])!.value,
+      userId: this.user.id,
     };
   }
 

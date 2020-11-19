@@ -75,6 +75,11 @@ import { RecipeTableComponent } from './tables/recipe-table/recipe-table.compone
     CheckOutComponent,
     FilterPipe,
     IngredientTagTableComponent,
+    BasePickerComponent,
+    DialogComponent,
+    PanelComponent,
+    TagFilterPipe,
+    RecipeTableComponent,
   ],
   entryComponents: [LoginModalComponent],
   exports: [
