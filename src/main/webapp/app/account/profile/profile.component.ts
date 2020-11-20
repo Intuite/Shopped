@@ -8,6 +8,9 @@ import { AccountService } from 'app/core/auth/account.service';
 import { UserProfileService } from 'app/entities/user-profile/user-profile.service';
 import { UserService } from 'app/core/user/user.service';
 import { Subscription } from 'rxjs';
+import { Cookies, ICookies } from 'app/shared/model/cookies.model';
+import { CookiesService } from 'app/entities/cookies/cookies.service';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'jhi-profile',
@@ -22,13 +25,15 @@ export class ProfileComponent implements OnInit, OnDestroy, AfterViewInit {
   progress = 0;
   success = true;
   authSubscription?: Subscription;
+  cookie: Cookies | undefined = undefined;
 
   constructor(
     protected dataUtils: JhiDataUtils,
     private userProfileService: UserProfileService,
     private userService: UserService,
     private accountService: AccountService,
-    protected activatedRoute: ActivatedRoute
+    protected activatedRoute: ActivatedRoute,
+    private cookiesService: CookiesService
   ) {}
 
   ngOnInit(): void {
@@ -51,6 +56,7 @@ export class ProfileComponent implements OnInit, OnDestroy, AfterViewInit {
         this.account = account;
         this.progress += 25;
         this.loadUser();
+        this.getCookies();
       },
       () => {
         this.requesting = false;
@@ -103,5 +109,19 @@ export class ProfileComponent implements OnInit, OnDestroy, AfterViewInit {
 
   previousState(): void {
     window.history.back();
+  }
+
+  private getCookies(): void {
+    this.cookiesService
+      .query({
+        ...(this.account?.id && { 'userId.equals': this.account?.id }),
+      })
+      .subscribe((res: HttpResponse<ICookies[]>) => this.onCookieSuccess(res.body || undefined));
+  }
+
+  private onCookieSuccess(param: ICookies[] | undefined): void {
+    if (param) {
+      this.cookie = param[0];
+    }
   }
 }
