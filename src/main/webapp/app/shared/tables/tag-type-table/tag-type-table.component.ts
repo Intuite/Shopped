@@ -20,6 +20,7 @@ export class TagTypeTableComponent implements OnInit, AfterViewInit {
 
   @ViewChild('sort') sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  loaded = false;
 
   ngOnInit(): void {
     this.dataSource.data = this.data;

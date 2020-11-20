@@ -14,6 +14,10 @@ export class TagFilterPipe implements PipeTransform {
           .replace(/(\{|,)\s*(.+?)\s*:/g, '')
           .includes(searchText.toLowerCase());
       })
-      .sort((a, b) => (a.typeId > b.typeId ? 1 : -1));
+      .sort((a: any, b: any) => {
+        const x = a.name.toUpperCase(),
+          y = b.name.toUpperCase();
+        return x === y ? 0 : x > y ? 1 : -1;
+      });
   }
 }

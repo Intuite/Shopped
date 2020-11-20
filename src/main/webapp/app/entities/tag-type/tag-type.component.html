@@ -1,21 +1,36 @@
 <div>
-    <h2 id="page-heading">
-        <span jhiTranslate="shoppedApp.tagType.home.title">Tag Types</span>
-    </h2>
+  <h2 id="page-heading">
+    <span jhiTranslate="shoppedApp.tagType.home.title">Tag Types</span>
+    <button
+      *ngIf="!requesting && (!tagTypes || tagTypes.length == 0)"
+      [matTooltipHideDelay]="0"
+      [matTooltipShowDelay]="1000"
+      [routerLink]="['/tag-type/new']"
+      aria-label="Create a new tag type"
+      class="float-right jh-create-entity create-tag-type mx-4 mb-3"
+      jhiMaterialColor="accent"
+      mat-mini-fab
+      matTooltip="Create a new Tag Type"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
+  </h2>
 
-    <jhi-alert-error></jhi-alert-error>
+  <jhi-alert-error></jhi-alert-error>
 
-    <jhi-alert></jhi-alert>
+  <jhi-alert></jhi-alert>
 
-    <div *ngIf="tagTypes && tagTypes.length > 0" class="table-responsive table-hover" id="entities">
-        <jhi-tag-type-table [data]="tagTypes" [managementComponent]="this"></jhi-tag-type-table>
-    </div>
-
-    <div *ngIf="tagTypes?.length === 0 || !tagTypes" class="alert alert-warning" id="no-result">
-        <span jhiTranslate="shoppedApp.ingredient.home.notFound">No Tag Types found</span>
-    </div>
-
+  <div *ngIf="requesting">
     <div class="w-100" fxLayout="row" fxLayoutAlign="space-around center">
-        <mat-spinner *ngIf="!tagTypes || tagTypes.length == 0" diameter="50" strokeWidth="5"></mat-spinner>
+      <mat-spinner *ngIf="!tagTypes || tagTypes.length == 0" diameter="50" strokeWidth="5"></mat-spinner>
     </div>
+  </div>
+
+  <div *ngIf="tagTypes?.length === 0 || !tagTypes" class="alert alert-warning" id="no-result">
+    <span jhiTranslate="shoppedApp.ingredient.home.notFound">No Tag Types found</span>
+  </div>
+
+  <div *ngIf="tagTypes && tagTypes.length > 0" class="table-responsive table-hover" id="entities">
+    <jhi-tag-type-table #table [data]="tagTypes" [managementComponent]="this"></jhi-tag-type-table>
+  </div>
 </div>
