@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Bundle, IBundle } from 'app/shared/model/bundle.model';
-import { Subscription } from 'rxjs';
 import { BundleService } from 'app/entities/bundle/bundle.service';
 import { MatDialog } from '@angular/material/dialog';
 import { HttpResponse } from '@angular/common/http';
@@ -13,12 +12,6 @@ import { BundlePickerDialogComponent } from 'app/shared/components/buy-cookie/bu
 })
 export class BuyCookieComponent implements OnInit {
   bundles?: Bundle[];
-  eventSubscriber?: Subscription;
-  totalItems = 0;
-  page!: number;
-  predicate!: string;
-  ascending!: boolean;
-  ngbPaginationPage = 1;
 
   constructor(protected service: BundleService, public dialog: MatDialog) {}
 

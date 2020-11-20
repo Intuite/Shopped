@@ -33,6 +33,8 @@ import { BundlePickerDialogComponent } from './components/buy-cookie/bundle-pick
 import { CheckOutComponent } from './components/check-out/check-out.component';
 import { FilterPipe } from './components/pickers/pipes/filter.pipe';
 import { IngredientTagTableComponent } from './components/tables/ingredient-tag-table/ingredient-tag-table.component';
+import { GiveAwardComponent } from './components/give-award/give-award.component';
+import { AwardPickerDialogComponent } from './components/giveAward/award-picker-dialog/award-picker-dialog.component';
 import { BasePickerComponent } from './components/pickers/base-picker/base-picker.component';
 import { DialogComponent } from './components/pickers/base-picker/dialog/dialog.component';
 import { PanelComponent } from './components/pickers/base-picker/panel/panel.component';
@@ -40,16 +42,6 @@ import { ChipsComponent } from './components/pickers/base-picker/chips/chips.com
 import { ListComponent } from './components/pickers/base-picker/list/list.component';
 import { TagFilterPipe } from './components/pickers/pipes/tag-filter.pipe';
 import { RecipeTagPickerComponent } from 'app/shared/components/pickers/recipe-tag-picker/recipe-tag-picker.component';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSelectModule } from '@angular/material/select';
-import { MatRadioModule } from '@angular/material/radio';
-import { MatCardModule } from '@angular/material/card';
-import { ReactiveFormsModule } from '@angular/forms';
-import { DragDropModule } from '@angular/cdk/drag-drop';
-import { MatTreeModule } from '@angular/material/tree';
-import { MatIconModule } from '@angular/material/icon';
-
 @NgModule({
   imports: [
     JhMaterialModule,
@@ -98,6 +90,8 @@ import { MatIconModule } from '@angular/material/icon';
     CheckOutComponent,
     FilterPipe,
     IngredientTagTableComponent,
+    GiveAwardComponent,
+    AwardPickerDialogComponent,
     BasePickerComponent,
     DialogComponent,
     PanelComponent,
@@ -133,6 +127,8 @@ import { MatIconModule } from '@angular/material/icon';
     IngredientPKDialogComponent,
     BuyCookieComponent,
     IngredientTagTableComponent,
+    AwardPickerDialogComponent,
+    GiveAwardComponent,
   ],
 })
 export class ShoppedSharedModule {}
