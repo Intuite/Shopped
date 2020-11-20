@@ -1,8 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Award, IAward } from 'app/shared/model/award.model';
-import { AwardService } from 'app/entities/award/award.service';
+import { Award } from 'app/shared/model/award.model';
 import { MatDialog } from '@angular/material/dialog';
-import { HttpResponse } from '@angular/common/http';
 import { AwardPickerDialogComponent } from 'app/shared/components/giveAward/award-picker-dialog/award-picker-dialog.component';
 
 @Component({

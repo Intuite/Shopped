@@ -22,5 +22,6 @@ export class AwardDeleteDialogComponent {
       this.eventManager.broadcast('awardListModification');
       this.activeModal.close();
     });
+    window.location.reload();
   }
 }

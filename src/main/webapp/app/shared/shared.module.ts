@@ -42,7 +42,6 @@ import { ChipsComponent } from './components/pickers/base-picker/chips/chips.com
 import { ListComponent } from './components/pickers/base-picker/list/list.component';
 import { TagFilterPipe } from './components/pickers/pipes/tag-filter.pipe';
 import { RecipeTagPickerComponent } from 'app/shared/components/pickers/recipe-tag-picker/recipe-tag-picker.component';
-
 @NgModule({
   imports: [JhMaterialModule, ShoppedSharedLibsModule, FlexModule, RouterModule, ExtendedModule],
   declarations: [
