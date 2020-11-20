@@ -170,6 +170,10 @@ button.active:focus {
   outline: none !important;
   outline-style: none !important;
 }
-//
+
+html,
+body {
+  height: 100%;
+}
 
 /* jhipster-needle-scss-add-main JHipster will add new css style */

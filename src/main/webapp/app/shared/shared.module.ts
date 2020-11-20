@@ -40,9 +40,33 @@ import { ChipsComponent } from './components/pickers/base-picker/chips/chips.com
 import { ListComponent } from './components/pickers/base-picker/list/list.component';
 import { TagFilterPipe } from './components/pickers/pipes/tag-filter.pipe';
 import { RecipeTagPickerComponent } from 'app/shared/components/pickers/recipe-tag-picker/recipe-tag-picker.component';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatCardModule } from '@angular/material/card';
+import { ReactiveFormsModule } from '@angular/forms';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatTreeModule } from '@angular/material/tree';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
-  imports: [JhMaterialModule, ShoppedSharedLibsModule, FlexModule, RouterModule, ExtendedModule],
+  imports: [
+    JhMaterialModule,
+    ShoppedSharedLibsModule,
+    FlexModule,
+    RouterModule,
+    ExtendedModule,
+    MatInputModule,
+    MatButtonModule,
+    MatSelectModule,
+    MatRadioModule,
+    MatCardModule,
+    ReactiveFormsModule,
+    DragDropModule,
+    MatTreeModule,
+    MatIconModule,
+  ],
   declarations: [
     FindLanguageFromKeyPipe,
     AlertComponent,
