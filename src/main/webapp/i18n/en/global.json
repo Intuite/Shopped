@@ -75,7 +75,7 @@
       "currentpassword.label": "Current password",
       "currentpassword.placeholder": "Current password",
       "newpassword.label": "New password",
-      "newpassword.placeholder": "New password",
+      "newpassword.placeholder": "At least 8 characters, uppercase, lowercase, special character and numbers",
       "confirmpassword.label": "New password confirmation",
       "confirmpassword.placeholder": "Confirm the new password",
       "email.label": "Email",
