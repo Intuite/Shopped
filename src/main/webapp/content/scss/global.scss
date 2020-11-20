@@ -75,6 +75,7 @@ Generic styles
 
 .footer {
   border-top: 1px solid rgba(0, 0, 0, 0.125);
+  text-align: right;
 }
 
 .hand,
@@ -171,6 +172,9 @@ button.active:focus {
   outline-style: none !important;
 }
 
-//
+html,
+body {
+  height: 100%;
+}
 
 /* jhipster-needle-scss-add-main JHipster will add new css style */

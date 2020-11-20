@@ -4,7 +4,10 @@
             Search
         </mat-label>
         <mat-icon matSuffix>search</mat-icon>
-        <input (keyup)="filter($event)" matInput placeholder="Type a text filter" type="text">
+        <input (keyup)="filter($event)"
+               matInput
+               placeholder="Type a text filter"
+               type="text">
     </mat-form-field>
     <button
         [matTooltipHideDelay]="0"
@@ -18,9 +21,9 @@
         <mat-icon>add</mat-icon>
     </button>
 </div>
-<jhi-wrapper-material-table #sort="matSort" [columns]="displayedColumns"
-                            [dataSource]="dataSource" matSort>
-
+<jhi-wrapper-material-table #sort="matSort"
+                            [columns]="displayedColumns" [dataSource]="dataSource"
+                            matSort>
     <ng-container matColumnDef="name">
         <th *matHeaderCellDef mat-header-cell mat-sort-header>Name</th>
         <td *matCellDef="let element" mat-cell>

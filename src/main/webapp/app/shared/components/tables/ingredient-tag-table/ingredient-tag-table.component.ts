@@ -20,6 +20,7 @@ export class IngredientTagTableComponent implements OnInit, AfterViewInit {
 
   @ViewChild('sort') sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  loaded = false;
 
   ngOnInit(): void {
     this.dataSource.data = this.data;
@@ -30,7 +31,7 @@ export class IngredientTagTableComponent implements OnInit, AfterViewInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.filterPredicate = (data: any, filter) => {
       let dataStr = JSON.stringify(data).toLowerCase();
-      dataStr = dataStr.replace(/({|,)\s(.+?)\s:/g, '');
+      dataStr = dataStr.replace(/(\{|,)\s(.+?)\s:/g, '');
       return dataStr.includes(filter);
     };
   }
