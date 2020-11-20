@@ -1,14 +1,19 @@
 package com.intuite.shopped.web.rest;
 
+import com.intuite.shopped.domain.Cookies;
 import com.intuite.shopped.domain.PersistentToken;
 import com.intuite.shopped.repository.PersistentTokenRepository;
 import com.intuite.shopped.domain.User;
 import com.intuite.shopped.repository.UserRepository;
 import com.intuite.shopped.security.SecurityUtils;
+import com.intuite.shopped.service.CookiesService;
 import com.intuite.shopped.service.MailService;
+import com.intuite.shopped.service.UserProfileService;
 import com.intuite.shopped.service.UserService;
+import com.intuite.shopped.service.dto.CookiesDTO;
 import com.intuite.shopped.service.dto.PasswordChangeDTO;
 import com.intuite.shopped.service.dto.UserDTO;
+import com.intuite.shopped.service.dto.UserProfileDTO;
 import com.intuite.shopped.web.rest.errors.*;
 import com.intuite.shopped.web.rest.vm.KeyAndPasswordVM;
 import com.intuite.shopped.web.rest.vm.ManagedUserVM;
@@ -46,13 +51,19 @@ public class AccountResource {
 
     private final MailService mailService;
 
+    private final CookiesService cookiesService;
+
+    private final UserProfileService userProfileService;
+
     private final PersistentTokenRepository persistentTokenRepository;
 
-    public AccountResource(UserRepository userRepository, UserService userService, MailService mailService, PersistentTokenRepository persistentTokenRepository) {
+    public AccountResource(UserRepository userRepository, UserService userService, MailService mailService, CookiesService cookiesService, UserProfileService userProfileService, PersistentTokenRepository persistentTokenRepository) {
 
         this.userRepository = userRepository;
         this.userService = userService;
         this.mailService = mailService;
+        this.cookiesService = cookiesService;
+        this.userProfileService = userProfileService;
         this.persistentTokenRepository = persistentTokenRepository;
     }
 
@@ -70,8 +81,23 @@ public class AccountResource {
         if (!checkPasswordLength(managedUserVM.getPassword())) {
             throw new InvalidPasswordException();
         }
-        User user = userService.registerUser(managedUserVM, managedUserVM.getPassword());
-        mailService.sendActivationEmail(user);
+        if (managedUserVM.getId() != null) {
+            throw new BadRequestAlertException("A new user cannot already have an ID", "userManagement", "idexists");
+            // Lowercase the user login before comparing with database
+        } else if (userRepository.findOneByLogin(managedUserVM.getLogin().toLowerCase()).isPresent()) {
+            throw new LoginAlreadyUsedException();
+        } else if (userRepository.findOneByEmailIgnoreCase(managedUserVM.getEmail()).isPresent()) {
+            throw new EmailAlreadyUsedException();
+        } else {
+            User user = userService.registerUser(managedUserVM, managedUserVM.getPassword());
+            CookiesDTO userCookies = new CookiesDTO();
+            UserProfileDTO profile = new UserProfileDTO();
+            profile.setUserId(user.getId());
+            userCookies.setUserId(user.getId());
+            cookiesService.save(userCookies);
+            userProfileService.save(profile);
+            mailService.sendActivationEmail(user);
+        }
     }
 
     /**
