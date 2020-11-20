@@ -43,22 +43,7 @@ import { ListComponent } from './components/pickers/base-picker/list/list.compon
 import { TagFilterPipe } from './components/pickers/pipes/tag-filter.pipe';
 import { RecipeTagPickerComponent } from 'app/shared/components/pickers/recipe-tag-picker/recipe-tag-picker.component';
 @NgModule({
-  imports: [
-    JhMaterialModule,
-    ShoppedSharedLibsModule,
-    FlexModule,
-    RouterModule,
-    ExtendedModule,
-    MatInputModule,
-    MatButtonModule,
-    MatSelectModule,
-    MatRadioModule,
-    MatCardModule,
-    ReactiveFormsModule,
-    DragDropModule,
-    MatTreeModule,
-    MatIconModule,
-  ],
+  imports: [JhMaterialModule, ShoppedSharedLibsModule, FlexModule, RouterModule, ExtendedModule],
   declarations: [
     FindLanguageFromKeyPipe,
     AlertComponent,
