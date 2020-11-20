@@ -515,6 +515,12 @@
                         <span jhiTranslate="global.menu.account.settings">Settings</span>
                     </button>
                     <button (click)="collapseNavbar()" *ngSwitchCase="true" mat-menu-item
+                            [routerLink]="['/account/profile', 1]"
+                            routerLinkActive="active">
+                        <fa-icon [fixedWidth]="true" icon="user"></fa-icon>
+                        <span jhiTranslate="global.menu.account.profile">Profile</span>
+                    </button>
+                    <button (click)="collapseNavbar()" *ngSwitchCase="true" mat-menu-item
                             routerLink="account/password" routerLinkActive="active">
                         <fa-icon [fixedWidth]="true" icon="lock"></fa-icon>
                         <span jhiTranslate="global.menu.account.password">Password</span>

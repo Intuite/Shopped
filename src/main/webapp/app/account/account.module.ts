@@ -12,6 +12,7 @@ import { PasswordResetInitComponent } from './password-reset/init/password-reset
 import { PasswordResetFinishComponent } from './password-reset/finish/password-reset-finish.component';
 import { SettingsComponent } from './settings/settings.component';
 import { accountState } from './account.route';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   imports: [ShoppedSharedModule, RouterModule.forChild(accountState)],
@@ -24,6 +25,7 @@ import { accountState } from './account.route';
     PasswordResetFinishComponent,
     SessionsComponent,
     SettingsComponent,
+    ProfileComponent,
   ],
 })
 export class AccountModule {}
