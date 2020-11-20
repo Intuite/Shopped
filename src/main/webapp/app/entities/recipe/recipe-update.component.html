@@ -7,9 +7,11 @@
     <div class="col-8">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
             <h2 id="jhi-recipe-heading" jhiTranslate="shoppedApp.recipe.home.createOrEditLabel">
-                Create or edit a recipe</h2>
-
+                Create your own recipe</h2>
+            <br>
+            {{recipeId|json}}
             <div>
+
                 <jhi-alert-error></jhi-alert-error>
 
                 <jhi-alert></jhi-alert>
@@ -20,7 +22,7 @@
                 </mat-form-field>
 
                 <mat-form-field appearance="fill" class="form-group w-100">
-                    <mat-label>Name*</mat-label>
+                    <mat-label>Name</mat-label>
                     <input formControlName="name" id="field_name" matInput name="name"
                            type="text"/>
                     <mat-error
@@ -30,8 +32,6 @@
                         This field is required.
                     </mat-error>
                 </mat-form-field>
-
-                <hr>
 
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="shoppedApp.recipe.image"
@@ -87,7 +87,7 @@
                 </mat-form-field>
 
                 <mat-form-field appearance="fill" class="form-group w-100">
-                    <mat-label>Cooking time(minutes):</mat-label>
+                    <mat-label>Cooking time (minutes):</mat-label>
                     <input formControlName="duration" id="field_duration" matInput name="duration"
                            type="number"/>
                     <mat-error
@@ -112,12 +112,12 @@
                 </mat-form-field>
 
                 <hr>
-                <h4><b>Ingredients:</b></h4>
                 <jhi-ingredient-picker></jhi-ingredient-picker>
+
                 <hr>
 
                 <mat-form-field appearance="fill" class="form-group w-100">
-                    <mat-label jhiTranslate="shoppedApp.recipe.description">Description</mat-label>
+                    <mat-label>Recipe instructions:</mat-label>
                     <input formControlName="description" id="field_description" matInput name="description"
                            type="text"/>
                     <mat-error
@@ -135,7 +135,7 @@
                 </mat-form-field>
 
                 <hr>
-                <h4><b>Tags:</b></h4>
+                <h4>Tags:</h4>
 
                 <hr>
 
@@ -174,7 +174,6 @@
 
             </div>
 
-            <hr>
 
             <div>
                 <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">

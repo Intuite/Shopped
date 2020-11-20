@@ -14,6 +14,9 @@ import { AlertError } from 'app/shared/alert/alert-error.model';
 import { IUser } from 'app/core/user/user.model';
 import { UserService } from 'app/core/user/user.service';
 import { AccountService } from 'app/core/auth/account.service';
+import { IRecipeHasIngredient, RecipeHasIngredient } from 'app/shared/model/recipe-has-ingredient.model';
+import { RecipeHasIngredientService } from 'app/entities/recipe-has-ingredient/recipe-has-ingredient.service.ts';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'jhi-recipe-update',
@@ -21,16 +24,11 @@ import { AccountService } from 'app/core/auth/account.service';
   styleUrls: ['../../../content/scss/image_Select.scss'],
 })
 export class RecipeUpdateComponent implements OnInit {
-  isSaving = false;
-  users: IUser[] = [];
-  statusOptions = ['ACTIVE', 'INACTIVE'];
-  user!: IUser;
-
   editForm = this.fb.group({
     id: [],
     name: [null, [Validators.required]],
     portion: [null, [Validators.min(1)]],
-    description: [null, [Validators.required, Validators.min(5), Validators.max(1000)]],
+    description: [null, [Validators.required, Validators.min(5)]],
     duration: [null, [Validators.min(1)]],
     creation: [],
     image: [],
@@ -38,6 +36,34 @@ export class RecipeUpdateComponent implements OnInit {
     status: [],
     userId: [],
   });
+
+  isSaving = false;
+  users: IUser[] = [];
+  statusOptions = ['ACTIVE', 'INACTIVE'];
+  user!: IUser;
+  recipeId: any;
+  recipes?: Recipe[];
+
+  // Ingredientes quemados
+  ingredientOne: IRecipeHasIngredient = {
+    id: 1,
+    amount: 10,
+    status: this.editForm.get(['status'])!.value,
+    ingredientName: 'Allspice',
+    ingredientId: 1,
+    recipeName: 'Lasagna',
+    recipeId: 5,
+  };
+  ingredientTwo: IRecipeHasIngredient = {
+    id: 2,
+    amount: 40,
+    status: this.editForm.get(['status'])!.value,
+    ingredientName: 'Ammaretti',
+    ingredientId: 2,
+    recipeName: 'Lasagna',
+    recipeId: 5,
+  };
+  savedIngredients: IRecipeHasIngredient[] = [this.ingredientOne, this.ingredientTwo];
 
   constructor(
     protected dataUtils: JhiDataUtils,
@@ -47,14 +73,14 @@ export class RecipeUpdateComponent implements OnInit {
     protected elementRef: ElementRef,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
-    private accountService: AccountService
+    private accountService: AccountService,
+    protected recipeHasIngredientService: RecipeHasIngredientService
   ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ recipe }) => {
       if (!recipe.id) {
-        const today = moment().startOf('minute');
-        recipe.creation = today;
+        recipe.creation = moment().startOf('minute');
       }
 
       this.accountService.getAuthenticationState().subscribe(account => {
@@ -63,6 +89,21 @@ export class RecipeUpdateComponent implements OnInit {
         }
       });
 
+      this.recipeService
+        .queryAll()
+        .pipe(
+          map((res: HttpResponse<IRecipe[]>) => {
+            return res.body || [];
+          })
+        )
+        .subscribe((resBody: IRecipe[]) => {
+          this.recipes = resBody;
+        });
+
+      if (this.recipes !== undefined) {
+        this.recipeId = this.recipes.length;
+        this.recipeId++;
+      }
       this.updateForm(recipe);
 
       this.userService.query().subscribe((res: HttpResponse<IUser[]>) => (this.users = res.body || []));
@@ -121,7 +162,28 @@ export class RecipeUpdateComponent implements OnInit {
       this.subscribeToSaveResponse(this.recipeService.update(recipe));
     } else {
       this.subscribeToSaveResponse(this.recipeService.create(recipe));
+      this.addIngredients();
     }
+  }
+
+  addIngredients(): void {
+    let i = 0;
+    while (i < this.savedIngredients.length) {
+      const recipeHasIngredient = this.createFromFormIngredient(i);
+      this.subscribeToSaveResponse(this.recipeHasIngredientService.create(recipeHasIngredient));
+      i++;
+    }
+  }
+
+  private createFromFormIngredient(n: number): IRecipeHasIngredient {
+    return {
+      ...new RecipeHasIngredient(),
+      id: undefined,
+      amount: this.savedIngredients[n].amount,
+      status: this.editForm.get(['status'])!.value,
+      ingredientId: this.savedIngredients[n].ingredientId,
+      recipeId: this.recipeId,
+    };
   }
 
   private createFromForm(): IRecipe {
@@ -149,7 +211,7 @@ export class RecipeUpdateComponent implements OnInit {
 
   protected onSaveSuccess(): void {
     this.isSaving = false;
-    this.previousState();
+    // this.previousState();
   }
 
   protected onSaveError(): void {
