@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
 
 import { LoginModalService } from 'app/core/login/login-modal.service';
 import { AccountService } from 'app/core/auth/account.service';
@@ -9,12 +10,17 @@ import { Account } from 'app/core/user/account.model';
   selector: 'jhi-home',
   templateUrl: './home.component.html',
   styleUrls: ['home.scss'],
+  providers: [NgbCarouselConfig], // add NgbCarouselConfig to the component providers
 })
 export class HomeComponent implements OnInit, OnDestroy {
   account: Account | null = null;
   authSubscription?: Subscription;
 
-  constructor(private accountService: AccountService, private loginModalService: LoginModalService) {}
+  constructor(private accountService: AccountService, private loginModalService: LoginModalService, config: NgbCarouselConfig) {
+    config.interval = 2000;
+    config.keyboard = true;
+    config.pauseOnHover = true;
+  }
 
   ngOnInit(): void {
     this.authSubscription = this.accountService.getAuthenticationState().subscribe(account => (this.account = account));

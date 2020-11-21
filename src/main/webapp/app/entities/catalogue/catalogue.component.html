@@ -8,6 +8,17 @@
 <!--            Create a new Catalogue-->
 <!--            </span>-->
 <!--        </button>-->
+        <button
+            [matTooltipHideDelay]="0"
+            [matTooltipShowDelay]="1000"
+            [routerLink]="['/catalogue/new']"
+            aria-label="Create a new catalogue tag"
+            class="float-right jh-create-entity create-recipe-tag mx-4 mb-3"
+            jhiMaterialColor="accent"
+            mat-mini-fab
+            matTooltip="Create a new catalogue tag">
+            <mat-icon>add</mat-icon>
+        </button>
     </h2>
 
     <jhi-alert-error></jhi-alert-error>
