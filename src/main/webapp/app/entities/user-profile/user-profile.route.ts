@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, Routes, Router } from '@angular/router';
-import { Observable, of, EMPTY } from 'rxjs';
+import { ActivatedRouteSnapshot, Resolve, Router, Routes } from '@angular/router';
+import { EMPTY, Observable, of } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
 
 import { Authority } from 'app/shared/constants/authority.constants';
@@ -39,7 +39,7 @@ export const userProfileRoute: Routes = [
     path: '',
     component: UserProfileComponent,
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       defaultSort: 'id,asc',
       pageTitle: 'shoppedApp.userProfile.home.title',
     },
@@ -52,23 +52,23 @@ export const userProfileRoute: Routes = [
       userProfile: UserProfileResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.USER, Authority.MOD],
       pageTitle: 'shoppedApp.userProfile.home.title',
     },
     canActivate: [UserRouteAccessService],
   },
-  {
-    path: 'new',
-    component: UserProfileUpdateComponent,
-    resolve: {
-      userProfile: UserProfileResolve,
-    },
-    data: {
-      authorities: [Authority.USER],
-      pageTitle: 'shoppedApp.userProfile.home.title',
-    },
-    canActivate: [UserRouteAccessService],
-  },
+  // {
+  //   path: 'new',
+  //   component: UserProfileUpdateComponent,
+  //   resolve: {
+  //     userProfile: UserProfileResolve,
+  //   },
+  //   data: {
+  //     authorities: [Authority.USER],
+  //     pageTitle: 'shoppedApp.userProfile.home.title',
+  //   },
+  //   canActivate: [UserRouteAccessService],
+  // },
   {
     path: ':id/edit',
     component: UserProfileUpdateComponent,
@@ -76,7 +76,7 @@ export const userProfileRoute: Routes = [
       userProfile: UserProfileResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.USER, Authority.MOD],
       pageTitle: 'shoppedApp.userProfile.home.title',
     },
     canActivate: [UserRouteAccessService],

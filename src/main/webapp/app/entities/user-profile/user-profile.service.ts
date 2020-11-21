@@ -38,6 +38,12 @@ export class UserProfileService {
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
+  findByUser(id: number): Observable<EntityResponseType> {
+    return this.http
+      .get<IUserProfile>(`${this.resourceUrl}/user/${id}`, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
+
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http
