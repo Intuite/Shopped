@@ -145,6 +145,7 @@ export class ViewTransactionsComponent implements OnInit {
       },
     };
 
+    // eslint-disable-next-line
     // @ts-ignore
     pdfMake.createPdf(docDefinition).download();
 
@@ -163,7 +164,6 @@ export class ViewTransactionsComponent implements OnInit {
           (res: HttpResponse<Transaction[]>) => ((this.transactions = res.body || []), console.warn(res.body)),
           () => console.warn('Transaction fetch failed')
         );
-      console.warn(this.account);
     }
   }
 }
