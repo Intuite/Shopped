@@ -25,6 +25,8 @@ import { DatepickerComponent } from './components/datepicker/datepicker.componen
 import { CheckboxComponent } from './components/checkbox/checkbox.component';
 import { PostTableComponent } from './tables/post-table/post-table.component';
 
+import { GiveAwardComponent } from './components/give-award/give-award.component';
+import { AwardPickerDialogComponent } from './components/giveAward/award-picker-dialog/award-picker-dialog.component';
 import { BuyCookieComponent } from './components/buy-cookie/buy-cookie.component';
 import { BundlePickerDialogComponent } from './components/buy-cookie/bundle-picker-dialog/bundle-picker-dialog.component';
 import { CheckOutComponent } from './components/check-out/check-out.component';
@@ -50,6 +52,7 @@ import { ListComponent as BasePickerListComponent } from './components/pickers/b
 // Pipes
 import { FilterPipe } from './components/pickers/pipes/filter.pipe';
 import { TagFilterPipe } from './components/pickers/pipes/tag-filter.pipe';
+import { ViewTransactionsComponent } from './components/view-transactions/view-transactions.component';
 
 @NgModule({
   imports: [JhMaterialModule, ShoppedSharedLibsModule, FlexModule, RouterModule, ExtendedModule],
@@ -80,6 +83,10 @@ import { TagFilterPipe } from './components/pickers/pipes/tag-filter.pipe';
     FilterPipe,
     IngredientTagTableComponent,
     TagFilterPipe,
+    GiveAwardComponent,
+    AwardPickerDialogComponent,
+    TagFilterPipe,
+    ViewTransactionsComponent,
     BasePickerComponent,
     BasePickerDialogComponent,
     BasePickerPanelComponent,
@@ -118,6 +125,9 @@ import { TagFilterPipe } from './components/pickers/pipes/tag-filter.pipe';
     PostTableComponent,
     BuyCookieComponent,
     IngredientTagTableComponent,
+    AwardPickerDialogComponent,
+    GiveAwardComponent,
+    ViewTransactionsComponent,
     BasePickerComponent,
     BasePickerDialogComponent,
     BasePickerPanelComponent,

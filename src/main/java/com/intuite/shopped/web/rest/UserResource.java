@@ -4,7 +4,11 @@ import com.intuite.shopped.config.Constants;
 import com.intuite.shopped.domain.User;
 import com.intuite.shopped.repository.UserRepository;
 import com.intuite.shopped.security.AuthoritiesConstants;
+import com.intuite.shopped.service.CookiesService;
 import com.intuite.shopped.service.MailService;
+import com.intuite.shopped.service.UserProfileService;
+import com.intuite.shopped.service.dto.CookiesDTO;
+import com.intuite.shopped.service.dto.UserProfileDTO;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import java.util.Collections;
@@ -75,10 +79,16 @@ public class UserResource {
 
     private final MailService mailService;
 
-    public UserResource(UserService userService, UserRepository userRepository, MailService mailService) {
+    private final CookiesService cookiesService;
+
+    private final UserProfileService userProfileService;
+
+    public UserResource(UserService userService, UserRepository userRepository, MailService mailService, CookiesService cookiesService, UserProfileService userProfileService) {
         this.userService = userService;
         this.userRepository = userRepository;
         this.mailService = mailService;
+        this.cookiesService = cookiesService;
+        this.userProfileService = userProfileService;
     }
 
     /**
@@ -107,6 +117,12 @@ public class UserResource {
             throw new EmailAlreadyUsedException();
         } else {
             User newUser = userService.createUser(userDTO);
+            CookiesDTO userCookies = new CookiesDTO();
+            UserProfileDTO profile = new UserProfileDTO();
+            profile.setUserId(newUser.getId());
+            userCookies.setUserId(newUser.getId());
+            cookiesService.save(userCookies);
+            userProfileService.save(profile);
             mailService.sendCreationEmail(newUser);
             return ResponseEntity.created(new URI("/api/users/" + newUser.getLogin()))
                 .headers(HeaderUtil.createAlert(applicationName,  "userManagement.created", newUser.getLogin()))

@@ -10,11 +10,11 @@
         [matTooltipHideDelay]="0"
         [matTooltipShowDelay]="1000"
         [routerLink]="['/award/new']"
-        aria-label="Create a new recipe tag"
+        aria-label="Create a new award"
         class="float-right jh-create-entity create-recipe-tag mx-4 mb-3"
         jhiMaterialColor="accent"
         mat-mini-fab
-        matTooltip="Create a new recipe tag">
+        matTooltip="Create a new award">
         <mat-icon>add</mat-icon>
     </button>
 </div>
@@ -98,8 +98,8 @@
                 </button>
 
                 <button [routerLink]="['/award/', element.id, 'edit']"
-                        class="text-white mx-3"
-                        jhiMaterialColor="primary"
+                        class="text-white ml-3"
+                        color="primary"
                         mat-mini-fab
                         type="submit">
                     <mat-icon>create</mat-icon>

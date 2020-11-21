@@ -1,0 +1,32 @@
+.btn-cookies {
+  border-radius: 20px 0 0 20px;
+  color: #ff8830;
+  background-color: #ffeeea;
+}
+
+.row-no-overflow {
+  overflow-y: hidden;
+}
+
+.row-overflow {
+  overflow-y: auto;
+}
+
+.award-list {
+  max-height: 300px;
+}
+
+.img-award-list {
+  height: 65px;
+  width: 65px;
+}
+
+.img-award-details {
+  height: 120px;
+  width: 120px;
+}
+
+.description {
+  width: 210px;
+  min-height: 50px;
+}

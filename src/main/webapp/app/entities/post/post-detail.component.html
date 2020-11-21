@@ -1,51 +1,169 @@
 <div class="row justify-content-center">
     <div class="col-10">
-        <button type="submit" class="btn btn-secondary" (click)="previousState()">
+        <button (click)="previousState()" class="btn btn-secondary" type="submit">
             <fa-icon icon="arrow-left"></fa-icon>
         </button>
     </div>
     <div class="col-8">
 
         <div *ngIf="post">
-            <h2>Post {{ post.recipeName }} </h2>
-
-            <hr>
-
             <jhi-alert-error></jhi-alert-error>
+            <mat-card>
+                <mat-card-content *ngIf="recipe">
+                    <div style="height: auto;">
+                        <div
+                            [ngStyle.gt-sm]="{ 'max-width': '900px' }"
+                            [ngStyle]="{ 'max-width': 'auto' }"
+                            gdAreas.gt-sm="recipePicture recipePicture recipePicture |
+                                           socialInfo userInfo awardsButtons |
+                                           caption caption caption |
+                                           ingredientsTitle ingredientsTitle portions |
+                                           ingredientsList ingredientsList ingredientsList |
+                                           addToCart addToCart addToCart |
+                                           instructionsTitle instructionsTitle duration |
+                                           instructionsList instructionsList instructionsList |
+                                           exportButtons exportButtons exportButtons |
+                                           biteButton biteButton biteButton |
+                                           tagsList tagsList tagsList |
+                                           reply reply reply |
+                                           commentsTitle commentsTitle commentsTitle |
+                                           commentsList commentsList commentsList"
+                            gdAreas.sm="recipePicture recipePicture |
+                                        socialInfo awardsButtons |
+                                        userInfo userInfo |
+                                        caption caption |
+                                        ingredientsTitle portions |
+                                        ingredientsList ingredientsList |
+                                        addToCart addToCart |
+                                        instructionsTitle duration|
+                                        instructionsList instructionsList |
+                                        exportButtons exportButtons |
+                                        biteButton biteButton |
+                                        tagsList tagsList |
+                                        reply reply |
+                                        commentsTitle commentsTitle |
+                                        commentsList commentsList"
+                            gdAreas.xs="recipePicture | socialInfo | userInfo | awardsButtons |
+                                        caption | portions | ingredientsTitle| ingredientsList | addToCart | duration |
+                                        instructionsTitle | instructionsList | exportButtons | biteButton | tagsList |
+                                        reply | horizontalLine | commentsTitle | commentsList"
+                            gdColumns.gt-sm="200px auto 200px"
+                            gdColumns.sm="50%!"
+                            gdColumns.xs="none"
+                            gdGap="1em"
+                            gdGap.gt-sm="20px">
 
-            <dl class="row-md jh-entity-details">
+                            <div class="blocks-1 post-picture" gdArea="recipePicture">
+                                <img *ngIf="recipe.image"
+                                     [src]="'data:' + recipe.imageContentType + ';base64,' + recipe.image"
+                                     alt="recipe image"
+                                     class="post-image"/>
+                            </div>
 
-                <dt><span jhiTranslate="shoppedApp.post.caption">Caption</span></dt>
-                <dd>
-                    <span>{{ post.caption }}</span>
-                </dd>
+                            <div class="blocks-2 post-element-left" gdArea="socialInfo">
+                                <span class="post-icon-bite"></span>
+                                <span class="post-icon-comment"></span>
+                                <span class="post-icon-view"></span>
+                            </div>
 
-                <dt><span jhiTranslate="shoppedApp.post.user">User</span></dt>
-                <dd>
-                    {{ post.userLogin }}
-                </dd>
-                <dt><span jhiTranslate="shoppedApp.post.date">Date</span></dt>
-                <dd>
-                    <span>{{ post.date | date:"long" }}</span>
-                </dd>
+                            <div class="blocks-3 post-element-right" gdArea="awardsButtons">Awards</div>
 
+                            <div class="blocks-4 post-element-center" gdArea="userInfo">
+                                <dd> By {{ post.userLogin }} <br/></dd>
+                                <dd><span>{{ post.date | date:"mediumDate" }}</span></dd>
+                            </div>
 
-                <dt><span jhiTranslate="shoppedApp.post.status">Status</span></dt>
-                <dd>
-                    <span jhiTranslate="{{ 'shoppedApp.Status.' + post.status }}">{{ post.status }}</span>
+                            <div class="blocks-5 post-element-center" gdArea="caption">
+                                <dd>
+                                    <div *ngIf="post.recipeId">
+                                        <h2><b>{{ post.recipeName }}</b></h2>
+                                    </div>
+                                </dd>
+                                <dd><span style="font-style: italic">{{ post.caption }}</span></dd>
+                            </div>
 
-                </dd>
+                            <div class="blocks-6 post-element-left post-subtitle" gdArea="ingredientsTitle">
+                                Ingredients:
+                            </div>
 
-                <hr>
+                            <div class="blocks-7 post-element-right" gdArea="portions">
+                                <span class="post-icon-portion"></span> {{recipe.portion}}
+                            </div>
 
-                <dt><span jhiTranslate="shoppedApp.post.recipe">Recipe</span></dt>
-                <dd>
-                    <div *ngIf="post.recipeId">
-                        <a [routerLink]="['/recipe', post.recipeId, 'view']">{{ post.recipeName }}</a>
+                            <div class="blocks-8 post-element-center" gdArea="ingredientsList">
+                                ingredients list
+                            </div>
+
+                            <div class="blocks-9 post-element-center" gdArea="addToCart">
+                                <button class="post-cart-button" type="submit">
+                                    <span class="post-icon-cart" style="background-color: primary"></span> ADD TO
+                                    SHOPPING CART
+                                </button>
+                            </div>
+
+                            <div class="blocks-10 post-element-left post-subtitle" gdArea="instructionsTitle">
+                                Instructions:
+                            </div>
+
+                            <div class="blocks-11 post-element-right" gdArea="duration">
+                                <span class="post-icon-duration"></span> {{recipe.duration}}
+                            </div>
+
+                            <div class="blocks-12 post-element-center post-instructions" gdArea="instructionsList">
+                                {{ recipe.description }}
+                            </div>
+
+                            <div class="blocks-13 post-element-right" gdArea="exportButtons">
+                                <button class="post-save-buttons" type="submit">
+                                    <span class="post-icon-email"></span> Email
+                                </button>
+                                <button class="post-save-buttons" type="submit">
+                                    <span class="post-icon-pdf"></span> PDF
+                                </button>
+                                <button class="post-save-buttons" type="submit">
+                                    <span class="post-icon-bookmark"></span> Bookmark
+                                </button>
+                            </div>
+
+                            <div class="blocks-14 post-element-center post-bite" gdArea="biteButton">
+                                <button class="post-bite-button" type="submit">
+                                    <div class="container-bite">
+                                        <div class="post-bite-div">
+                                            <span class="post-icon-heart-white"></span>
+                                        </div>
+                                        <div class="post-bite-div">
+                                            <span class="post-bite-text-above">Tried this recipe?</span>
+                                            <span class="post-bite-text-below">Leave a bite if you like it!</span>
+                                        </div>
+                                    </div>
+                                </button>
+                            </div>
+
+                            <div class="blocks-15 post-element-left post-subtitle" gdArea="tagsList">
+                                Tags:
+                                <br>
+                                <hr>
+                            </div>
+
+                            <div class="blocks-16 post-element-left post-reply" gdArea="reply">
+                                Leave a reply:
+                                <hr>
+                            </div>
+
+                            <div class="blocks-17 post-element-left post-subtitle" gdArea="commentsTitle">
+                                Comments:
+                                <br>
+                                <hr>
+                            </div>
+
+                            <div class="blocks-18 post-element-center" gdArea="commentsList">
+                                Comments List
+                            </div>
+
+                        </div>
                     </div>
-                </dd>
-
-            </dl>
+                </mat-card-content>
+            </mat-card>
         </div>
     </div>
 </div>
