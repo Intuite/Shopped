@@ -1,0 +1,26 @@
+<mat-list>
+    <div
+        *ngFor=" let rt of options | filter: searchText; let i = index; first as first ">
+        <mat-list-item>
+            <img
+                *ngIf="rt.image"
+                [src]="'data:' + rt.imageContentType + ';base64,' + rt.image"
+                alt="ingredient image"
+                matListAvatar
+            />
+            <mat-icon *ngIf="!rt.image" color="primary" matListIcon
+            >shopping_cart
+            </mat-icon
+            >
+            <button (click)="add(rt)" mat-icon-button>
+                <mat-icon color="accent">add</mat-icon>
+            </button>
+            <div matLine>
+                {{ rt.name }}
+            </div>
+            <div matLine>
+                {{ rt.description }}
+            </div>
+        </mat-list-item>
+    </div>
+</mat-list>

@@ -1,10 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  IngredientPicker,
-  IngredientPKForm,
-  IngredientPKSelection,
-  IngredientPKSelectionForm,
-} from 'app/shared/components/pickers/ingredient-picker/ingredient-picker.model';
+import { IngredientPicker, IngredientPKForm, IngredientPKSelection, IngredientPKSelectionForm } from './ingredient-picker.model';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { IIngredient } from 'app/shared/model/ingredient.model';

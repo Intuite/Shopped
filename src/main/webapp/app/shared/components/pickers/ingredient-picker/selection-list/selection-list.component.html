@@ -1,0 +1,8 @@
+<mat-list>
+    <jhi-ingredient-selection
+        (deselect)="remove($event)"
+        *ngFor="let item of controls; let i = index"
+        [form]="item"
+        [index]="i"
+    ></jhi-ingredient-selection>
+</mat-list>
