@@ -10,7 +10,6 @@ import { IRecipe } from 'app/shared/model/recipe.model';
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { RecipeService } from './recipe.service';
 import { RecipeDeleteDialogComponent } from './recipe-delete-dialog.component';
-import { Status } from 'app/shared/model/enumerations/status.model';
 import { RecipeTableComponent } from 'app/shared/tables/recipe-table/recipe-table.component';
 
 @Component({
@@ -93,17 +92,6 @@ export class RecipeComponent implements OnInit, OnDestroy {
         sort: this.predicate + ',' + (this.ascending ? 'asc' : 'desc'),
       },
     });
-  }
-
-  setStatus(element: IRecipe, newStatus: boolean): void {
-    this.recipeService
-      .update({
-        ...element,
-        status: !newStatus ? (Status.ACTIVE.toUpperCase() as Status) : (Status.INACTIVE.toUpperCase() as Status),
-      })
-      .subscribe(() => {
-        this.loadPage(this.page);
-      });
   }
 
   protected handleNavigation(): void {

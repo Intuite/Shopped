@@ -64,18 +64,9 @@
     <ng-container matColumnDef="status">
         <th *matHeaderCellDef mat-header-cell mat-sort-header>Status</th>
         <td *matCellDef="let element" mat-cell>
-            <div [ngSwitch]="element.status">
-                <button (click)="managementComponent.setStatus(element, true)" *ngSwitchCase="'ACTIVE'"
-                        class="text-white" jhiMaterialColor="success"
-                        mat-mini-fab>
-                    <mat-icon>toggle_on</mat-icon>
-                </button>
-                <button (click)="managementComponent.setStatus(element, false)" *ngSwitchDefault class="text-white"
-                        color="warn"
-                        mat-mini-fab>
-                    <mat-icon>toggle_off</mat-icon>
-                </button>
-            </div>
+            <span>
+                {{ element.status }}
+            </span>
         </td>
     </ng-container>
 

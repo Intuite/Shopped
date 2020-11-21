@@ -16,7 +16,6 @@ import { UserService } from 'app/core/user/user.service';
 import { AccountService } from 'app/core/auth/account.service';
 import { IRecipeHasIngredient, RecipeHasIngredient } from 'app/shared/model/recipe-has-ingredient.model';
 import { RecipeHasIngredientService } from 'app/entities/recipe-has-ingredient/recipe-has-ingredient.service.ts';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'jhi-recipe-update',
@@ -89,21 +88,6 @@ export class RecipeUpdateComponent implements OnInit {
         }
       });
 
-      this.recipeService
-        .queryAll()
-        .pipe(
-          map((res: HttpResponse<IRecipe[]>) => {
-            return res.body || [];
-          })
-        )
-        .subscribe((resBody: IRecipe[]) => {
-          this.recipes = resBody;
-        });
-
-      if (this.recipes !== undefined) {
-        this.recipeId = this.recipes.length;
-        this.recipeId++;
-      }
       this.updateForm(recipe);
 
       this.userService.query().subscribe((res: HttpResponse<IUser[]>) => (this.users = res.body || []));
@@ -161,29 +145,34 @@ export class RecipeUpdateComponent implements OnInit {
     if (recipe.id !== undefined) {
       this.subscribeToSaveResponse(this.recipeService.update(recipe));
     } else {
-      this.subscribeToSaveResponse(this.recipeService.create(recipe));
-      this.addIngredients();
+      this.recipeService.create(recipe).subscribe(
+        () => this.addIngredientsToRecipe(recipe),
+        () => console.warn('Error adding ingredients to recipe')
+      );
     }
+
+    this.previousState();
   }
 
-  addIngredients(): void {
+  addIngredientsToRecipe(recipe: Recipe): void {
     let i = 0;
     while (i < this.savedIngredients.length) {
-      const recipeHasIngredient = this.createFromFormIngredient(i);
-      this.subscribeToSaveResponse(this.recipeHasIngredientService.create(recipeHasIngredient));
+      const recipeHasIngredient = new RecipeHasIngredient(
+        undefined,
+        this.savedIngredients[i].amount,
+        recipe.status,
+        this.savedIngredients[i].ingredientName,
+        this.savedIngredients[i].ingredientId,
+        recipe.name,
+        recipe.id
+      );
+
+      this.recipeHasIngredientService.create(recipeHasIngredient).subscribe(
+        () => console.warn('Ingredient added to recipe'),
+        () => console.warn('error adding ingredient to recipe')
+      );
       i++;
     }
-  }
-
-  private createFromFormIngredient(n: number): IRecipeHasIngredient {
-    return {
-      ...new RecipeHasIngredient(),
-      id: undefined,
-      amount: this.savedIngredients[n].amount,
-      status: this.editForm.get(['status'])!.value,
-      ingredientId: this.savedIngredients[n].ingredientId,
-      recipeId: this.recipeId,
-    };
   }
 
   private createFromForm(): IRecipe {
@@ -198,7 +187,7 @@ export class RecipeUpdateComponent implements OnInit {
       imageContentType: this.editForm.get(['imageContentType'])!.value,
       image: this.editForm.get(['image'])!.value,
       status: this.editForm.get(['status'])!.value,
-      userId: this.user.id,
+      userId: 1,
     };
   }
 

@@ -9,7 +9,6 @@
             <h2 id="jhi-recipe-heading" jhiTranslate="shoppedApp.recipe.home.createOrEditLabel">
                 Create your own recipe</h2>
             <br>
-            {{recipeId|json}}
             <div>
 
                 <jhi-alert-error></jhi-alert-error>
@@ -112,7 +111,8 @@
                 </mat-form-field>
 
                 <hr>
-                <jhi-ingredient-picker></jhi-ingredient-picker>
+                <jhi-ingredient-picker >
+                </jhi-ingredient-picker>
 
                 <hr>
 
