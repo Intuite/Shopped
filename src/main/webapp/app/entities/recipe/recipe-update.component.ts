@@ -23,6 +23,13 @@ import { RecipeHasIngredientService } from 'app/entities/recipe-has-ingredient/r
   styleUrls: ['../../../content/scss/image_Select.scss'],
 })
 export class RecipeUpdateComponent implements OnInit {
+  isSaving = false;
+  users: IUser[] = [];
+  statusOptions = ['ACTIVE', 'INACTIVE'];
+  user!: IUser;
+  recipeId: any;
+  recipes?: Recipe[];
+
   editForm = this.fb.group({
     id: [],
     name: [null, [Validators.required]],
@@ -36,13 +43,6 @@ export class RecipeUpdateComponent implements OnInit {
     userId: [],
   });
 
-  isSaving = false;
-  users: IUser[] = [];
-  statusOptions = ['ACTIVE', 'INACTIVE'];
-  user!: IUser;
-  recipeId: any;
-  recipes?: Recipe[];
-
   // Ingredientes quemados
   ingredientOne: IRecipeHasIngredient = {
     id: 1,
@@ -51,7 +51,7 @@ export class RecipeUpdateComponent implements OnInit {
     ingredientName: 'Allspice',
     ingredientId: 1,
     recipeName: 'Lasagna',
-    recipeId: 5,
+    recipeId: 1,
   };
   ingredientTwo: IRecipeHasIngredient = {
     id: 2,
@@ -60,7 +60,7 @@ export class RecipeUpdateComponent implements OnInit {
     ingredientName: 'Ammaretti',
     ingredientId: 2,
     recipeName: 'Lasagna',
-    recipeId: 5,
+    recipeId: 1,
   };
   savedIngredients: IRecipeHasIngredient[] = [this.ingredientOne, this.ingredientTwo];
 
@@ -164,7 +164,8 @@ export class RecipeUpdateComponent implements OnInit {
         this.savedIngredients[i].ingredientName,
         this.savedIngredients[i].ingredientId,
         recipe.name,
-        recipe.id
+        // recipe id issue 'validation error'
+        this.savedIngredients[i].recipeId
       );
 
       this.recipeHasIngredientService.create(recipeHasIngredient).subscribe(
@@ -187,7 +188,7 @@ export class RecipeUpdateComponent implements OnInit {
       imageContentType: this.editForm.get(['imageContentType'])!.value,
       image: this.editForm.get(['image'])!.value,
       status: this.editForm.get(['status'])!.value,
-      userId: 1,
+      userId: this.user.id,
     };
   }
 
