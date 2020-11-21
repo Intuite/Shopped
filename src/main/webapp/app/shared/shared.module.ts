@@ -42,6 +42,7 @@ import { ChipsComponent } from './components/pickers/base-picker/chips/chips.com
 import { ListComponent } from './components/pickers/base-picker/list/list.component';
 import { TagFilterPipe } from './components/pickers/pipes/tag-filter.pipe';
 import { RecipeTagPickerComponent } from 'app/shared/components/pickers/recipe-tag-picker/recipe-tag-picker.component';
+import { ViewTransactionsComponent } from './components/view-transactions/view-transactions.component';
 @NgModule({
   imports: [JhMaterialModule, ShoppedSharedLibsModule, FlexModule, RouterModule, ExtendedModule],
   declarations: [
@@ -81,6 +82,7 @@ import { RecipeTagPickerComponent } from 'app/shared/components/pickers/recipe-t
     DialogComponent,
     PanelComponent,
     TagFilterPipe,
+    ViewTransactionsComponent,
   ],
   entryComponents: [LoginModalComponent],
   exports: [
@@ -114,6 +116,7 @@ import { RecipeTagPickerComponent } from 'app/shared/components/pickers/recipe-t
     IngredientTagTableComponent,
     AwardPickerDialogComponent,
     GiveAwardComponent,
+    ViewTransactionsComponent,
   ],
 })
 export class ShoppedSharedModule {}
