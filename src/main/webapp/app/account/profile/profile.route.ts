@@ -11,7 +11,7 @@ export const profileRoute: Route = {
     userProfile: UserProfileResolve,
   },
   data: {
-    authorities: [Authority.USER],
+    authorities: [Authority.USER, Authority.MOD],
     pageTitle: 'global.menu.account.profile',
   },
   canActivate: [UserRouteAccessService],
