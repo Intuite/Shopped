@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +30,12 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api")
 public class UserProfileResource {
+
+    private static class UserProfileResourceException extends RuntimeException {
+        private UserProfileResourceException(String message) {
+            super(message);
+        }
+    }
 
     private final Logger log = LoggerFactory.getLogger(UserProfileResource.class);
 
@@ -125,6 +130,19 @@ public class UserProfileResource {
     public ResponseEntity<UserProfileDTO> getUserProfile(@PathVariable Long id) {
         log.debug("REST request to get UserProfile : {}", id);
         Optional<UserProfileDTO> userProfileDTO = userProfileService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(userProfileDTO);
+    }
+
+    /**
+     * {@code GET  /user-profiles/user/{id}} : get the current user.
+     *
+     * @return a user profile with the user.
+     * @throws RuntimeException {@code 500 (Internal Server Error)} if the user couldn't be returned.
+     */
+    @GetMapping("/user-profiles/user/{id}")
+    public ResponseEntity<UserProfileDTO> getAccount(@PathVariable Long id) {
+        log.debug("REST request to get UserProfile by User : {}", id);
+        Optional<UserProfileDTO> userProfileDTO = userProfileService.findByUser(id);
         return ResponseUtil.wrapOrNotFound(userProfileDTO);
     }
 

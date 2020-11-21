@@ -1,5 +1,6 @@
 package com.intuite.shopped.service.dto;
 
+import com.intuite.shopped.domain.UserProfile;
 import io.swagger.annotations.ApiModel;
 import java.time.LocalDate;
 import java.io.Serializable;
@@ -11,7 +12,7 @@ import com.intuite.shopped.domain.enumeration.Status;
  */
 @ApiModel(description = "Users for shopped that\nis composed with User.\n@author Isaac Miranda")
 public class UserProfileDTO implements Serializable {
-    
+
     private Long id;
 
     private String description;
@@ -28,7 +29,7 @@ public class UserProfileDTO implements Serializable {
     private Long userId;
 
     private String userLogin;
-    
+
     public Long getId() {
         return id;
     }
