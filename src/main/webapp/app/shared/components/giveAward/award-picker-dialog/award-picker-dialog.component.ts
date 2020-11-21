@@ -48,20 +48,26 @@ export class AwardPickerDialogComponent implements OnInit {
       (res: HttpResponse<IAward[]>) => this.onSuccess(res.body),
       () => this.onError()
     );
-    this.accountService.identity().subscribe(res => (this.account = res || undefined));
-    this.cookieService
-      .query({
-        ...(this.account?.id && { 'userId.equals': this.account?.id }),
-      })
-      .subscribe(
-        (res: HttpResponse<ICookies[]>) => this.onCookieSuccess(res.body || undefined),
-        () => console.warn('se cayo')
-      );
+    this.accountService.identity().subscribe(res => this.onAccountSuccess(res || undefined));
     this.postService.find(this.data).subscribe(
       (res: HttpResponse<IPost>) => this.onSuccessPost(res.body || undefined),
       () => console.warn('no such post')
     );
     this.catalogueService.find(1).subscribe((res: HttpResponse<ICatalogue>) => this.setBundle(res.body || undefined));
+  }
+
+  onAccountSuccess(account: Account | undefined): void {
+    if (account !== undefined) {
+      this.account = account;
+      this.cookieService
+        .query({
+          ...(this.account?.id && { 'userId.equals': this.account?.id }),
+        })
+        .subscribe(
+          (res: HttpResponse<ICookies[]>) => this.onCookieSuccess(res.body || undefined),
+          () => console.warn('se cayo')
+        );
+    }
   }
 
   onCookieSuccess(data: any): void {

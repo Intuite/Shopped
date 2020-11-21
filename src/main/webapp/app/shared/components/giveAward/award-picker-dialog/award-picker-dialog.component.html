@@ -48,12 +48,11 @@
             <mat-divider></mat-divider>
             <div class="col-md-5 mt-3 sticky-top">
                 <div class="justify-content-center" align="center">
-                    <!-- TODO -->
                     <img [src]="'data:' + award.imageContentType + ';base64,' + award.image"
                          alt="award image" class="rounded-circle mt-2 img-award-details"
                          align="center"/>
                     <h3 class="text-center">{{award.name}}</h3>
-                    <p class="text-center">{{award.description}}</p>
+                    <p class="text-center description">{{award.description}}</p>
                     <h2 class="text-center primary">
                         <fa-icon icon="cookie-bite"></fa-icon>
                         {{award.cost}}</h2>
