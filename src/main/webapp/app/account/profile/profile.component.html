@@ -25,31 +25,40 @@
                                 </li>
                             </ul>
                         </mat-card-subtitle>
-                        <img mat-card-avatar
-                             src="https://material.angular.io/assets/img/examples/shiba2.jpg"
-                             alt="Photo of a Shiba Inu">
+<!--                        <img mat-card-avatar-->
+<!--                             src="https://material.angular.io/assets/img/examples/shiba2.jpg"-->
+<!--                             alt="Photo of a Shiba Inu">-->
                     </mat-card-header>
                     <!--                    <img mat-card-image-->
                     <!--                         src="https://material.angular.io/assets/img/examples/shiba2.jpg"-->
                     <!--                         alt="Photo of a Shiba Inu">-->
                     <img mat-card-image [src]="'data:' + userProfile.imageContentType + ';base64,' + userProfile.image"
-                         alt="---"/>
+                         alt="No profile image"/>
                     <mat-card-content>
-                        {{ userProfile.description }}
+                        Description: {{ userProfile.description }}
                     </mat-card-content>
 
                     <mat-card-footer>
-                        <jhi-boolean
-                            [value]="user.activated ? true : false"
-                            [textTrue]="'userManagement.activated' | translate"
-                            [textFalse]="'userManagement.deactivated' | translate">
-                        </jhi-boolean>
+                        <div fxLayout="row">
+                            <jhi-boolean
+                                [value]="user.activated ? true : false"
+                                [textTrue]="'userManagement.activated' | translate"
+                                [textFalse]="'userManagement.deactivated' | translate">
+                            </jhi-boolean>
+                        </div>
+                        <button [routerLink]="['/user-profile', userProfile.id, 'edit']"
+                                class="text-white mx-2 my-2 float-right"
+                                color="primary"
+                                mat-mini-fab
+                                type="submit">
+                            <mat-icon>create</mat-icon>
+                        </button>
                     </mat-card-footer>
-
                     <mat-card-actions>
                         <mat-icon>facebook</mat-icon>
                         <mat-icon>instagram</mat-icon>
                     </mat-card-actions>
+
                 </mat-card>
             </div>
             <div id="profile-additional-information">
