@@ -1,0 +1,32 @@
+<div fxLayout="row">
+    <mat-expansion-panel
+        #panel
+        (closed)="panelStatus = false"
+        (opened)="checkSelections()"
+        fxFlex="100%"
+    >
+        <mat-expansion-panel-header>
+            <mat-panel-title *ngIf="!panelStatus">Ingredients</mat-panel-title>
+            <mat-panel-title *ngIf="panelStatus">
+                <button
+                    (click)="launchDialog()"
+                    class="corner-add"
+                    color="accent"
+                    mat-mini-fab
+                >
+                    <mat-icon>add</mat-icon>
+                </button>
+            </mat-panel-title>
+            <mat-panel-description style="justify-content: end">
+                {{ this.selections.length }}
+                <mat-icon>shopping_cart</mat-icon>
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <jhi-ingredient-selection-list
+            (isEmpty)="togglePanel($event)"
+            [ingredientList]="selections"
+            [list]="getSelectedForms()"
+        >
+        </jhi-ingredient-selection-list>
+    </mat-expansion-panel>
+</div>
