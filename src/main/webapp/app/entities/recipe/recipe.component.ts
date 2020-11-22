@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, ParamMap, Router, Data } from '@angular/router';
 import { Subscription, combineLatest } from 'rxjs';
@@ -10,6 +10,7 @@ import { IRecipe } from 'app/shared/model/recipe.model';
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { RecipeService } from './recipe.service';
 import { RecipeDeleteDialogComponent } from './recipe-delete-dialog.component';
+import { RecipeTableComponent } from 'app/shared/tables/recipe-table/recipe-table.component';
 
 @Component({
   selector: 'jhi-recipe',
@@ -24,6 +25,9 @@ export class RecipeComponent implements OnInit, OnDestroy {
   predicate!: string;
   ascending!: boolean;
   ngbPaginationPage = 1;
+  tableLoaded = false;
+  requesting = false;
+  @ViewChild('table', { static: false }) table!: RecipeTableComponent;
 
   constructor(
     protected recipeService: RecipeService,
@@ -34,45 +38,15 @@ export class RecipeComponent implements OnInit, OnDestroy {
     protected modalService: NgbModal
   ) {}
 
-  loadPage(page?: number, dontNavigate?: boolean): void {
-    const pageToLoad: number = page || this.page || 1;
-
-    this.recipeService
-      .query({
-        page: pageToLoad - 1,
-        size: this.itemsPerPage,
-        sort: this.sort(),
-      })
-      .subscribe(
-        (res: HttpResponse<IRecipe[]>) => this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate),
-        () => this.onError()
-      );
-  }
-
   ngOnInit(): void {
     this.handleNavigation();
     this.registerChangeInRecipes();
   }
 
-  protected handleNavigation(): void {
-    combineLatest(this.activatedRoute.data, this.activatedRoute.queryParamMap, (data: Data, params: ParamMap) => {
-      const page = params.get('page');
-      const pageNumber = page !== null ? +page : 1;
-      const sort = (params.get('sort') ?? data['defaultSort']).split(',');
-      const predicate = sort[0];
-      const ascending = sort[1] === 'asc';
-      if (pageNumber !== this.page || predicate !== this.predicate || ascending !== this.ascending) {
-        this.predicate = predicate;
-        this.ascending = ascending;
-        this.loadPage(pageNumber, true);
-      }
-    }).subscribe();
-  }
-
   ngOnDestroy(): void {
-    if (this.eventSubscriber) {
-      this.eventManager.destroy(this.eventSubscriber);
-    }
+    //  if (this.eventSubscriber) {
+    //    this.eventManager.destroy(this.eventSubscriber);
+    //  }
   }
 
   trackId(index: number, item: IRecipe): number {
@@ -80,16 +54,8 @@ export class RecipeComponent implements OnInit, OnDestroy {
     return item.id!;
   }
 
-  byteSize(base64String: string): string {
-    return this.dataUtils.byteSize(base64String);
-  }
-
-  openFile(contentType = '', base64String: string): void {
-    return this.dataUtils.openFile(contentType, base64String);
-  }
-
   registerChangeInRecipes(): void {
-    this.eventSubscriber = this.eventManager.subscribe('recipeListModification', () => this.loadPage());
+    // this.eventSubscriber = this.eventManager.subscribe('recipeListModification', () => this.loadPage());
   }
 
   delete(recipe: IRecipe): void {
@@ -105,23 +71,86 @@ export class RecipeComponent implements OnInit, OnDestroy {
     return result;
   }
 
-  protected onSuccess(data: IRecipe[] | null, headers: HttpHeaders, page: number, navigate: boolean): void {
-    this.totalItems = Number(headers.get('X-Total-Count'));
-    this.page = page;
-    if (navigate) {
-      this.router.navigate(['/recipe'], {
-        queryParams: {
-          page: this.page,
-          size: this.itemsPerPage,
-          sort: this.predicate + ',' + (this.ascending ? 'asc' : 'desc'),
-        },
-      });
+  changePage(pageIndex: number): void {
+    const page = pageIndex;
+    if (page !== this.page) {
+      this.page = page;
     }
+  }
+
+  changePageSize(pageSize: number): void {
+    if (pageSize !== this.itemsPerPage) {
+      this.itemsPerPage = pageSize;
+    }
+  }
+
+  navigate(): void {
+    this.router.navigate(['./recipe'], {
+      queryParams: {
+        page: this.page,
+        size: this.itemsPerPage,
+        sort: this.predicate + ',' + (this.ascending ? 'asc' : 'desc'),
+      },
+    });
+  }
+
+  protected handleNavigation(): void {
+    combineLatest(this.activatedRoute.data, this.activatedRoute.queryParamMap, (data: Data, params: ParamMap) => {
+      const page = params.get('page');
+      const pageNumber = page !== null ? +page : 0;
+      const pageSize = params.get('size');
+      this.itemsPerPage = pageSize !== null ? +pageSize : ITEMS_PER_PAGE;
+      const sort = (params.get('sort') ?? data['defaultSort']).split(',');
+      const predicate = sort[0];
+      const ascending = sort[1] === 'asc';
+      if (pageNumber !== this.page || predicate !== this.predicate || ascending !== this.ascending) {
+        this.predicate = predicate;
+        this.ascending = ascending;
+        this.loadPage(pageNumber);
+      }
+    }).subscribe();
+  }
+
+  protected onSuccess(data: IRecipe[] | null, headers: HttpHeaders, page: number): void {
+    this.page = page;
     this.recipes = data || [];
+    this.totalItems = this.recipes?.length ?? 0;
     this.ngbPaginationPage = this.page;
+    this.requesting = false;
+    if (this.tableLoaded) {
+      this.refresh();
+    }
+    this.tableLoaded = true;
   }
 
   protected onError(): void {
     this.ngbPaginationPage = this.page ?? 1;
+    this.requesting = false;
+  }
+
+  protected refresh(): void {
+    this.table.reloadSource(this.recipes as IRecipe[]);
+    this.navigate();
+  }
+
+  private loadPage(page?: number): void {
+    const pageToLoad: number = page || this.page || 0;
+    this.requesting = true;
+    this.recipeService
+      .queryAll({
+        sort: this.sort(),
+      })
+      .subscribe(
+        (res: HttpResponse<IRecipe[]>) => this.onSuccess(res.body, res.headers, pageToLoad),
+        () => this.onError()
+      );
+  }
+
+  byteSize(base64String: string): string {
+    return this.dataUtils.byteSize(base64String);
+  }
+
+  openFile(contentType = '', base64String: string): void {
+    return this.dataUtils.openFile(contentType, base64String);
   }
 }
