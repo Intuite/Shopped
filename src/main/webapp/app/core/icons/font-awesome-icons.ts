@@ -37,6 +37,19 @@ import {
   faDownload,
   // jhipster-needle-add-icon-import
   faHome,
+  faUsersCog,
+  faUtensils,
+  faTags,
+  faTag,
+  faHamburger,
+  faThermometer,
+  faMortarPestle,
+  faAward,
+  faBoxOpen,
+  faHistory,
+  faStickyNote,
+  faCartArrowDown,
+  faBookmark,
 } from '@fortawesome/free-solid-svg-icons';
 
 export const fontAwesomeIcons = [
@@ -78,4 +91,17 @@ export const fontAwesomeIcons = [
   faDownload,
   // jhipster-needle-add-icon-import
   faAsterisk,
+  faUsersCog,
+  faUtensils,
+  faTags,
+  faTag,
+  faHamburger,
+  faThermometer,
+  faMortarPestle,
+  faAward,
+  faBoxOpen,
+  faHistory,
+  faStickyNote,
+  faCartArrowDown,
+  faBookmark,
 ];
