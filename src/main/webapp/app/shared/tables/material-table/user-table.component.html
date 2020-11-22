@@ -115,7 +115,7 @@
         <th *matHeaderCellDef class="text-center" mat-header-cell>Options</th>
         <td *matCellDef="let element" mat-cell>
             <div class="w-100" fxLayout="row" fxLayoutAlign="center center">
-                <button [routerLink]="['./', element.login, 'view']"
+                <button [routerLink]="['/account/profile', element.login]"
                         class="text-white"
                         jhiMaterialColor="secondary"
                         mat-mini-fab
