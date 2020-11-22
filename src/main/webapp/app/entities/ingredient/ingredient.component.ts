@@ -30,7 +30,7 @@ export class IngredientComponent implements OnInit, OnDestroy {
   ascending!: boolean;
   ngbPaginationPage = 0;
   tableLoaded = false;
-
+  requesting = false;
   @ViewChild('tbl', { static: false }) tbl!: IngredientTableComponent;
 
   constructor(
@@ -151,34 +151,35 @@ export class IngredientComponent implements OnInit, OnDestroy {
   }
 
   protected onSuccess(data: IIngredient[] | null, headers: HttpHeaders, page: number): void {
-    this.totalItems = Number(headers.get('X-Total-Count'));
+    this.totalItems = this.ingredients?.length ?? 0;
     this.page = page;
     this.ingredients = data || [];
     this.ngbPaginationPage = this.page;
+    this.requesting = false;
+    if (this.tableLoaded) {
+      this.refresh();
+    }
     this.tableLoaded = true;
   }
-
   protected onError(): void {
     this.ngbPaginationPage = this.page ?? 1;
   }
 
-  protected refresh(page: number): void {
-    this.page = page;
+  protected refresh(): void {
+    this.tbl.reloadSource(this.ingredients as IIngredient[]);
+    this.navigate();
   }
 
-  private loadPage(page?: number): void {
+  loadPage(page?: number): void {
     const pageToLoad: number = page || this.page || 0;
-    if (this.totalItems === 0) {
-      this.ingredientService
-        .queryAll({
-          sort: this.sort(),
-        })
-        .subscribe(
-          (res: HttpResponse<IIngredient[]>) => this.onSuccess(res.body, res.headers, pageToLoad),
-          () => this.onError()
-        );
-    } else {
-      this.refresh(pageToLoad);
-    }
+    this.requesting = true;
+    this.ingredientService
+      .queryAll({
+        sort: this.sort(),
+      })
+      .subscribe(
+        (res: HttpResponse<IIngredient[]>) => this.onSuccess(res.body, res.headers, pageToLoad),
+        () => this.onError()
+      );
   }
 }
