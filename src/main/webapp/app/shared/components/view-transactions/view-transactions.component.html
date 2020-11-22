@@ -1,4 +1,4 @@
-<table mat-table [dataSource]="transactions" class="mat-elevation-z8">
+<table mat-table [dataSource]="transactions" class="mat-elevation-z8" *ngIf="transactions.length !== 0">
 
     <!-- Position Column -->
     <ng-container matColumnDef="cost">

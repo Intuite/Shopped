@@ -2,100 +2,109 @@
 <html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}" lang="en">
 <head>
     <title th:text="#{email.invoice.title (${transac.id})}"></title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="icon" th:href="@{|${baseUrl}/favicon.ico|}" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="icon" th:href="@{|${baseUrl}/favicon.ico|}"/>
 </head>
 <body>
 <div>
+
     <tr>
-        <td>
-            <!--Agregar una linea con el logo de shopped para que se vea mas lindo -->
-        </td>
-    </tr>
-    <tr>
-        <td bgcolor="#f1ece8">
+        <td bgcolor="#fcf8f5">
             <table width="470" style="padding-left:5px;padding-right:5px;padding-bottom:10px;color:#212529">
                 <tbody>
-                    <tr>
-                        <td>
-                            <h2 th:text="#{email.invoice.greeting (${user.login})}">
-                            </h2>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <h3 th:text="#{email.invoice.content1}"> </h3>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <table width="470" border="0" align="center" style="padding-bottom:10px">
-                                <thead>
-                                    <tr>
-                                        <td style="width:50px"></td>
-                                        <td style="width:545px"></td>
-                                        <td style="width:175px"></td>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td style="padding-top: 5px; padding-bottom: 5px" colspan="3"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <img src="https://i.ibb.co/QMQCp7y/cookie.png" style="width: 40px; height:40px; border-radius: 3px; align-content: center; vertical-align: middle;">
-                                        </td>
-                                        <td style="font-size:12px;padding-right:10px;padding-top:10px;padding-bottom:10px" th:text="#{ email.invoice.cookies (${transac.cookiesAmount})}">
-                                        </td>
-                                        <td style="font-family:Helvetica,Arial,sans-serif;font-size:14px;padding-right:15px;text-align:right;padding-top:10px;padding-bottom:10px" th:text="#{ email.invoice.cost (${transac.amount})}">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="padding-top: 5px" colspan="3"></td>
-                                    </tr>
-                                    <tr style="">
-                                        <td style="padding-bottom: 5px; width: 313px; padding-top: 5px; border-top: 2px solid #bbb" colspan="2">
-                                            <table>
-                                                <tbody>
-                                                    <tr>
-                                                        <td th:text="#{ email.invoice.transaction (${transac.id})}"></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td th:text="#{ email.invoice.date (${transac.created})}"></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td th:text="#{ email.invoice.paymentMethod }"></td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </td>
-                                        <td style="padding-top: 5px; width: 157px; color: #ff8830; text-align: right; border-top: 2px solid #bbb; padding-right: 15px" colspan="1" th:text="#{ email.invoice.total (${transac.amount})}"></td>
-                                    </tr>
-                                </tbody>
+                <tr>
+                    <td width="480" bgcolor="#fcf8f5">
+                        <!--Agregar una linea con el logo de shopped para que se vea mas lindo -->
+                        <img src="https://i.postimg.cc/T3f9mdh5/banner-shopped.png"
+                             style="width: 100%; height:55px; object-fit: cover;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h2 th:text="#{email.invoice.greeting (${user.login})}">
+                        </h2>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h3 th:text="#{email.invoice.content1}"></h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table width="470" border="0" align="center" style="padding-bottom:10px">
+                            <thead>
+                            <tr>
+                                <td style="width:50px"></td>
+                                <td style="width:545px"></td>
+                                <td style="width:175px"></td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td style="padding-top: 5px; padding-bottom: 5px" colspan="3"></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img src="https://i.ibb.co/qFZxgpb/cookie-icon-oreo.png"
+                                         style="width: 40px; height:40px; border-radius: 3px; align-content: center; vertical-align: middle;">
+                                </td>
+                                <td style="font-size:12px;padding-right:10px;padding-top:10px;padding-bottom:10px"
+                                    th:text="#{ email.invoice.cookies (${transac.cookiesAmount})}">
+                                </td>
+                                <td style="font-family:Helvetica,Arial,sans-serif;font-size:14px;padding-right:15px;text-align:right;padding-top:10px;padding-bottom:10px"
+                                    th:text="#{ email.invoice.cost (${transac.amount})}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding-top: 5px" colspan="3"></td>
+                            </tr>
+                            <tr style="">
+                                <td style="padding-bottom: 5px; width: 313px; padding-top: 5px; border-top: 2px solid #bbb"
+                                    colspan="2">
+                                    <table>
+                                        <tbody>
+                                        <tr>
+                                            <td th:text="#{ email.invoice.transaction (${transac.id})}"></td>
+                                        </tr>
+                                        <tr>
+                                            <td th:text="#{ email.invoice.date (${ formatedDate })}"></td>
+                                        </tr>
+                                        <tr>
+                                            <td th:text="#{ email.invoice.paymentMethod }"></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                                <td style="padding-top: 5px; width: 157px; color: #ff8830; text-align: right; border-top: 2px solid #bbb; padding-right: 15px"
+                                    colspan="1" th:text="#{ email.invoice.total (${transac.amount})}"></td>
+                            </tr>
+                            </tbody>
 
-                            </table>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p th:text="#{email.invoice.terms}"></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p>
-                                <em th:text="#{email.invoice.BottomText}">.</em>
-                                <br/>
-                                <em th:text="#{email.signature}">.</em>
-                            </p>
-                        </td>
-                    </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p th:text="#{email.invoice.terms}"></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>
+                            <em th:text="#{email.invoice.BottomText}">.</em>
+                            <br/>
+                            <em th:text="#{email.signature}">.</em>
+                        </p>
+                    </td>
+                </tr>
                 </tbody>
             </table>
+
         </td>
     </tr>
 </div>
-
-
+<img src="https://i.postimg.cc/pXDCphVt/banner-intuite.png"
+     style="width: 488px; height:37px; object-fit: cover; margin-left: 1px"/>
 </body>
 </html>

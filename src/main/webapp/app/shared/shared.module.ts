@@ -31,7 +31,7 @@ import { BuyCookieComponent } from './components/buy-cookie/buy-cookie.component
 import { BundlePickerDialogComponent } from './components/buy-cookie/bundle-picker-dialog/bundle-picker-dialog.component';
 import { CheckOutComponent } from './components/check-out/check-out.component';
 import { IngredientTagTableComponent } from './components/tables/ingredient-tag-table/ingredient-tag-table.component';
-
+import { RecipeTableComponent } from './tables/recipe-table/recipe-table.component';
 import { RecipeTagPickerComponent } from 'app/shared/components/pickers/recipe-tag-picker/recipe-tag-picker.component';
 
 // Ingredient Picker
@@ -73,6 +73,7 @@ import { ViewTransactionsComponent } from './components/view-transactions/view-t
     AwardTableComponent,
     IngredientTableComponent,
     RecipeTagTableComponent,
+    RecipeTableComponent,
     RecipeTagPickerComponent,
     DatepickerComponent,
     CheckboxComponent,
@@ -119,6 +120,7 @@ import { ViewTransactionsComponent } from './components/view-transactions/view-t
     AwardTableComponent,
     IngredientTableComponent,
     RecipeTagTableComponent,
+    RecipeTableComponent,
     RecipeTagPickerComponent,
     DatepickerComponent,
     CheckboxComponent,
