@@ -26,8 +26,6 @@ export class RecipeListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.accountService.identity().subscribe(res => this.onAccountSuccess(res || undefined));
-
     this.recipeService.query().subscribe(
       (res: HttpResponse<IRecipe[]>) => this.onSuccess(res.body),
       () => this.onError()

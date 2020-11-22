@@ -5,7 +5,9 @@
 
             <hr>
 
-            <jhi-alert-error></jhi-alert-error>
+
+          <jhi-chip-list></jhi-chip-list>
+
 
             <dl class="row-md jh-entity-details">
                 <dt><span jhiTranslate="shoppedApp.recipe.name">Name</span></dt>
@@ -46,6 +48,8 @@
                     {{ recipe.userLogin }}
                 </dd>
             </dl>
+
+            <jhi-recipe-user-list>
 
             <button type="submit"
                     (click)="previousState()"
