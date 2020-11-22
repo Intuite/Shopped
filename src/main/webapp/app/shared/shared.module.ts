@@ -24,25 +24,36 @@ import { RecipeTagTableComponent } from './tables/recipe-tag-table/recipe-tag-ta
 import { DatepickerComponent } from './components/datepicker/datepicker.component';
 import { CheckboxComponent } from './components/checkbox/checkbox.component';
 import { PostTableComponent } from './tables/post-table/post-table.component';
-import { IngredientPickerComponent } from './components/pickers/ingredient-picker/ingredient-picker.component';
-import { SelectionComponent as IngredientPKSelectionComponent } from './components/pickers/ingredient-picker/selection/selection.component';
-import { DialogComponent as IngredientPKDialogComponent } from './components/pickers/ingredient-picker/dialog/dialog.component';
 
+import { GiveAwardComponent } from './components/give-award/give-award.component';
+import { AwardPickerDialogComponent } from './components/giveAward/award-picker-dialog/award-picker-dialog.component';
 import { BuyCookieComponent } from './components/buy-cookie/buy-cookie.component';
 import { BundlePickerDialogComponent } from './components/buy-cookie/bundle-picker-dialog/bundle-picker-dialog.component';
 import { CheckOutComponent } from './components/check-out/check-out.component';
-import { FilterPipe } from './components/pickers/pipes/filter.pipe';
 import { IngredientTagTableComponent } from './components/tables/ingredient-tag-table/ingredient-tag-table.component';
-import { GiveAwardComponent } from './components/give-award/give-award.component';
-import { AwardPickerDialogComponent } from './components/giveAward/award-picker-dialog/award-picker-dialog.component';
-import { BasePickerComponent } from './components/pickers/base-picker/base-picker.component';
-import { DialogComponent } from './components/pickers/base-picker/dialog/dialog.component';
-import { PanelComponent } from './components/pickers/base-picker/panel/panel.component';
-import { ChipsComponent } from './components/pickers/base-picker/chips/chips.component';
-import { ListComponent } from './components/pickers/base-picker/list/list.component';
-import { TagFilterPipe } from './components/pickers/pipes/tag-filter.pipe';
+
 import { RecipeTagPickerComponent } from 'app/shared/components/pickers/recipe-tag-picker/recipe-tag-picker.component';
+
+// Ingredient Picker
+import { IngredientPickerComponent } from './components/pickers/ingredient-picker/ingredient-picker.component';
+import { DialogComponent as IngredientPickerDialogComponent } from './components/pickers/ingredient-picker/dialog/dialog.component';
+import { PanelComponent as IngredientPickerPanelComponent } from './components/pickers/ingredient-picker/panel/panel.component';
+import { ListComponent as IngredientPickerListComponent } from './components/pickers/ingredient-picker/list/list.component';
+import { SelectionComponent as IngredientPickerSelectionComponent } from './components/pickers/ingredient-picker/selection/selection.component';
+import { SelectionListComponent as IngredientPickerSelectionListComponent } from './components/pickers/ingredient-picker/selection-list/selection-list.component';
+
+// Base Picker
+import { BasePickerComponent } from './components/pickers/base-picker/base-picker.component';
+import { DialogComponent as BasePickerDialogComponent } from './components/pickers/base-picker/dialog/dialog.component';
+import { PanelComponent as BasePickerPanelComponent } from './components/pickers/base-picker/panel/panel.component';
+import { ChipsComponent as BasePickerChipsComponent } from './components/pickers/base-picker/chips/chips.component';
+import { ListComponent as BasePickerListComponent } from './components/pickers/base-picker/list/list.component';
+
+// Pipes
+import { FilterPipe } from './components/pickers/pipes/filter.pipe';
+import { TagFilterPipe } from './components/pickers/pipes/tag-filter.pipe';
 import { ViewTransactionsComponent } from './components/view-transactions/view-transactions.component';
+
 @NgModule({
   imports: [JhMaterialModule, ShoppedSharedLibsModule, FlexModule, RouterModule, ExtendedModule],
   declarations: [
@@ -51,9 +62,7 @@ import { ViewTransactionsComponent } from './components/view-transactions/view-t
     AlertErrorComponent,
     LoginModalComponent,
     HasAnyAuthorityDirective,
-    ChipsComponent,
     ColorDirective,
-    ListComponent,
     TabsComponent,
     UserTableComponent,
     WrapperMaterialTableComponent,
@@ -68,21 +77,28 @@ import { ViewTransactionsComponent } from './components/view-transactions/view-t
     DatepickerComponent,
     CheckboxComponent,
     PostTableComponent,
-    IngredientPickerComponent,
-    IngredientPKSelectionComponent,
-    IngredientPKDialogComponent,
     BuyCookieComponent,
     BundlePickerDialogComponent,
     CheckOutComponent,
     FilterPipe,
     IngredientTagTableComponent,
+    TagFilterPipe,
     GiveAwardComponent,
     AwardPickerDialogComponent,
-    BasePickerComponent,
-    DialogComponent,
-    PanelComponent,
     TagFilterPipe,
     ViewTransactionsComponent,
+    BasePickerComponent,
+    BasePickerDialogComponent,
+    BasePickerPanelComponent,
+    BasePickerChipsComponent,
+    BasePickerListComponent,
+    IngredientPickerComponent,
+    IngredientPickerSelectionComponent,
+    IngredientPickerDialogComponent,
+    IngredientPickerSelectionComponent,
+    IngredientPickerSelectionListComponent,
+    IngredientPickerPanelComponent,
+    IngredientPickerListComponent,
   ],
   entryComponents: [LoginModalComponent],
   exports: [
@@ -93,9 +109,7 @@ import { ViewTransactionsComponent } from './components/view-transactions/view-t
     AlertErrorComponent,
     LoginModalComponent,
     HasAnyAuthorityDirective,
-    ListComponent,
     TabsComponent,
-    ChipsComponent,
     ColorDirective,
     UserTableComponent,
     DynamicTablePrototypeComponent,
@@ -109,14 +123,23 @@ import { ViewTransactionsComponent } from './components/view-transactions/view-t
     DatepickerComponent,
     CheckboxComponent,
     PostTableComponent,
-    IngredientPickerComponent,
-    IngredientPKSelectionComponent,
-    IngredientPKDialogComponent,
     BuyCookieComponent,
     IngredientTagTableComponent,
     AwardPickerDialogComponent,
     GiveAwardComponent,
     ViewTransactionsComponent,
+    BasePickerComponent,
+    BasePickerDialogComponent,
+    BasePickerPanelComponent,
+    BasePickerChipsComponent,
+    BasePickerListComponent,
+    IngredientPickerComponent,
+    IngredientPickerSelectionComponent,
+    IngredientPickerDialogComponent,
+    IngredientPickerSelectionComponent,
+    IngredientPickerSelectionListComponent,
+    IngredientPickerPanelComponent,
+    IngredientPickerListComponent,
   ],
 })
 export class ShoppedSharedModule {}
