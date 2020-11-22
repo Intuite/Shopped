@@ -146,7 +146,11 @@ export class RecipeUpdateComponent implements OnInit {
       this.subscribeToSaveResponse(this.recipeService.update(recipe));
     } else {
       this.recipeService.create(recipe).subscribe(
-        () => this.addIngredientsToRecipe(recipe),
+        response => {
+          if (response.body !== null) {
+            this.addIngredientsToRecipe(response.body);
+          }
+        },
         () => console.warn('Error adding ingredients to recipe')
       );
     }
@@ -161,11 +165,11 @@ export class RecipeUpdateComponent implements OnInit {
         undefined,
         this.savedIngredients[i].amount,
         recipe.status,
-        this.savedIngredients[i].ingredientName,
+        undefined,
         this.savedIngredients[i].ingredientId,
         recipe.name,
         // recipe id issue 'validation error'
-        this.savedIngredients[i].recipeId
+        recipe.id
       );
 
       this.recipeHasIngredientService.create(recipeHasIngredient).subscribe(
