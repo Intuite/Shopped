@@ -19,6 +19,10 @@ import { PageRibbonComponent } from './layouts/profiles/page-ribbon.component';
 import { ActiveMenuDirective } from './layouts/navbar/active-menu.directive';
 import { ErrorComponent } from './layouts/error/error.component';
 
+import { MatCardModule } from '@angular/material/card';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -31,6 +35,9 @@ import { ErrorComponent } from './layouts/error/error.component';
     ShoppedEntityModule,
     ShoppedAppRoutingModule,
     NgbModule,
+    MatCardModule,
+    MatToolbarModule,
+    MatButtonModule,
   ],
   declarations: [MainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent],
   bootstrap: [MainComponent],

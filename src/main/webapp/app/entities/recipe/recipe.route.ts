@@ -11,6 +11,7 @@ import { RecipeService } from './recipe.service';
 import { RecipeComponent } from './recipe.component';
 import { RecipeDetailComponent } from './recipe-detail.component';
 import { RecipeUpdateComponent } from './recipe-update.component';
+import { RecipeListComponent } from './recipe-list.component';
 
 @Injectable({ providedIn: 'root' })
 export class RecipeResolve implements Resolve<IRecipe> {
@@ -72,6 +73,18 @@ export const recipeRoute: Routes = [
   {
     path: ':id/edit',
     component: RecipeUpdateComponent,
+    resolve: {
+      recipe: RecipeResolve,
+    },
+    data: {
+      authorities: [Authority.USER],
+      pageTitle: 'shoppedApp.recipe.home.title',
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: 'list',
+    component: RecipeListComponent,
     resolve: {
       recipe: RecipeResolve,
     },
