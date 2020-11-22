@@ -46,7 +46,7 @@
                                 [textFalse]="'userManagement.deactivated' | translate">
                             </jhi-boolean>
                         </div>
-                        <button [routerLink]="['/user-profile', userProfile.id, 'edit']"
+                        <button *ngIf="account && account.login == user.login" [routerLink]="['/user-profile', userProfile.id, 'edit']"
                                 class="text-white mx-2 my-2 float-right"
                                 color="primary"
                                 mat-mini-fab
