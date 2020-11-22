@@ -25,31 +25,40 @@
                                 </li>
                             </ul>
                         </mat-card-subtitle>
-                        <img mat-card-avatar
-                             src="https://material.angular.io/assets/img/examples/shiba2.jpg"
-                             alt="Photo of a Shiba Inu">
+<!--                        <img mat-card-avatar-->
+<!--                             src="https://material.angular.io/assets/img/examples/shiba2.jpg"-->
+<!--                             alt="Photo of a Shiba Inu">-->
                     </mat-card-header>
                     <!--                    <img mat-card-image-->
                     <!--                         src="https://material.angular.io/assets/img/examples/shiba2.jpg"-->
                     <!--                         alt="Photo of a Shiba Inu">-->
                     <img mat-card-image [src]="'data:' + userProfile.imageContentType + ';base64,' + userProfile.image"
-                         alt="---"/>
+                         alt="No profile image"/>
                     <mat-card-content>
-                        {{ userProfile.description }}
+                        Description: {{ userProfile.description }}
                     </mat-card-content>
 
                     <mat-card-footer>
-                        <jhi-boolean
-                            [value]="user.activated ? true : false"
-                            [textTrue]="'userManagement.activated' | translate"
-                            [textFalse]="'userManagement.deactivated' | translate">
-                        </jhi-boolean>
+                        <div fxLayout="row">
+                            <jhi-boolean
+                                [value]="user.activated ? true : false"
+                                [textTrue]="'userManagement.activated' | translate"
+                                [textFalse]="'userManagement.deactivated' | translate">
+                            </jhi-boolean>
+                        </div>
+                        <button [routerLink]="['/user-profile', userProfile.id, 'edit']"
+                                class="text-white mx-2 my-2 float-right"
+                                color="primary"
+                                mat-mini-fab
+                                type="submit">
+                            <mat-icon>create</mat-icon>
+                        </button>
                     </mat-card-footer>
-
                     <mat-card-actions>
                         <mat-icon>facebook</mat-icon>
                         <mat-icon>instagram</mat-icon>
                     </mat-card-actions>
+
                 </mat-card>
             </div>
             <div id="profile-additional-information">
@@ -75,7 +84,33 @@
                     <mat-icon class="example-tab-icon">payment</mat-icon>
                     {{ ' Payments' }}
                 </ng-template>
-                Cookies and transactions here
+                <div class="container tab-container">
+                    <div class="row mt-4">
+                        <div class="col-md-8">
+                            <h2 class="text-left">
+                                Payments
+                            </h2>
+                        </div>
+                        <div class="col-md-4" align="right">
+                            <jhi-buy-cookie></jhi-buy-cookie>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mt-4 tab-container" align="center">
+                            <mat-card>
+                                <mat-card-content>
+                                    <img src="../../../content/images/cookie-icon-large.png"/>
+                                    <h4 class="mt-2"><fa-icon icon="cookie-bite"></fa-icon> {{ (cookie?.amount || 0) }}</h4>
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                    </div>
+                    <div class="row mt-3 ml-2 table-transac">
+                        <div class="col">
+                            <jhi-view-transactions></jhi-view-transactions>
+                        </div>
+                    </div>
+                </div>
             </mat-tab>
             <mat-tab>
                 <ng-template mat-tab-label>

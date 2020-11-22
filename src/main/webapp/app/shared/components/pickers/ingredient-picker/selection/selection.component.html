@@ -1,25 +1,27 @@
-<mat-card class="mat-elevation-z4">
-    <mat-card-header>
-        <div *ngIf="ingredient.image" class="mb-2" matCardAvatar>
-            <img [src]="'data:' + ingredient.imageContentType + ';base64,' + ingredient.image" alt="ingredient image"
-                 matCardImage/>
-        </div>
-        <mat-card-title>{{ingredient.name}}</mat-card-title>
-    </mat-card-header>
-    <mat-card-actions>
-        <form [formGroup]="ingredientSelectedForm">
-            <mat-form-field appearance="fill" fxFill>
-                <mat-label>Amount</mat-label>
-                <input autocomplete="off"
-                       formControlName="amount"
-                       matInput
-                       placeholder="3"
-                       type="number">
-                <span matSuffix>{{ingredient.unitAbbrev}}</span>
+<mat-divider></mat-divider>
+<mat-list-item>
+    <img
+        *ngIf="ingredient.image"
+        [src]="'data:' + ingredient.imageContentType + ';base64,' + ingredient.image"
+        alt="ingredient image"
+        matListAvatar
+    />
+    <mat-icon *ngIf="!ingredient.image" color="primary" matListIcon>shopping_cart</mat-icon>
+    <div matLine> {{ ingredient.name }} </div>
+    <div matLine>
+        <form [formGroup]="form">
+            <mat-form-field>
+                <input
+                    autocomplete="off"
+                    formControlName="amount"
+                    matInput
+                    type="number"
+                />
+                <span matSuffix>{{ ingredient.unitAbbrev }}</span>
             </mat-form-field>
         </form>
-        <button (click)="deselectItem()" class="corner-exit" mat-icon-button>
-            <mat-icon>close</mat-icon>
-        </button>
-    </mat-card-actions>
-</mat-card>
+    </div>
+    <button (click)="remove()" mat-icon-button>
+        <mat-icon>close</mat-icon>
+    </button>
+</mat-list-item>

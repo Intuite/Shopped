@@ -76,7 +76,6 @@ export class CheckOutComponent implements OnInit {
           };
           transaction(order);
           processTransaction(this.transac);
-          console.warn(this.transac);
         },
         onError(err: any): any {
           console.warn(err);
