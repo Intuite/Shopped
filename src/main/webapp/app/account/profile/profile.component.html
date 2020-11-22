@@ -32,7 +32,7 @@
                     <!--                    <img mat-card-image-->
                     <!--                         src="https://material.angular.io/assets/img/examples/shiba2.jpg"-->
                     <!--                         alt="Photo of a Shiba Inu">-->
-                    <img mat-card-image [src]="'data:' + userProfile.imageContentType + ';base64,' + userProfile.image"
+                    <img mat-card-image class="rounded-circle img-fluid mx-auto" [src]="'data:' + userProfile.imageContentType + ';base64,' + userProfile.image"
                          alt="No profile image"/>
                     <mat-card-content>
                         Description: {{ userProfile.description }}

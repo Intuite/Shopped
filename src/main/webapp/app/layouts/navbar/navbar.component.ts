@@ -9,9 +9,6 @@ import { AccountService } from 'app/core/auth/account.service';
 import { LoginModalService } from 'app/core/login/login-modal.service';
 import { LoginService } from 'app/core/login/login.service';
 import { ProfileService } from 'app/layouts/profiles/profile.service';
-import { UserProfileService } from 'app/entities/user-profile/user-profile.service';
-import { UserProfile } from 'app/shared/model/user-profile.model';
-import { HttpResponse } from '@angular/common/http';
 import { Account } from 'app/core/user/account.model';
 
 @Component({
@@ -26,14 +23,13 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   swaggerEnabled?: boolean;
   version: string;
   currentAccount: Account | null = null;
-  userProfile!: UserProfile | null;
+  // userProfile!: UserProfile | null;
 
   constructor(
     private loginService: LoginService,
     private languageService: JhiLanguageService,
     private sessionStorage: SessionStorageService,
     private accountService: AccountService,
-    private userProfileService: UserProfileService,
     private loginModalService: LoginModalService,
     private profileService: ProfileService,
     private alertService: JhiAlertService,
@@ -45,7 +41,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.accountService.identity().subscribe(account => {
       this.currentAccount = account;
-      if (this.isAuthenticated() && account) this.loadAccountData(account.id);
+      // if (this.isAuthenticated() && account) this.loadAccountData(account.id);
     });
     this.profileService.getProfileInfo().subscribe(profileInfo => {
       this.inProduction = profileInfo.inProduction;
@@ -55,11 +51,11 @@ export class NavbarComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {}
 
-  private loadAccountData(idUser: number): void {
-    this.userProfileService.findByUser(idUser).subscribe((res: HttpResponse<UserProfile>) => {
-      this.userProfile = res.body || null;
-    });
-  }
+  // private loadAccountData(idUser: number): void {
+  //   this.userProfileService.findByUser(idUser).subscribe((res: HttpResponse<UserProfile>) => {
+  //     this.userProfile = res.body || null;
+  //   });
+  // }
 
   changeLanguage(languageKey: string): void {
     this.sessionStorage.store('locale', languageKey);

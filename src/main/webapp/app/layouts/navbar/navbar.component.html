@@ -515,10 +515,10 @@
                         <span jhiTranslate="global.menu.account.settings">Settings</span>
                     </button>
                     <div>
-                        <div *ngIf="userProfile">
+                        <div *ngIf="currentAccount">
                             <button (click)="collapseNavbar()"
                                     *ngSwitchCase="true" mat-menu-item
-                                    [routerLink]="['/account/profile', userProfile.id]"
+                                    [routerLink]="['/account/profile', currentAccount.login]"
                                     routerLinkActive="active">
                                 <fa-icon [fixedWidth]="true" icon="user"></fa-icon>
                                 <span jhiTranslate="global.menu.account.profile">Profile</span>

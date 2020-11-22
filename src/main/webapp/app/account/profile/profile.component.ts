@@ -62,25 +62,16 @@ export class ProfileComponent implements OnInit, OnDestroy, AfterViewInit {
         this.requesting = false;
       }
     );
-    // this.accountService.identity().subscribe(account => {
-    //   if (account) {
-    //     this.progress += 25;
-    //     this.account = account;
-    //     this.loadUser();
-    //   }
-    // }, ()=> {
-    //   this.requesting = false;
-    // });
   }
 
   loadUser(): void {
     this.activatedRoute.data.subscribe(
-      ({ userProfile }) => {
-        this.userProfile = userProfile;
+      ({ user }) => {
+        this.user = user;
         this.progress += 25;
-        this.userService.find(userProfile.userLogin).subscribe(
-          user => {
-            this.user = user;
+        this.userProfileService.findByUser(user.id).subscribe(
+          userProfile => {
+            this.userProfile = userProfile.body;
             this.success = true;
             this.requesting = false;
           },
