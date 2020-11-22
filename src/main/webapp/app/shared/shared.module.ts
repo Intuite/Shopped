@@ -31,7 +31,7 @@ import { BuyCookieComponent } from './components/buy-cookie/buy-cookie.component
 import { BundlePickerDialogComponent } from './components/buy-cookie/bundle-picker-dialog/bundle-picker-dialog.component';
 import { CheckOutComponent } from './components/check-out/check-out.component';
 import { IngredientTagTableComponent } from './components/tables/ingredient-tag-table/ingredient-tag-table.component';
-
+import { RecipeTableComponent } from './tables/recipe-table/recipe-table.component';
 import { RecipeTagPickerComponent } from 'app/shared/components/pickers/recipe-tag-picker/recipe-tag-picker.component';
 
 // Ingredient Picker
@@ -52,9 +52,6 @@ import { ListComponent as BasePickerListComponent } from './components/pickers/b
 // Pipes
 import { FilterPipe } from './components/pickers/pipes/filter.pipe';
 import { TagFilterPipe } from './components/pickers/pipes/tag-filter.pipe';
-import { RecipeTagPickerComponent } from 'app/shared/components/pickers/recipe-tag-picker/recipe-tag-picker.component';
-import { RecipeTableComponent } from './tables/recipe-table/recipe-table.component';
-
 import { ViewTransactionsComponent } from './components/view-transactions/view-transactions.component';
 
 @NgModule({
@@ -76,6 +73,7 @@ import { ViewTransactionsComponent } from './components/view-transactions/view-t
     AwardTableComponent,
     IngredientTableComponent,
     RecipeTagTableComponent,
+    RecipeTableComponent,
     RecipeTagPickerComponent,
     DatepickerComponent,
     CheckboxComponent,
@@ -91,10 +89,6 @@ import { ViewTransactionsComponent } from './components/view-transactions/view-t
     TagFilterPipe,
     ViewTransactionsComponent,
     BasePickerComponent,
-    DialogComponent,
-    PanelComponent,
-    TagFilterPipe,
-    RecipeTableComponent,
     BasePickerDialogComponent,
     BasePickerPanelComponent,
     BasePickerChipsComponent,
@@ -126,6 +120,7 @@ import { ViewTransactionsComponent } from './components/view-transactions/view-t
     AwardTableComponent,
     IngredientTableComponent,
     RecipeTagTableComponent,
+    RecipeTableComponent,
     RecipeTagPickerComponent,
     DatepickerComponent,
     CheckboxComponent,
@@ -134,7 +129,6 @@ import { ViewTransactionsComponent } from './components/view-transactions/view-t
     IngredientTagTableComponent,
     AwardPickerDialogComponent,
     GiveAwardComponent,
-    RecipeTableComponent,
     ViewTransactionsComponent,
     BasePickerComponent,
     BasePickerDialogComponent,

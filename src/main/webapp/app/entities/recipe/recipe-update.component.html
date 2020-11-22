@@ -111,8 +111,8 @@
                 </mat-form-field>
 
                 <hr>
-                <jhi-ingredient-picker >
-                </jhi-ingredient-picker>
+                <h4>Include Ingredients:</h4>
+                <jhi-ingredient-picker #ingredientPk ></jhi-ingredient-picker>
 
                 <hr>
 
@@ -123,8 +123,8 @@
                     <mat-error
                         *ngIf="(editForm.get('description')!.invalid && (editForm.get('description')!.dirty ||
                                 editForm.get('description')!.touched)) && editForm.get('description')?.errors?.minlength"
-                        [translateValues]="{ min: 5 }" jhiTranslate="entity.validation.minlength">
-                        This field is required to be at least 5 characters.
+                        [translateValues]="{ min: 1 }" jhiTranslate="entity.validation.minlength">
+
                     </mat-error>
                     <mat-error *ngIf="(editForm.get('description')!.invalid && (editForm.get('description')!.dirty ||
                                 editForm.get('description')!.touched)) && editForm.get('description')?.errors?.maxlength"
@@ -135,8 +135,8 @@
                 </mat-form-field>
 
                 <hr>
-                <h4>Tags:</h4>
-
+                <h4>Include Tags:</h4>
+                <jhi-recipe-tag-picker #recipeTagPk ></jhi-recipe-tag-picker>
                 <hr>
 
                 <div [hidden]="true" class="form-group">

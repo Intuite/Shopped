@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
@@ -14,8 +14,15 @@ import { AlertError } from 'app/shared/alert/alert-error.model';
 import { IUser } from 'app/core/user/user.model';
 import { UserService } from 'app/core/user/user.service';
 import { AccountService } from 'app/core/auth/account.service';
-import { IRecipeHasIngredient, RecipeHasIngredient } from 'app/shared/model/recipe-has-ingredient.model';
+
+import { IRecipeTag } from 'app/shared/model/recipe-tag.model';
+import { RecipeHasRecipeTag } from 'app/shared/model/recipe-has-recipe-tag.model';
+import { RecipeHasRecipeTagService } from 'app/entities/recipe-has-recipe-tag/recipe-has-recipe-tag.service';
+import { RecipeHasIngredient } from 'app/shared/model/recipe-has-ingredient.model';
 import { RecipeHasIngredientService } from 'app/entities/recipe-has-ingredient/recipe-has-ingredient.service.ts';
+
+import { IngredientPickerComponent } from 'app/shared/components/pickers/ingredient-picker/ingredient-picker.component';
+import { RecipeTagPickerComponent } from 'app/shared/components/pickers/recipe-tag-picker/recipe-tag-picker.component';
 
 @Component({
   selector: 'jhi-recipe-update',
@@ -23,18 +30,20 @@ import { RecipeHasIngredientService } from 'app/entities/recipe-has-ingredient/r
   styleUrls: ['../../../content/scss/image_Select.scss'],
 })
 export class RecipeUpdateComponent implements OnInit {
+  @ViewChild('ingredientPk') ingredientPiker!: IngredientPickerComponent;
+  @ViewChild('recipeTagPk') recipePiker!: RecipeTagPickerComponent;
   isSaving = false;
   users: IUser[] = [];
   statusOptions = ['ACTIVE', 'INACTIVE'];
   user!: IUser;
-  recipeId: any;
-  recipes?: Recipe[];
+  savedIngredients: any[] = [];
+  savedRecipeTags: IRecipeTag[] = [];
 
   editForm = this.fb.group({
     id: [],
     name: [null, [Validators.required]],
     portion: [null, [Validators.min(1)]],
-    description: [null, [Validators.required, Validators.min(5)]],
+    description: [null, [Validators.required]],
     duration: [null, [Validators.min(1)]],
     creation: [],
     image: [],
@@ -42,27 +51,6 @@ export class RecipeUpdateComponent implements OnInit {
     status: [],
     userId: [],
   });
-
-  // Ingredientes quemados
-  ingredientOne: IRecipeHasIngredient = {
-    id: 1,
-    amount: 10,
-    status: this.editForm.get(['status'])!.value,
-    ingredientName: 'Allspice',
-    ingredientId: 1,
-    recipeName: 'Lasagna',
-    recipeId: 1,
-  };
-  ingredientTwo: IRecipeHasIngredient = {
-    id: 2,
-    amount: 40,
-    status: this.editForm.get(['status'])!.value,
-    ingredientName: 'Ammaretti',
-    ingredientId: 2,
-    recipeName: 'Lasagna',
-    recipeId: 1,
-  };
-  savedIngredients: IRecipeHasIngredient[] = [this.ingredientOne, this.ingredientTwo];
 
   constructor(
     protected dataUtils: JhiDataUtils,
@@ -73,7 +61,8 @@ export class RecipeUpdateComponent implements OnInit {
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
     private accountService: AccountService,
-    protected recipeHasIngredientService: RecipeHasIngredientService
+    protected recipeHasIngredientService: RecipeHasIngredientService,
+    protected recipeHasRecipeTagService: RecipeHasRecipeTagService
   ) {}
 
   ngOnInit(): void {
@@ -145,16 +134,19 @@ export class RecipeUpdateComponent implements OnInit {
     if (recipe.id !== undefined) {
       this.subscribeToSaveResponse(this.recipeService.update(recipe));
     } else {
+      this.savedIngredients = this.ingredientPiker.getIngredients();
+      this.savedRecipeTags = this.recipePiker.getRecipeTags();
+
       this.recipeService.create(recipe).subscribe(
         response => {
           if (response.body !== null) {
             this.addIngredientsToRecipe(response.body);
+            this.addRecipeTagsToRecipe(response.body);
           }
         },
-        () => console.warn('Error adding ingredients to recipe')
+        () => console.warn('Error adding ingredients and tags to recipe')
       );
     }
-
     this.previousState();
   }
 
@@ -166,15 +158,34 @@ export class RecipeUpdateComponent implements OnInit {
         this.savedIngredients[i].amount,
         recipe.status,
         undefined,
-        this.savedIngredients[i].ingredientId,
+        this.savedIngredients[i].ingredient.id,
         recipe.name,
-        // recipe id issue 'validation error'
         recipe.id
       );
 
       this.recipeHasIngredientService.create(recipeHasIngredient).subscribe(
         () => console.warn('Ingredient added to recipe'),
         () => console.warn('error adding ingredient to recipe')
+      );
+      i++;
+    }
+  }
+
+  addRecipeTagsToRecipe(recipe: Recipe): void {
+    let i = 0;
+    while (i < this.savedRecipeTags.length) {
+      const recipeHasRecipeTag = new RecipeHasRecipeTag(
+        undefined,
+        recipe.status,
+        undefined,
+        recipe.id,
+        this.savedRecipeTags[i].name,
+        this.savedRecipeTags[i].id
+      );
+
+      this.recipeHasRecipeTagService.create(recipeHasRecipeTag).subscribe(
+        () => console.warn('Recipe Tag added to recipe'),
+        () => console.warn('error adding Recipe Tag to recipe')
       );
       i++;
     }
