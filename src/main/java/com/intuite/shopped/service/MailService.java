@@ -6,6 +6,9 @@ import com.intuite.shopped.service.dto.TransactionDTO;
 import io.github.jhipster.config.JHipsterProperties;
 
 import java.nio.charset.StandardCharsets;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.Locale;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -107,6 +110,11 @@ public class MailService {
 
     @Async
     public void sendInvoiceEmail(User user, TransactionDTO transac) {
+        DateTimeFormatter formatter =
+            DateTimeFormatter.ofLocalizedDateTime( FormatStyle.SHORT )
+                .withLocale( Locale.US )
+                .withZone( ZoneId.systemDefault() );
+        String formated = formatter.format( transac.getCreated() );
         log.debug("Sending Invoice email to '{}", user.getEmail());
         if (user.getEmail() == null) {
             log.debug("Email doesn't exist for user '{}'", user.getLogin());
@@ -116,6 +124,7 @@ public class MailService {
         Context context = new Context(locale);
         context.setVariable(USER, user);
         context.setVariable("transac",transac);
+        context.setVariable("formatedDate",formated);
         context.setVariable(BASE_URL, jHipsterProperties.getMail().getBaseUrl());
         String content = templateEngine.process("mail/invoiceEmail", context);
         String subject = messageSource.getMessage("email.invoice.title", null, locale);
