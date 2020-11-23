@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { JhiDataUtils } from 'ng-jhipster';
 
-import { Recipe, IRecipe } from 'app/shared/model/recipe.model';
+import { IRecipe } from 'app/shared/model/recipe.model';
 import { RecipeService } from 'app/entities/recipe/recipe.service';
 import { HttpResponse } from '@angular/common/http';
 import { Account } from 'app/core/user/account.model';
@@ -40,8 +40,6 @@ export class RecipeListComponent implements OnInit {
       (res: HttpResponse<IRecipe[]>) => this.onSuccess(res.body),
       () => this.onError()
     );
-
-    this.cleanRecipes();
   }
 
   cleanRecipes(): void {
@@ -67,23 +65,12 @@ export class RecipeListComponent implements OnInit {
     window.history.back();
   }
 
-  onAccountSuccess(account: Account | undefined): void {
-    if (account !== undefined) {
-      this.account = account;
-    }
-  }
-
   private onError(): void {
     console.warn('There are no Recipes');
   }
 
-  private onSuccess(body: Recipe[] | null): void {
+  private onSuccess(body: IRecipe[] | null): void {
     this.recipes = body || [];
-  }
-
-  onSuccessRecipes(data: any): void {
-    if (data !== null && data !== undefined) {
-      this.recipes = data || [];
-    }
+    this.cleanRecipes();
   }
 }

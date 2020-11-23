@@ -56,3 +56,14 @@ Logo styles
 fa-icon {
   color: $primary;
 }
+
+.icon-recipe {
+  height: 16px;
+  width: 16px;
+  text-align: right;
+  display: inline-block;
+  vertical-align: middle;
+  background: url('../../../content/images/recipe-icon.png') no-repeat center center;
+  background-size: contain;
+  margin-right: 2px;
+}
