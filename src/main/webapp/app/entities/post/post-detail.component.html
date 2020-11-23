@@ -65,7 +65,13 @@
                                 <span class="post-icon-view"></span>
                             </div>
 
-                            <div class="blocks-3 post-element-right" gdArea="awardsButtons">Awards</div>
+                            <div class="blocks-3 post-element-right align-center" gdArea="awardsButtons">
+                                <jhi-award-viewer [postId]=post.id></jhi-award-viewer>
+                                <div class="row" align="center">
+                                    <jhi-give-award [data]=post.id></jhi-give-award>
+                                </div>
+
+                            </div>
 
                             <div class="blocks-4 post-element-center" gdArea="userInfo">
                                 <dd> By {{ post.userLogin }} <br/></dd>

@@ -53,6 +53,7 @@ import { ListComponent as BasePickerListComponent } from './components/pickers/b
 import { FilterPipe } from './components/pickers/pipes/filter.pipe';
 import { TagFilterPipe } from './components/pickers/pipes/tag-filter.pipe';
 import { ViewTransactionsComponent } from './components/view-transactions/view-transactions.component';
+import { AwardViewerComponent } from './components/award-viewer/award-viewer.component';
 import { RecipeListComponent } from './components/recipe-list/recipe-list.component';
 import { ChipListComponent } from './components/chip-list/chip-list.component';
 
@@ -102,6 +103,7 @@ import { ChipListComponent } from './components/chip-list/chip-list.component';
     IngredientPickerSelectionListComponent,
     IngredientPickerPanelComponent,
     IngredientPickerListComponent,
+    AwardViewerComponent,
     RecipeListComponent,
     ChipListComponent,
   ],
@@ -146,6 +148,7 @@ import { ChipListComponent } from './components/chip-list/chip-list.component';
     IngredientPickerSelectionListComponent,
     IngredientPickerPanelComponent,
     IngredientPickerListComponent,
+    AwardViewerComponent,
     RecipeListComponent,
     ChipListComponent,
   ],

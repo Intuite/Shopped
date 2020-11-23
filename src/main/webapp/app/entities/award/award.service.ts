@@ -37,6 +37,11 @@ export class AwardService {
     return this.http.get<IAward[]>(`${this.resourceUrl}/all`, { params: options, observe: 'response' });
   }
 
+  /* getByPost(id: number): Observable<EntityArrayResponseType> {
+    console.warn(`${this.resourceUrl}/post/${id}`);
+    return this.http.get<IAward[]>(`${this.resourceUrl}/post/${id}`, { observe: 'response' })
+  }*/
+
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
