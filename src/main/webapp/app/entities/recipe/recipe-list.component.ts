@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { JhiDataUtils } from 'ng-jhipster';
 
@@ -17,7 +17,7 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./recipe-list.component.scss'],
 })
 export class RecipeListComponent implements OnInit, AfterViewInit {
-  @Input() data!: IRecipe[];
+  // @Input() recipes!: IRecipe[];
 
   recipes: IRecipe[] = [];
   account?: Account;
@@ -44,6 +44,8 @@ export class RecipeListComponent implements OnInit, AfterViewInit {
       (res: HttpResponse<IRecipe[]>) => this.onSuccess(res.body),
       () => this.onError()
     );
+
+    this.dataSource.data = this.recipes;
   }
 
   ngAfterViewInit(): void {
@@ -92,7 +94,7 @@ export class RecipeListComponent implements OnInit, AfterViewInit {
   };
 
   public reloadSource(data: IRecipe[]): void {
-    this.data = data;
+    this.recipes = data;
     this.dataSource.data = data;
   }
 }
