@@ -147,7 +147,7 @@ export class RecipeUpdateComponent implements OnInit {
         () => console.warn('Error adding ingredients and tags to recipe')
       );
     }
-    this.previousState();
+    // this.previousState();
   }
 
   addIngredientsToRecipe(recipe: Recipe): void {

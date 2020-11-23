@@ -9,15 +9,12 @@
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
             <h2 id="jhi-post-heading">{{ editForm.get('id')!.value !== undefined ? "Edit" : "Create" }}
                 the public post for your recipe</h2>
-
             <br>
 
             <div>
-                <jhi-alert-error></jhi-alert-error>
-
                 <jhi-alert></jhi-alert>
 
-                <mat-form-field [hidden]="!editForm.get('id')!.value" appearance="fill" class="form-group w-100">
+                <mat-form-field appearance="fill" class="form-group w-100" [hidden]="true">
                     <mat-label jhiTranslate="global.field.id"></mat-label>
                     <input formControlName="id" id="id" matInput name="id" readonly type="text"/>
                 </mat-form-field>
@@ -68,7 +65,7 @@
                     </mat-error>
                 </mat-form-field>
 
-                <mat-form-field [hidden]="true" appearance="fill" class="form-group w-100" >
+                <mat-form-field [hidden]="true" appearance="fill" class="form-group w-100">
                     <mat-label jhiTranslate="shoppedApp.post.status"></mat-label>
                     <mat-select [(ngModel)]="statusOptions[0]" formControlName="status" id="status" name="status">
                         <mat-option *ngFor="let status of statusOptions" [value]="status">
@@ -79,7 +76,6 @@
             </div>
 
             <div>
-
                 <button [disabled]="editForm.invalid || isSaving" id="save-entity" jhiMaterialColor="primary"
                         mat-raised-button
                         type="submit">

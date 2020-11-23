@@ -16,10 +16,10 @@ import { UserService } from 'app/core/user/user.service';
   styleUrls: ['./recipe-list.component.scss'],
 })
 export class RecipeListComponent implements OnInit {
-  recipe: IRecipe | null = null;
-  recipes: Recipe[] = [];
+  recipes: IRecipe[] = [];
   account?: Account;
   user!: IUser;
+  statusOptions = ['ACTIVE', 'INACTIVE'];
 
   constructor(
     protected dataUtils: JhiDataUtils,
@@ -40,6 +40,19 @@ export class RecipeListComponent implements OnInit {
       (res: HttpResponse<IRecipe[]>) => this.onSuccess(res.body),
       () => this.onError()
     );
+
+    this.cleanRecipes();
+  }
+
+  cleanRecipes(): void {
+    let i = 0;
+    while (i < this.recipes.length) {
+      if (this.recipes[i].userId !== this.user.id || this.recipes[i].status === this.statusOptions[1]) {
+        this.recipes.splice(i, 1);
+      } else {
+        i++;
+      }
+    }
   }
 
   byteSize(base64String: string): string {
@@ -65,9 +78,7 @@ export class RecipeListComponent implements OnInit {
   }
 
   private onSuccess(body: Recipe[] | null): void {
-    console.warn(body);
     this.recipes = body || [];
-    this.recipe = (body || [])[0];
   }
 
   onSuccessRecipes(data: any): void {

@@ -11,12 +11,10 @@
             <br>
             <div>
 
-                <jhi-alert-error></jhi-alert-error>
-
                 <jhi-alert></jhi-alert>
 
                 <mat-form-field [hidden]="true" appearance="fill" class="form-group w-100">
-                    <mat-label [hidden]="true"  jhiTranslate="global.field.id"></mat-label>
+                    <mat-label [hidden]="true" jhiTranslate="global.field.id"></mat-label>
                     <input [hidden]="true" formControlName="id" id="id" matInput name="id" readonly type="text"/>
                 </mat-form-field>
 
@@ -112,14 +110,14 @@
                 </mat-form-field>
 
 
-                <jhi-ingredient-picker #ingredientPk ></jhi-ingredient-picker>
+                <jhi-ingredient-picker #ingredientPk></jhi-ingredient-picker>
                 <br>
-                
+
                 <mat-form-field appearance="fill" class="form-group w-100">
                     <mat-label>Recipe instructions:</mat-label>
 
                     <textarea formControlName="description" id="field_description" matInput name="description"
-                    type="text" style="height: 100px"></textarea>
+                              type="text" style="height: 100px"></textarea>
 
                     <mat-error
                         *ngIf="(editForm.get('description')!.invalid && (editForm.get('description')!.dirty ||
@@ -136,7 +134,7 @@
                 </mat-form-field>
 
 
-                <jhi-recipe-tag-picker #recipeTagPk ></jhi-recipe-tag-picker>
+                <jhi-recipe-tag-picker #recipeTagPk></jhi-recipe-tag-picker>
                 <br>
 
                 <div [hidden]="true" class="form-group">
@@ -182,7 +180,8 @@
                 </button>
 
                 <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving"
-                        class="btn btn-primary">
+                        class="btn btn-primary"
+                        [routerLink]="['/recipe/list']">
                     <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
                 </button>
             </div>

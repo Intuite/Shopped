@@ -28,8 +28,6 @@ export class PostUpdateComponent implements OnInit {
   statusOptions = ['ACTIVE', 'INACTIVE'];
   user!: IUser;
 
-  // continue with the user
-
   editForm = this.fb.group({
     id: [],
     caption: [],
