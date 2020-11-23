@@ -25,7 +25,6 @@ type SelectableEntity = IRecipe | IUser;
 export class PostUpdateComponent implements OnInit {
   isSaving = false;
   recipes: IRecipe[] = [];
-  userRecipes: IRecipe[] = [];
   statusOptions = ['ACTIVE', 'INACTIVE'];
   user!: IUser;
 

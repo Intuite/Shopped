@@ -1,0 +1,16 @@
+<div class="row" align="center">
+    <div *ngFor="let element of awards" class="awardBox">
+            <div class="d-flex">
+                    <span>
+                        <img [src]="'data:' + element.imageContentType + ';base64,' + element.image"
+                             alt="award image"
+                             class="rounded-circle mt-2 img-award-list"/>
+                    </span>
+            </div>
+    </div>
+    <button *ngIf="awards.length > 3"
+            class="btn-awards mt-2">
+            {{ awards.length - 3 }}
+    </button>
+</div>
+

@@ -31,7 +31,7 @@ import { BuyCookieComponent } from './components/buy-cookie/buy-cookie.component
 import { BundlePickerDialogComponent } from './components/buy-cookie/bundle-picker-dialog/bundle-picker-dialog.component';
 import { CheckOutComponent } from './components/check-out/check-out.component';
 import { IngredientTagTableComponent } from './components/tables/ingredient-tag-table/ingredient-tag-table.component';
-
+import { RecipeTableComponent } from './tables/recipe-table/recipe-table.component';
 import { RecipeTagPickerComponent } from 'app/shared/components/pickers/recipe-tag-picker/recipe-tag-picker.component';
 
 // Ingredient Picker
@@ -53,6 +53,7 @@ import { ListComponent as BasePickerListComponent } from './components/pickers/b
 import { FilterPipe } from './components/pickers/pipes/filter.pipe';
 import { TagFilterPipe } from './components/pickers/pipes/tag-filter.pipe';
 import { ViewTransactionsComponent } from './components/view-transactions/view-transactions.component';
+import { AwardViewerComponent } from './components/award-viewer/award-viewer.component';
 
 @NgModule({
   imports: [JhMaterialModule, ShoppedSharedLibsModule, FlexModule, RouterModule, ExtendedModule],
@@ -73,6 +74,7 @@ import { ViewTransactionsComponent } from './components/view-transactions/view-t
     AwardTableComponent,
     IngredientTableComponent,
     RecipeTagTableComponent,
+    RecipeTableComponent,
     RecipeTagPickerComponent,
     DatepickerComponent,
     CheckboxComponent,
@@ -99,6 +101,7 @@ import { ViewTransactionsComponent } from './components/view-transactions/view-t
     IngredientPickerSelectionListComponent,
     IngredientPickerPanelComponent,
     IngredientPickerListComponent,
+    AwardViewerComponent,
   ],
   entryComponents: [LoginModalComponent],
   exports: [
@@ -119,6 +122,7 @@ import { ViewTransactionsComponent } from './components/view-transactions/view-t
     AwardTableComponent,
     IngredientTableComponent,
     RecipeTagTableComponent,
+    RecipeTableComponent,
     RecipeTagPickerComponent,
     DatepickerComponent,
     CheckboxComponent,
@@ -140,6 +144,7 @@ import { ViewTransactionsComponent } from './components/view-transactions/view-t
     IngredientPickerSelectionListComponent,
     IngredientPickerPanelComponent,
     IngredientPickerListComponent,
+    AwardViewerComponent,
   ],
 })
 export class ShoppedSharedModule {}

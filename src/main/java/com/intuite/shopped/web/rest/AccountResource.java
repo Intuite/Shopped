@@ -2,6 +2,7 @@ package com.intuite.shopped.web.rest;
 
 import com.intuite.shopped.domain.Cookies;
 import com.intuite.shopped.domain.PersistentToken;
+import com.intuite.shopped.domain.enumeration.Status;
 import com.intuite.shopped.repository.PersistentTokenRepository;
 import com.intuite.shopped.domain.User;
 import com.intuite.shopped.repository.UserRepository;
@@ -93,7 +94,9 @@ public class AccountResource {
             CookiesDTO userCookies = new CookiesDTO();
             UserProfileDTO profile = new UserProfileDTO();
             profile.setUserId(user.getId());
+            profile.setStatus(Status.INACTIVE);
             userCookies.setUserId(user.getId());
+            userCookies.setAmount(0);
             cookiesService.save(userCookies);
             userProfileService.save(profile);
             mailService.sendActivationEmail(user);

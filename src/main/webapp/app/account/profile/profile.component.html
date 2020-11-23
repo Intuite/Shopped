@@ -32,7 +32,7 @@
                     <!--                    <img mat-card-image-->
                     <!--                         src="https://material.angular.io/assets/img/examples/shiba2.jpg"-->
                     <!--                         alt="Photo of a Shiba Inu">-->
-                    <img mat-card-image [src]="'data:' + userProfile.imageContentType + ';base64,' + userProfile.image"
+                    <img mat-card-image class="rounded-circle img-fluid mx-auto" [src]="'data:' + userProfile.imageContentType + ';base64,' + userProfile.image"
                          alt="No profile image"/>
                     <mat-card-content>
                         Description: {{ userProfile.description }}
@@ -46,7 +46,7 @@
                                 [textFalse]="'userManagement.deactivated' | translate">
                             </jhi-boolean>
                         </div>
-                        <button [routerLink]="['/user-profile', userProfile.id, 'edit']"
+                        <button *ngIf="account && account.login == user.login" [routerLink]="['/user-profile', userProfile.id, 'edit']"
                                 class="text-white mx-2 my-2 float-right"
                                 color="primary"
                                 mat-mini-fab

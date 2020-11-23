@@ -114,7 +114,7 @@ public class AwardResource {
      */
     @GetMapping("/awards/all")
     public ResponseEntity<List<AwardDTO>> getAllAwards(AwardCriteria criteria) {
-        log.debug("REST request to get RecipeTags by criteria: {}", criteria);
+        log.debug("REST request to get Awards by criteria: {}", criteria);
         List<AwardDTO> list = awardQueryService.findByCriteria(criteria);
         return ResponseEntity.ok().body(list);
     }
@@ -144,6 +144,18 @@ public class AwardResource {
         return ResponseUtil.wrapOrNotFound(awardDTO);
     }
 
+    /**
+     * (@code GET /awards/post/:id) : get the awards from a post id.
+     *
+     * @param id the id of the postDTO to retrive the awards.
+     * @return the (@link ResponseEntity) with status {@code 200 (OK)} and with body the awardDTO, or with status {@code 404 (Not Found)}.
+     */
+    @GetMapping("/awards/post/{id}")
+    public ResponseEntity<List<AwardDTO>> getByPost(@PathVariable Long id) {
+        log.debug("REST request to get Awards by Post : {}", id);
+//        Optional<List<AwardDTO>> list = awardService.findAll();
+        return ResponseEntity.notFound().headers(HeaderUtil.createFailureAlert(applicationName, false, ENTITY_NAME, id.toString(),"not implemented")).build();
+    }
     /**
      * {@code DELETE  /awards/:id} : delete the "id" award.
      *
