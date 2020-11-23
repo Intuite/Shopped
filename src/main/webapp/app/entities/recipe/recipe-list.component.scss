@@ -74,7 +74,7 @@
   text-align: right;
   display: inline-block;
   vertical-align: middle;
-  background: url('../../../content/images/recipe-icon.png') no-repeat center center;
+  background: url('../../../content/images/recipe-white-icon.png') no-repeat center center;
   background-size: contain;
   margin-right: 5px;
 }
@@ -85,7 +85,7 @@
   text-align: right;
   display: inline-block;
   vertical-align: middle;
-  background: url('../../../content/images/social-icon.png') no-repeat center center;
+  background: url('../../../content/images/social-white-icon.png') no-repeat center center;
   background-size: contain;
   margin-right: 5px;
 }
@@ -124,4 +124,9 @@
 
 .recipe-list-title-buttons {
   float: right;
+}
+
+.recipe-list-empty {
+  height: 400px;
+  width: auto;
 }
