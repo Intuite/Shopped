@@ -6,7 +6,7 @@
     </div>
     <div class="col-8">
 
-        <div *ngIf="recipe">
+        <div *ngIf="recipe?.userId === user?.id">
             <mat-card>
                 <mat-card-content *ngIf="recipe">
                     <div style="height: auto;">
@@ -50,7 +50,6 @@
                             </div>
 
                             <div class="blocks-4 recipe-element-center" gdArea="userInfo">
-                                <dd> By {{ recipe.userLogin }} <br/></dd>
                                 <dd><span>{{ recipe.creation | date:"mediumDate" }}</span></dd>
                             </div>
 
@@ -86,7 +85,7 @@
                             </div>
 
                             <div class="blocks-11 recipe-element-right" gdArea="duration">
-                                <span class="recipe-icon-duration"></span> {{recipe.duration}}
+                                <span class="recipe-icon-duration"></span> {{recipe.duration}}min
                             </div>
 
                             <div class="blocks-12 recipe-element-center recipe-instructions" gdArea="instructionsList">
