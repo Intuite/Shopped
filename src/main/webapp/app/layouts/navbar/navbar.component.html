@@ -105,14 +105,9 @@
                         <fa-icon [fixedWidth]="true" icon="list"></fa-icon>
                         <span jhiTranslate="global.menu.admin.configuration">Configuration</span>
                     </button>
-                    <button (click)="collapseNavbar()" mat-menu-item routerLink="admin/audits"
-                            routerLinkActive="active">
-                        <fa-icon [fixedWidth]="true" icon="bell"></fa-icon>
-                        <span jhiTranslate="global.menu.admin.audits">Audits</span>
-                    </button>
-                    <button (click)="collapseNavbar()" mat-menu-item routerLink="admin/logs" routerLinkActive="active">
-                        <fa-icon [fixedWidth]="true" icon="tasks"></fa-icon>
-                        <span jhiTranslate="global.menu.admin.logs">Logs</span>
+                    <button mat-menu-item [matMenuTriggerFor]="logsMenu">
+                        <fa-icon [fixedWidth]="true" icon="users-cog"></fa-icon>
+                        <span>Logs</span>
                     </button>
                     <button (click)="collapseNavbar()" *ngIf="swaggerEnabled" mat-menu-item routerLink="admin/docs"
                             routerLinkActive="active">
@@ -158,12 +153,47 @@
                     </button>
                 </mat-menu>
 
+                <mat-menu #logsMenu xPosition="before">
+                    <button
+                        (click)="collapseNavbar()"
+                        [routerLinkActiveOptions]="{ exact: true }"
+                        class="dropdown-item"
+                        mat-menu-item
+                        routerLink="log-type"
+                        routerLinkActive="active"
+                    >
+                        <fa-icon [fixedWidth]="true" icon="asterisk"></fa-icon>
+                        <span jhiTranslate="global.menu.entities.logType">Log Types</span>
+                    </button>
+                    <button
+                        (click)="collapseNavbar()"
+                        [routerLinkActiveOptions]="{ exact: true }"
+                        class="dropdown-item"
+                        mat-menu-item
+                        routerLink="log"
+                        routerLinkActive="active"
+                    >
+                        <fa-icon [fixedWidth]="true" icon="asterisk"></fa-icon>
+                        <span jhiTranslate="global.menu.entities.log">Platform logs</span>
+                    </button>
+                    <button (click)="collapseNavbar()" mat-menu-item routerLink="admin/logs" routerLinkActive="active">
+                        <fa-icon [fixedWidth]="true" icon="tasks"></fa-icon>
+                        <span jhiTranslate="global.menu.admin.logs">Admin logs</span>
+                    </button>
+                    <button (click)="collapseNavbar()" mat-menu-item routerLink="admin/audits"
+                            routerLinkActive="active">
+                        <fa-icon [fixedWidth]="true" icon="bell"></fa-icon>
+                        <span jhiTranslate="global.menu.admin.audits">Audits</span>
+                    </button>
+                </mat-menu>
+
                 <mat-menu #foodManagementMenu="matMenu" xPosition="before">
                     <button (click)="collapseNavbar()"
+                            class="dropdown-item"
                             mat-menu-item
                             [matMenuTriggerFor]="tagTypesMenu">
                         <span>
-                          <fa-icon [fixedWidth]="true" icon="user-plus"></fa-icon>
+                          <fa-icon [fixedWidth]="true" icon="tag"></fa-icon>
                           <span>Tags</span>
                         </span>
                     </button>
