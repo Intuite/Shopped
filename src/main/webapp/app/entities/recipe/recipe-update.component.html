@@ -15,9 +15,9 @@
 
                 <jhi-alert></jhi-alert>
 
-                <mat-form-field [hidden]="!editForm.get('id')!.value" appearance="fill" class="form-group w-100">
-                    <mat-label jhiTranslate="global.field.id"></mat-label>
-                    <input formControlName="id" id="id" matInput name="id" readonly type="text"/>
+                <mat-form-field [hidden]="true" appearance="fill" class="form-group w-100">
+                    <mat-label [hidden]="true"  jhiTranslate="global.field.id"></mat-label>
+                    <input [hidden]="true" formControlName="id" id="id" matInput name="id" readonly type="text"/>
                 </mat-form-field>
 
                 <mat-form-field appearance="fill" class="form-group w-100">
@@ -33,32 +33,33 @@
                 </mat-form-field>
 
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="shoppedApp.recipe.image"
-                           for="">Image</label>
+                    <label class="form-control-label"
+                           for=""></label>
                     <div>
                         <img
                             [src]="'data:' + editForm.get('imageContentType')!.value + ';base64,' + editForm.get('image')!.value"
                             style="max-height: 100px;" *ngIf="editForm.get('image')!.value" alt="award image"/>
+                        <div *ngIf="!editForm.get('image')!.value">
+                            <input type="file" id="file_image" (change)="setFileData($event, 'image', true)"
+                                   accept="image/*" jhiTranslate="entity.action.addimage" class="inputfile"/>
+                            <label for="file_image">
+                                <a type="button" mat-flat-button jhiMaterialColor="primary">
+                                    <fa-icon icon="image"></fa-icon>
+                                    Add Image
+                                </a>
+                            </label>
+                        </div>
                         <div *ngIf="editForm.get('image')!.value" class="form-text text-danger clearfix">
-                            <span class="pull-left">{{ editForm.get('imageContentType')!.value }}
-                                , {{ byteSize(editForm.get('image')!.value) }}</span>
+
                             <button type="button" (click)="clearInputImage('image', 'imageContentType', 'file_image')"
                                     class="btn btn-secondary btn-xs pull-right">
                                 <fa-icon icon="times"></fa-icon>
                             </button>
                         </div>
-                        <input type="file" id="file_image" (change)="setFileData($event, 'image', true)"
-                               accept="image/*" jhiTranslate="entity.action.addimage" class="inputfile"/>
-                        <label for="file_image">
-                            <a type="button" mat-flat-button jhiMaterialColor="primary">
-                                <fa-icon icon="image"></fa-icon>
-                                Add Image
-                            </a>
-                        </label>
+
                     </div>
                 </div>
 
-                <hr>
 
                 <mat-form-field appearance="fill" class="form-group w-100">
                     <mat-label>Number of servings:</mat-label>
@@ -110,16 +111,16 @@
                     </mat-error>
                 </mat-form-field>
 
-                <hr>
-                <h4>Include Ingredients:</h4>
+
                 <jhi-ingredient-picker #ingredientPk ></jhi-ingredient-picker>
-
-                <hr>
-
+                <br>
+                
                 <mat-form-field appearance="fill" class="form-group w-100">
                     <mat-label>Recipe instructions:</mat-label>
-                    <input formControlName="description" id="field_description" matInput name="description"
-                           type="text"/>
+
+                    <textarea formControlName="description" id="field_description" matInput name="description"
+                    type="text" style="height: 100px"></textarea>
+
                     <mat-error
                         *ngIf="(editForm.get('description')!.invalid && (editForm.get('description')!.dirty ||
                                 editForm.get('description')!.touched)) && editForm.get('description')?.errors?.minlength"
@@ -134,10 +135,9 @@
                     </mat-error>
                 </mat-form-field>
 
-                <hr>
-                <h4>Include Tags:</h4>
+
                 <jhi-recipe-tag-picker #recipeTagPk ></jhi-recipe-tag-picker>
-                <hr>
+                <br>
 
                 <div [hidden]="true" class="form-group">
                     <label class="form-control-label" jhiTranslate="shoppedApp.recipe.creation"
@@ -174,6 +174,7 @@
 
             </div>
 
+            <hr>
 
             <div>
                 <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
