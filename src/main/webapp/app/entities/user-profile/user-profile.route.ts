@@ -52,7 +52,7 @@ export const userProfileRoute: Routes = [
       userProfile: UserProfileResolve,
     },
     data: {
-      authorities: [Authority.USER, Authority.MOD],
+      authorities: [Authority.USER, Authority.MOD, Authority.ADMIN],
       pageTitle: 'shoppedApp.userProfile.home.title',
     },
     canActivate: [UserRouteAccessService],
@@ -76,7 +76,7 @@ export const userProfileRoute: Routes = [
       userProfile: UserProfileResolve,
     },
     data: {
-      authorities: [Authority.USER, Authority.MOD],
+      authorities: [Authority.USER, Authority.MOD, Authority.ADMIN],
       pageTitle: 'shoppedApp.userProfile.home.title',
     },
     canActivate: [UserRouteAccessService],
