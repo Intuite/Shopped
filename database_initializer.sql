@@ -550,3 +550,6 @@ values ('ACTIVE', 1),
 update jhi_user
 set email = 'teamintuite@gmail.com'
 where login = 'admin';
+
+delete from jhi_user_authority
+where user_id = 1 AND authority_name = 'ROLE_USER';

@@ -1,0 +1,223 @@
+.recipe-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  overflow: hidden;
+}
+
+.recipe-element-center {
+  text-align: center;
+}
+
+.recipe-element-left {
+  text-align: left;
+}
+
+.recipe-element-right {
+  text-align: right;
+}
+
+.recipe-subtitle {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.recipe-bite {
+  background-color: #87643e;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  padding-top: 15px;
+}
+
+.container-bite {
+  height: 65px;
+  width: 250px;
+  padding: 0;
+  margin: 0;
+}
+
+.recipe-bite-div {
+  display: inline-block;
+  float: left;
+}
+
+.recipe-bite-text-above {
+  font-size: 20px;
+  color: white;
+  float: left;
+  clear: left;
+}
+
+.recipe-bite-text-below {
+  font-size: 14px;
+  color: white;
+  float: left;
+  clear: left;
+}
+
+.recipe-instructions {
+  border-style: groove;
+  padding: 15px;
+  font-size: 15px;
+}
+
+.recipe-save-buttons {
+  font-size: 10px;
+  margin-right: 2px;
+  border: none;
+  background-color: white;
+  width: 60px;
+}
+
+.recipe-reply {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.recipe-picture img {
+  height: auto;
+  width: auto;
+  overflow: hidden;
+}
+
+.recipe-bite-button {
+  border: none;
+  background: none;
+}
+
+.recipe-cart-button {
+  margin: 5px;
+  height: 35px;
+  border-radius: 25px;
+  background-color: #fea201;
+  color: white;
+}
+
+.recipe-picture {
+  height: 250px;
+  width: auto;
+  display: inline-block;
+  vertical-align: middle;
+  background-size: cover;
+  background: url('../../../content/images/placeholder-image.png') no-repeat center center;
+}
+
+.recipe-picture img {
+  height: 250px;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.recipe-icon-bite {
+  height: 24px;
+  width: 24px;
+  display: inline-block;
+  vertical-align: middle;
+  background: url('../../../content/images/bite-icon.png') no-repeat center center;
+  background-size: contain;
+  margin-right: 3px;
+}
+
+.recipe-icon-duration {
+  height: 20px;
+  width: 20px;
+  display: inline-block;
+  vertical-align: middle;
+  background: url('../../../content/images/duration-icon.png') no-repeat center center;
+  background-size: contain;
+  margin-right: 3px;
+}
+
+.recipe-icon-comment {
+  height: 24px;
+  width: 24px;
+  display: inline-block;
+  vertical-align: middle;
+  background: url('../../../content/images/comment-icon.png') no-repeat center center;
+  background-size: contain;
+  margin-right: 8px;
+}
+
+.recipe-icon-view {
+  height: 24px;
+  width: 24px;
+  display: inline-block;
+  vertical-align: middle;
+  background: url('../../../content/images/view-icon.png') no-repeat center center;
+  background-size: contain;
+  margin-right: 8px;
+}
+
+.recipe-icon-portion {
+  height: 20px;
+  width: 20px;
+  display: inline-block;
+  vertical-align: middle;
+  background: url('../../../content/images/portion-icon.png') no-repeat center center;
+  background-size: contain;
+  margin-right: 3px;
+}
+
+.recipe-icon-cart {
+  height: 20px;
+  width: 20px;
+  display: inline-block;
+  vertical-align: middle;
+  background: url('../../../content/images/shopcart-white-icon.png') no-repeat center center;
+  background-size: contain;
+  margin-right: 3px;
+}
+
+.recipe-icon-heart-white {
+  height: 48px;
+  width: 48px;
+  display: inline-block;
+  vertical-align: middle;
+  background: url('../../../content/images/heart-white-icon.png') no-repeat center center;
+  background-size: contain;
+  margin-top: 5px;
+  margin-right: 8px;
+  margin-lef: 5px;
+}
+
+.recipe-icon-bite-white {
+  height: 48px;
+  width: 48px;
+  display: inline-block;
+  vertical-align: middle;
+  background: url('../../../content/images/bite-white-icon.png') no-repeat center center;
+  background-size: contain;
+  margin-right: 8px;
+}
+
+.recipe-icon-email {
+  height: 24px;
+  width: 24px;
+  display: inline-block;
+  vertical-align: middle;
+  background: url('../../../content/images/email-grey-icon.png') no-repeat center center;
+  background-size: contain;
+  margin-right: 5px;
+}
+
+.recipe-icon-pdf {
+  height: 24px;
+  width: 24px;
+  display: inline-block;
+  vertical-align: middle;
+  background: url('../../../content/images/pdf-grey-icon.png') no-repeat center center;
+  background-size: contain;
+  margin-right: 5px;
+}
+
+.recipe-icon-bookmark {
+  height: 24px;
+  width: 24px;
+  display: inline-block;
+  vertical-align: middle;
+  background: url('../../../content/images/bookmark-icon.png') no-repeat center center;
+  background-size: contain;
+  margin-right: 5px;
+}

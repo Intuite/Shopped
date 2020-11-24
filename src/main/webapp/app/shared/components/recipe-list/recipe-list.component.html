@@ -1,0 +1,46 @@
+<dl class="row-md jh-entity-details">
+    <div class="recipe-card-content" fxLayout="row wrap" fxLayoutGap="16px grid">
+        <div fxFlex="25%" fxFlex.xs="100%" fxFlex.sm="50%" fxFlex.gt-sm="33%"  *ngFor="let card of recipes">
+            <mat-card class="mat-elevation-z4" >
+                <mat-card-header>
+                    <mat-card-title class="recipe-card-title">
+                        <div>
+                            {{ card.name }}
+                        </div>
+                    </mat-card-title>
+                </mat-card-header>
+                <div *ngIf="card.image">
+                    <img [src]="'data:' + recipe.imageContentType + ';base64,' + recipe.image" style="max-width: 100%;" alt="recipe image"/>
+                </div>
+                <div *ngIf="!card.image">
+                    <img src='../../../../content/images/placeholder-square.png' alt="Shopped logo"
+                         style="max-width: 100%;"/>
+                </div>
+                <mat-card-content>
+                    <div class="recipe-card-element-right">
+                        <span class="recipe-card-icon-portion">{{card.portion}}</span>
+                        <span class="recipe-card-icon-duration">{{card.duration}} min</span>
+                    </div>
+                </mat-card-content>
+                <mat-card-actions>
+
+                    <button type="submit"
+                            [routerLink]="['/recipe', card.id, 'view']"
+                            class="btn btn-info btn-sm btn-primary">
+                        <fa-icon icon="eye"></fa-icon>
+                        <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                    </button>
+
+                    <button type="button"
+                            [routerLink]="['/recipe', card.id, 'edit']"
+                            class="btn btn-sm  btn-secondary">
+                        <fa-icon icon="pencil-alt"></fa-icon>
+                        &nbsp;
+                        <span jhiTranslate="entity.action.edit">Edit</span>
+                    </button>
+
+                </mat-card-actions>
+            </mat-card>
+        </div>
+    </div>
+</dl>

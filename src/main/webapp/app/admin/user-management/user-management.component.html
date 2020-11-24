@@ -23,7 +23,7 @@
         <mat-spinner diameter="50" strokeWidth="5"></mat-spinner>
     </div>
 
-    <div class="table-responsive table-hover" *ngIf="users">
+    <div class="table-responsive table-hover" *ngIf="users && !requesting">
         <jhi-material-table #tableComponent [data]="users" [managementComponent]="this"></jhi-material-table>
     </div>
 </div>

@@ -25,7 +25,8 @@ export class LoginModalComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     if (this.username) {
-      this.username.nativeElement.focus();
+      // SE VE MAL PORQUE BAJA UN POCO
+      // this.username.nativeElement.focus();
     }
   }
 
