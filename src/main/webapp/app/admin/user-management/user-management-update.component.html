@@ -128,10 +128,10 @@
 
                 <mat-form-field class="form-group w-100" appearance="fill">
                     <mat-label jhiTranslate="userManagement.profiles">Profiles</mat-label>
-                    <mat-select multiple name="authority" formControlName="authorities">
+                    <mat-select name="authority" formControlName="authorities">
                         <mat-option *ngFor="let authority of authorities" [value]="authority"
                                     [disabled]="authority === 'ROLE_ADMIN'">
-                            <span>{{ authority }}</span>
+                            <span>{{ getAuthorityName(authority) }}</span>
                         </mat-option>
                     </mat-select>
                     <mat-hint></mat-hint>
