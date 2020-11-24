@@ -1,11 +1,9 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { IUserProfile } from 'app/shared/model/user-profile.model';
 import { User } from 'app/core/user/user.model';
 import { JhiDataUtils } from 'ng-jhipster';
 import { ActivatedRoute } from '@angular/router';
 import { Account } from 'app/core/user/account.model';
 import { AccountService } from 'app/core/auth/account.service';
-import { UserProfileService } from 'app/entities/user-profile/user-profile.service';
 import { UserService } from 'app/core/user/user.service';
 import { Subscription } from 'rxjs';
 import { Cookies, ICookies } from 'app/shared/model/cookies.model';
@@ -20,7 +18,6 @@ import { HttpResponse } from '@angular/common/http';
 export class ProfileComponent implements OnInit, OnDestroy, AfterViewInit {
   account: Account | null = null;
   user: User | null = null;
-  userProfile: IUserProfile | null = null;
   requesting = false;
   progress = 0;
   success = true;
@@ -29,7 +26,6 @@ export class ProfileComponent implements OnInit, OnDestroy, AfterViewInit {
 
   constructor(
     protected dataUtils: JhiDataUtils,
-    private userProfileService: UserProfileService,
     private userService: UserService,
     private accountService: AccountService,
     protected activatedRoute: ActivatedRoute,
@@ -69,16 +65,6 @@ export class ProfileComponent implements OnInit, OnDestroy, AfterViewInit {
       ({ user }) => {
         this.user = user;
         this.progress += 25;
-        this.userProfileService.findByUser(user.id).subscribe(
-          userProfile => {
-            this.userProfile = userProfile.body;
-            this.success = true;
-            this.requesting = false;
-          },
-          () => {
-            this.requesting = false;
-          }
-        );
       },
       () => {
         this.requesting = false;
