@@ -39,7 +39,7 @@ export const tagTypeRoute: Routes = [
     path: '',
     component: TagTypeComponent,
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       defaultSort: 'id,asc',
       pageTitle: 'shoppedApp.tagType.home.title',
     },
@@ -52,7 +52,7 @@ export const tagTypeRoute: Routes = [
       tagType: TagTypeResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       pageTitle: 'shoppedApp.tagType.home.title',
     },
     canActivate: [UserRouteAccessService],
@@ -64,7 +64,7 @@ export const tagTypeRoute: Routes = [
       tagType: TagTypeResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       pageTitle: 'shoppedApp.tagType.home.title',
     },
     canActivate: [UserRouteAccessService],

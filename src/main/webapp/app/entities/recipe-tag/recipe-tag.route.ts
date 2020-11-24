@@ -38,7 +38,7 @@ export const recipeTagRoute: Routes = [
     path: '',
     component: RecipeTagComponent,
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       defaultSort: 'id,asc',
       pageTitle: 'shoppedApp.recipeTag.home.title',
     },
@@ -51,7 +51,7 @@ export const recipeTagRoute: Routes = [
       recipeTag: RecipeTagResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       pageTitle: 'shoppedApp.recipeTag.home.title',
     },
     canActivate: [UserRouteAccessService],
@@ -63,7 +63,7 @@ export const recipeTagRoute: Routes = [
       recipeTag: RecipeTagResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       pageTitle: 'shoppedApp.recipeTag.home.title',
     },
     canActivate: [UserRouteAccessService],

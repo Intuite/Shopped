@@ -47,7 +47,7 @@
             </div>
             <mat-divider></mat-divider>
             <div class="col-md-5 mt-3 sticky-top">
-                <div class="justify-content-center" align="center">
+                <div class="justify-content-center description" align="center" *ngIf="award">
                     <img [src]="'data:' + award.imageContentType + ';base64,' + award.image"
                          alt="award image" class="rounded-circle mt-2 img-award-details"
                          align="center"/>
@@ -57,7 +57,7 @@
                         <fa-icon icon="cookie-bite"></fa-icon>
                         {{award.cost}}</h2>
                     <div *ngIf="(cookie.amount || -1) >= (award.cost || 0)">
-                        <button mat-raised-button jhiMaterialColor="primary" align="center" (click)="
+                        <button mat-raised-button jhiMaterialColor="primary" align="center" [mat-dialog-close] (click)="
                             awardPost(award)">Next
                         </button>
                     </div>

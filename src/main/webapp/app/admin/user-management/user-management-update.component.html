@@ -1,4 +1,9 @@
 <div class="row justify-content-center">
+    <div class="col-10">
+        <button (click)="previousState()" class="btn btn-secondary" type="submit">
+            <fa-icon icon="arrow-left"></fa-icon>
+        </button>
+    </div>
     <div class="col-8">
         <div class="w-100" fxLayout="row" fxLayoutAlign="space-around center">
             <mat-spinner *ngIf="loadingUser || isSaving" diameter="50" strokeWidth="5"></mat-spinner>
@@ -128,10 +133,10 @@
 
                 <mat-form-field class="form-group w-100" appearance="fill">
                     <mat-label jhiTranslate="userManagement.profiles">Profiles</mat-label>
-                    <mat-select multiple name="authority" formControlName="authorities">
+                    <mat-select name="authority" formControlName="authorities">
                         <mat-option *ngFor="let authority of authorities" [value]="authority"
                                     [disabled]="authority === 'ROLE_ADMIN'">
-                            <span>{{ authority }}</span>
+                            <span>{{ getAuthorityName(authority) }}</span>
                         </mat-option>
                     </mat-select>
                     <mat-hint></mat-hint>
