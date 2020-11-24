@@ -24,6 +24,7 @@ export class RecipeListComponent implements OnInit, AfterViewInit {
   user!: IUser;
   statusOptions = ['ACTIVE', 'INACTIVE'];
   dataSource = new MatTableDataSource<IRecipe>();
+  searchText = '';
 
   constructor(
     protected dataUtils: JhiDataUtils,
