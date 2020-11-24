@@ -1,63 +1,116 @@
 <div class="row justify-content-center">
+    <div class="col-10">
+        <button (click)="previousState()" class="btn btn-secondary" type="submit">
+            <fa-icon icon="arrow-left"></fa-icon>
+        </button>
+    </div>
     <div class="col-8">
-        <div *ngIf="recipe">
-            <h2><span jhiTranslate="shoppedApp.recipe.detail.title">Recipe</span> {{ recipe.id }}</h2>
 
-            <hr>
+        <div *ngIf="recipe?.userId === user?.id">
+            <mat-card>
+                <mat-card-content *ngIf="recipe">
+                    <div style="height: auto;">
+                        <div
+                            [ngStyle.gt-sm]="{ 'max-width': '900px' }"
+                            [ngStyle]="{ 'max-width': 'auto' }"
+                            gdAreas.gt-sm="recipePicture recipePicture recipePicture |
+                                           userInfo  userInfo userInfo  |
+                                           caption caption caption |
+                                           ingredientsTitle ingredientsTitle portions |
+                                           ingredientsList ingredientsList ingredientsList |
+                                           addToCart addToCart addToCart |
+                                           instructionsTitle instructionsTitle duration |
+                                           instructionsList instructionsList instructionsList |
+                                           exportButtons exportButtons exportButtons |
+                                           tagsList tagsList tagsList"
+                            gdAreas.sm="recipePicture recipePicture |
+                                        userInfo userInfo |
+                                        caption caption |
+                                        ingredientsTitle portions |
+                                        ingredientsList ingredientsList |
+                                        addToCart addToCart |
+                                        instructionsTitle duration|
+                                        instructionsList instructionsList |
+                                        exportButtons exportButtons |
+                                        tagsList tagsList"
+                            gdAreas.xs="recipePicture | userInfo |
+                                        caption | portions | ingredientsTitle| ingredientsList | addToCart | duration |
+                                        instructionsTitle | instructionsList | exportButtons | tagsList"
+                            gdColumns.gt-sm="200px auto 200px"
+                            gdColumns.sm="50%!"
+                            gdColumns.xs="none"
+                            gdGap="1em"
+                            gdGap.gt-sm="20px">
 
-            <jhi-alert-error></jhi-alert-error>
+                            <div class="blocks-1 recipe-picture" gdArea="recipePicture">
+                                <img *ngIf="recipe.image"
+                                     [src]="'data:' + recipe.imageContentType + ';base64,' + recipe.image"
+                                     alt="recipe image"
+                                     class="recipe-image"/>
+                            </div>
 
-            <dl class="row-md jh-entity-details">
-                <dt><span jhiTranslate="shoppedApp.recipe.name">Name</span></dt>
-                <dd>
-                    <span>{{ recipe.name }}</span>
-                </dd>
-                <dt><span jhiTranslate="shoppedApp.recipe.portion">Portion</span></dt>
-                <dd>
-                    <span>{{ recipe.portion }}</span>
-                </dd>
-                <dt><span jhiTranslate="shoppedApp.recipe.description">Description</span></dt>
-                <dd>
-                    <span>{{ recipe.description }}</span>
-                </dd>
-                <dt><span jhiTranslate="shoppedApp.recipe.duration">Duration</span></dt>
-                <dd>
-                    <span>{{ recipe.duration }}</span>
-                </dd>
-                <dt><span jhiTranslate="shoppedApp.recipe.creation">Creation</span></dt>
-                <dd>
-                    <span>{{ recipe.creation }}</span>
-                </dd>
-                <dt><span jhiTranslate="shoppedApp.recipe.image">Image</span></dt>
-                <dd>
-                    <div *ngIf="recipe.image">
-                        <a (click)="openFile(recipe.imageContentType, recipe.image)">
-                            <img [src]="'data:' + recipe.imageContentType + ';base64,' + recipe.image" style="max-width: 100%;" alt="recipe image"/>
-                        </a>
-                        {{ recipe.imageContentType }}, {{ byteSize(recipe.image) }}
+                            <div class="blocks-4 recipe-element-center" gdArea="userInfo">
+                                <dd><span>{{ recipe.creation | date:"mediumDate" }}</span></dd>
+                            </div>
+
+                            <div class="blocks-5 recipe-element-center" gdArea="caption">
+                                <dd>
+                                    <div *ngIf="recipe.id">
+                                        <h2><b>{{ recipe.name }}</b></h2>
+                                    </div>
+                                </dd>
+                            </div>
+
+                            <div class="blocks-6 recipe-element-left recipe-subtitle" gdArea="ingredientsTitle">
+                                Ingredients:
+                            </div>
+
+                            <div class="blocks-7 recipe-element-right" gdArea="portions">
+                                <span class="recipe-icon-portion"></span> {{recipe.portion}}
+                            </div>
+
+                            <div class="blocks-8 recipe-element-center" gdArea="ingredientsList">
+                                ingredients list
+                            </div>
+
+                            <div class="blocks-9 recipe-element-center" gdArea="addToCart">
+                                <button class="recipe-cart-button" type="submit">
+                                    <span class="recipe-icon-cart"></span> ADD TO
+                                    SHOPPING CART
+                                </button>
+                            </div>
+
+                            <div class="blocks-10 recipe-element-left recipe-subtitle" gdArea="instructionsTitle">
+                                Instructions:
+                            </div>
+
+                            <div class="blocks-11 recipe-element-right" gdArea="duration">
+                                <span class="recipe-icon-duration"></span> {{recipe.duration}}min
+                            </div>
+
+                            <div class="blocks-12 recipe-element-center recipe-instructions" gdArea="instructionsList">
+                                {{ recipe.description }}
+                            </div>
+
+                            <div class="blocks-13 recipe-element-right" gdArea="exportButtons">
+                                <button class="recipe-save-buttons" type="submit">
+                                    <span class="recipe-icon-email"></span> Email
+                                </button>
+                                <button class="recipe-save-buttons" type="submit">
+                                    <span class="recipe-icon-pdf"></span> PDF
+                                </button>
+                            </div>
+
+                            <div class="blocks-15 recipe-element-left recipe-subtitle" gdArea="tagsList">
+                                Tags:
+                                <br>
+                                <hr>
+                            </div>
+
+                        </div>
                     </div>
-                </dd>
-                <dt><span jhiTranslate="shoppedApp.recipe.status">Status</span></dt>
-                <dd>
-                    <span jhiTranslate="{{ 'shoppedApp.Status.' + recipe.status }}">{{ recipe.status }}</span>
-                </dd>
-                <dt><span jhiTranslate="shoppedApp.recipe.user">User</span></dt>
-                <dd>
-                    {{ recipe.userLogin }}
-                </dd>
-            </dl>
-
-            <button type="submit"
-                    (click)="previousState()"
-                    class="btn btn-info">
-                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
-            </button>
-
-            <button type="button"
-                    [routerLink]="['/recipe', recipe.id, 'edit']"
-                    class="btn btn-primary">
-                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
-            </button>
+                </mat-card-content>
+            </mat-card>
         </div>
     </div>
 </div>

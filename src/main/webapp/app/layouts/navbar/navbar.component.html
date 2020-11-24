@@ -200,11 +200,22 @@
                         [routerLinkActiveOptions]="{ exact: true }"
                         class="dropdown-item"
                         mat-menu-item
+                        routerLink="recipe"
+                        routerLinkActive="active"
+                    >
+                        <fa-icon [fixedWidth]="true" icon="mortar-pestle"></fa-icon>
+                        <span>Recipes</span>
+                    </button>
+                    <button
+                        (click)="collapseNavbar()"
+                        [routerLinkActiveOptions]="{ exact: true }"
+                        class="dropdown-item"
+                        mat-menu-item
                         routerLink="ingredient"
                         routerLinkActive="active"
                     >
                         <fa-icon [fixedWidth]="true" icon="hamburger"></fa-icon>
-                        <span jhiTranslate="global.menu.entities.ingredient">Ingredients</span>
+                        <span>Ingredients</span>
                     </button>
                     <button
                         (click)="collapseNavbar()"
@@ -356,18 +367,18 @@
                         routerLinkActive="active"
                     >
                         <fa-icon [fixedWidth]="true" icon="bookmark"></fa-icon>
-                        <span jhiTranslate="global.menu.entities.collection">Collection</span>
+                        <span>My Collections</span>
                     </button>
                     <button
                         (click)="collapseNavbar()"
                         [routerLinkActiveOptions]="{ exact: true }"
                         class="dropdown-item"
                         mat-menu-item
-                        routerLink="recipe"
+                        routerLink="recipe/list"
                         routerLinkActive="active"
                     >
-                        <fa-icon [fixedWidth]="true" icon="mortar-pestle"></fa-icon>
-                        <span>Recipes</span>
+                        <span class="icon-recipe"></span>
+                        <span>My Recipes</span>
                     </button>
                 </mat-menu>
             </li>
