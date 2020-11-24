@@ -27,7 +27,7 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
         <td mat-cell *matCellDef="let element" >
             <span>
-                <a [routerLink]="['./', element.login, 'view']">{{ element.id }}</a>
+                <a [routerLink]="['/account/profile', element.login]">{{ element.id }}</a>
             </span>
         </td>
     </ng-container>

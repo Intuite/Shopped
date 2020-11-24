@@ -16,6 +16,7 @@ import { Status } from 'app/shared/model/enumerations/status.model';
 @Component({
   selector: 'jhi-ingredient-update',
   templateUrl: './ingredient-update.component.html',
+  styleUrls: ['../../../content/scss/image_Select.scss'],
 })
 export class IngredientUpdateComponent implements OnInit {
   isSaving = false;

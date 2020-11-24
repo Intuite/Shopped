@@ -9,12 +9,15 @@ export class LoginModalService {
 
   constructor(private modalService: NgbModal) {}
 
-  open(): void {
+  open(finalizeFunc?: Function): void {
     if (this.isOpen) {
       return;
     }
     this.isOpen = true;
-    const modalRef: NgbModalRef = this.modalService.open(LoginModalComponent);
-    modalRef.result.finally(() => (this.isOpen = false));
+    const modalRef: NgbModalRef = this.modalService.open(LoginModalComponent, { centered: true });
+    modalRef.result.finally(() => {
+      this.isOpen = false;
+      if (finalizeFunc) finalizeFunc();
+    });
   }
 }

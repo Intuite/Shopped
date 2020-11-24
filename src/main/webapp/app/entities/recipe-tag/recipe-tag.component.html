@@ -14,8 +14,6 @@
         </button>
     </h2>
 
-    <jhi-alert-error></jhi-alert-error>
-
     <jhi-alert></jhi-alert>
 
     <div *ngIf="requesting">
@@ -28,10 +26,9 @@
         <jhi-recipe-tag-table #table [data]="recipeTags" [managementComponent]="this"></jhi-recipe-tag-table>
     </div>
 
-    <div *ngIf="recipeTags?.length === 0 || !recipeTags" class="alert alert-warning" id="no-result">
+    <div *ngIf="recipeTags?.length === 0 || !recipeTags && !requesting" class="alert alert-warning" id="no-result">
         <div>
             <span>No Recipe Tags found</span>
         </div>
     </div>
 </div>
-<jhi-recipe-tag-picker></jhi-recipe-tag-picker>

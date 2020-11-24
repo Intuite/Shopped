@@ -23,6 +23,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   swaggerEnabled?: boolean;
   version: string;
   currentAccount: Account | null = null;
+  accountLoaded = false;
   // userProfile!: UserProfile | null;
 
   constructor(
@@ -39,10 +40,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.accountService.identity().subscribe(account => {
-      this.currentAccount = account;
-      // if (this.isAuthenticated() && account) this.loadAccountData(account.id);
-    });
+    this.loadAccount();
     this.profileService.getProfileInfo().subscribe(profileInfo => {
       this.inProduction = profileInfo.inProduction;
       this.swaggerEnabled = profileInfo.swaggerEnabled;
@@ -51,11 +49,13 @@ export class NavbarComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {}
 
-  // private loadAccountData(idUser: number): void {
-  //   this.userProfileService.findByUser(idUser).subscribe((res: HttpResponse<UserProfile>) => {
-  //     this.userProfile = res.body || null;
-  //   });
-  // }
+  loadAccount(): void {
+    this.accountService.identity().subscribe(account => {
+      this.currentAccount = account;
+      // if (this.isAuthenticated() && account) this.loadAccountData(account.id);
+    });
+    this.accountLoaded = true;
+  }
 
   changeLanguage(languageKey: string): void {
     this.sessionStorage.store('locale', languageKey);
@@ -71,7 +71,11 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   }
 
   login(): void {
-    this.loginModalService.open();
+    this.loginModalService.open(() => {
+      this.accountLoaded = false;
+      this.currentAccount = null;
+      this.loadAccount();
+    });
   }
 
   logout(): void {
