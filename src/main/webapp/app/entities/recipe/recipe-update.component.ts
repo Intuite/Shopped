@@ -2,7 +2,7 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
@@ -38,6 +38,7 @@ export class RecipeUpdateComponent implements OnInit {
   user!: IUser;
   savedIngredients: any[] = [];
   savedRecipeTags: IRecipeTag[] = [];
+  recipeCreated!: IRecipe;
 
   editForm = this.fb.group({
     id: [],
@@ -62,7 +63,8 @@ export class RecipeUpdateComponent implements OnInit {
     private fb: FormBuilder,
     private accountService: AccountService,
     protected recipeHasIngredientService: RecipeHasIngredientService,
-    protected recipeHasRecipeTagService: RecipeHasRecipeTagService
+    protected recipeHasRecipeTagService: RecipeHasRecipeTagService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -140,6 +142,7 @@ export class RecipeUpdateComponent implements OnInit {
       this.recipeService.create(recipe).subscribe(
         response => {
           if (response.body !== null) {
+            this.selectRecipeCreated(response.body);
             this.addIngredientsToRecipe(response.body);
             this.addRecipeTagsToRecipe(response.body);
           }
@@ -147,7 +150,12 @@ export class RecipeUpdateComponent implements OnInit {
         () => console.warn('Error adding ingredients and tags to recipe')
       );
     }
-    this.previousState();
+    // this.previousState();
+    this.gotoAfterSave();
+  }
+
+  selectRecipeCreated(recipe: Recipe): void {
+    this.recipeCreated = recipe;
   }
 
   addIngredientsToRecipe(recipe: Recipe): void {
@@ -225,5 +233,11 @@ export class RecipeUpdateComponent implements OnInit {
 
   trackById(index: number, item: IUser): any {
     return item.id;
+  }
+
+  gotoAfterSave(): void {
+    // const recipeId = this.recipeCreated.id ? this.recipeCreated.id : null;
+    // this.router.navigate(['/recipe', {id: this.recipeCreated.id}, 'view']);
+    this.router.navigate(['/recipe', 'list']);
   }
 }

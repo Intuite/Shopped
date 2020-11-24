@@ -1,0 +1,40 @@
+.row-no-overflow {
+  overflow-y: hidden;
+}
+
+.row-overflow {
+  overflow-y: auto;
+}
+
+.recipe-list {
+  max-height: 600px;
+}
+
+.img-recipe-list {
+  height: 150px;
+  width: 150px;
+}
+
+.img-recipe-details {
+  height: 120px;
+  width: 120px;
+}
+
+.description {
+  width: 210px;
+  min-height: 50px;
+}
+
+//
+
+.recipe-card-content {
+  padding: 16px;
+}
+
+.recipe-card-content > mat-card {
+  width: 200px;
+}
+
+.recipe-card-title {
+  height: 20px;
+}

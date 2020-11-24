@@ -65,7 +65,7 @@
         <th *matHeaderCellDef mat-header-cell mat-sort-header>Status</th>
         <td *matCellDef="let element" mat-cell>
             <span>
-                {{ element.status }}
+                {{ element.status |titlecase }}
             </span>
         </td>
     </ng-container>
@@ -82,7 +82,7 @@
                     <mat-icon>launch</mat-icon>
                 </button>
 
-                <button [routerLink]="['/recipe/', element.id, 'edit']"
+                <button [routerLink]="['/recipe/', element.id, 'edit']" [hidden]="true"
                         class="text-white mx-3"
                         color="primary"
                         mat-mini-fab

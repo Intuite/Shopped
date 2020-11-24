@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as moment from 'moment';
@@ -28,8 +28,6 @@ export class PostUpdateComponent implements OnInit {
   statusOptions = ['ACTIVE', 'INACTIVE'];
   user!: IUser;
 
-  // continue with the user
-
   editForm = this.fb.group({
     id: [],
     caption: [],
@@ -45,7 +43,8 @@ export class PostUpdateComponent implements OnInit {
     protected userService: UserService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -145,7 +144,8 @@ export class PostUpdateComponent implements OnInit {
 
   protected onSaveSuccess(): void {
     this.isSaving = false;
-    this.previousState();
+    // this.previousState();
+    this.gotoAfterSave();
   }
 
   protected onSaveError(): void {
@@ -154,5 +154,9 @@ export class PostUpdateComponent implements OnInit {
 
   trackById(index: number, item: SelectableEntity): any {
     return item.id;
+  }
+
+  gotoAfterSave(): void {
+    this.router.navigate(['/recipe', 'list']);
   }
 }
