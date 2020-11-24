@@ -543,10 +543,10 @@ insert into log_type (id, name, template, status)
 values (1,'Award','','ACTIVE');
 
 insert into user_profile(status, user_id)
-values ('INACTIVE', 1),
-       ('INACTVIE', 2),
-       ('INACTVIE', 3),
-       ('INACTIVE', 4);
+values ('ACTIVE', 1),
+       ('ACTVIE', 2),
+       ('ACTVIE', 3),
+       ('ACTIVE', 4);
 update jhi_user
 set email = 'teamintuite@gmail.com'
 where login = 'admin';
