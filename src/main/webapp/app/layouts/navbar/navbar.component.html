@@ -331,6 +331,19 @@
                         <span jhiTranslate="global.menu.entities.collection">Collection</span>
                     </button>
                     <button
+                        *jhiHasAnyAuthority="'ROLE_USER'"
+                        (click)="collapseNavbar()"
+                        [routerLinkActiveOptions]="{ exact: true }"
+                        class="dropdown-item"
+                        mat-menu-item
+                        routerLink="recipe/list"
+                        routerLinkActive="active"
+                    >
+                        <span class="icon-recipe"></span>
+                        <span>My Recipes</span>
+                    </button>
+                    <button
+                        *jhiHasAnyAuthority="'ROLE_ADMIN'"
                         (click)="collapseNavbar()"
                         [routerLinkActiveOptions]="{ exact: true }"
                         class="dropdown-item"
@@ -339,7 +352,7 @@
                         routerLinkActive="active"
                     >
                         <fa-icon [fixedWidth]="true" icon="mortar-pestle"></fa-icon>
-                        <span jhiTranslate="global.menu.entities.recipe">Recipe</span>
+                        <span>Recipe Table</span>
                     </button>
                 </mat-menu>
             </li>
