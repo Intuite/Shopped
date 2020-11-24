@@ -1,4 +1,9 @@
 <div class="row justify-content-center">
+    <div class="col-10">
+        <button type="submit" class="btn btn-secondary" (click)="previousState()">
+            <fa-icon icon="arrow-left"></fa-icon>
+        </button>
+    </div>
     <div class="col-8">
         <div *ngIf="award">
             <h2><span jhiTranslate="shoppedApp.award.detail.title">Award</span> {{ award.id }}</h2>
