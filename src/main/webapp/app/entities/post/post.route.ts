@@ -39,7 +39,7 @@ export const postRoute: Routes = [
     path: '',
     component: PostComponent,
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       defaultSort: 'id,asc',
       pageTitle: 'shoppedApp.post.home.title',
     },
