@@ -47,7 +47,7 @@
                 </button>
 
                 <mat-menu #adminMenu="matMenu" xPosition="before">
-                    <button [matMenuTriggerFor]="platformAdminMenu" class="nav-link dropdown-toggle" id="admin-platform-menu"
+                    <button [matMenuTriggerFor]="platformAdminMenu" id="admin-platform-menu"
                             mat-menu-item>
                         <span>
                           <fa-icon icon="user-plus"></fa-icon>
@@ -105,14 +105,9 @@
                         <fa-icon [fixedWidth]="true" icon="list"></fa-icon>
                         <span jhiTranslate="global.menu.admin.configuration">Configuration</span>
                     </button>
-                    <button (click)="collapseNavbar()" mat-menu-item routerLink="admin/audits"
-                            routerLinkActive="active">
-                        <fa-icon [fixedWidth]="true" icon="bell"></fa-icon>
-                        <span jhiTranslate="global.menu.admin.audits">Audits</span>
-                    </button>
-                    <button (click)="collapseNavbar()" mat-menu-item routerLink="admin/logs" routerLinkActive="active">
-                        <fa-icon [fixedWidth]="true" icon="tasks"></fa-icon>
-                        <span jhiTranslate="global.menu.admin.logs">Logs</span>
+                    <button mat-menu-item [matMenuTriggerFor]="logsMenu">
+                        <fa-icon [fixedWidth]="true" icon="users-cog"></fa-icon>
+                        <span>Logs</span>
                     </button>
                     <button (click)="collapseNavbar()" *ngIf="swaggerEnabled" mat-menu-item routerLink="admin/docs"
                             routerLinkActive="active">
@@ -158,12 +153,45 @@
                     </button>
                 </mat-menu>
 
+                <mat-menu #logsMenu xPosition="before">
+                    <button
+                        (click)="collapseNavbar()"
+                        [routerLinkActiveOptions]="{ exact: true }"
+                        mat-menu-item
+                        routerLink="log-type"
+                        routerLinkActive="active"
+                    >
+                        <fa-icon [fixedWidth]="true" icon="tasks"></fa-icon>
+                        <span>Log Types</span>
+                    </button>
+                    <button
+                        (click)="collapseNavbar()"
+                        [routerLinkActiveOptions]="{ exact: true }"
+                        mat-menu-item
+                        routerLink="log"
+                        routerLinkActive="active"
+                    >
+                        <fa-icon [fixedWidth]="true" icon="tasks"></fa-icon>
+                        <span jhiTranslate="global.menu.entities.log">Platform logs</span>
+                    </button>
+                    <button (click)="collapseNavbar()" mat-menu-item routerLink="admin/logs" routerLinkActive="active">
+                        <fa-icon [fixedWidth]="true" icon="tasks"></fa-icon>
+                        <span jhiTranslate="global.menu.admin.logs">Admin logs</span>
+                    </button>
+                    <button (click)="collapseNavbar()" mat-menu-item routerLink="admin/audits"
+                            routerLinkActive="active">
+                        <fa-icon [fixedWidth]="true" icon="bell"></fa-icon>
+                        <span jhiTranslate="global.menu.admin.audits">Audits</span>
+                    </button>
+                </mat-menu>
+
                 <mat-menu #foodManagementMenu="matMenu" xPosition="before">
                     <button (click)="collapseNavbar()"
+                            class="dropdown-item"
                             mat-menu-item
                             [matMenuTriggerFor]="tagTypesMenu">
                         <span>
-                          <fa-icon [fixedWidth]="true" icon="user-plus"></fa-icon>
+                          <fa-icon [fixedWidth]="true" icon="tag"></fa-icon>
                           <span>Tags</span>
                         </span>
                     </button>
@@ -176,17 +204,7 @@
                         routerLinkActive="active"
                     >
                         <fa-icon [fixedWidth]="true" icon="hamburger"></fa-icon>
-                        <span jhiTranslate="global.menu.entities.ingredient">Ingredients</span>
-                    </button>
-                    <button
-                        (click)="collapseNavbar()"
-                        [routerLinkActiveOptions]="{ exact: true }"
-                        class="dropdown-item"
-                        mat-menu-item
-                        routerLink="unit"
-                        routerLinkActive="active">
-                        <fa-icon [fixedWidth]="true" icon="thermometer"></fa-icon>
-                        <span jhiTranslate="global.menu.entities.unit">Units</span>
+                        <span>Ingredients</span>
                     </button>
                 </mat-menu>
 
@@ -236,7 +254,7 @@
                         routerLinkActive="active"
                     >
                         <fa-icon [fixedWidth]="true" icon="mortar-pestle"></fa-icon>
-                        <span jhiTranslate="global.menu.entities.post">Manage</span>
+                        <span>Manage</span>
                     </button>
                     <button
                         (click)="collapseNavbar()"
@@ -247,7 +265,7 @@
                         routerLinkActive="active"
                     >
                         <fa-icon [fixedWidth]="true" icon="award"></fa-icon>
-                        <span jhiTranslate="global.menu.entities.award">Awards</span>
+                        <span>Awards</span>
                     </button>
                 </mat-menu>
 
@@ -261,7 +279,7 @@
                         routerLinkActive="active"
                     >
                         <fa-icon [fixedWidth]="true" icon="box-open"></fa-icon>
-                        <span jhiTranslate="global.menu.entities.bundle">Bundles</span>
+                        <span>Bundles</span>
                     </button>
                     <button
                         (click)="collapseNavbar()"
@@ -272,7 +290,7 @@
                         routerLinkActive="active"
                     >
                         <fa-icon [fixedWidth]="true" icon="history"></fa-icon>
-                        <span jhiTranslate="global.menu.entities.transaction">Transactions</span>
+                        <span>Transactions</span>
                     </button>
                 </mat-menu>
 
@@ -286,7 +304,7 @@
                         routerLinkActive="active"
                     >
                         <fa-icon [fixedWidth]="true" icon="asterisk"></fa-icon>
-                        <span jhiTranslate="global.menu.entities.catalogue">Catalogues</span>
+                        <span>Catalogues</span>
                     </button>
                     <button
                         (click)="collapseNavbar()"
@@ -297,7 +315,7 @@
                         routerLinkActive="active"
                     >
                         <fa-icon [fixedWidth]="true" icon="sticky-note"></fa-icon>
-                        <span jhiTranslate="global.menu.entities.message">Message</span>
+                        <span>Message</span>
                     </button>
                 </mat-menu>
             </li>
@@ -328,10 +346,9 @@
                         routerLinkActive="active"
                     >
                         <fa-icon [fixedWidth]="true" icon="bookmark"></fa-icon>
-                        <span jhiTranslate="global.menu.entities.collection">Collection</span>
+                        <span>My Collections</span>
                     </button>
                     <button
-                        *jhiHasAnyAuthority="'ROLE_USER'"
                         (click)="collapseNavbar()"
                         [routerLinkActiveOptions]="{ exact: true }"
                         class="dropdown-item"
@@ -341,18 +358,6 @@
                     >
                         <span class="icon-recipe"></span>
                         <span>My Recipes</span>
-                    </button>
-                    <button
-                        *jhiHasAnyAuthority="'ROLE_ADMIN'"
-                        (click)="collapseNavbar()"
-                        [routerLinkActiveOptions]="{ exact: true }"
-                        class="dropdown-item"
-                        mat-menu-item
-                        routerLink="recipe"
-                        routerLinkActive="active"
-                    >
-                        <fa-icon [fixedWidth]="true" icon="mortar-pestle"></fa-icon>
-                        <span>Recipe Table</span>
                     </button>
                 </mat-menu>
             </li>
@@ -446,7 +451,7 @@
 
             <!-- ACCOUNT MENU -->
             <li
-                [routerLinkActiveOptions]="{ exact: true }"
+                [routerLinkActiveOptions]="{ exact: false }"
                 class="nav-item dropdown pointer"
                 display="dynamic"
                 ngbDropdown
@@ -467,16 +472,14 @@
                         <fa-icon [fixedWidth]="true" icon="wrench"></fa-icon>
                         <span jhiTranslate="global.menu.account.settings">Settings</span>
                     </button>
-                    <div>
-                        <div *ngIf="currentAccount">
-                            <button (click)="collapseNavbar()"
-                                    *ngSwitchCase="true" mat-menu-item
-                                    [routerLink]="['/account/profile', currentAccount.login]"
-                                    routerLinkActive="active">
-                                <fa-icon [fixedWidth]="true" icon="user"></fa-icon>
-                                <span jhiTranslate="global.menu.account.profile">Profile</span>
-                            </button>
-                        </div>
+                    <div *ngIf="currentAccount">
+                        <button (click)="collapseNavbar()"
+                                *ngSwitchCase="true" mat-menu-item
+                                [routerLink]="['/account/profile', currentAccount.login]"
+                                routerLinkActive="active">
+                            <fa-icon [fixedWidth]="true" icon="user"></fa-icon>
+                            <span jhiTranslate="global.menu.account.profile">Profile</span>
+                        </button>
                     </div>
                     <button (click)="collapseNavbar()" *ngSwitchCase="true" mat-menu-item
                             routerLink="account/password" routerLinkActive="active">

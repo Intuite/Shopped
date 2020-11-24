@@ -117,6 +117,7 @@ export class AwardUpdateComponent implements OnInit {
         this.isSaving = true;
       }
     } else if (val === 0) {
+      award.state = 'ACTIVE';
       this.subscribeToSaveResponse(this.awardService.create(award));
       this.isSaving = true;
     } else {

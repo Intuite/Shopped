@@ -78,6 +78,8 @@ export class UserManagementUpdateComponent implements OnInit, AfterViewInit {
   }
 
   private updateForm(user: User): void {
+    let authority = '';
+    if (user.authorities) authority = user.authorities[0];
     this.editForm.patchValue({
       id: user.id,
       login: user.login,
@@ -86,7 +88,7 @@ export class UserManagementUpdateComponent implements OnInit, AfterViewInit {
       email: user.email,
       activated: user.activated,
       langKey: user.langKey,
-      authorities: user.authorities,
+      authorities: authority,
     });
     this.loadingUser = false;
   }
@@ -98,7 +100,11 @@ export class UserManagementUpdateComponent implements OnInit, AfterViewInit {
     user.email = this.editForm.get(['email'])!.value;
     user.activated = this.editForm.get(['activated'])!.value;
     user.langKey = this.editForm.get(['langKey'])!.value;
-    user.authorities = this.editForm.get(['authorities'])!.value;
+    user.authorities = [this.editForm.get(['authorities'])!.value];
+  }
+
+  getAuthorityName(authority: string): string {
+    return authority.split('_')[1];
   }
 
   private onSaveSuccess(): void {

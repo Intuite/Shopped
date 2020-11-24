@@ -40,7 +40,7 @@ export const recipeRoute: Routes = [
     path: '',
     component: RecipeComponent,
     data: {
-      authorities: [Authority.ADMIN],
+      authorities: [Authority.USER],
       defaultSort: 'id,asc',
       pageTitle: 'shoppedApp.recipe.home.title',
     },
