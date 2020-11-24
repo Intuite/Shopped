@@ -5,10 +5,9 @@
         </button>
     </div>
     <div class="col-8">
-        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-            <h2 id="jhi-recipe-heading" jhiTranslate="shoppedApp.recipe.home.createOrEditLabel">
-                Create your own recipe</h2>
-            <br>
+        <form (ngSubmit)="save()" [formGroup]="editForm" name="editForm" novalidate role="form">
+            <h2 id="jhi-recipe-heading">{{ editForm.get('id')!.value !== undefined ? "Edit" : "Create" }} Recipe
+                </h2>
             <div>
 
                 <mat-form-field [hidden]="true" appearance="fill" class="form-group w-100">
