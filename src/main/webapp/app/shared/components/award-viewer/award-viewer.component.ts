@@ -13,6 +13,7 @@ import { ICommendation } from 'app/shared/model/commendation.model';
 export class AwardViewerComponent implements OnInit {
   @Input() postId: number | undefined;
   awards: Award[] = [];
+  len = 0;
 
   constructor(private awardService: AwardService, private commendationService: CommendationService) {}
 
@@ -35,12 +36,13 @@ export class AwardViewerComponent implements OnInit {
           idList.push(element.awardId as number);
         }
       }
+      this.len = idList.length;
       this.awardService
         .query({
           ...(idList && { 'id.in': idList }),
         })
         .subscribe(
-          (res: HttpResponse<IAward[]>) => (this.awards = res.body || []),
+          (res: HttpResponse<IAward[]>) => (this.awards = (res.body || []).slice(0, 3)),
           () => console.warn('error fetching awards')
         );
     }
