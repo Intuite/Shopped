@@ -1,5 +1,5 @@
 # This must be ran only the first time the database is created
-use shopped;
+use Shopped;
 
 # INITIALIZE TAG TYPES
 insert into tag_type (name, description, status)
@@ -544,12 +544,12 @@ values (1,'Award','','ACTIVE');
 
 insert into user_profile(status, user_id)
 values ('ACTIVE', 1),
-       ('ACTVIE', 2),
-       ('ACTVIE', 3),
-       ('ACTIVE', 4);
+       ('ACTIVE', 2),
+       ('ACTIVE', 3);
+
 update jhi_user
 set email = 'teamintuite@gmail.com'
 where login = 'admin';
 
-delete from jhi_user_authority
-where user_id = 1 AND authority_name = 'ROLE_USER';
+select @uauser := ua.user_id from jhi_user_authority ua inner join jhi_user u on ua.user_id = u.id where u.login = 'admin' and ua.authority_name like 'ROLE_USER';
+delete from jhi_user_authority where user_id = @uauser and authority_name like 'ROLE_USER';

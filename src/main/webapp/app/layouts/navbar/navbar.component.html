@@ -200,32 +200,11 @@
                         [routerLinkActiveOptions]="{ exact: true }"
                         class="dropdown-item"
                         mat-menu-item
-                        routerLink="recipe"
-                        routerLinkActive="active"
-                    >
-                        <fa-icon [fixedWidth]="true" icon="mortar-pestle"></fa-icon>
-                        <span>Recipes</span>
-                    </button>
-                    <button
-                        (click)="collapseNavbar()"
-                        [routerLinkActiveOptions]="{ exact: true }"
-                        class="dropdown-item"
-                        mat-menu-item
                         routerLink="ingredient"
                         routerLinkActive="active"
                     >
                         <fa-icon [fixedWidth]="true" icon="hamburger"></fa-icon>
                         <span>Ingredients</span>
-                    </button>
-                    <button
-                        (click)="collapseNavbar()"
-                        [routerLinkActiveOptions]="{ exact: true }"
-                        class="dropdown-item"
-                        mat-menu-item
-                        routerLink="unit"
-                        routerLinkActive="active">
-                        <fa-icon [fixedWidth]="true" icon="thermometer"></fa-icon>
-                        <span jhiTranslate="global.menu.entities.unit">Units</span>
                     </button>
                 </mat-menu>
 
