@@ -1,36 +1,35 @@
 <div>
-  <h2 id="page-heading">
-    <span jhiTranslate="shoppedApp.ingredientTag.home.title">Ingredient Tags</span>
-    <button
-      *ngIf="!requesting && (!ingredientTags || ingredientTags.length == 0)"
-      [matTooltipHideDelay]="0"
-      [matTooltipShowDelay]="1000"
-      [routerLink]="['/ingredient-tag/new']"
-      aria-label="Create a new ingredient tag"
-      class="float-right jh-create-entity create-ingredient-tag mx-4 mb-3"
-      jhiMaterialColor="accent"
-      mat-mini-fab
-      matTooltip="Create a new Ingredient Tag"
-    >
-      <mat-icon>add</mat-icon>
-    </button>
-  </h2>
+    <h2 id="page-heading">
+        <span jhiTranslate="shoppedApp.ingredientTag.home.title">Ingredient Tags</span>
+        <button *ngIf="!requesting && (!ingredientTags || ingredientTags.length == 0)"
+                [matTooltipHideDelay]="0"
+                [matTooltipShowDelay]="1000"
+                [routerLink]="['/ingredient-tag/new']"
+                aria-label="Create a new ingredient tag"
+                class="float-right jh-create-entity create-ingredient-tag mx-4 mb-3"
+                jhiMaterialColor="accent"
+                mat-mini-fab
+                matTooltip="Create a new Ingredient Tag">
+            <mat-icon>add</mat-icon>
+        </button>
+    </h2>
 
-  <jhi-alert-error></jhi-alert-error>
+    <jhi-alert></jhi-alert>
 
-  <jhi-alert></jhi-alert>
-
-  <div *ngIf="requesting">
-    <div class="w-100" fxLayout="row" fxLayoutAlign="space-around center">
-      <mat-spinner *ngIf="!ingredientTags || ingredientTags.length == 0" diameter="50" strokeWidth="5"></mat-spinner>
+    <div *ngIf="requesting">
+        <div class="w-100" fxLayout="row" fxLayoutAlign="space-around center">
+            <mat-spinner *ngIf="!ingredientTags || ingredientTags.length == 0" diameter="50"
+                         strokeWidth="5"></mat-spinner>
+        </div>
     </div>
-  </div>
 
-  <div *ngIf="ingredientTags?.length === 0 || !ingredientTags" class="alert alert-warning" id="no-result">
-    <span>No Ingredient Tags found</span>
-  </div>
+    <div *ngIf="ingredientTags && ingredientTags.length > 0" class="table-responsive table-hover" id="entities">
+        <jhi-ingredient-tag-table #table [data]="ingredientTags"
+                                  [managementComponent]="this"></jhi-ingredient-tag-table>
+    </div>
 
-  <div *ngIf="ingredientTags && ingredientTags.length > 0" class="table-responsive table-hover" id="entities">
-    <jhi-ingredient-tag-table #table [data]="ingredientTags" [managementComponent]="this"></jhi-ingredient-tag-table>
-  </div>
+    <div *ngIf="ingredientTags?.length === 0 || !ingredientTags && !requesting" class="alert alert-warning"
+         id="no-result">
+        <span>No Ingredient Tags found</span>
+    </div>
 </div>
