@@ -11,6 +11,7 @@ import { UserProfileService } from 'app/entities/user-profile/user-profile.servi
 export class UserInfoComponent implements OnInit {
   @Input() user!: User;
   profile!: IUserProfile | null;
+  requesting = true;
 
   constructor(private userProfileService: UserProfileService) {}
 
@@ -18,6 +19,7 @@ export class UserInfoComponent implements OnInit {
     this.userProfileService.findByUser(this.user.id).subscribe(
       userProfile => {
         this.profile = userProfile.body;
+        this.requesting = false;
       },
       e => {
         console.warn(e);

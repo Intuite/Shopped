@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'jhi-recipes',
+  selector: 'jhi-dashboard-recipes',
   templateUrl: './recipes.component.html',
   styleUrls: ['./recipes.component.scss'],
 })

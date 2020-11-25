@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'jhi-collections',
+  selector: 'jhi-dashboard-collections',
   templateUrl: './collections.component.html',
   styleUrls: ['./collections.component.scss'],
 })

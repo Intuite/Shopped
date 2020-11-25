@@ -20,9 +20,10 @@ import { CollectionsComponent } from './profile/dashboard/collections/collection
 import { CartComponent } from './profile/dashboard/cart/cart.component';
 import { ReportsComponent } from './profile/dashboard/reports/reports.component';
 import { PaymentsComponent } from './profile/dashboard/payments/payments.component';
+import { ShoppedTransactionModule } from 'app/entities/transaction/transaction.module';
 
 @NgModule({
-  imports: [ShoppedSharedModule, RouterModule.forChild(accountState)],
+  imports: [ShoppedSharedModule, RouterModule.forChild(accountState), ShoppedTransactionModule],
   declarations: [
     ActivateComponent,
     RegisterComponent,

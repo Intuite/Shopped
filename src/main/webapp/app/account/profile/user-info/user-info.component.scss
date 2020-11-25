@@ -3,3 +3,8 @@ img {
   min-height: 200px;
   max-height: 500px;
 }
+
+::ng-deep .mat-list[dense] .mat-list-item .mat-line {
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}

@@ -1,75 +1,14 @@
 <div>
-    <div *ngIf="!success && !requesting" class="alert alert-warning" id="alert-container" id="no-result">
-        <span jhiTranslate="shoppedApp.ingredient.home.notFound">No ingredients found</span>
-    </div>
-    <div *ngIf="requesting" class="w-100"
-         fxLayout="row" fxLayoutAlign="space-around center" id="spinner-container">
-        <mat-spinner [diameter]="50" [strokeWidth]="5" [value]="progress" mode="determinate"></mat-spinner>
-    </div>
     <div *ngIf="user"
-         fxFlexFill fxLayout="row"
-         fxLayout.lt-md="column" fxLayoutAlign="space-around"
-         id="main-data-container">
-        <div class="px-3 py-3" fxLayout="column">
+         fxFlexFill fxLayout="row" fxLayout.sm="column"
+         fxLayout.xs="column" fxLayoutGap="24px grid"
+         fxLayoutGap.sm="24px" fxLayoutGap.xs="24px"
+    >
+        <div fxFlex="20" fxFlex.md="35" fxFlex.xl="30">
             <jhi-user-info [user]="user"></jhi-user-info>
         </div>
-        <mat-tab-group class="px-3 py-3 w-100" mat-align-tabs="center">
-            <mat-tab fxLayout="row" id="user-posts-container">
-                <ng-template mat-tab-label>
-                    <mat-icon class="example-tab-icon">local_dining</mat-icon>
-                    {{ ' Recipes' }}
-                </ng-template>
-                Table here
-            </mat-tab>
-            <mat-tab>
-                <ng-template mat-tab-label>
-                    <mat-icon class="example-tab-icon">library_add</mat-icon>
-                    {{ ' Collections' }}
-                </ng-template>
-                Collections here
-            </mat-tab>
-            <mat-tab>
-                <ng-template mat-tab-label>
-                    <mat-icon class="example-tab-icon">payment</mat-icon>
-                    {{ ' Payments' }}
-                </ng-template>
-                <div class="container tab-container">
-                    <div class="row mt-4">
-                        <div class="col-md-8">
-                            <h2 class="text-left">
-                                Payments
-                            </h2>
-                        </div>
-                        <div align="right" class="col-md-4">
-                            <jhi-buy-cookie></jhi-buy-cookie>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div align="center" class="col mt-4 tab-container">
-                            <mat-card>
-                                <mat-card-content>
-                                    <img src="../../../content/images/cookie-icon-large.png"/>
-                                    <h4 class="mt-2">
-                                        <fa-icon icon="cookie-bite"></fa-icon>
-                                        {{ (cookie?.amount || 0) }}</h4>
-                                </mat-card-content>
-                            </mat-card>
-                        </div>
-                    </div>
-                    <div class="row mt-3 ml-2 table-transac">
-                        <div class="col">
-                            <jhi-view-transactions></jhi-view-transactions>
-                        </div>
-                    </div>
-                </div>
-            </mat-tab>
-            <mat-tab>
-                <ng-template mat-tab-label>
-                    <mat-icon class="example-tab-icon">dashboard</mat-icon>
-                    {{ ' Dashboard' }}
-                </ng-template>
-                Dashboard here
-            </mat-tab>
-        </mat-tab-group>
+        <div fxFlex>
+            <jhi-dashboard></jhi-dashboard>
+        </div>
     </div>
 </div>
