@@ -8,8 +8,6 @@ import { Authority } from 'app/shared/constants/authority.constants';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
 import { IUserProfile, UserProfile } from 'app/shared/model/user-profile.model';
 import { UserProfileService } from './user-profile.service';
-import { UserProfileComponent } from './user-profile.component';
-import { UserProfileDetailComponent } from './user-profile-detail.component';
 import { UserProfileUpdateComponent } from './user-profile-update.component';
 
 @Injectable({ providedIn: 'root' })
