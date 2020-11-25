@@ -1,17 +1,17 @@
 <form *ngIf="recipe" name="deleteForm" (ngSubmit)="confirmDelete(recipe!, true)">
-    <div class="modal-header">
+    <div class="modal-header" style="border: none">
         <h4 class="modal-title">Please confirm your delete action</h4>
 
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
                 (click)="cancel()">&times;
         </button>
-    </div>
+    </div >
 
-    <div>
+    <div class="modal-body" style="border: none">
         <p id="jhi-delete-recipe-heading" >Are you sure you want to delete recipe {{ recipe.name }}?</p>
     </div>
 
-    <div>
+    <div class="modal-footer" style="border: none">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">
             <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
         </button>
