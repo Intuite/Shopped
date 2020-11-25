@@ -1,4 +1,4 @@
-<div class="row justify-content-center">
+<div class="row justify-content-center" xmlns="http://www.w3.org/1999/html">
     <div class="col-10">
         <button (click)="previousState()" class="btn btn-secondary" type="submit">
             <fa-icon icon="arrow-left"></fa-icon>
@@ -12,85 +12,99 @@
             <div>
                 <jhi-alert-error></jhi-alert-error>
 
-                <div class="form-group" [hidden]="!editForm.get('id')!.value">
-                    <label for="id" jhiTranslate="global.field.id">ID</label>
-                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly/>
-                </div>
+                <mat-form-field class="form-group" [hidden]="true">
+                    <mat-label for="id" jhiTranslate="global.field.id">ID</mat-label>
+                    <input matInput type="text" class="form-control" id="id" name="id" formControlName="id" readonly/>
+                </mat-form-field>
+
+                <mat-form-field class="form-group w-100" appearance="fill">
+                    <mat-label class="form-control-label" jhiTranslate="shoppedApp.userProfile.description"
+                           for="field_description">Description</mat-label>
+                    <textarea matInput type="text"  name="description" id="field_description"
+                              placeholder="Type a description below 254 characters." [maxLength]="254"
+                              style="resize: none" [rows]="10" formControlName="description"></textarea>
+                    <mat-error *ngIf="editForm.get('description')!.invalid && (editForm.get('description')!.dirty ||
+                    editForm.get('description')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('description')?.errors?.maxlength">
+                            Max length reached
+                        </small>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="form-group w-100" appearance="fill">
+                    <mat-label class="form-control-label" jhiTranslate="shoppedApp.userProfile.birthDate"
+                           for="field_birthDate">Birth Date</mat-label>
+                    <input matInput id="field_birthDate" type="text" name="birthDate"
+                           formControlName="birthDate" [matDatepicker]="picker" [min]="minDate" [max]="maxDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker [startAt]="startDate"></mat-datepicker>
+                </mat-form-field>
 
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="shoppedApp.userProfile.description"
-                           for="field_description">Description</label>
-                    <input type="text" class="form-control" name="description" id="field_description"
-                           formControlName="description"/>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="shoppedApp.userProfile.birthDate"
-                           for="field_birthDate">Birth Date</label>
-                    <div class="input-group">
-                        <input id="field_birthDate" type="text" class="form-control" name="birthDate" ngbDatepicker
-                               #birthDateDp="ngbDatepicker" formControlName="birthDate"/>
-                        <span class="input-group-append">
-                            <button type="button" class="btn btn-secondary" (click)="birthDateDp.toggle()"><fa-icon
-                                icon="calendar-alt"></fa-icon></button>
-                        </span>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="shoppedApp.userProfile.image" for="">Image</label>
+                    <label class="form-control-label" jhiTranslate="shoppedApp.userProfile.image">Image</label>
                     <div>
                         <img
                             [src]="'data:' + editForm.get('imageContentType')!.value + ';base64,' + editForm.get('image')!.value"
                             style="max-height: 100px;" *ngIf="editForm.get('image')!.value" alt="userProfile image"/>
                         <div *ngIf="editForm.get('image')!.value" class="form-text text-danger clearfix">
-                            <span class="pull-left">{{ editForm.get('imageContentType')!.value }}
-                                , {{ byteSize(editForm.get('image')!.value) }}</span>
+<!--                            <span class="pull-left">-->
+<!--                                {{ editForm.get('imageContentType')!.value }}-->
+<!--                                , {{ byteSize(editForm.get('image')!.value) }}-->
+<!--                            </span>-->
                             <button type="button" (click)="clearInputImage('image', 'imageContentType', 'file_image')"
                                     class="">
                                 <fa-icon icon="times"></fa-icon>
                             </button>
 
                         </div>
-                        <input type="file" id="file_image" (change)="setFileData($event, 'image', true)"
-                               accept="image/*" jhiTranslate="entity.action.addimage" class="inputfile"/>
-                        <label for="file_image">
-                            <a type="button" mat-flat-button jhiMaterialColor="primary">
-                                <fa-icon icon="image"></fa-icon>
-                                Add Image
-                            </a>
-                        </label>
+                        <div>
+                            <input type="file" id="file_image" (change)="setFileData($event, 'image', true)"
+                                   accept="image/*" jhiTranslate="entity.action.addimage" class="inputfile"/>
+                            <label for="file_image">
+                                <a type="button" mat-flat-button jhiMaterialColor="primary">
+                                    <fa-icon icon="image"></fa-icon>
+                                    Add Image
+                                </a>
+                            </label>
+                        </div>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="shoppedApp.userProfile.status" for="field_status">Status</label>
-                    <select class="form-control" name="status" formControlName="status" id="field_status">
-                        <option value="ACTIVE">{{ 'shoppedApp.Status.ACTIVE' | translate }}</option>
-                        <option value="INACTIVE">{{ 'shoppedApp.Status.INACTIVE' | translate }}</option>
-                        <option value="BLOCKED">{{ 'shoppedApp.Status.BLOCKED' | translate }}</option>
-                        <option value="PENDING">{{ 'shoppedApp.Status.PENDING' | translate }}</option>
-                    </select>
-                </div>
+                <mat-form-field class="form-group w-100 mat-form-field-disabled" appearance="fill">
+                    <mat-label class="form-control-label" jhiTranslate="shoppedApp.userProfile.status" for="field_status">Status</mat-label>
+                    <div [ngSwitch]="editableStatus">
+                        <mat-select *ngSwitchCase="true" name="status" formControlName="status"
+                                    id="field_status" readonly>
+                            <mat-option value="ACTIVE">Active</mat-option>
+                                <mat-option value="INACTIVE">Inactive</mat-option>
+                            <mat-option value="BLOCKED">Blocked</mat-option>
+                            <mat-option value="PENDING">Pending</mat-option>
+                        </mat-select>
+                        <input matInput *ngSwitchCase="false" name="status" formControlName="status"
+                               id="field_statusInput" readonly/>
+                    </div>
+                </mat-form-field>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="shoppedApp.userProfile.user"
-                           for="field_user">User</label>
-                    <select class="form-control" id="field_user" name="user" formControlName="userId">
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="userOption.id"
-                                *ngFor="let userOption of users; trackBy: trackById">{{ userOption.login }}</option>
-                    </select>
-                </div>
+<!--                <div class="form-group">-->
+<!--                    <label class="form-control-label" jhiTranslate="shoppedApp.userProfile.user"-->
+<!--                           for="field_user">User</label>-->
+<!--                    <select class="form-control" id="field_user" name="user" formControlName="userId">-->
+<!--                        <option [ngValue]="null"></option>-->
+<!--                        <option [ngValue]="userOption.id"-->
+<!--                                *ngFor="let userOption of users; trackBy: trackById">{{ userOption.login }}</option>-->
+<!--                    </select>-->
+<!--                </div>-->
             </div>
 
             <div>
-                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                <button mat-flat-button type="button" id="cancel-save" class="text-white" (click)="previousState()"
+                        jhiMaterialColor="secondary">
                     <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
                 </button>
 
-                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving"
-                        class="btn btn-primary">
+                <button mat-flat-button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving"
+                        color="primary" class="text-white">
                     <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
                 </button>
             </div>

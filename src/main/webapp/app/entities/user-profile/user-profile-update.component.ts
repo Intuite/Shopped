@@ -11,6 +11,8 @@ import { UserProfileService } from './user-profile.service';
 import { AlertError } from 'app/shared/alert/alert-error.model';
 import { IUser } from 'app/core/user/user.model';
 import { UserService } from 'app/core/user/user.service';
+import { Status } from 'app/shared/model/enumerations/status.model';
+import * as moment from 'moment';
 
 @Component({
   selector: 'jhi-user-profile-update',
@@ -19,17 +21,21 @@ import { UserService } from 'app/core/user/user.service';
 })
 export class UserProfileUpdateComponent implements OnInit {
   isSaving = false;
-  users: IUser[] = [];
-  birthDateDp: any;
+  currentUserProfile!: IUserProfile;
+  editableStatus = false;
+  minDate = new Date(1915, 0, 1);
+  maxDate = new Date(2010, 0, 1);
+  startDate = new Date(1990, 0, 1);
+  // users: IUser[] = [];
 
   editForm = this.fb.group({
     id: [],
-    description: [],
+    description: ['', [Validators.maxLength(254)]],
     birthDate: [],
     image: [],
     imageContentType: [],
     status: [],
-    userId: [],
+    // userId: [],
   });
 
   constructor(
@@ -44,9 +50,10 @@ export class UserProfileUpdateComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ userProfile }) => {
-      this.updateForm(userProfile);
+      this.currentUserProfile = userProfile;
+      this.updateForm(this.currentUserProfile);
 
-      this.userService.query().subscribe((res: HttpResponse<IUser[]>) => (this.users = res.body || []));
+      // this.userService.query().subscribe((res: HttpResponse<IUser[]>) => (this.users = res.body || []));
     });
   }
 
@@ -54,12 +61,19 @@ export class UserProfileUpdateComponent implements OnInit {
     this.editForm.patchValue({
       id: userProfile.id,
       description: userProfile.description,
-      birthDate: userProfile.birthDate,
       image: userProfile.image,
       imageContentType: userProfile.imageContentType,
       status: userProfile.status,
       userId: userProfile.userId,
     });
+    if (!this.editableStatus)
+      this.editForm.patchValue({
+        status: this.getStatusCapitalized(userProfile.status),
+      });
+    if (userProfile.birthDate)
+      this.editForm.patchValue({
+        birthDate: moment(userProfile.birthDate).toISOString() || '',
+      });
   }
 
   byteSize(base64String: string): string {
@@ -107,11 +121,11 @@ export class UserProfileUpdateComponent implements OnInit {
       ...new UserProfile(),
       id: this.editForm.get(['id'])!.value,
       description: this.editForm.get(['description'])!.value,
-      birthDate: this.editForm.get(['birthDate'])!.value,
+      birthDate: moment(this.editForm.get(['birthDate'])!.value),
       imageContentType: this.editForm.get(['imageContentType'])!.value,
       image: this.editForm.get(['image'])!.value,
-      status: this.editForm.get(['status'])!.value,
-      userId: this.editForm.get(['userId'])!.value,
+      status: this.currentUserProfile.status,
+      userId: this.currentUserProfile.userId,
     };
   }
 
@@ -133,5 +147,11 @@ export class UserProfileUpdateComponent implements OnInit {
 
   trackById(index: number, item: IUser): any {
     return item.id;
+  }
+
+  getStatusCapitalized(status?: Status): string {
+    if (!status) return 'Not defined';
+    const stStatus = status.toString();
+    return stStatus[0].toUpperCase() + stStatus.substr(1).toLowerCase();
   }
 }

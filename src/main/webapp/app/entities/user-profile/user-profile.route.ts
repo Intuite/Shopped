@@ -8,8 +8,6 @@ import { Authority } from 'app/shared/constants/authority.constants';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
 import { IUserProfile, UserProfile } from 'app/shared/model/user-profile.model';
 import { UserProfileService } from './user-profile.service';
-import { UserProfileComponent } from './user-profile.component';
-import { UserProfileDetailComponent } from './user-profile-detail.component';
 import { UserProfileUpdateComponent } from './user-profile-update.component';
 
 @Injectable({ providedIn: 'root' })
@@ -35,28 +33,28 @@ export class UserProfileResolve implements Resolve<IUserProfile> {
 }
 
 export const userProfileRoute: Routes = [
-  {
-    path: '',
-    component: UserProfileComponent,
-    data: {
-      authorities: [Authority.ADMIN],
-      defaultSort: 'id,asc',
-      pageTitle: 'shoppedApp.userProfile.home.title',
-    },
-    canActivate: [UserRouteAccessService],
-  },
-  {
-    path: ':id/view',
-    component: UserProfileDetailComponent,
-    resolve: {
-      userProfile: UserProfileResolve,
-    },
-    data: {
-      authorities: [Authority.USER, Authority.MOD, Authority.ADMIN],
-      pageTitle: 'shoppedApp.userProfile.home.title',
-    },
-    canActivate: [UserRouteAccessService],
-  },
+  // {
+  //   path: '',
+  //   component: UserProfileComponent,
+  //   data: {
+  //     authorities: [Authority.ADMIN],
+  //     defaultSort: 'id,asc',
+  //     pageTitle: 'shoppedApp.userProfile.home.title',
+  //   },
+  //   canActivate: [UserRouteAccessService],
+  // },
+  // {
+  //   path: ':id/view',
+  //   component: UserProfileDetailComponent,
+  //   resolve: {
+  //     userProfile: UserProfileResolve,
+  //   },
+  //   data: {
+  //     authorities: [Authority.USER, Authority.MOD, Authority.ADMIN],
+  //     pageTitle: 'shoppedApp.userProfile.home.title',
+  //   },
+  //   canActivate: [UserRouteAccessService],
+  // },
   // {
   //   path: 'new',
   //   component: UserProfileUpdateComponent,
