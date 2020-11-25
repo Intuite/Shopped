@@ -25,7 +25,7 @@
 
     <jhi-alert></jhi-alert>
 
-    <div class="alert alert-warning" id="no-result" *ngIf="catalogues?.length === 0">
+    <div class="alert alert-warning" id="no-result" *ngIf="catalogues?.length === 0 || !catalogues && !requesting">
         <span jhiTranslate="shoppedApp.catalogue.home.notFound">No catalogues found</span>
     </div>
 

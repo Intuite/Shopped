@@ -1,0 +1,41 @@
+<div *ngIf="requesting" class="w-100"
+     fxLayout="row" fxLayoutAlign="space-around center" id="spinner-container">
+    <mat-spinner [diameter]="50" [strokeWidth]="5" mode="determinate"></mat-spinner>
+</div>
+<mat-card class="mat-elevation-z4">
+    <mat-card-title-group>
+        <mat-card-title>{{ user.firstName }} {{user.lastName }}</mat-card-title>
+        <mat-card-subtitle>@{{ user.login }}</mat-card-subtitle>
+        <button [routerLink]="['/user-profile', profile?.id, 'edit']" color="accent" mat-icon-button>
+            <mat-icon>create</mat-icon>
+        </button>
+    </mat-card-title-group>
+    <img *ngIf="!profile?.image" alt="Default profile image"
+         mat-card-image
+         src="/content/images/placeholder-image.png"
+    />
+    <img *ngIf="profile?.image"
+         [src]="'data:' + profile?.imageContentType + ';base64,' + profile?.image"
+         alt="Profile image"
+         mat-card-image
+    />
+    <mat-card-content>
+        <mat-list>
+            <mat-list-item>
+                <mat-icon matListIcon>email</mat-icon>
+                <div matLine> {{user.email}} </div>
+            </mat-list-item>
+        </mat-list>
+        <div *ngIf="profile?.description !== null">
+            <p class="p-3">
+                {{profile!.description}}
+            </p>
+        </div>
+        <!--        <mat-chip-list [selectable]="false">-->
+        <!--            <mat-chip *ngFor="let authority of user.authorities" class="text-white" color="primary"-->
+        <!--                      selected="true">-->
+        <!--                {{ authority }}-->
+        <!--            </mat-chip>-->
+        <!--        </mat-chip-list>-->
+    </mat-card-content>
+</mat-card>
