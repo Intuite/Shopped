@@ -1,0 +1,29 @@
+<div class="container tab-container">
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+        <div>
+            <h2 class="text-left">
+                Payments
+            </h2>
+        </div>
+        <div>
+            <jhi-buy-cookie></jhi-buy-cookie>
+        </div>
+    </div>
+    <div class="row">
+        <div align="center" class="col mt-4 tab-container">
+            <mat-card>
+                <mat-card-content>
+                    <img src="/content/images/cookie-icon-large.png"/>
+                    <h4 class="mt-2">
+                        <fa-icon icon="cookie-bite"></fa-icon>
+                        {{ (cookies?.amount || 0) }}</h4>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+    <div class="row mt-3 ml-2 table-transac">
+        <div class="col">
+            <jhi-view-transactions></jhi-view-transactions>
+        </div>
+    </div>
+</div>
