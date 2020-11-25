@@ -6,10 +6,9 @@
     </div>
 
     <div class="col-8">
-        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-            <h2 id="jhi-post-heading">{{ editForm.get('id')!.value !== undefined ? "Edit" : "Create" }}
-                the public post for your recipe</h2>
-            <br>
+        <form (ngSubmit)="save()" [formGroup]="editForm" name="editForm" novalidate role="form">
+            <h2 id="jhi-post-heading">{{ editForm.get('id')!.value !== undefined ? "Edit" : "Create" }} Post
+            </h2>
 
             <div>
 

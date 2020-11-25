@@ -43,9 +43,9 @@ export class RecipeUpdateComponent implements OnInit {
   editForm = this.fb.group({
     id: [],
     name: [null, [Validators.required]],
-    portion: [null, [Validators.min(1)]],
+    portion: [null, [Validators.required, Validators.min(1)]],
     description: [null, [Validators.required]],
-    duration: [null, [Validators.min(1)]],
+    duration: [null, [Validators.required, Validators.min(1)]],
     creation: [],
     image: [],
     imageContentType: [],
@@ -236,8 +236,7 @@ export class RecipeUpdateComponent implements OnInit {
   }
 
   gotoAfterSave(): void {
-    // const recipeId = this.recipeCreated.id ? this.recipeCreated.id : null;
-    // this.router.navigate(['/recipe', {id: this.recipeCreated.id}, 'view']);
+    // this.router.navigate(['/recipe', ${id: this.recipeCreated.id}, 'view']);
     this.router.navigate(['/recipe', 'list']);
   }
 }

@@ -206,6 +206,17 @@
                         <fa-icon [fixedWidth]="true" icon="hamburger"></fa-icon>
                         <span>Ingredients</span>
                     </button>
+                    <button
+                        (click)="collapseNavbar()"
+                        [routerLinkActiveOptions]="{ exact: true }"
+                        class="dropdown-item"
+                        mat-menu-item
+                        routerLink="recipe"
+                        routerLinkActive="active"
+                    >
+                        <span class="icon-recipe"></span>
+                        <span>Recipes</span>
+                    </button>
                 </mat-menu>
 
                 <mat-menu #tagTypesMenu="matMenu" xPosition="before">
