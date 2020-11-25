@@ -25,6 +25,7 @@ export class CatalogueComponent implements OnInit, OnDestroy {
   ascending!: boolean;
   ngbPaginationPage = 1;
   tableLoaded: any;
+  requesting = false;
 
   constructor(
     protected catalogueService: CatalogueService,
@@ -36,6 +37,7 @@ export class CatalogueComponent implements OnInit, OnDestroy {
 
   loadPage(page?: number): void {
     const pageToLoad: number = page || this.page || 1;
+    this.requesting = true;
     if (this.totalItems === 0) {
       this.catalogueService
         .queryAll({
@@ -104,12 +106,14 @@ export class CatalogueComponent implements OnInit, OnDestroy {
     this.totalItems = Number(headers.get('X-Total-Count'));
     this.page = page;
     this.catalogues = data || [];
+    this.requesting = false;
     this.ngbPaginationPage = this.page;
     this.tableLoaded = true;
   }
 
   protected onError(): void {
     this.ngbPaginationPage = this.page ?? 1;
+    this.requesting = false;
   }
 
   protected refresh(page: number): void {
