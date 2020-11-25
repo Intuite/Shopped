@@ -23,7 +23,7 @@
         </div>
     </div>
 
-    <div class="alert alert-warning" id="no-result" *ngIf="awards?.length === 0">
+    <div class="alert alert-warning" id="no-result" *ngIf="awards?.length === 0 || !awards && !requesting">
         <span jhiTranslate="shoppedApp.award.home.notFound">No awards found</span>
     </div>
 
