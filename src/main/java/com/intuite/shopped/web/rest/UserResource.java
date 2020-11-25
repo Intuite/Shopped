@@ -121,7 +121,7 @@ public class UserResource {
             CookiesDTO userCookies = new CookiesDTO();
             UserProfileDTO profile = new UserProfileDTO();
             profile.setUserId(newUser.getId());
-            profile.setStatus(Status.INACTIVE);
+            profile.setStatus(Status.ACTIVE);
             userCookies.setUserId(newUser.getId());
             userCookies.setAmount(0);
             cookiesService.save(userCookies);

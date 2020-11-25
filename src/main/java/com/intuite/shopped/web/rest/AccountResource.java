@@ -94,7 +94,7 @@ public class AccountResource {
             CookiesDTO userCookies = new CookiesDTO();
             UserProfileDTO profile = new UserProfileDTO();
             profile.setUserId(user.getId());
-            profile.setStatus(Status.INACTIVE);
+            profile.setStatus(Status.ACTIVE);
             userCookies.setUserId(user.getId());
             userCookies.setAmount(0);
             cookiesService.save(userCookies);
