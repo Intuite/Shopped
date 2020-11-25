@@ -21,9 +21,10 @@ import { CartComponent } from './profile/dashboard/cart/cart.component';
 import { ReportsComponent } from './profile/dashboard/reports/reports.component';
 import { PaymentsComponent } from './profile/dashboard/payments/payments.component';
 import { ShoppedTransactionModule } from 'app/entities/transaction/transaction.module';
+import { ShoppedRecipeModule } from 'app/entities/recipe/recipe.module';
 
 @NgModule({
-  imports: [ShoppedSharedModule, RouterModule.forChild(accountState), ShoppedTransactionModule],
+  imports: [ShoppedSharedModule, RouterModule.forChild(accountState), ShoppedTransactionModule, ShoppedRecipeModule],
   declarations: [
     ActivateComponent,
     RegisterComponent,
