@@ -19,17 +19,17 @@ import { UserService } from 'app/core/user/user.service';
 })
 export class UserProfileUpdateComponent implements OnInit {
   isSaving = false;
-  users: IUser[] = [];
-  birthDateDp: any;
+  currentUserProfile!: IUserProfile;
+  // users: IUser[] = [];
 
   editForm = this.fb.group({
     id: [],
-    description: [],
+    description: ['', [Validators.maxLength(254)]],
     birthDate: [],
     image: [],
     imageContentType: [],
     status: [],
-    userId: [],
+    // userId: [],
   });
 
   constructor(
@@ -44,9 +44,10 @@ export class UserProfileUpdateComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ userProfile }) => {
-      this.updateForm(userProfile);
+      this.currentUserProfile = userProfile;
+      this.updateForm(this.currentUserProfile);
 
-      this.userService.query().subscribe((res: HttpResponse<IUser[]>) => (this.users = res.body || []));
+      // this.userService.query().subscribe((res: HttpResponse<IUser[]>) => (this.users = res.body || []));
     });
   }
 
@@ -110,8 +111,8 @@ export class UserProfileUpdateComponent implements OnInit {
       birthDate: this.editForm.get(['birthDate'])!.value,
       imageContentType: this.editForm.get(['imageContentType'])!.value,
       image: this.editForm.get(['image'])!.value,
-      status: this.editForm.get(['status'])!.value,
-      userId: this.editForm.get(['userId'])!.value,
+      status: this.currentUserProfile.status,
+      userId: this.currentUserProfile.userId,
     };
   }
 
