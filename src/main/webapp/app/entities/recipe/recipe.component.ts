@@ -11,7 +11,6 @@ import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { RecipeService } from './recipe.service';
 import { RecipeDeleteDialogComponent } from './recipe-delete-dialog.component';
 import { RecipeTableComponent } from 'app/shared/tables/recipe-table/recipe-table.component';
-import { RecipeListComponent } from 'app/shared/components/recipe-list/recipe-list.component';
 
 @Component({
   selector: 'jhi-recipe',
@@ -29,7 +28,6 @@ export class RecipeComponent implements OnInit, OnDestroy {
   tableLoaded = false;
   requesting = false;
   @ViewChild('table', { static: false }) table!: RecipeTableComponent;
-  @ViewChild('list', { static: false }) list!: RecipeListComponent;
 
   constructor(
     protected recipeService: RecipeService,
