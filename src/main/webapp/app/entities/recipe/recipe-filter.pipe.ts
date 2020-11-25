@@ -11,7 +11,7 @@ export class RecipeFilterPipe implements PipeTransform {
       .filter(x => {
         return JSON.stringify(x)
           .toLowerCase()
-          .replace(/({|,)\s(.+?)\s:/g, '')
+          .replace(/(\{|,)\s*(.+?)\s*:/g, '')
           .includes(searchText.toLowerCase());
       })
       .sort((a: any, b: any) => {
