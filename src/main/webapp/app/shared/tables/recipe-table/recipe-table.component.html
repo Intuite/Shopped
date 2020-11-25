@@ -25,21 +25,12 @@
 <jhi-wrapper-material-table #sort="matSort"
                             [columns]="displayedColumns" [dataSource]="dataSource"
                             matSort>
-    <ng-container matColumnDef="image">
-        <th *matHeaderCellDef mat-header-cell mat-sort-header>Image</th>
-        <td *matCellDef="let element" mat-cell>
-            <span>
-                <img [src]="'data:' + element.imageContentType + ';base64,' + element.image" alt="---"
-                     style="max-height: 40px;"/>
-            </span>
-        </td>
-    </ng-container>
 
-    <ng-container matColumnDef="name">
-        <th *matHeaderCellDef mat-header-cell mat-sort-header>Name</th>
+    <ng-container matColumnDef="creation">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>Creation</th>
         <td *matCellDef="let element" mat-cell>
             <span>
-                {{ element.name }}
+                {{ element.creation | date:'short' }}
             </span>
         </td>
     </ng-container>
@@ -53,14 +44,15 @@
         </td>
     </ng-container>
 
-    <ng-container matColumnDef="creation">
-        <th *matHeaderCellDef mat-header-cell mat-sort-header>Creation</th>
+    <ng-container matColumnDef="name">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>Name</th>
         <td *matCellDef="let element" mat-cell>
             <span>
-                {{ element.creation | date:'short' }}
+                {{ element.name }}
             </span>
         </td>
     </ng-container>
+
 
     <ng-container matColumnDef="status">
         <th *matHeaderCellDef mat-header-cell mat-sort-header>Status</th>
@@ -71,36 +63,6 @@
         </td>
     </ng-container>
 
-    <ng-container class="text-right" matColumnDef="options">
-        <th *matHeaderCellDef class="text-center" mat-header-cell>Options</th>
-        <td *matCellDef="let element" mat-cell>
-            <div class="w-100" fxLayout="row" fxLayoutAlign="center center">
-                <button [routerLink]="['/recipe/', element.id, 'view']"
-                        class="text-white"
-                        jhiMaterialColor="secondary"
-                        mat-mini-fab
-                        type="submit">
-                    <mat-icon>launch</mat-icon>
-                </button>
-
-                <button [routerLink]="['/recipe/', element.id, 'edit']" [hidden]="true"
-                        class="text-white mx-3"
-                        color="primary"
-                        mat-mini-fab
-                        type="submit">
-                    <mat-icon>create</mat-icon>
-                </button>
-
-                <button (click)="managementComponent.delete(element)" [hidden]="true"
-                        class="text-white"
-                        color="warn"
-                        mat-mini-fab
-                        type="submit">
-                    <mat-icon>close</mat-icon>
-                </button>
-            </div>
-        </td>
-    </ng-container>
     <!-- Custom row definitions to be provided to the wrapper table. -->
     <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
     <tr *matRowDef="let row; columns: displayedColumns; " mat-row></tr>
