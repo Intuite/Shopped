@@ -40,7 +40,7 @@
                 <tr *ngFor="let userProfile of userProfiles ;trackBy: trackId">
                     <td><a [routerLink]="['/user-profile', userProfile.id, 'view']">{{ userProfile.id }}</a></td>
                     <td>{{ userProfile.description }}</td>
-                    <td>{{ userProfile.birthDate | date:'mediumDate' }}</td>
+                    <td>{{ userProfile.birthDate | date:'mediumDate': '+1800' }}</td>
                     <td>
                         <a *ngIf="userProfile.image" (click)="openFile(userProfile.imageContentType, userProfile.image)">
                             <img [src]="'data:' + userProfile.imageContentType + ';base64,' + userProfile.image" style="max-height: 30px;" alt="userProfile image"/>

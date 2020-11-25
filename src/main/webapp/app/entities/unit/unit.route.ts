@@ -4,13 +4,8 @@ import { Resolve, ActivatedRouteSnapshot, Routes, Router } from '@angular/router
 import { Observable, of, EMPTY } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
 
-import { Authority } from 'app/shared/constants/authority.constants';
-import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
 import { IUnit, Unit } from 'app/shared/model/unit.model';
 import { UnitService } from './unit.service';
-import { UnitComponent } from './unit.component';
-import { UnitDetailComponent } from './unit-detail.component';
-import { UnitUpdateComponent } from './unit-update.component';
 
 @Injectable({ providedIn: 'root' })
 export class UnitResolve implements Resolve<IUnit> {
@@ -35,49 +30,49 @@ export class UnitResolve implements Resolve<IUnit> {
 }
 
 export const unitRoute: Routes = [
-  {
-    path: '',
-    component: UnitComponent,
-    data: {
-      authorities: [Authority.USER],
-      pageTitle: 'shoppedApp.unit.home.title',
-    },
-    canActivate: [UserRouteAccessService],
-  },
-  {
-    path: ':id/view',
-    component: UnitDetailComponent,
-    resolve: {
-      unit: UnitResolve,
-    },
-    data: {
-      authorities: [Authority.USER],
-      pageTitle: 'shoppedApp.unit.home.title',
-    },
-    canActivate: [UserRouteAccessService],
-  },
-  {
-    path: 'new',
-    component: UnitUpdateComponent,
-    resolve: {
-      unit: UnitResolve,
-    },
-    data: {
-      authorities: [Authority.USER],
-      pageTitle: 'shoppedApp.unit.home.title',
-    },
-    canActivate: [UserRouteAccessService],
-  },
-  {
-    path: ':id/edit',
-    component: UnitUpdateComponent,
-    resolve: {
-      unit: UnitResolve,
-    },
-    data: {
-      authorities: [Authority.USER],
-      pageTitle: 'shoppedApp.unit.home.title',
-    },
-    canActivate: [UserRouteAccessService],
-  },
+  // {
+  // path: '',
+  // component: UnitComponent,
+  // data: {
+  // authorities: [Authority.USER],
+  // pageTitle: 'shoppedApp.unit.home.title',
+  // },
+  // canActivate: [UserRouteAccessService],
+  // },
+  // {
+  // path: ':id/view',
+  // component: UnitDetailComponent,
+  // resolve: {
+  // unit: UnitResolve,
+  // },
+  // data: {
+  // authorities: [Authority.USER],
+  // pageTitle: 'shoppedApp.unit.home.title',
+  // },
+  // canActivate: [UserRouteAccessService],
+  // },
+  // {
+  // path: 'new',
+  // component: UnitUpdateComponent,
+  // resolve: {
+  // unit: UnitResolve,
+  // },
+  // data: {
+  // authorities: [Authority.USER],
+  // pageTitle: 'shoppedApp.unit.home.title',
+  // },
+  // canActivate: [UserRouteAccessService],
+  // },
+  // {
+  // path: ':id/edit',
+  // component: UnitUpdateComponent,
+  // resolve: {
+  // unit: UnitResolve,
+  // },
+  // data: {
+  // authorities: [Authority.USER],
+  // pageTitle: 'shoppedApp.unit.home.title',
+  // },
+  // canActivate: [UserRouteAccessService],
+  // },
 ];

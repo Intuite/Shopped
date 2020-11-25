@@ -39,7 +39,7 @@ export const ingredientTagRoute: Routes = [
     path: '',
     component: IngredientTagComponent,
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       defaultSort: 'id,asc',
       pageTitle: 'shoppedApp.ingredientTag.home.title',
     },
@@ -52,7 +52,7 @@ export const ingredientTagRoute: Routes = [
       ingredientTag: IngredientTagResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       pageTitle: 'shoppedApp.ingredientTag.home.title',
     },
     canActivate: [UserRouteAccessService],
@@ -64,7 +64,7 @@ export const ingredientTagRoute: Routes = [
       ingredientTag: IngredientTagResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       pageTitle: 'shoppedApp.ingredientTag.home.title',
     },
     canActivate: [UserRouteAccessService],
