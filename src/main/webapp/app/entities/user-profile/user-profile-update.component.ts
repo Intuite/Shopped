@@ -12,6 +12,7 @@ import { AlertError } from 'app/shared/alert/alert-error.model';
 import { IUser } from 'app/core/user/user.model';
 import { UserService } from 'app/core/user/user.service';
 import { Status } from 'app/shared/model/enumerations/status.model';
+import * as moment from 'moment';
 
 @Component({
   selector: 'jhi-user-profile-update',
@@ -22,6 +23,9 @@ export class UserProfileUpdateComponent implements OnInit {
   isSaving = false;
   currentUserProfile!: IUserProfile;
   editableStatus = false;
+  minDate = new Date(1915, 0, 1);
+  maxDate = new Date(2010, 0, 1);
+  startDate = new Date(1990, 0, 1);
   // users: IUser[] = [];
 
   editForm = this.fb.group({
@@ -57,7 +61,6 @@ export class UserProfileUpdateComponent implements OnInit {
     this.editForm.patchValue({
       id: userProfile.id,
       description: userProfile.description,
-      birthDate: userProfile.birthDate,
       image: userProfile.image,
       imageContentType: userProfile.imageContentType,
       status: userProfile.status,
@@ -66,6 +69,10 @@ export class UserProfileUpdateComponent implements OnInit {
     if (!this.editableStatus)
       this.editForm.patchValue({
         status: this.getStatusCapitalized(userProfile.status),
+      });
+    if (userProfile.birthDate)
+      this.editForm.patchValue({
+        birthDate: moment(userProfile.birthDate).toISOString() || '',
       });
   }
 
@@ -114,7 +121,7 @@ export class UserProfileUpdateComponent implements OnInit {
       ...new UserProfile(),
       id: this.editForm.get(['id'])!.value,
       description: this.editForm.get(['description'])!.value,
-      birthDate: this.editForm.get(['birthDate'])!.value,
+      birthDate: moment(this.editForm.get(['birthDate'])!.value),
       imageContentType: this.editForm.get(['imageContentType'])!.value,
       image: this.editForm.get(['image'])!.value,
       status: this.currentUserProfile.status,

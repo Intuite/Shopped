@@ -35,28 +35,28 @@ export class UserProfileResolve implements Resolve<IUserProfile> {
 }
 
 export const userProfileRoute: Routes = [
-  {
-    path: '',
-    component: UserProfileComponent,
-    data: {
-      authorities: [Authority.ADMIN],
-      defaultSort: 'id,asc',
-      pageTitle: 'shoppedApp.userProfile.home.title',
-    },
-    canActivate: [UserRouteAccessService],
-  },
-  {
-    path: ':id/view',
-    component: UserProfileDetailComponent,
-    resolve: {
-      userProfile: UserProfileResolve,
-    },
-    data: {
-      authorities: [Authority.USER, Authority.MOD, Authority.ADMIN],
-      pageTitle: 'shoppedApp.userProfile.home.title',
-    },
-    canActivate: [UserRouteAccessService],
-  },
+  // {
+  //   path: '',
+  //   component: UserProfileComponent,
+  //   data: {
+  //     authorities: [Authority.ADMIN],
+  //     defaultSort: 'id,asc',
+  //     pageTitle: 'shoppedApp.userProfile.home.title',
+  //   },
+  //   canActivate: [UserRouteAccessService],
+  // },
+  // {
+  //   path: ':id/view',
+  //   component: UserProfileDetailComponent,
+  //   resolve: {
+  //     userProfile: UserProfileResolve,
+  //   },
+  //   data: {
+  //     authorities: [Authority.USER, Authority.MOD, Authority.ADMIN],
+  //     pageTitle: 'shoppedApp.userProfile.home.title',
+  //   },
+  //   canActivate: [UserRouteAccessService],
+  // },
   // {
   //   path: 'new',
   //   component: UserProfileUpdateComponent,

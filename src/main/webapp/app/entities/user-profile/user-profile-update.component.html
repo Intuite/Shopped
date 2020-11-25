@@ -21,17 +21,24 @@
                     <mat-label class="form-control-label" jhiTranslate="shoppedApp.userProfile.description"
                            for="field_description">Description</mat-label>
                     <textarea matInput type="text"  name="description" id="field_description"
-                              placeholder="Type a description below 254 characters." [maxLength]="254" style="resize: none" [rows]="10"
-                           formControlName="description"></textarea>
+                              placeholder="Type a description below 254 characters." [maxLength]="254"
+                              style="resize: none" [rows]="10" formControlName="description"></textarea>
+                    <mat-error *ngIf="editForm.get('description')!.invalid && (editForm.get('description')!.dirty ||
+                    editForm.get('description')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('description')?.errors?.maxlength">
+                            Max length reached
+                        </small>
+                    </mat-error>
                 </mat-form-field>
 
                 <mat-form-field class="form-group w-100" appearance="fill">
                     <mat-label class="form-control-label" jhiTranslate="shoppedApp.userProfile.birthDate"
                            for="field_birthDate">Birth Date</mat-label>
                     <input matInput id="field_birthDate" type="text" name="birthDate"
-                           formControlName="birthDate" [matDatepicker]="picker">
+                           formControlName="birthDate" [matDatepicker]="picker" [min]="minDate" [max]="maxDate">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-datepicker #picker [startAt]="startDate"></mat-datepicker>
                 </mat-form-field>
 
                 <div class="form-group">
@@ -41,22 +48,26 @@
                             [src]="'data:' + editForm.get('imageContentType')!.value + ';base64,' + editForm.get('image')!.value"
                             style="max-height: 100px;" *ngIf="editForm.get('image')!.value" alt="userProfile image"/>
                         <div *ngIf="editForm.get('image')!.value" class="form-text text-danger clearfix">
-                            <span class="pull-left">{{ editForm.get('imageContentType')!.value }}
-                                , {{ byteSize(editForm.get('image')!.value) }}</span>
+<!--                            <span class="pull-left">-->
+<!--                                {{ editForm.get('imageContentType')!.value }}-->
+<!--                                , {{ byteSize(editForm.get('image')!.value) }}-->
+<!--                            </span>-->
                             <button type="button" (click)="clearInputImage('image', 'imageContentType', 'file_image')"
                                     class="">
                                 <fa-icon icon="times"></fa-icon>
                             </button>
 
                         </div>
-                        <input type="file" id="file_image" (change)="setFileData($event, 'image', true)"
-                               accept="image/*" jhiTranslate="entity.action.addimage" class="inputfile"/>
-                        <label for="file_image">
-                            <a type="button" mat-flat-button jhiMaterialColor="primary">
-                                <fa-icon icon="image"></fa-icon>
-                                Add Image
-                            </a>
-                        </label>
+                        <div>
+                            <input type="file" id="file_image" (change)="setFileData($event, 'image', true)"
+                                   accept="image/*" jhiTranslate="entity.action.addimage" class="inputfile"/>
+                            <label for="file_image">
+                                <a type="button" mat-flat-button jhiMaterialColor="primary">
+                                    <fa-icon icon="image"></fa-icon>
+                                    Add Image
+                                </a>
+                            </label>
+                        </div>
                     </div>
                 </div>
 

@@ -5,7 +5,7 @@
          fxLayoutGap.sm="24px" fxLayoutGap.xs="24px"
     >
         <div fxFlex="20" fxFlex.md="35" fxFlex.xl="30">
-            <jhi-user-info [user]="user"></jhi-user-info>
+            <jhi-user-info [canEdit]="(account?.id == user?.id) || false" [user]="user"></jhi-user-info>
         </div>
         <div fxFlex>
             <jhi-dashboard></jhi-dashboard>
