@@ -11,6 +11,7 @@ import { UserProfileService } from './user-profile.service';
 import { AlertError } from 'app/shared/alert/alert-error.model';
 import { IUser } from 'app/core/user/user.model';
 import { UserService } from 'app/core/user/user.service';
+import { Status } from 'app/shared/model/enumerations/status.model';
 
 @Component({
   selector: 'jhi-user-profile-update',
@@ -20,6 +21,7 @@ import { UserService } from 'app/core/user/user.service';
 export class UserProfileUpdateComponent implements OnInit {
   isSaving = false;
   currentUserProfile!: IUserProfile;
+  editableStatus = false;
   // users: IUser[] = [];
 
   editForm = this.fb.group({
@@ -61,6 +63,10 @@ export class UserProfileUpdateComponent implements OnInit {
       status: userProfile.status,
       userId: userProfile.userId,
     });
+    if (!this.editableStatus)
+      this.editForm.patchValue({
+        status: this.getStatusCapitalized(userProfile.status),
+      });
   }
 
   byteSize(base64String: string): string {
@@ -134,5 +140,11 @@ export class UserProfileUpdateComponent implements OnInit {
 
   trackById(index: number, item: IUser): any {
     return item.id;
+  }
+
+  getStatusCapitalized(status?: Status): string {
+    if (!status) return 'Not defined';
+    const stStatus = status.toString();
+    return stStatus[0].toUpperCase() + stStatus.substr(1).toLowerCase();
   }
 }

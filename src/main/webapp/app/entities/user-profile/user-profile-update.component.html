@@ -62,12 +62,17 @@
 
                 <mat-form-field class="form-group w-100 mat-form-field-disabled" appearance="fill">
                     <mat-label class="form-control-label" jhiTranslate="shoppedApp.userProfile.status" for="field_status">Status</mat-label>
-                    <mat-select name="status" formControlName="status" id="field_status" readonly>
-                        <mat-option value="ACTIVE">{{ 'shoppedApp.Status.ACTIVE' | translate }}</mat-option>
-                        <mat-option value="INACTIVE">{{ 'shoppedApp.Status.INACTIVE' | translate }}</mat-option>
-                        <mat-option value="BLOCKED">{{ 'shoppedApp.Status.BLOCKED' | translate }}</mat-option>
-                        <mat-option value="PENDING">{{ 'shoppedApp.Status.PENDING' | translate }}</mat-option>
-                    </mat-select>
+                    <div [ngSwitch]="editableStatus">
+                        <mat-select *ngSwitchCase="true" name="status" formControlName="status"
+                                    id="field_status" readonly>
+                            <mat-option value="ACTIVE">Active</mat-option>
+                                <mat-option value="INACTIVE">Inactive</mat-option>
+                            <mat-option value="BLOCKED">Blocked</mat-option>
+                            <mat-option value="PENDING">Pending</mat-option>
+                        </mat-select>
+                        <input matInput *ngSwitchCase="false" name="status" formControlName="status"
+                               id="field_statusInput" readonly/>
+                    </div>
                 </mat-form-field>
 
 <!--                <div class="form-group">-->
