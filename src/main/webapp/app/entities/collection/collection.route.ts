@@ -4,13 +4,8 @@ import { Resolve, ActivatedRouteSnapshot, Routes, Router } from '@angular/router
 import { Observable, of, EMPTY } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
 
-import { Authority } from 'app/shared/constants/authority.constants';
-import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
 import { ICollection, Collection } from 'app/shared/model/collection.model';
 import { CollectionService } from './collection.service';
-import { CollectionComponent } from './collection.component';
-import { CollectionDetailComponent } from './collection-detail.component';
-import { CollectionUpdateComponent } from './collection-update.component';
 
 @Injectable({ providedIn: 'root' })
 export class CollectionResolve implements Resolve<ICollection> {
@@ -35,50 +30,50 @@ export class CollectionResolve implements Resolve<ICollection> {
 }
 
 export const collectionRoute: Routes = [
-  {
-    path: '',
-    component: CollectionComponent,
-    data: {
-      authorities: [Authority.USER],
-      defaultSort: 'id,asc',
-      pageTitle: 'shoppedApp.collection.home.title',
-    },
-    canActivate: [UserRouteAccessService],
-  },
-  {
-    path: ':id/view',
-    component: CollectionDetailComponent,
-    resolve: {
-      collection: CollectionResolve,
-    },
-    data: {
-      authorities: [Authority.USER],
-      pageTitle: 'shoppedApp.collection.home.title',
-    },
-    canActivate: [UserRouteAccessService],
-  },
-  {
-    path: 'new',
-    component: CollectionUpdateComponent,
-    resolve: {
-      collection: CollectionResolve,
-    },
-    data: {
-      authorities: [Authority.USER],
-      pageTitle: 'shoppedApp.collection.home.title',
-    },
-    canActivate: [UserRouteAccessService],
-  },
-  {
-    path: ':id/edit',
-    component: CollectionUpdateComponent,
-    resolve: {
-      collection: CollectionResolve,
-    },
-    data: {
-      authorities: [Authority.USER],
-      pageTitle: 'shoppedApp.collection.home.title',
-    },
-    canActivate: [UserRouteAccessService],
-  },
+  // {
+  //   path: '',
+  //   component: CollectionComponent,
+  //   data: {
+  //     authorities: [Authority.USER],
+  //     defaultSort: 'id,asc',
+  //     pageTitle: 'shoppedApp.collection.home.title',
+  //   },
+  //   canActivate: [UserRouteAccessService],
+  // },
+  // {
+  //   path: ':id/view',
+  //   component: CollectionDetailComponent,
+  //   resolve: {
+  //     collection: CollectionResolve,
+  //   },
+  //   data: {
+  //     authorities: [Authority.USER],
+  //     pageTitle: 'shoppedApp.collection.home.title',
+  //   },
+  //   canActivate: [UserRouteAccessService],
+  // },
+  // {
+  //   path: 'new',
+  //   component: CollectionUpdateComponent,
+  //   resolve: {
+  //     collection: CollectionResolve,
+  //   },
+  //   data: {
+  //     authorities: [Authority.USER],
+  //     pageTitle: 'shoppedApp.collection.home.title',
+  //   },
+  //   canActivate: [UserRouteAccessService],
+  // },
+  // {
+  //   path: ':id/edit',
+  //   component: CollectionUpdateComponent,
+  //   resolve: {
+  //     collection: CollectionResolve,
+  //   },
+  //   data: {
+  //     authorities: [Authority.USER],
+  //     pageTitle: 'shoppedApp.collection.home.title',
+  //   },
+  //   canActivate: [UserRouteAccessService],
+  // },
 ];
