@@ -41,6 +41,17 @@ export class RecipeListComponent implements OnInit, AfterViewInit {
       (res: HttpResponse<IRecipe[]>) => this.onSuccess(res.body),
       () => this.onError()
     );
+
+    this.recipeService.refreshNeeded$.subscribe(() => {
+      this.getRecipes();
+    });
+  }
+
+  getRecipes(): any {
+    this.recipeService.query().subscribe(
+      (res: HttpResponse<IRecipe[]>) => this.onSuccess(res.body),
+      () => this.onError()
+    );
   }
 
   ngAfterViewInit(): void {}

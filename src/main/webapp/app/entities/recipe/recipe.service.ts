@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 import * as moment from 'moment';
 
 import { SERVER_API_URL } from 'app/app.constants';
@@ -15,20 +15,36 @@ type EntityArrayResponseType = HttpResponse<IRecipe[]>;
 export class RecipeService {
   public resourceUrl = SERVER_API_URL + 'api/recipes';
 
+  refreshNeeded$ = new Subject<void>();
+
   constructor(protected http: HttpClient) {}
+
+  getRefreshNeed(): any {
+    return this.refreshNeeded$;
+  }
 
   create(recipe: IRecipe): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(recipe);
     return this.http
       .post<IRecipe>(this.resourceUrl, copy, { observe: 'response' })
-      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+      .pipe(
+        map((res: EntityResponseType) => this.convertDateFromServer(res)),
+        tap(() => {
+          this.refreshNeeded$.next();
+        })
+      );
   }
 
   update(recipe: IRecipe): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(recipe);
     return this.http
       .put<IRecipe>(this.resourceUrl, copy, { observe: 'response' })
-      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+      .pipe(
+        map((res: EntityResponseType) => this.convertDateFromServer(res)),
+        tap(() => {
+          this.refreshNeeded$.next();
+        })
+      );
   }
 
   find(id: number | undefined): Observable<EntityResponseType> {
