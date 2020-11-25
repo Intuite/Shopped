@@ -106,7 +106,7 @@ export class RecipeListComponent implements OnInit, AfterViewInit {
   }
 
   delete(recipe: IRecipe): void {
-    const modalRef = this.modalService.open(RecipeDeleteDialogComponent, { size: 'md', backdrop: 'static' });
+    const modalRef = this.modalService.open(RecipeDeleteDialogComponent, { size: 'md', backdrop: 'static', centered: true });
     modalRef.componentInstance.recipe = recipe;
   }
 }
