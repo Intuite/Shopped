@@ -14,7 +14,7 @@ export class RecipeTableComponent implements OnInit, AfterViewInit {
   @Input() data!: IRecipe[];
   @Input() managementComponent!: RecipeComponent;
 
-  displayedColumns: string[] = ['image', 'name', 'userLogin', 'creation', 'status', 'options'];
+  displayedColumns: string[] = ['creation', 'userLogin', 'name', 'status'];
 
   dataSource = new MatTableDataSource<IRecipe>();
 

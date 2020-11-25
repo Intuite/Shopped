@@ -10,6 +10,7 @@ import { UserProfileService } from 'app/entities/user-profile/user-profile.servi
 })
 export class UserInfoComponent implements OnInit {
   @Input() user!: User;
+  @Input() canEdit!: boolean;
   profile!: IUserProfile | null;
   requesting = true;
 

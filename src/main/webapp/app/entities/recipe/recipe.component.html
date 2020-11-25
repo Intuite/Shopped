@@ -1,7 +1,7 @@
 <div>
     <h2 id="page-heading">
         <span jhiTranslate="shoppedApp.recipe.home.title">recipes</span>
-        <button *ngIf="!requesting && (!recipes || recipes.length == 0)"
+        <button *ngIf="!requesting && (!recipes || recipes.length == 0)" [hidden]=true
                 [matTooltipHideDelay]="0"
                 [matTooltipShowDelay]="1000"
                 [routerLink]="['/recipe/new']"
