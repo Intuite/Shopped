@@ -9,6 +9,7 @@ import { Account } from 'app/core/user/account.model';
 import { AccountService } from 'app/core/auth/account.service';
 import { IUser } from 'app/core/user/user.model';
 import { UserService } from 'app/core/user/user.service';
+import { Status } from 'app/shared/model/enumerations/status.model';
 
 @Component({
   selector: 'jhi-recipe-user-list',
@@ -86,5 +87,16 @@ export class RecipeListComponent implements OnInit, AfterViewInit {
   private onSuccess(body: IRecipe[] | null): void {
     this.recipes = body || [];
     this.cleanRecipes();
+  }
+
+  setStatus(element: IRecipe, newStatus: boolean): void {
+    this.recipeService
+      .update({
+        ...element,
+        status: !newStatus ? (Status.ACTIVE.toUpperCase() as Status) : (Status.INACTIVE.toUpperCase() as Status),
+      })
+      .subscribe(() => {
+        // this.loadPage(this.page);
+      });
   }
 }
