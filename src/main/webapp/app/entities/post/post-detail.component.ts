@@ -5,6 +5,17 @@ import { JhiDataUtils } from 'ng-jhipster';
 import { IPost } from 'app/shared/model/post.model';
 import { IRecipe } from 'app/shared/model/recipe.model';
 import { RecipeService } from 'app/entities/recipe/recipe.service';
+import { IRecipeHasRecipeTag } from 'app/shared/model/recipe-has-recipe-tag.model';
+import { IngredientService } from 'app/entities/ingredient/ingredient.service';
+
+interface FullIngredient {
+  id?: number;
+  amount?: number;
+  name?: string;
+  imageContentType?: string;
+  image?: any;
+  unitAbbrev?: string;
+}
 
 @Component({
   selector: 'jhi-post-detail',
@@ -15,8 +26,15 @@ export class PostDetailComponent implements OnInit {
   post: IPost | null = null;
   recipe: IRecipe | null | undefined;
   eventSubscriber?: Subscription;
+  recipeTags!: IRecipeHasRecipeTag[] | null;
+  ingredients: FullIngredient[] = [];
 
-  constructor(protected recipeService: RecipeService, protected dataUtils: JhiDataUtils, protected activatedRoute: ActivatedRoute) {}
+  constructor(
+    protected recipeService: RecipeService,
+    protected ingredientService: IngredientService,
+    protected dataUtils: JhiDataUtils,
+    protected activatedRoute: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ post }) => (this.post = post));
@@ -39,11 +57,34 @@ export class PostDetailComponent implements OnInit {
     window.history.back();
   }
 
-  protected onSuccess(): void {
-    this.recipeService.find(this.post?.recipeId).subscribe(response => (this.recipe = response.body || null));
+  onError(): void {
+    console.warn('There was an error');
   }
 
-  protected onError(): void {
-    console.warn('There was an error');
+  protected onSuccess(): void {
+    this.recipeService.find(this.post?.recipeId).subscribe(response => {
+      this.recipe = response.body;
+      if (this.post?.recipeId !== undefined) {
+        this.recipeService.findRecipeHasIngredients(this.post.recipeId).subscribe(recipeHasIng => {
+          if (recipeHasIng.body !== null) {
+            recipeHasIng.body.forEach(ing => {
+              if (ing.id !== undefined) {
+                this.ingredientService.find(ing.id).subscribe(fullIng => {
+                  this.ingredients.push({
+                    id: ing.ingredientId,
+                    name: ing.ingredientName,
+                    amount: ing.amount,
+                    unitAbbrev: fullIng.body!.unitAbbrev,
+                    image: fullIng.body?.image,
+                    imageContentType: fullIng.body?.imageContentType,
+                  });
+                });
+              }
+            });
+          }
+        });
+        this.recipeService.findRecipeHasRecipeTags(this.post?.recipeId).subscribe(recipeTags => (this.recipeTags = recipeTags.body));
+      }
+    });
   }
 }
