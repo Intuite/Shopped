@@ -21,8 +21,6 @@ export class TransactionLogicService {
   ) {}
 
   processTransactionBuy(transac: ITransaction): void {
-    this.router.navigate(['/transaction']);
-    console.warn(transac);
     this.transactionService.create(transac).subscribe(
       res => ((transac = res.body || transac), this.continue(transac)),
       () => console.warn('error')
@@ -30,7 +28,6 @@ export class TransactionLogicService {
   }
 
   addCookies(wallet: ICookies[] | null, amount: number | undefined): void {
-    console.warn(wallet);
     if (wallet !== null) {
       wallet[0].amount = (wallet[0].amount || 0) + (amount || 0);
       this.cookiesService.update(wallet[0]).subscribe(
@@ -41,7 +38,6 @@ export class TransactionLogicService {
   }
 
   private continue(transac: ITransaction): void {
-    console.warn('second stage');
     const user = transac.userId;
     console.warn(user);
 
