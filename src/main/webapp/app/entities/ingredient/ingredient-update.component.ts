@@ -135,4 +135,9 @@ export class IngredientUpdateComponent implements OnInit {
       unitId: this.editForm.get(['unitId'])!.value,
     };
   }
+
+  byteSizeNumber(base64String: string): number {
+    const st = this.dataUtils.byteSize(base64String).replace(/[^0-9]/g, '');
+    return parseInt(st, 10);
+  }
 }
