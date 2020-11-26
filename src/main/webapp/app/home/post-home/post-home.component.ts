@@ -9,9 +9,10 @@ import { Account } from 'app/core/user/account.model';
 import { AccountService } from 'app/core/auth/account.service';
 import { IUser } from 'app/core/user/user.model';
 import { UserService } from 'app/core/user/user.service';
-import { Status } from 'app/shared/model/enumerations/status.model';
 import { MatDialog } from '@angular/material/dialog';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { IPost } from 'app/shared/model/post.model';
+import { PostService } from 'app/entities/post/post.service';
 
 @Component({
   selector: 'jhi-post-home',
@@ -20,6 +21,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class PostHomeComponent implements OnInit, AfterViewInit {
   recipes: IRecipe[] = [];
+  posts: IPost[] = [];
+  finalArray: Array<{ post: IPost; recipe: IRecipe }> = [];
   account?: Account;
   user!: IUser;
   statusOptions = ['ACTIVE', 'INACTIVE'];
@@ -29,6 +32,7 @@ export class PostHomeComponent implements OnInit, AfterViewInit {
     protected dataUtils: JhiDataUtils,
     protected activatedRoute: ActivatedRoute,
     protected recipeService: RecipeService,
+    protected postService: PostService,
     protected userService: UserService,
     private accountService: AccountService,
     public dialog: MatDialog,
@@ -42,32 +46,54 @@ export class PostHomeComponent implements OnInit, AfterViewInit {
       }
     });
 
-    this.recipeService.query().subscribe(
-      (res: HttpResponse<IRecipe[]>) => this.onSuccess(res.body),
+    this.postService.query().subscribe(
+      (res: HttpResponse<IRecipe[]>) => this.onSuccessPost(res.body),
       () => this.onError()
     );
 
-    this.recipeService.refreshNeeded$.subscribe(() => {
+    this.postService.refreshNeeded$.subscribe(() => {
       this.getRecipes();
+      this.getPosts();
     });
   }
 
   getRecipes(): any {
     this.recipeService.query().subscribe(
-      (res: HttpResponse<IRecipe[]>) => this.onSuccess(res.body),
+      (res: HttpResponse<IRecipe[]>) => this.onSuccessRecipe(res.body),
+      () => this.onError()
+    );
+  }
+
+  getPosts(): any {
+    this.postService.query().subscribe(
+      (res: HttpResponse<IRecipe[]>) => this.onSuccessPost(res.body),
       () => this.onError()
     );
   }
 
   ngAfterViewInit(): void {}
 
-  cleanRecipes(): void {
+  cleanPosts(): void {
     let i = 0;
-    while (i < this.recipes.length) {
-      if (this.recipes[i].userId !== this.user.id || this.recipes[i].status === this.statusOptions[1]) {
+    while (i < this.posts.length) {
+      if (this.posts[i].status === this.statusOptions[1]) {
         this.recipes.splice(i, 1);
       } else {
         i++;
+      }
+    }
+  }
+
+  joinRecipe(): void {
+    for (let i = 0; i <= this.posts.length; i++) {
+      for (let j = 0; j <= this.recipes.length; j++) {
+        if (this.posts[i].recipeId === this.recipes[j].id) {
+          const test = {
+            post: this.posts[i],
+            recipe: this.recipes[j],
+          };
+          this.finalArray.push(test);
+        }
       }
     }
   }
@@ -85,22 +111,15 @@ export class PostHomeComponent implements OnInit, AfterViewInit {
   }
 
   private onError(): void {
-    console.warn('There are no Recipes');
+    console.warn('There was an error');
   }
 
-  private onSuccess(body: IRecipe[] | null): void {
+  private onSuccessRecipe(body: IRecipe[] | null): void {
     this.recipes = body || [];
-    this.cleanRecipes();
   }
 
-  setStatus(element: IRecipe, newStatus: boolean): void {
-    this.recipeService
-      .update({
-        ...element,
-        status: !newStatus ? (Status.ACTIVE.toUpperCase() as Status) : (Status.INACTIVE.toUpperCase() as Status),
-      })
-      .subscribe(() => {
-        // this.loadPage(this.page);
-      });
+  private onSuccessPost(body: IPost[] | null): void {
+    this.posts = body || [];
+    this.cleanPosts();
   }
 }
