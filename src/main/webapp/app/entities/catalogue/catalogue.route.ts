@@ -39,7 +39,7 @@ export const catalogueRoute: Routes = [
     path: '',
     component: CatalogueComponent,
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       defaultSort: 'id,asc',
       pageTitle: 'shoppedApp.catalogue.home.title',
     },
@@ -52,7 +52,7 @@ export const catalogueRoute: Routes = [
       catalogue: CatalogueResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       pageTitle: 'shoppedApp.catalogue.home.title',
     },
     canActivate: [UserRouteAccessService],
@@ -64,7 +64,7 @@ export const catalogueRoute: Routes = [
       catalogue: CatalogueResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       pageTitle: 'shoppedApp.catalogue.home.title',
     },
     canActivate: [UserRouteAccessService],
@@ -76,7 +76,7 @@ export const catalogueRoute: Routes = [
       catalogue: CatalogueResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       pageTitle: 'shoppedApp.catalogue.home.title',
     },
     canActivate: [UserRouteAccessService],

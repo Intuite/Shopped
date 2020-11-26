@@ -161,7 +161,7 @@ export class ViewTransactionsComponent implements OnInit {
           ...(this.account?.id && { 'userId.equals': this.account?.id }),
         })
         .subscribe(
-          (res: HttpResponse<Transaction[]>) => ((this.transactions = res.body || []), console.warn(res.body)),
+          (res: HttpResponse<Transaction[]>) => (this.transactions = res.body || []),
           () => console.warn('Transaction fetch failed')
         );
     }
