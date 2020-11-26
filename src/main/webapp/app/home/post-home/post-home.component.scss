@@ -1,5 +1,21 @@
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 .recipe-card-element-right {
   text-align: right;
+  float: right;
+}
+
+.recipe-card-element-left {
+  text-align: left;
+  float: left;
+}
+
+.recipe-card-element-center {
+  text-align: center;
+  font-style: italic;
 }
 
 .recipe-card-content {
