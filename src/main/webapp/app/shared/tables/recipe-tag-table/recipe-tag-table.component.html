@@ -9,7 +9,7 @@
                placeholder="Type a text filter"
                type="text">
     </mat-form-field>
-    <button [hidden]=true
+    <button
         [matTooltipHideDelay]="0"
         [matTooltipShowDelay]="1000"
         [routerLink]="['/recipe-tag/new']"
@@ -90,7 +90,7 @@
                     <mat-icon>create</mat-icon>
                 </button>
 
-                <button (click)="managementComponent.delete(element)" [hidden]="true"
+                <button (click)="managementComponent.delete(element)"
                         class="text-white"
                         color="warn"
                         mat-mini-fab
