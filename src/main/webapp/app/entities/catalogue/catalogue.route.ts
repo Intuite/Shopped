@@ -4,13 +4,13 @@ import { Resolve, ActivatedRouteSnapshot, Routes, Router } from '@angular/router
 import { Observable, of, EMPTY } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
 
-import { Authority } from 'app/shared/constants/authority.constants';
-import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
+// import { Authority } from 'app/shared/constants/authority.constants';
+// import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
 import { ICatalogue, Catalogue } from 'app/shared/model/catalogue.model';
 import { CatalogueService } from './catalogue.service';
-import { CatalogueComponent } from './catalogue.component';
-import { CatalogueDetailComponent } from './catalogue-detail.component';
-import { CatalogueUpdateComponent } from './catalogue-update.component';
+// import { CatalogueComponent } from './catalogue.component';
+// import { CatalogueDetailComponent } from './catalogue-detail.component';
+// import { CatalogueUpdateComponent } from './catalogue-update.component';
 
 @Injectable({ providedIn: 'root' })
 export class CatalogueResolve implements Resolve<ICatalogue> {
