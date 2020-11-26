@@ -63,4 +63,8 @@ export class PasswordComponent implements OnInit {
   isPasswordAcceptable(): boolean {
     return this.stBar.curIdx === 5;
   }
+
+  previousState(): void {
+    window.history.back();
+  }
 }
