@@ -5,11 +5,11 @@
                 [matTooltipHideDelay]="0"
                 [matTooltipShowDelay]="1000"
                 [routerLink]="['/recipe-tag/new']"
-                aria-label="Create a new recipe tag"
+                aria-label="Create a new Recipe tag"
                 class="float-right jh-create-entity create-recipe-tag mx-4 mb-3"
                 jhiMaterialColor="accent"
                 mat-mini-fab
-                matTooltip="Create a new recipe tag">
+                matTooltip="Create a new Recipe Tag">
             <mat-icon>add</mat-icon>
         </button>
     </h2>
@@ -18,7 +18,7 @@
 
     <div *ngIf="requesting">
         <div class="w-100" fxLayout="row" fxLayoutAlign="space-around center">
-            <mat-spinner diameter="50" strokeWidth="5"></mat-spinner>
+            <mat-spinner *ngIf="!recipeTags || recipeTags.length == 0" diameter="50" strokeWidth="5"></mat-spinner>
         </div>
     </div>
 
@@ -27,8 +27,6 @@
     </div>
 
     <div *ngIf="recipeTags?.length === 0 || !recipeTags && !requesting" class="alert alert-warning" id="no-result">
-        <div>
-            <span>No Recipe Tags found</span>
-        </div>
+        <span>No recipe Tags found</span>
     </div>
 </div>

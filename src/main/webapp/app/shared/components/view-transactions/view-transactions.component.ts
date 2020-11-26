@@ -53,7 +53,7 @@ export class ViewTransactionsComponent implements OnInit {
   }
 
   print(transaction: Transaction): void {
-    this.invoice.products.push(new Product('cookies', transaction.amount || 0, transaction.cookiesAmount || 0));
+    this.invoice.products.push(new Product('cookie bundle x' + transaction.cookiesAmount, transaction.amount || 0, 1));
     const docDefinition = {
       content: [
         {

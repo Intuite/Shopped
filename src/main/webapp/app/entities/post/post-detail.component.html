@@ -65,12 +65,11 @@
                                 <span class="post-icon-view"></span>
                             </div>
 
-                            <div class="blocks-3 post-element-right align-center" gdArea="awardsButtons">
+                            <div class="blocks-3 post-element-right" gdArea="awardsButtons">
                                 <jhi-award-viewer [postId]=post.id></jhi-award-viewer>
-                                <div class="row" align="center">
+                                <div style="float: right">
                                     <jhi-give-award [data]=post.id></jhi-give-award>
                                 </div>
-
                             </div>
 
                             <div class="blocks-4 post-element-center" gdArea="userInfo">
@@ -95,14 +94,35 @@
                                 <span class="post-icon-portion"></span> {{recipe.portion}}
                             </div>
 
-                            <div class="blocks-8 post-element-center" gdArea="ingredientsList">
-                                ingredients list
+                            <div class="blocks-8" gdArea="ingredientsList">
+                                <mat-list>
+                                    <div *ngFor="let ingredient of ingredients; first as first">
+                                        <mat-divider></mat-divider>
+                                        <mat-list-item>
+                                            <img
+                                                *ngIf="ingredient.image"
+                                                [src]="'data:' + ingredient.imageContentType + ';base64,' + ingredient.image"
+                                                alt="ingredient image"
+                                                matListAvatar
+                                            />
+                                            <mat-icon *ngIf="!ingredient.image" color="primary" matListIcon>
+                                                shopping_cart
+                                            </mat-icon>
+                                            <div matLine> {{ ingredient.name }} </div>
+                                            <div matLine>
+                                                <span>{{ ingredient.amount }}</span>
+                                                <strong>{{ ingredient.unitAbbrev }}</strong>
+                                            </div>
+                                        </mat-list-item>
+                                    </div>
+                                    <mat-divider></mat-divider>
+                                </mat-list>
                             </div>
 
                             <div class="blocks-9 post-element-center" gdArea="addToCart">
-                                <button class="post-cart-button" type="submit">
-                                    <span class="post-icon-cart" style="background-color: primary"></span> ADD TO
-                                    SHOPPING CART
+                                <button class="text-white" color="primary" mat-raised-button>
+                                    <mat-icon>shopping_cart</mat-icon>
+                                    Add to cart
                                 </button>
                             </div>
 
@@ -144,10 +164,14 @@
                                 </button>
                             </div>
 
-                            <div class="blocks-15 post-element-left post-subtitle" gdArea="tagsList">
+                            <div *ngIf="recipeTags !== null" class="blocks-15 post-element-left post-subtitle"
+                                 gdArea="tagsList">
                                 Tags:
-                                <br>
-                                <hr>
+                                <mat-chip-list>
+                                    <mat-chip *ngFor="let tag of recipeTags" color="accent" selected="true">
+                                        {{tag.recipeTagName}}
+                                    </mat-chip>
+                                </mat-chip-list>
                             </div>
 
                             <div class="blocks-16 post-element-left post-reply" gdArea="reply">

@@ -1,4 +1,9 @@
 <div class="row justify-content-center">
+    <div class="col-10">
+        <button type="submit" class="btn btn-secondary" (click)="previousState()">
+            <fa-icon icon="arrow-left"></fa-icon>
+        </button>
+    </div>
     <div class="col-8">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
             <h2 id="jhi-ingredient-heading">{{ editForm.get('id')!.value !== undefined ? "Edit" : "Create" }}
@@ -12,7 +17,7 @@
 <!--                </mat-form-field>-->
 
                 <mat-form-field appearance="fill" class="form-group w-100">
-                    <mat-label jhiTranslate="shoppedApp.award.name">Name</mat-label>
+                    <mat-label>Name*</mat-label>
                     <input formControlName="name" id="field_name" matInput name="name"
                            type="text"/>
                     <mat-error
@@ -24,7 +29,7 @@
                 </mat-form-field>
 
                 <mat-form-field appearance="fill" class="form-group w-100">
-                    <mat-label jhiTranslate="shoppedApp.award.description">Description</mat-label>
+                    <mat-label>Description *</mat-label>
                     <input formControlName="description" id="field_description" matInput name="description"
                            type="text"/>
                     <mat-error
@@ -42,7 +47,7 @@
                 </mat-form-field>
 
                 <mat-form-field appearance="fill" class="form-group w-100">
-                    <mat-label jhiTranslate="shoppedApp.award.cost">Cost</mat-label>
+                    <mat-label>Cost*</mat-label>
                     <input formControlName="cost" id="form-control" matInput name="cost"
                            type="number"/>
                     <mat-error
@@ -67,42 +72,43 @@
                 </mat-form-field>
 
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="shoppedApp.award.image"
-                           for="">Image</label>
+                    <label class="form-control-label"
+                           for=""></label>
                     <div>
                         <img
                             [src]="'data:' + editForm.get('imageContentType')!.value + ';base64,' + editForm.get('image')!.value"
                             style="max-height: 100px;" *ngIf="editForm.get('image')!.value" alt="award image"/>
+                        <div *ngIf="!editForm.get('image')!.value">
+                            <input type="file" id="file_image" (change)="setFileData($event, 'image', true)"
+                                   accept="image/*" jhiTranslate="entity.action.addimage" class="inputfile"/>
+                            <label for="file_image">
+                                <a type="button" mat-flat-button jhiMaterialColor="primary">
+                                    <fa-icon icon="image"></fa-icon>
+                                    Add Image
+                                </a>
+                            </label>
+                        </div>
                         <div *ngIf="editForm.get('image')!.value" class="form-text text-danger clearfix">
-                            <span class="pull-left">{{ editForm.get('imageContentType')!.value }}
-                                , {{ byteSize(editForm.get('image')!.value) }}</span>
+
                             <button type="button" (click)="clearInputImage('image', 'imageContentType', 'file_image')"
                                     class="btn btn-secondary btn-xs pull-right">
                                 <fa-icon icon="times"></fa-icon>
                             </button>
                         </div>
-                        <input type="file" id="file_image" (change)="setFileData($event, 'image', true)"
-                               accept="image/*" jhiTranslate="entity.action.addimage" class="inputfile"/>
-                        <label for="file_image">
-                            <a type="button" mat-flat-button jhiMaterialColor="primary">
-                                <fa-icon icon="image"></fa-icon>
-                                Add Image
-                            </a>
-                        </label>
-                        <!--<input type="hidden" class="form-control" name="image" id="field_image"
-                           formControlName="image"/>
-                    <input type="hidden" class="form-control" name="imageContentType" id="field_imageContentType"
-                           formControlName="imageContentType"/>-->
+
                     </div>
                 </div>
-                <mat-form-field appearance="fill" class="form-group w-100">
-                    <mat-label jhiTranslate="shoppedApp.award.status"></mat-label>
-                    <mat-select formControlName="status" id="status" name="status">
-                        <mat-option *ngFor="let status of statusOptions" [value]="status">
-                            {{status | capitalize }}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
+                <div *ngIf="this.editForm.get(['id'])!.value === undefined">
+                    <mat-form-field [hidden]="true" appearance="fill" class="form-group w-100">
+                        <mat-label jhiTranslate="shoppedApp.award.status"></mat-label>
+                        <mat-select [(ngModel)]="statusOptions[0]" formControlName="status" id="status" name="status">
+                            <mat-option *ngFor="let status of statusOptions" [value]="status">
+                                {{status | capitalize }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
             </div>
 
             <div>

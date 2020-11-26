@@ -6,10 +6,9 @@
     </div>
 
     <div class="col-8">
-        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-            <h2 id="jhi-post-heading">{{ editForm.get('id')!.value !== undefined ? "Edit" : "Create" }}
-                the public post for your recipe</h2>
-            <br>
+        <form (ngSubmit)="save()" [formGroup]="editForm" name="editForm" novalidate role="form">
+            <h2 id="jhi-post-heading">{{ editForm.get('id')!.value !== undefined ? "Edit" : "Create" }} Post
+            </h2>
 
             <div>
 
@@ -75,9 +74,13 @@
             </div>
 
             <div>
-                <button [disabled]="editForm.invalid || isSaving" id="save-entity" jhiMaterialColor="primary"
-                        mat-raised-button
-                        type="submit">
+                <button (click)="previousState()" class="text-white" id="cancel-save" jhiMaterialColor="secondary"
+                        mat-raised-button type="button">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+
+                <button [disabled]="editForm.invalid || isSaving" class="text-white" id="save-entity"
+                        jhiMaterialColor="primary" mat-raised-button type="submit">
                     <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
                 </button>
             </div>

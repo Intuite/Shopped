@@ -1,7 +1,7 @@
 <div>
     <h2 id="page-heading">
         <span jhiTranslate="shoppedApp.post.home.title">Post</span>
-        <button *ngIf="!requesting && (!posts || posts.length == 0)"
+        <button *ngIf="!requesting && (!posts || posts.length == 0)" [hidden]=true
                 [matTooltipHideDelay]="0"
                 [matTooltipShowDelay]="1000"
                 [routerLink]="['/post/new']"

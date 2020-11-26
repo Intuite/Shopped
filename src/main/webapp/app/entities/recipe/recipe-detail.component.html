@@ -14,28 +14,26 @@
                             [ngStyle.gt-sm]="{ 'max-width': '900px' }"
                             [ngStyle]="{ 'max-width': 'auto' }"
                             gdAreas.gt-sm="recipePicture recipePicture recipePicture |
-                                           userInfo  userInfo userInfo  |
-                                           caption caption caption |
+                                           recipeInfo recipeInfo recipeInfo |
                                            ingredientsTitle ingredientsTitle portions |
                                            ingredientsList ingredientsList ingredientsList |
                                            addToCart addToCart addToCart |
                                            instructionsTitle instructionsTitle duration |
                                            instructionsList instructionsList instructionsList |
-                                           exportButtons exportButtons exportButtons |
-                                           tagsList tagsList tagsList"
+                                           tagsList tagsList tagsList |
+                                           exportButtons exportButtons exportButtons"
                             gdAreas.sm="recipePicture recipePicture |
-                                        userInfo userInfo |
-                                        caption caption |
+                                        recipeInfo recipeInfo |
                                         ingredientsTitle portions |
                                         ingredientsList ingredientsList |
                                         addToCart addToCart |
                                         instructionsTitle duration|
                                         instructionsList instructionsList |
-                                        exportButtons exportButtons |
-                                        tagsList tagsList"
-                            gdAreas.xs="recipePicture | userInfo |
-                                        caption | portions | ingredientsTitle| ingredientsList | addToCart | duration |
-                                        instructionsTitle | instructionsList | exportButtons | tagsList"
+                                        tagsList tagsList|
+                                        exportButtons exportButtons"
+                            gdAreas.xs="recipePicture | recipeInfo | portions | ingredientsTitle| ingredientsList |
+                                        addToCart | duration | instructionsTitle | instructionsList |tagsList |
+                                        exportButtons"
                             gdColumns.gt-sm="200px auto 200px"
                             gdColumns.sm="50%!"
                             gdColumns.xs="none"
@@ -49,11 +47,7 @@
                                      class="recipe-image"/>
                             </div>
 
-                            <div class="blocks-4 recipe-element-center" gdArea="userInfo">
-                                <dd><span>{{ recipe.creation | date:"mediumDate" }}</span></dd>
-                            </div>
-
-                            <div class="blocks-5 recipe-element-center" gdArea="caption">
+                            <div class="blocks-2 recipe-element-center" gdArea="recipeInfo">
                                 <dd>
                                     <div *ngIf="recipe.id">
                                         <h2><b>{{ recipe.name }}</b></h2>
@@ -61,38 +55,69 @@
                                 </dd>
                             </div>
 
-                            <div class="blocks-6 recipe-element-left recipe-subtitle" gdArea="ingredientsTitle">
+                            <div class="blocks-3 recipe-element-left recipe-subtitle" gdArea="ingredientsTitle">
                                 Ingredients:
                             </div>
 
-                            <div class="blocks-7 recipe-element-right" gdArea="portions">
+                            <div class="blocks-4 recipe-element-right" gdArea="portions">
                                 <span class="recipe-icon-portion"></span> {{recipe.portion}}
                             </div>
 
-                            <div class="blocks-8 recipe-element-center" gdArea="ingredientsList">
-                                ingredients list
+                            <div class="blocks-5" gdArea="ingredientsList">
+                                <mat-list>
+                                    <div *ngFor="let ingredient of ingredients; first as first">
+                                        <mat-divider></mat-divider>
+                                        <mat-list-item>
+                                            <img
+                                                *ngIf="ingredient.image"
+                                                [src]="'data:' + ingredient.imageContentType + ';base64,' + ingredient.image"
+                                                alt="ingredient image"
+                                                matListAvatar
+                                            />
+                                            <mat-icon *ngIf="!ingredient.image" color="primary" matListIcon>
+                                                shopping_cart
+                                            </mat-icon>
+                                            <div matLine> {{ ingredient.name }} </div>
+                                            <div matLine>
+                                                <span>{{ ingredient.amount }}</span>
+                                                <strong>{{ ingredient.unitAbbrev }}</strong>
+                                            </div>
+                                        </mat-list-item>
+                                    </div>
+                                    <mat-divider></mat-divider>
+                                </mat-list>
                             </div>
 
-                            <div class="blocks-9 recipe-element-center" gdArea="addToCart">
-                                <button class="recipe-cart-button" type="submit">
-                                    <span class="recipe-icon-cart"></span> ADD TO
-                                    SHOPPING CART
+                            <div class="blocks-6 recipe-element-center" gdArea="addToCart">
+                                <button class="text-white" color="primary" mat-raised-button>
+                                    <mat-icon>shopping_cart</mat-icon>
+                                    Add to cart
                                 </button>
                             </div>
 
-                            <div class="blocks-10 recipe-element-left recipe-subtitle" gdArea="instructionsTitle">
+                            <div class="blocks-7 recipe-element-left recipe-subtitle" gdArea="instructionsTitle">
                                 Instructions:
                             </div>
 
-                            <div class="blocks-11 recipe-element-right" gdArea="duration">
+                            <div class="blocks-8 recipe-element-right" gdArea="duration">
                                 <span class="recipe-icon-duration"></span> {{recipe.duration}}min
                             </div>
 
-                            <div class="blocks-12 recipe-element-center recipe-instructions" gdArea="instructionsList">
+                            <div class="blocks-9 recipe-element-center recipe-instructions" gdArea="instructionsList">
                                 {{ recipe.description }}
                             </div>
 
-                            <div class="blocks-13 recipe-element-right" gdArea="exportButtons">
+                            <div *ngIf="recipeTags !== null" class="blocks-10 recipe-element-left recipe-subtitle"
+                                 gdArea="tagsList">
+                                Tags:
+                                <mat-chip-list>
+                                    <mat-chip *ngFor="let tag of recipeTags" color="accent" selected="true">
+                                        {{tag.recipeTagName}}
+                                    </mat-chip>
+                                </mat-chip-list>
+                            </div>
+
+                            <div class="blocks-11 recipe-element-right" gdArea="exportButtons">
                                 <button class="recipe-save-buttons" type="submit">
                                     <span class="recipe-icon-email"></span> Email
                                 </button>
@@ -100,13 +125,6 @@
                                     <span class="recipe-icon-pdf"></span> PDF
                                 </button>
                             </div>
-
-                            <div class="blocks-15 recipe-element-left recipe-subtitle" gdArea="tagsList">
-                                Tags:
-                                <br>
-                                <hr>
-                            </div>
-
                         </div>
                     </div>
                 </mat-card-content>

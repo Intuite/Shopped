@@ -9,7 +9,10 @@ import { Account } from 'app/core/user/account.model';
 import { AccountService } from 'app/core/auth/account.service';
 import { IUser } from 'app/core/user/user.model';
 import { UserService } from 'app/core/user/user.service';
-import { MatTableDataSource } from '@angular/material/table';
+import { Status } from 'app/shared/model/enumerations/status.model';
+import { MatDialog } from '@angular/material/dialog';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { RecipeDeleteDialogComponent } from './recipe-delete-dialog.component';
 
 @Component({
   selector: 'jhi-recipe-user-list',
@@ -17,13 +20,10 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./recipe-list.component.scss'],
 })
 export class RecipeListComponent implements OnInit, AfterViewInit {
-  // @Input() recipes!: IRecipe[];
-
   recipes: IRecipe[] = [];
   account?: Account;
   user!: IUser;
   statusOptions = ['ACTIVE', 'INACTIVE'];
-  dataSource = new MatTableDataSource<IRecipe>();
   searchText = '';
 
   constructor(
@@ -31,7 +31,9 @@ export class RecipeListComponent implements OnInit, AfterViewInit {
     protected activatedRoute: ActivatedRoute,
     protected recipeService: RecipeService,
     protected userService: UserService,
-    private accountService: AccountService
+    private accountService: AccountService,
+    public dialog: MatDialog,
+    protected modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
@@ -46,17 +48,19 @@ export class RecipeListComponent implements OnInit, AfterViewInit {
       () => this.onError()
     );
 
-    this.dataSource.data = this.recipes;
+    this.recipeService.refreshNeeded$.subscribe(() => {
+      this.getRecipes();
+    });
   }
 
-  ngAfterViewInit(): void {
-    // this.dataSource.sort = this.sort;
-    this.dataSource.filterPredicate = (data: any, filter) => {
-      let dataStr = JSON.stringify(data).toLowerCase();
-      dataStr = dataStr.replace(/(\{|,)\s*(.+?)\s*:/g, '');
-      return dataStr.includes(filter);
-    };
+  getRecipes(): any {
+    this.recipeService.query().subscribe(
+      (res: HttpResponse<IRecipe[]>) => this.onSuccess(res.body),
+      () => this.onError()
+    );
   }
+
+  ngAfterViewInit(): void {}
 
   cleanRecipes(): void {
     let i = 0;
@@ -90,12 +94,19 @@ export class RecipeListComponent implements OnInit, AfterViewInit {
     this.cleanRecipes();
   }
 
-  public filter = (e: Event) => {
-    this.dataSource.filter = (e.target as HTMLInputElement).value.trim().toLocaleLowerCase();
-  };
+  setStatus(element: IRecipe, newStatus: boolean): void {
+    this.recipeService
+      .update({
+        ...element,
+        status: !newStatus ? (Status.ACTIVE.toUpperCase() as Status) : (Status.INACTIVE.toUpperCase() as Status),
+      })
+      .subscribe(() => {
+        // this.loadPage(this.page);
+      });
+  }
 
-  public reloadSource(data: IRecipe[]): void {
-    this.recipes = data;
-    this.dataSource.data = data;
+  delete(recipe: IRecipe): void {
+    const modalRef = this.modalService.open(RecipeDeleteDialogComponent, { size: 'md', backdrop: 'static', centered: true });
+    modalRef.componentInstance.recipe = recipe;
   }
 }

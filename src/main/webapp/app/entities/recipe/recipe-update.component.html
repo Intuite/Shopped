@@ -5,10 +5,9 @@
         </button>
     </div>
     <div class="col-8">
-        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-            <h2 id="jhi-recipe-heading" jhiTranslate="shoppedApp.recipe.home.createOrEditLabel">
-                Create your own recipe</h2>
-            <br>
+        <form (ngSubmit)="save()" [formGroup]="editForm" name="editForm" novalidate role="form">
+            <h2 id="jhi-recipe-heading">{{ editForm.get('id')!.value !== undefined ? "Edit" : "Create" }} Recipe
+                </h2>
             <div>
 
                 <mat-form-field [hidden]="true" appearance="fill" class="form-group w-100">
@@ -17,7 +16,7 @@
                 </mat-form-field>
 
                 <mat-form-field appearance="fill" class="form-group w-100">
-                    <mat-label>Name</mat-label>
+                    <mat-label>Name*</mat-label>
                     <input formControlName="name" id="field_name" matInput name="name"
                            type="text"/>
                     <mat-error
@@ -58,7 +57,7 @@
 
 
                 <mat-form-field appearance="fill" class="form-group w-100">
-                    <mat-label>Number of servings:</mat-label>
+                    <mat-label>Number of servings*</mat-label>
                     <input formControlName="portion" id="field_portion" matInput name="portion"
                            type="number"/>
                     <mat-error
@@ -83,7 +82,7 @@
                 </mat-form-field>
 
                 <mat-form-field appearance="fill" class="form-group w-100">
-                    <mat-label>Cooking time (minutes):</mat-label>
+                    <mat-label>Cooking time (minutes)*</mat-label>
                     <input formControlName="duration" id="field_duration" matInput name="duration"
                            type="number"/>
                     <mat-error
@@ -112,7 +111,7 @@
                 <br>
 
                 <mat-form-field appearance="fill" class="form-group w-100">
-                    <mat-label>Recipe instructions:</mat-label>
+                    <mat-label>Recipe instructions*</mat-label>
 
                     <textarea formControlName="description" id="field_description" matInput name="description"
                               type="text" style="height: 100px"></textarea>
@@ -173,12 +172,13 @@
             <hr>
 
             <div>
-                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                <button (click)="previousState()" class="text-white" id="cancel-save" jhiMaterialColor="secondary"
+                        mat-raised-button type="button">
                     <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
                 </button>
 
-                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving"
-                        class="btn btn-primary">
+                <button [disabled]="editForm.invalid || isSaving" class="text-white" id="save-entity"
+                        jhiMaterialColor="primary" mat-raised-button type="submit">
                     <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
                 </button>
             </div>
