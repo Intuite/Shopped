@@ -1,7 +1,7 @@
 <h2 mat-dialog-title>Buy cookies</h2>
 <mat-divider></mat-divider>
 <mat-dialog-content class="mat-typography">
-    <mat-horizontal-stepper [linear]=false class="h-auto" #stepper>
+    <mat-horizontal-stepper [linear]=false class="h-auto" color="accent" #stepper>
         <mat-step [stepControl]="firstFormGroup" label="Available Bundles">
             <form [formGroup]="firstFormGroup" *ngIf="data.length > 0">
                 <div class="content mt-3" fxLayout="row wrap" fxLayoutGap="16px grid">
@@ -12,15 +12,15 @@
                             </mat-card-header>
                             <mat-card-content>
                                 <span class="align-middle">
-                                    {{(item.cookieAmount||0) * 0.75}} <fa-icon icon="image"></fa-icon>
+                                    {{(item.cookieAmount||0) * 0.75}} <fa-icon icon="cookie-bite"></fa-icon>
                                 </span>
                                 <div class="block"></div>
-                                <span class="align-middle badge badge-primary text-10">
+                                <span class="align-middle badge badge-primary text-12">
                                     {{(item.cookieAmount||0) * 0.25}} bonus
                                 </span>
                             </mat-card-content>
                             <mat-card-actions class="align-middle mb-0">
-                                <button mat-raised-button matStepperNext jhiMaterialColor="primary"
+                                <button mat-raised-button matStepperNext jhiMaterialColor="accent" class="txt-white"
                                         (click)="selectBundle(item)">$ {{item.cost}}</button>
                             </mat-card-actions>
                             <div class="d-none">
@@ -51,7 +51,7 @@
                                     Current: {{cookie.amount||0}}
                                 </span> <br>
                                 <div class="block"></div>
-                                <span class="align-middle badge badge-primary text-10">
+                                <span class="align-middle badge badge-primary text-12">
                                     Buying: {{bundle.cookieAmount||0}} bonus
                                 </span> <br>
                                 <span class="align-middle block">
