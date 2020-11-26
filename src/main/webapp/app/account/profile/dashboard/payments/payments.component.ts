@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CookiesService } from 'app/entities/cookies/cookies.service';
 import { Cookies, ICookies } from 'app/shared/model/cookies.model';
 import { HttpResponse } from '@angular/common/http';
@@ -10,16 +10,29 @@ import { Account } from 'app/core/user/account.model';
   templateUrl: './payments.component.html',
   styleUrls: ['./payments.component.scss'],
 })
-export class PaymentsComponent implements OnInit {
+export class PaymentsComponent implements OnInit, OnDestroy {
   account: Account | undefined;
   cookies!: Cookies | undefined;
+  private id: NodeJS.Timeout | undefined;
 
   constructor(private cookiesService: CookiesService, private accountService: AccountService) {}
 
   ngOnInit(): void {
-    this.accountService.identity().subscribe(res => this.onSuccess(res || undefined));
+    this.load();
+    this.id = setInterval(() => {
+      this.load();
+    }, 3000);
   }
 
+  ngOnDestroy(): void {
+    if (this.id) {
+      clearInterval(this.id);
+    }
+  }
+
+  private load(): void {
+    this.accountService.identity().subscribe(res => this.onSuccess(res || undefined));
+  }
   private onSuccess(account: Account | undefined): void {
     if (account) {
       this.account = account;

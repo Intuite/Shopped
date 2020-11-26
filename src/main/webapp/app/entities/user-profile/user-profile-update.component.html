@@ -139,7 +139,6 @@
                 </mat-form-field>
 
                 <div class="form-group">
-<!--                    <label class="form-control-label" jhiTranslate="shoppedApp.userProfile.image">Image</label>-->
                     <div>
                         <img
                             [src]="'data:' + editForm.get('imageContentType')!.value + ';base64,' + editForm.get('image')!.value"
@@ -155,19 +154,21 @@
                             </label>
                         </div>
                         <div *ngIf="editForm.get('image')!.value" class="form-text clearfix">
-                            <span class="pull-left">
-<!--                                {{ editForm.get('imageContentType')!.value }},-->
-<!--                                {{ byteSize(editForm.get('image')!.value) }}-->
+                            <span *ngIf="byteSizeNumber(editForm.get('image')!.value) >= 1000000" class="pull-left text-danger">
+                                Image size should be smaller
                             </span>
-                            <button type="button" (click)="clearInputImage('image', 'imageContentType', 'file_image')"
-                                    class="">
+
+                            <button type="button"
+                                    (click)="clearInputImage(
+                                    'image', 'imageContentType', 'file_image')"
+                                    class="btn btn-secondary btn-xs pull-right">
                                 <fa-icon icon="times"></fa-icon>
                             </button>
                         </div>
                     </div>
                 </div>
 
-                <mat-form-field class="form-group w-100 mat-form-field-disabled" appearance="fill">
+                <mat-form-field [hidden]="true" class="form-group w-100 mat-form-field-disabled" appearance="fill">
                     <mat-label class="form-control-label" jhiTranslate="shoppedApp.userProfile.status" for="field_status">Status</mat-label>
                     <div [ngSwitch]="editableStatus">
                         <mat-select *ngSwitchCase="true" name="status" formControlName="status"

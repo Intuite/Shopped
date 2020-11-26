@@ -4,13 +4,13 @@ import { Resolve, ActivatedRouteSnapshot, Routes, Router } from '@angular/router
 import { Observable, of, EMPTY } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
 
-import { Authority } from 'app/shared/constants/authority.constants';
-import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
+// import { Authority } from 'app/shared/constants/authority.constants';
+// import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
 import { IMessage, Message } from 'app/shared/model/message.model';
 import { MessageService } from './message.service';
-import { MessageComponent } from './message.component';
-import { MessageDetailComponent } from './message-detail.component';
-import { MessageUpdateComponent } from './message-update.component';
+// import { MessageComponent } from './message.component';
+// import { MessageDetailComponent } from './message-detail.component';
+// import { MessageUpdateComponent } from './message-update.component';
 
 @Injectable({ providedIn: 'root' })
 export class MessageResolve implements Resolve<IMessage> {
