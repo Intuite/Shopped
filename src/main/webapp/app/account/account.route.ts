@@ -5,8 +5,6 @@ import { passwordRoute } from './password/password.route';
 import { passwordResetFinishRoute } from './password-reset/finish/password-reset-finish.route';
 import { passwordResetInitRoute } from './password-reset/init/password-reset-init.route';
 import { registerRoute } from './register/register.route';
-import { sessionsRoute } from './sessions/sessions.route';
-import { settingsRoute } from './settings/settings.route';
 import { profileRoute } from './profile/profile.route';
 
 const ACCOUNT_ROUTES = [
@@ -15,8 +13,8 @@ const ACCOUNT_ROUTES = [
   passwordResetFinishRoute,
   passwordResetInitRoute,
   registerRoute,
-  sessionsRoute,
-  settingsRoute,
+  // sessionsRoute,
+  // settingsRoute,
   profileRoute,
 ];
 

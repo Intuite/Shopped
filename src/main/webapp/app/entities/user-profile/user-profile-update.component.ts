@@ -20,8 +20,12 @@ import * as moment from 'moment';
   styleUrls: ['../../../content/scss/image_Select.scss'],
 })
 export class UserProfileUpdateComponent implements OnInit {
-  isSaving = false;
+  isSavingUP = false;
+  isSavingU = false;
+  successUP = false;
+  successU = false;
   currentUserProfile!: IUserProfile;
+  currentUser!: IUser;
   editableStatus = false;
   minDate = new Date(1915, 0, 1);
   maxDate = new Date(2010, 0, 1);
@@ -35,6 +39,9 @@ export class UserProfileUpdateComponent implements OnInit {
     image: [],
     imageContentType: [],
     status: [],
+    firstName: [undefined, [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+    lastName: [undefined, [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+    email: [undefined, [Validators.required, Validators.minLength(5), Validators.maxLength(254), Validators.email]],
     // userId: [],
   });
 
@@ -74,6 +81,7 @@ export class UserProfileUpdateComponent implements OnInit {
       this.editForm.patchValue({
         birthDate: moment(userProfile.birthDate).toISOString() || '',
       });
+    if (this.currentUserProfile !== undefined) this.updateUserFields(userProfile);
   }
 
   byteSize(base64String: string): string {
@@ -107,16 +115,19 @@ export class UserProfileUpdateComponent implements OnInit {
   }
 
   save(): void {
-    this.isSaving = true;
-    const userProfile = this.createFromForm();
-    if (userProfile.id !== undefined) {
+    this.isSavingUP = true;
+    this.isSavingU = true;
+    const userProfile = this.createProfileFromForm();
+    const user = this.createUserFromForm();
+    if (userProfile.id !== undefined && user != null) {
       this.subscribeToSaveResponse(this.userProfileService.update(userProfile));
+      this.subscribeToRespond(this.userService.update(user));
     } else {
       this.subscribeToSaveResponse(this.userProfileService.create(userProfile));
     }
   }
 
-  private createFromForm(): IUserProfile {
+  private createProfileFromForm(): IUserProfile {
     return {
       ...new UserProfile(),
       id: this.editForm.get(['id'])!.value,
@@ -129,6 +140,13 @@ export class UserProfileUpdateComponent implements OnInit {
     };
   }
 
+  private createUserFromForm(): IUser {
+    this.currentUser.firstName = this.editForm.get('firstName')!.value;
+    this.currentUser.lastName = this.editForm.get('lastName')!.value;
+    this.currentUser.email = this.editForm.get('email')!.value;
+    return this.currentUser;
+  }
+
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IUserProfile>>): void {
     result.subscribe(
       () => this.onSaveSuccess(),
@@ -137,12 +155,15 @@ export class UserProfileUpdateComponent implements OnInit {
   }
 
   protected onSaveSuccess(): void {
-    this.isSaving = false;
-    this.previousState();
+    this.isSavingUP = false;
+    this.successUP = true;
+    setTimeout(() => {
+      this.successUP = false;
+    }, 3000);
   }
 
   protected onSaveError(): void {
-    this.isSaving = false;
+    this.isSavingUP = false;
   }
 
   trackById(index: number, item: IUser): any {
@@ -153,5 +174,37 @@ export class UserProfileUpdateComponent implements OnInit {
     if (!status) return 'Not defined';
     const stStatus = status.toString();
     return stStatus[0].toUpperCase() + stStatus.substr(1).toLowerCase();
+  }
+
+  private updateUserFields(userProfile: UserProfile): void {
+    const userLogin = userProfile.userLogin;
+    if (userLogin) {
+      this.userService.find(userLogin).subscribe(resUser => {
+        if (resUser) {
+          this.editForm.patchValue({
+            firstName: resUser.firstName,
+            lastName: resUser.lastName,
+            email: resUser.email,
+          });
+          this.currentUser = resUser;
+        }
+      });
+    }
+  }
+
+  private subscribeToRespond(iUserObservable: Observable<IUser>): void {
+    iUserObservable.subscribe(
+      () => {
+        this.isSavingU = false;
+        this.successU = true;
+        setTimeout(() => {
+          this.successU = false;
+        }, 3000);
+      },
+      () => {
+        this.isSavingU = false;
+        this.successU = false;
+      }
+    );
   }
 }

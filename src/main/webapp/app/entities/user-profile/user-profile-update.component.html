@@ -5,12 +5,109 @@
         </button>
     </div>
     <div class="col-8">
+<!--        <jhi-settings></jhi-settings>-->
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-            <h2 id="jhi-user-profile-heading" jhiTranslate="shoppedApp.userProfile.home.createOrEditLabel">Create or
-                edit a User Profile</h2>
+            <h2 id="jhi-user-profile-heading">
+                {{ currentUserProfile !== undefined ? "Edit" : "Create" }} Profile
+            </h2>
 
             <div>
+
+                <div class="my-1" style="min-height: 80px">
+                    <div class="alert alert-success" *ngIf="successU || successUP">
+                        <strong>Settings saved!</strong>
+                    </div>
+                </div>
+
+<!--                <div class="alert alert-success" *ngIf="successUP">-->
+<!--                    <strong>Profile settings saved!</strong>-->
+<!--                </div>-->
+
                 <jhi-alert-error></jhi-alert-error>
+
+                <div *ngIf="currentUserProfile.id !== undefined">
+                    <mat-form-field appearance="fill" class="form-group w-100">
+                        <mat-label for="firstName" jhiTranslate="settings.form.firstname">First Name</mat-label>
+                        <input matInput type="text" id="firstName" name="firstName" placeholder="{{ 'settings.form.firstname.placeholder' | translate }}"
+                               formControlName="firstName">
+                        <mat-hint></mat-hint>
+                        <mat-error *ngIf="editForm.get('firstName')!.invalid && (editForm.get('firstName')!.dirty || editForm.get('firstName')!.touched)">
+                            <small class="form-text text-danger"
+                                   *ngIf="editForm.get('firstName')?.errors?.required"
+                                   jhiTranslate="settings.messages.validate.firstname.required">
+                                Your first name is required.
+                            </small>
+
+                            <small class="form-text text-danger"
+                                   *ngIf="editForm.get('firstName')?.errors?.minlength"
+                                   jhiTranslate="settings.messages.validate.firstname.minlength">
+                                Your first name is required to be at least 1 character.
+                            </small>
+
+                            <small class="form-text text-danger"
+                                   *ngIf="editForm.get('firstName')?.errors?.maxlength"
+                                   jhiTranslate="settings.messages.validate.firstname.maxlength">
+                                Your first name cannot be longer than 50 characters.
+                            </small>
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill" class="form-group w-100">
+                        <mat-label for="lastName" jhiTranslate="settings.form.lastname">Last Name</mat-label>
+                        <input matInput type="text" id="lastName" name="lastName" placeholder="{{ 'settings.form.lastname.placeholder' | translate }}"
+                               formControlName="lastName">
+                        <mat-error *ngIf="editForm.get('lastName')!.invalid && (editForm.get('lastName')!.dirty || editForm.get('lastName')!.touched)">
+                            <small class="form-text text-danger"
+                                   *ngIf="editForm.get('lastName')?.errors?.required"
+                                   jhiTranslate="settings.messages.validate.lastname.required">
+                                Your last name is required.
+                            </small>
+
+                            <small class="form-text text-danger"
+                                   *ngIf="editForm.get('lastName')?.errors?.minlength"
+                                   jhiTranslate="settings.messages.validate.lastname.minlength">
+                                Your last name is required to be at least 1 character.
+                            </small>
+
+                            <small class="form-text text-danger"
+                                   *ngIf="editForm.get('lastName')?.errors?.maxlength"
+                                   jhiTranslate="settings.messages.validate.lastname.maxlength">
+                                Your last name cannot be longer than 50 characters.
+                            </small>
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill" class="form-group w-100 mat-form-field-disabled">
+                        <mat-label class="form-control-label" for="email" jhiTranslate="global.form.email.label">Email</mat-label>
+                        <input [readonly]="true" matInput type="email" id="email" name="email" placeholder="{{ 'global.form.email.placeholder' | translate }}"
+                               formControlName="email">
+                        <mat-error *ngIf="editForm.get('email')!.invalid && (editForm.get('email')!.dirty || editForm.get('email')!.touched)">
+                            <small class="form-text text-danger"
+                                   *ngIf="editForm.get('email')?.errors?.required"
+                                   jhiTranslate="global.messages.validate.email.required">
+                                Your email is required.
+                            </small>
+
+                            <small class="form-text text-danger"
+                                   *ngIf="editForm.get('email')?.errors?.email"
+                                   jhiTranslate="global.messages.validate.email.invalid">
+                                Your email is invalid.
+                            </small>
+
+                            <small class="form-text text-danger"
+                                   *ngIf="editForm.get('email')?.errors?.minlength"
+                                   jhiTranslate="global.messages.validate.email.minlength">
+                                Your email is required to be at least 5 characters.
+                            </small>
+
+                            <small class="form-text text-danger"
+                                   *ngIf="editForm.get('email')?.errors?.maxlength"
+                                   jhiTranslate="global.messages.validate.email.maxlength">
+                                Your email cannot be longer than 100 characters.
+                            </small>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
 
                 <mat-form-field class="form-group" [hidden]="true">
                     <mat-label for="id" jhiTranslate="global.field.id">ID</mat-label>
@@ -42,31 +139,30 @@
                 </mat-form-field>
 
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="shoppedApp.userProfile.image">Image</label>
+<!--                    <label class="form-control-label" jhiTranslate="shoppedApp.userProfile.image">Image</label>-->
                     <div>
                         <img
                             [src]="'data:' + editForm.get('imageContentType')!.value + ';base64,' + editForm.get('image')!.value"
                             style="max-height: 100px;" *ngIf="editForm.get('image')!.value" alt="userProfile image"/>
-                        <div *ngIf="editForm.get('image')!.value" class="form-text text-danger clearfix">
-<!--                            <span class="pull-left">-->
-<!--                                {{ editForm.get('imageContentType')!.value }}-->
-<!--                                , {{ byteSize(editForm.get('image')!.value) }}-->
-<!--                            </span>-->
-                            <button type="button" (click)="clearInputImage('image', 'imageContentType', 'file_image')"
-                                    class="">
-                                <fa-icon icon="times"></fa-icon>
-                            </button>
-
-                        </div>
-                        <div>
+                        <div *ngIf="!editForm.get('image')!.value">
                             <input type="file" id="file_image" (change)="setFileData($event, 'image', true)"
                                    accept="image/*" jhiTranslate="entity.action.addimage" class="inputfile"/>
                             <label for="file_image">
-                                <a type="button" mat-flat-button jhiMaterialColor="primary">
+                                <a type="button" class="text-white" mat-flat-button jhiMaterialColor="primary">
                                     <fa-icon icon="image"></fa-icon>
                                     Add Image
                                 </a>
                             </label>
+                        </div>
+                        <div *ngIf="editForm.get('image')!.value" class="form-text clearfix">
+                            <span class="pull-left">
+<!--                                {{ editForm.get('imageContentType')!.value }},-->
+<!--                                {{ byteSize(editForm.get('image')!.value) }}-->
+                            </span>
+                            <button type="button" (click)="clearInputImage('image', 'imageContentType', 'file_image')"
+                                    class="">
+                                <fa-icon icon="times"></fa-icon>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -103,11 +199,18 @@
                     <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
                 </button>
 
-                <button mat-flat-button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving"
+                <button mat-flat-button type="submit" id="save-entity" [disabled]="editForm.invalid || isSavingUP"
                         color="primary" class="text-white">
                     <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
                 </button>
             </div>
         </form>
+
+        <div class="mt-3">
+            <span>Do you want to change your password?</span>
+            <button class="btn btn-link" [routerLink]="['/account/password']">
+                Reset password
+            </button>
+        </div>
     </div>
 </div>
