@@ -4,6 +4,7 @@ import { JhiEventManager } from 'ng-jhipster';
 
 import { IRecipe } from 'app/shared/model/recipe.model';
 import { RecipeService } from './recipe.service';
+import { Status } from 'app/shared/model/enumerations/status.model';
 
 @Component({
   templateUrl: './recipe-delete-dialog.component.html',
@@ -17,10 +18,14 @@ export class RecipeDeleteDialogComponent {
     this.activeModal.dismiss();
   }
 
-  confirmDelete(id: number): void {
-    this.recipeService.delete(id).subscribe(() => {
-      this.eventManager.broadcast('recipeListModification');
-      this.activeModal.close();
-    });
+  confirmDelete(element: IRecipe, newStatus: boolean): void {
+    this.recipeService
+      .update({
+        ...element,
+        status: !newStatus ? (Status.ACTIVE.toUpperCase() as Status) : (Status.INACTIVE.toUpperCase() as Status),
+      })
+      .subscribe(() => {
+        this.activeModal.close();
+      });
   }
 }

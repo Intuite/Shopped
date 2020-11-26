@@ -7,6 +7,10 @@ import * as moment from 'moment';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
 import { IRecipe } from 'app/shared/model/recipe.model';
+import { IRecipeHasRecipeTag } from 'app/shared/model/recipe-has-recipe-tag.model';
+import { RecipeHasRecipeTagService } from 'app/entities/recipe-has-recipe-tag/recipe-has-recipe-tag.service';
+import { RecipeHasIngredientService } from 'app/entities/recipe-has-ingredient/recipe-has-ingredient.service';
+import { IRecipeHasIngredient } from 'app/shared/model/recipe-has-ingredient.model';
 
 type EntityResponseType = HttpResponse<IRecipe>;
 type EntityArrayResponseType = HttpResponse<IRecipe[]>;
@@ -17,10 +21,26 @@ export class RecipeService {
 
   refreshNeeded$ = new Subject<void>();
 
-  constructor(protected http: HttpClient) {}
+  constructor(
+    protected http: HttpClient,
+    protected recipeHasRecipeTagService: RecipeHasRecipeTagService,
+    protected recipeHasIngredientService: RecipeHasIngredientService
+  ) {}
 
   getRefreshNeed(): any {
     return this.refreshNeeded$;
+  }
+
+  findRecipeHasRecipeTags(id: number): Observable<HttpResponse<IRecipeHasRecipeTag[]>> {
+    return this.recipeHasRecipeTagService.query({
+      ...{ 'recipeId.equals': id },
+    });
+  }
+
+  findRecipeHasIngredients(id: number): Observable<HttpResponse<IRecipeHasIngredient[]>> {
+    return this.recipeHasIngredientService.query({
+      ...{ 'recipeId.equals': id },
+    });
   }
 
   create(recipe: IRecipe): Observable<EntityResponseType> {

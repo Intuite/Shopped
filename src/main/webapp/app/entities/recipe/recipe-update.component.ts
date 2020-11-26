@@ -237,6 +237,7 @@ export class RecipeUpdateComponent implements OnInit {
 
   gotoAfterSave(): void {
     // this.router.navigate(['/recipe', ${id: this.recipeCreated.id}, 'view']);
-    this.router.navigate(['/recipe', 'list']);
+    // this.router.navigate(['/recipe', 'list']);
+    this.previousState();
   }
 }
