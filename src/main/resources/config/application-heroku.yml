@@ -24,3 +24,14 @@ spring:
     password: ${JDBC_DATABASE_PASSWORD}
     hikari:
       maximumPoolSize: 8
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: teamintuite@gmail.com
+    password: DreamTeam-p3
+    protocol: smtp
+    tls: true
+    properties.mail.smtp:
+      auth: true
+      starttls.enable: true
+      ssl.trust: smtp.gmail.com

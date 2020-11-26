@@ -67,7 +67,7 @@
 
                             <div class="blocks-3 post-element-right" gdArea="awardsButtons">
                                 <jhi-award-viewer [postId]=post.id></jhi-award-viewer>
-                                <div style="float: right">
+                                <div style="float: right" *ngIf="account!.id !== 3">
                                     <jhi-give-award [data]=post.id></jhi-give-award>
                                 </div>
                             </div>

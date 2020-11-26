@@ -7,6 +7,8 @@ import { IRecipe } from 'app/shared/model/recipe.model';
 import { RecipeService } from 'app/entities/recipe/recipe.service';
 import { IRecipeHasRecipeTag } from 'app/shared/model/recipe-has-recipe-tag.model';
 import { IngredientService } from 'app/entities/ingredient/ingredient.service';
+import { AccountService } from 'app/core/auth/account.service';
+import { Account } from 'app/core/user/account.model';
 
 interface FullIngredient {
   id?: number;
@@ -28,17 +30,19 @@ export class PostDetailComponent implements OnInit {
   eventSubscriber?: Subscription;
   recipeTags!: IRecipeHasRecipeTag[] | null;
   ingredients: FullIngredient[] = [];
+  account?: Account | undefined;
 
   constructor(
     protected recipeService: RecipeService,
     protected ingredientService: IngredientService,
     protected dataUtils: JhiDataUtils,
-    protected activatedRoute: ActivatedRoute
+    protected activatedRoute: ActivatedRoute,
+    protected accountService: AccountService
   ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ post }) => (this.post = post));
-
+    this.accountService.identity().subscribe(res => (this.account = res || undefined));
     this.recipeService.query().subscribe(
       () => this.onSuccess(),
       () => this.onError()
