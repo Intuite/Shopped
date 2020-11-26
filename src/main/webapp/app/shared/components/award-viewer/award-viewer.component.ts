@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { AwardService } from 'app/entities/award/award.service';
 import { CommendationService } from 'app/entities/commendation/commendation.service';
 import { HttpResponse } from '@angular/common/http';
@@ -10,14 +10,28 @@ import { ICommendation } from 'app/shared/model/commendation.model';
   templateUrl: './award-viewer.component.html',
   styleUrls: ['./award-viewer.component.scss'],
 })
-export class AwardViewerComponent implements OnInit {
+export class AwardViewerComponent implements OnInit, OnDestroy {
   @Input() postId: number | undefined;
   awards: Award[] = [];
   len = 0;
+  private id: NodeJS.Timeout | undefined;
 
   constructor(private awardService: AwardService, private commendationService: CommendationService) {}
 
   ngOnInit(): void {
+    this.load();
+    this.id = setInterval(() => {
+      this.load();
+    }, 3000);
+  }
+
+  ngOnDestroy(): void {
+    if (this.id) {
+      clearInterval(this.id);
+    }
+  }
+
+  private load(): void {
     this.commendationService
       .query({
         ...(this.postId && { 'postId.equals': this.postId }),
