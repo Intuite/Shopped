@@ -13,7 +13,6 @@ import { IUser } from 'app/core/user/user.model';
 import { UserService } from 'app/core/user/user.service';
 import { Status } from 'app/shared/model/enumerations/status.model';
 import * as moment from 'moment';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'jhi-user-profile-update',
