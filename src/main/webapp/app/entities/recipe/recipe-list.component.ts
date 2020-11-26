@@ -9,6 +9,10 @@ import { Account } from 'app/core/user/account.model';
 import { AccountService } from 'app/core/auth/account.service';
 import { IUser } from 'app/core/user/user.model';
 import { UserService } from 'app/core/user/user.service';
+import { Status } from 'app/shared/model/enumerations/status.model';
+import { MatDialog } from '@angular/material/dialog';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { RecipeDeleteDialogComponent } from './recipe-delete-dialog.component';
 
 @Component({
   selector: 'jhi-recipe-user-list',
@@ -27,7 +31,9 @@ export class RecipeListComponent implements OnInit, AfterViewInit {
     protected activatedRoute: ActivatedRoute,
     protected recipeService: RecipeService,
     protected userService: UserService,
-    private accountService: AccountService
+    private accountService: AccountService,
+    public dialog: MatDialog,
+    protected modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
@@ -86,5 +92,21 @@ export class RecipeListComponent implements OnInit, AfterViewInit {
   private onSuccess(body: IRecipe[] | null): void {
     this.recipes = body || [];
     this.cleanRecipes();
+  }
+
+  setStatus(element: IRecipe, newStatus: boolean): void {
+    this.recipeService
+      .update({
+        ...element,
+        status: !newStatus ? (Status.ACTIVE.toUpperCase() as Status) : (Status.INACTIVE.toUpperCase() as Status),
+      })
+      .subscribe(() => {
+        // this.loadPage(this.page);
+      });
+  }
+
+  delete(recipe: IRecipe): void {
+    const modalRef = this.modalService.open(RecipeDeleteDialogComponent, { size: 'md', backdrop: 'static', centered: true });
+    modalRef.componentInstance.recipe = recipe;
   }
 }

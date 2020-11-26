@@ -21,11 +21,12 @@
 </div>
 <jhi-wrapper-material-table #sort="matSort" [columns]="displayedColumns"
                             [dataSource]="dataSource" matSort>
-    <ng-container matColumnDef="id">
-        <th *matHeaderCellDef mat-header-cell mat-sort-header>ID</th>
+
+    <ng-container matColumnDef="date">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>Date</th>
         <td *matCellDef="let element" mat-cell>
             <span>
-                <a [routerLink]="['./', element.id, 'view']">{{ element.id }}</a>
+                {{ element.date | date:'short' }}
             </span>
         </td>
     </ng-container>
@@ -53,15 +54,6 @@
         <td *matCellDef="let element" mat-cell>
             <span>
                 {{ element.userLogin }}
-            </span>
-        </td>
-    </ng-container>
-
-    <ng-container matColumnDef="date">
-        <th *matHeaderCellDef mat-header-cell mat-sort-header>Date</th>
-        <td *matCellDef="let element" mat-cell>
-            <span>
-                {{ element.date | date:'short' }}
             </span>
         </td>
     </ng-container>
