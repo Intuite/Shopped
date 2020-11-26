@@ -82,7 +82,7 @@
                           <span>Cookies</span>
                         </span>
                     </button>
-                    <button mat-menu-item [matMenuTriggerFor]="otherMenu">
+                    <button [hidden]="true" mat-menu-item [matMenuTriggerFor]="otherMenu">
                         <span>
                           <fa-icon icon="asterisk"></fa-icon>
                           <span>Other</span>
@@ -315,7 +315,7 @@
                     </button>
                 </mat-menu>
 
-                <mat-menu #otherMenu="matMenu" xPosition="before">
+                <mat-menu [hidden]="true" #otherMenu="matMenu" xPosition="before">
                     <button
                         (click)="collapseNavbar()"
                         [routerLinkActiveOptions]="{ exact: true }"
@@ -349,6 +349,7 @@
                 display="dynamic"
                 ngbDropdown
                 routerLinkActive="active"
+                [hidden]="true"
             >
                 <button [matMenuTriggerFor]="foodMenu" class="nav-link dropdown-toggle" id="food-button"
                         mat-button>
@@ -387,6 +388,7 @@
             <li  *jhiHasAnyAuthority="'ROLE_USER'"
                  [routerLinkActiveOptions]="{ exact: true }"
                  class="nav-item" routerLinkActive="active"
+                 [hidden]="true"
             >
                 <button
                     (click)="collapseNavbar()"

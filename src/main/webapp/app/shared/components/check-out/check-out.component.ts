@@ -41,7 +41,6 @@ export class CheckOutComponent implements OnInit {
 
       transactionLogicService.processTransactionBuy(transac);
       dialog.close();
-      // TODO llamar transaction-logic-service con transac ya armado.
     }
 
     paypal
@@ -61,7 +60,6 @@ export class CheckOutComponent implements OnInit {
         },
         async onApprove(data: any, actions: any): Promise<any> {
           const order = await actions.order.capture();
-          console.warn(order);
 
           const transaction = (ord: any) => {
             this.transac = {

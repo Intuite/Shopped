@@ -39,7 +39,7 @@ export const awardRoute: Routes = [
     path: '',
     component: AwardComponent,
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       defaultSort: 'id,asc',
       pageTitle: 'shoppedApp.award.home.title',
     },
@@ -52,7 +52,7 @@ export const awardRoute: Routes = [
       award: AwardResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       pageTitle: 'shoppedApp.award.home.title',
     },
     canActivate: [UserRouteAccessService],
@@ -64,7 +64,7 @@ export const awardRoute: Routes = [
       award: AwardResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       pageTitle: 'shoppedApp.award.home.title',
     },
     canActivate: [UserRouteAccessService],
@@ -76,7 +76,7 @@ export const awardRoute: Routes = [
       award: AwardResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       pageTitle: 'shoppedApp.award.home.title',
     },
     canActivate: [UserRouteAccessService],

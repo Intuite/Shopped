@@ -34,12 +34,12 @@ export class TransactionLogicService {
         () => console.warn('success'),
         () => console.warn('error')
       );
+      window.location.reload();
     }
   }
 
   private continue(transac: ITransaction): void {
     const user = transac.userId;
-    console.warn(user);
 
     this.cookiesService
       .query({
