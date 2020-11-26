@@ -11,7 +11,7 @@ import { IRecipeHasRecipeTag } from 'app/shared/model/recipe-has-recipe-tag.mode
 import { IngredientService } from 'app/entities/ingredient/ingredient.service';
 import { RecipeService } from 'app/entities/recipe/recipe.service';
 
-export interface FullIngredient {
+interface FullIngredient {
   id?: number;
   amount?: number;
   name?: string;
