@@ -42,6 +42,13 @@
                         <mat-card-title class="recipe-card-title">
                             {{ card.name }}
                         </mat-card-title>
+
+                        <div class="recipe-card-disable-button">
+                            <button aria-label="Close" data-dismiss="modal" class="close" type="button"
+                                    (click)="this.delete(card)">
+                                <span aria-hidden="true">x</span>
+                            </button>
+                        </div>
                     </mat-card-header>
                     <div *ngIf="card.image">
                         <div class="recipe-card-picture">
