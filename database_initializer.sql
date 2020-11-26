@@ -3,77 +3,36 @@ use Shopped;
 
 # INITIALIZE TAG TYPES
 insert into tag_type (name, description, status)
-values ('culture', 'Mauris lacinia sapien quis libero.', 'INACTIVE'),
-       ('bitter',
-        'Morbi ut odio. Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo. In blandit ultrices enim.',
-        'ACTIVE'),
-        ('country',
-        'Morbi ut odio. Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo. In blandit ultrices enim.',
-        'ACTIVE'),
-       ('sweet',
-        'Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem. Integer tincidunt ante vel ipsum.',
-        'ACTIVE'),
-       ('salty', 'Vestibulum sed magna at nunc commodo placerat.', 'ACTIVE'),
-       ('professional', 'Morbi a ipsum. Integer a nibh. In quis justo.', 'INACTIVE'),
-       ('sour',
-        'Nulla suscipit ligula in lacus. Curabitur at ipsum ac tellus semper interdum. Mauris ullamcorper purus sit amet nulla. Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.',
-        'ACTIVE'),
-       ('spicy', 'Morbi non quam nec dui luctus rutrum. Nulla tellus.', 'ACTIVE');
+values ('culture', 'Mauris lacinia sapien quis libero.', 'INACTIVE'),               # 1
+       ('origin', 'Where the food was originated from', 'ACTIVE'),                  # 2
+       ('sweet', 'Food that is categorized by the sweet taste it has', 'ACTIVE'),   # 3
+       ('salty', 'Food that is categorized by the salty taste it has', 'ACTIVE'),   # 4
+       ('sour', 'Food that is categorized by the sour taste it has', 'ACTIVE'),     # 5
+       ('spicy', 'Food that is categorized by the spicy taste it has', 'ACTIVE'),   # 6
+       ('bitter', 'Food that is categorized by the bitter taste it has', 'ACTIVE'); # 7
 
 # INITIALIZE RECIPE TAGS
 insert into recipe_tag (name, description, status, type_id)
-values ('Domainer',
-        'Nulla nisl. Nunc nisl. Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus.',
-        'ACTIVE', 6),
-       ('Sub-Ex', 'Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus.', 'INACTIVE', 5),
-       ('Fix San', 'Duis mattis egestas metus. Aenean fermentum.', 'ACTIVE', 5),
-       ('Mat Lam Tam',
-        'Suspendisse potenti. Cras in purus eu magna vulputate luctus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus vestibulum sagittis sapien.',
-        'INACTIVE', 4),
-       ('Fix San', 'Suspendisse potenti.', 'INACTIVE', 4),
-       ('Namfix', 'Vivamus tortor.', 'ACTIVE', 5),
-       ('Zamit', 'Morbi quis tortor id nulla ultrices aliquet.', 'ACTIVE', 1),
-       ('Lotstring', 'Cras in purus eu magna vulputate luctus.', 'INACTIVE', 4),
-       ('Cardguard', 'Aliquam erat volutpat.', 'INACTIVE', 2),
-       ('Ventosanzap', 'Phasellus sit amet erat.', 'ACTIVE', 4),
-       ('Transcof', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin risus. Praesent lectus.', 'ACTIVE',
-        5),
-       ('Regrant',
-        'Sed vel enim sit amet nunc viverra dapibus. Nulla suscipit ligula in lacus. Curabitur at ipsum ac tellus semper interdum.',
-        'INACTIVE', 2),
-       ('Kanlam',
-        'Vivamus vel nulla eget eros elementum pellentesque. Quisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla.',
-        'ACTIVE', 5),
-       ('Sonair',
-        'Duis mattis egestas metus. Aenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh.',
-        'ACTIVE', 3),
-       ('Asoka',
-        'Aliquam sit amet diam in magna bibendum imperdiet. Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis. Fusce posuere felis sed lacus.',
-        'INACTIVE', 4),
-       ('Zontrax', 'Nulla nisl. Nunc nisl.', 'INACTIVE', 3),
-       ('Home Ing', 'Cras non velit nec nisi vulputate nonummy.', 'ACTIVE', 5),
-       ('Home Ing', 'Nulla ut erat id mauris vulputate elementum.', 'INACTIVE', 4),
-       ('Fixflex',
-        'Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum. In hac habitasse platea dictumst.',
-        'INACTIVE', 1),
-       ('Transcof', 'Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus. Suspendisse potenti.',
-        'INACTIVE', 6),
-       ('Vagram',
-        'Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue.',
-        'ACTIVE', 6),
-       ('Hatity', 'Suspendisse accumsan tortor quis turpis.', 'ACTIVE', 3),
-       ('Zathin', 'Suspendisse potenti.', 'ACTIVE', 5),
-       ('Sonsing',
-        'Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis. Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci. Mauris lacinia sapien quis libero.',
-        'INACTIVE', 3),
-       ('Asoka', 'Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat.', 'ACTIVE', 3),
-       ('Sub-Ex', 'Nulla tellus. In sagittis dui vel nisl. Duis ac nibh.', 'ACTIVE', 3),
-       ('Bamity', 'Donec dapibus. Duis at velit eu est congue elementum. In hac habitasse platea dictumst.', 'INACTIVE',
-        1),
-       ('Greenlam', 'Vestibulum rutrum rutrum neque. Aenean auctor gravida sem.', 'INACTIVE', 3),
-       ('Bamity',
-        'Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo. In blandit ultrices enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.',
-        'ACTIVE', 1);
+values ('Italian', 'Food from Italy, Europe', 'ACTIVE', 2),                         # Origin
+       ('Canadien', 'Food from Canada, America', 'INACTIVE', 2),                    # Origin
+       ('Costa Rican', 'Food from Costa Rica, America', 'ACTIVE', 2),               # Origin
+       ('Indian', 'Food from India, Asia', 'INACTIVE', 2),                          # Origin
+       ('Chocolate', 'Treats that are prepared using cocoa', 'ACTIVE', 3),          # Sweet
+       ('Cake', 'Sweet pastry', 'ACTIVE', 3),                                       # Sweet
+       ('Bread', 'Salty pastry', 'ACTIVE', 4),                                      # Salty
+       ('Snack', 'Salty ', 'ACTIVE', 4),                                            # Salty
+       ('Pepper', 'Spicy vegetable', 'ACTIVE', 6),                                  # Spicy
+       ('Hot Sauce', 'Sauce used to spice food', 'ACTIVE', 6),                      # Spicy
+
+# INITIALIZE INGREDIENT TAGS
+insert into ingredient_tag (name, description, status, type_id)
+values ('British', 'Food from Britain, Europe', 'ACTIVE', 2),                       # Origin
+       ('Canadien', 'Food from Canada, America', 'INACTIVE', 2),                    # Origin
+       ('Costa Rican', 'Food from Costa Rica, America', 'INACTIVE', 2),             # Origin
+       ('Indian', 'Food from India, Asia', 'ACTIVE', 2),                            # Origin
+       ('Sugar', 'Carbohydrate that gives food a sweet taste', 'ACTIVE', 3),        # Sweet
+       ('Salt', 'Salty pastry', 'ACTIVE', 4),                                       # Salty
+
 
 # INITIALIZE UNITS
 insert into unit (name, abbrev)

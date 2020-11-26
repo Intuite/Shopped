@@ -19,24 +19,27 @@
 
                 <div class="form-group">
                     <div>
-                        <img
-                            *ngIf="editForm.get('image')!.value"
-                            [src]="'data:' + editForm.get('imageContentType')!.value + ';base64,' + editForm.get('image')!.value"
-                            alt="Ingredient image" style="max-height: 100px;"/>
+                        <img [src]="'data:' + editForm.get('imageContentType')!.value + ';base64,' + editForm.get('image')!.value"
+                            style="max-height: 100px;" *ngIf="editForm.get('image')!.value" alt="userProfile image"/>
                         <div *ngIf="!editForm.get('image')!.value">
-                            <input (change)="setFileData($event, 'image', true)" accept="image/*" class="inputfile"
-                                   id="file_image" jhiTranslate="entity.action.addimage" type="file"/>
+                            <input type="file" id="file_image" (change)="setFileData($event, 'image', true)"
+                                   accept="image/*" jhiTranslate="entity.action.addimage" class="inputfile"/>
                             <label for="file_image">
-                                <a jhiMaterialColor="primary" mat-flat-button type="button">
+                                <a type="button" class="text-white" mat-flat-button jhiMaterialColor="primary">
                                     <fa-icon icon="image"></fa-icon>
                                     Add Image
                                 </a>
                             </label>
                         </div>
-                        <div *ngIf="editForm.get('image')!.value" class="form-text text-danger clearfix">
-                            <button (click)="clearInputImage('image', 'imageContentType', 'file_image')"
-                                    class="btn btn-secondary btn-xs pull-right"
-                                    type="button">
+                        <div *ngIf="editForm.get('image')!.value" class="form-text clearfix">
+                            <span *ngIf="byteSizeNumber(editForm.get('image')!.value) >= 1000000" class="pull-left text-danger">
+                                Too large image!
+                            </span>
+
+                            <button type="button"
+                                    (click)="clearInputImage(
+                                    'image', 'imageContentType', 'file_image')"
+                                    class="btn btn-secondary btn-xs pull-right">
                                 <fa-icon icon="times"></fa-icon>
                             </button>
                         </div>
