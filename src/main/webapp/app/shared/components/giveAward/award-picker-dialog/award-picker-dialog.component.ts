@@ -70,7 +70,7 @@ export class AwardPickerDialogComponent implements OnInit {
         })
         .subscribe(
           (res: HttpResponse<ICookies[]>) => this.onCookieSuccess(res.body || undefined),
-          () => console.warn('se cayo')
+          () => console.warn('no cookie found')
         );
     }
   }
@@ -96,12 +96,9 @@ export class AwardPickerDialogComponent implements OnInit {
       );
   }
 
-  private onError(): void {
-    console.warn('There are no Awards');
-  }
+  private onError(): void {}
 
   private onSuccess(body: Award[] | null): void {
-    console.warn(body);
     this.awards = body || [];
     this.award = (body || [])[0];
   }
@@ -160,11 +157,11 @@ export class AwardPickerDialogComponent implements OnInit {
         awardCost: this.award.cost,
         tax: +tax,
       });
-      console.warn(description);
       this.logService.create(new Log(undefined, description, moment(), 'Award', 1, this.account?.login, this.account?.id)).subscribe(
         () => console.warn('log succesful'),
         () => console.warn('log failed')
       );
+      window.location.reload();
     }
   }
 
