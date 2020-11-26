@@ -10,7 +10,7 @@ import { Account } from 'app/core/user/account.model';
   selector: 'jhi-home',
   templateUrl: './home.component.html',
   styleUrls: ['home.scss'],
-  providers: [NgbCarouselConfig], // add NgbCarouselConfig to the component providers
+  providers: [NgbCarouselConfig],
 })
 export class HomeComponent implements OnInit, OnDestroy {
   account: Account | null = null;
