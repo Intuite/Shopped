@@ -1,4 +1,4 @@
-<div>
+<div class="body-wrapper">
     <div class="recipe-list-title-wrapper">
         <div class="recipe-list-title-txt">
             <h2><span>My Recipes</span></h2>
@@ -32,12 +32,12 @@
     </div>
 
 
-    <dl class="row-md jh-entity-details">
-        <div class="recipe-card-content" fxLayout="row wrap" fxLayoutGap="16px grid">
+    <dl class="jh-entity-details">
+        <div class="recipe-card-content" fxLayout="row wrap" fxLayoutGap="6px grid">
             <div *ngFor="let card of recipes | recipeFilter:searchText" fxFlex="100%" fxFlex.gt-sm="33%" fxFlex.sm="50%"
                  fxFlex.xs="100%">
 
-                <mat-card class="mat-elevation-z4 col-sm-8">
+                <mat-card class="mat-elevation-z4 col-sm-12">
                     <mat-card-header>
                         <mat-card-title class="recipe-card-title">
                             {{ card.name }}

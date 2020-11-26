@@ -157,7 +157,7 @@ export class PostUpdateComponent implements OnInit {
   }
 
   gotoAfterSave(): void {
-    // this.router.navigate(['/recipe', 'list']);
-    this.previousState();
+    this.router.navigate(['/']);
+    // this.previousState();
   }
 }
