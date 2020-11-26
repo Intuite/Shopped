@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
 import { IPost } from 'app/shared/model/post.model';
+import { tap } from 'rxjs/operators';
 
 type EntityResponseType = HttpResponse<IPost>;
 type EntityArrayResponseType = HttpResponse<IPost[]>;
@@ -13,14 +14,32 @@ type EntityArrayResponseType = HttpResponse<IPost[]>;
 export class PostService {
   public resourceUrl = SERVER_API_URL + 'api/posts';
 
+  refreshNeeded$ = new Subject<void>();
+
   constructor(protected http: HttpClient) {}
 
+  getRefreshNeed(): any {
+    return this.refreshNeeded$;
+  }
+
   create(post: IPost): Observable<EntityResponseType> {
-    return this.http.post<IPost>(this.resourceUrl, post, { observe: 'response' });
+    return this.http
+      .post<IPost>(this.resourceUrl, post, { observe: 'response' })
+      .pipe(
+        tap(() => {
+          this.refreshNeeded$.next();
+        })
+      );
   }
 
   update(post: IPost): Observable<EntityResponseType> {
-    return this.http.put<IPost>(this.resourceUrl, post, { observe: 'response' });
+    return this.http
+      .put<IPost>(this.resourceUrl, post, { observe: 'response' })
+      .pipe(
+        tap(() => {
+          this.refreshNeeded$.next();
+        })
+      );
   }
 
   find(id: number): Observable<EntityResponseType> {

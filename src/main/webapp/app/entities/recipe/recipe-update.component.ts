@@ -104,6 +104,11 @@ export class RecipeUpdateComponent implements OnInit {
     return this.dataUtils.byteSize(base64String);
   }
 
+  byteSizeNumber(base64String: string): number {
+    const st = this.dataUtils.byteSize(base64String).replace(/[^0-9]/g, '');
+    return parseInt(st, 10);
+  }
+
   openFile(contentType: string, base64String: string): void {
     this.dataUtils.openFile(contentType, base64String);
   }

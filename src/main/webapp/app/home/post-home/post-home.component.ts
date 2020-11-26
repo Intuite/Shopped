@@ -1,0 +1,111 @@
+import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { JhiDataUtils } from 'ng-jhipster';
+
+import { IRecipe } from 'app/shared/model/recipe.model';
+import { RecipeService } from 'app/entities/recipe/recipe.service';
+import { HttpResponse } from '@angular/common/http';
+import { Account } from 'app/core/user/account.model';
+import { AccountService } from 'app/core/auth/account.service';
+import { IUser } from 'app/core/user/user.model';
+import { UserService } from 'app/core/user/user.service';
+import { MatDialog } from '@angular/material/dialog';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { IPost } from 'app/shared/model/post.model';
+import { PostService } from 'app/entities/post/post.service';
+
+@Component({
+  selector: 'jhi-post-home',
+  templateUrl: './post-home.component.html',
+  styleUrls: ['./post-home.component.scss'],
+})
+export class PostHomeComponent implements OnInit, AfterViewInit {
+  recipes: IRecipe[] = [];
+  posts: IPost[] = [];
+  finalArray: Array<{ post: IPost; recipe: IRecipe }> = [];
+  account?: Account;
+  user!: IUser;
+  statusOptions = ['ACTIVE', 'INACTIVE'];
+  searchText = '';
+
+  constructor(
+    protected dataUtils: JhiDataUtils,
+    protected activatedRoute: ActivatedRoute,
+    protected recipeService: RecipeService,
+    protected postService: PostService,
+    protected userService: UserService,
+    private accountService: AccountService,
+    public dialog: MatDialog,
+    protected modalService: NgbModal
+  ) {}
+
+  ngOnInit(): void {
+    this.accountService.getAuthenticationState().subscribe(account => {
+      if (account) {
+        this.userService.find(account.login).subscribe(user => (this.user = user));
+      }
+    });
+
+    this.postService.query().subscribe(
+      (res: HttpResponse<IRecipe[]>) => this.onSuccessPost(res.body),
+      () => this.onError()
+    );
+
+    this.postService.refreshNeeded$.subscribe(() => {
+      this.getRecipes();
+      this.getPosts();
+    });
+  }
+
+  getRecipes(): any {
+    this.recipeService.query().subscribe(
+      (res: HttpResponse<IRecipe[]>) => this.onSuccessRecipe(res.body),
+      () => this.onError()
+    );
+  }
+
+  getPosts(): any {
+    this.postService.query().subscribe(
+      (res: HttpResponse<IRecipe[]>) => this.onSuccessPost(res.body),
+      () => this.onError()
+    );
+  }
+
+  ngAfterViewInit(): void {}
+
+  cleanPosts(): void {
+    let i = 0;
+    while (i < this.posts.length) {
+      if (this.posts[i].status === this.statusOptions[1]) {
+        this.recipes.splice(i, 1);
+      } else {
+        i++;
+      }
+    }
+  }
+
+  byteSize(base64String: string): string {
+    return this.dataUtils.byteSize(base64String);
+  }
+
+  openFile(contentType = '', base64String: string): void {
+    this.dataUtils.openFile(contentType, base64String);
+  }
+
+  previousState(): void {
+    window.history.back();
+  }
+
+  private onError(): void {
+    console.warn('There was an error');
+  }
+
+  private onSuccessRecipe(body: IRecipe[] | null): void {
+    this.recipes = body || [];
+  }
+
+  private onSuccessPost(body: IPost[] | null): void {
+    this.posts = body || [];
+    this.cleanPosts();
+  }
+}
