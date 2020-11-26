@@ -27,7 +27,17 @@
                   </span>
                 </button>
             </li>
-            <!-- ADMIN DASHBOARD LINK -->
+            <!-- DASHBOARD LINK -->
+            <li *ngSwitchCase="true" [routerLinkActiveOptions]="{ exact: true }" class="nav-item" routerLinkActive="active">
+                <button *ngIf="currentAccount" (click)="collapseNavbar()" class="nav-link" mat-button
+                        [routerLink]="['/account/profile', currentAccount.login]"
+                >
+                  <span>
+                    <fa-icon icon="user"></fa-icon>
+                    <span>Dashboard</span>
+                  </span>
+                </button>
+            </li>
 
             <!-- ADMIN MENU-->
             <li
@@ -467,6 +477,7 @@
                 display="dynamic"
                 ngbDropdown
                 routerLinkActive="active"
+                *ngSwitchCase="false"
             >
                 <button [matMenuTriggerFor]="accountMenu" class="nav-link dropdown-toggle" mat-button>
                   <span *ngIf="!getImageUrl()">
@@ -478,34 +489,6 @@
                   </span>
                 </button>
                 <mat-menu #accountMenu="matMenu">
-                    <button (click)="collapseNavbar()" *ngSwitchCase="true" mat-menu-item routerLink="account/settings"
-                            routerLinkActive="active">
-                        <fa-icon [fixedWidth]="true" icon="wrench"></fa-icon>
-                        <span jhiTranslate="global.menu.account.settings">Settings</span>
-                    </button>
-                    <div *ngIf="currentAccount">
-                        <button (click)="collapseNavbar()"
-                                *ngSwitchCase="true" mat-menu-item
-                                [routerLink]="['/account/profile', currentAccount.login]"
-                                routerLinkActive="active">
-                            <fa-icon [fixedWidth]="true" icon="user"></fa-icon>
-                            <span jhiTranslate="global.menu.account.profile">Profile</span>
-                        </button>
-                    </div>
-                    <button (click)="collapseNavbar()" *ngSwitchCase="true" mat-menu-item
-                            routerLink="account/password" routerLinkActive="active">
-                        <fa-icon [fixedWidth]="true" icon="lock"></fa-icon>
-                        <span jhiTranslate="global.menu.account.password">Password</span>
-                    </button>
-<!--                    <button (click)="collapseNavbar()" *ngSwitchCase="true" mat-menu-item-->
-<!--                            routerLink="account/sessions" routerLinkActive="active">-->
-<!--                        <fa-icon [fixedWidth]="true" icon="cloud"></fa-icon>-->
-<!--                        <span jhiTranslate="global.menu.account.sessions">Sessions</span>-->
-<!--                    </button>-->
-                    <button (click)="logout()" *ngSwitchCase="true" id="logout" mat-menu-item>
-                        <fa-icon [fixedWidth]="true" icon="sign-out-alt"></fa-icon>
-                        <span jhiTranslate="global.menu.account.logout">Sign out</span>
-                    </button>
                     <button (click)="login()" *ngSwitchCase="false" id="login" mat-menu-item>
                         <fa-icon [fixedWidth]="true" icon="sign-in-alt"></fa-icon>
                         <span jhiTranslate="global.menu.account.login">Sign in</span>
@@ -516,6 +499,14 @@
                         <span jhiTranslate="global.menu.account.register">Register</span>
                     </button>
                 </mat-menu>
+            </li>
+            <li *ngSwitchCase="true" [routerLinkActiveOptions]="{ exact: true }" class="nav-item" routerLinkActive="active">
+                <button *ngIf="currentAccount" (click)="logout()" class="nav-link" mat-button>
+                  <span>
+                    <fa-icon icon="sign-out-alt"></fa-icon>
+                    <span>Sign out</span>
+                  </span>
+                </button>
             </li>
         </ul>
     </div>
