@@ -1,15 +1,15 @@
 <div>
     <h2 id="page-heading">
-        <span jhiTranslate="shoppedApp.recipeTag.home.title">recipe Tags</span>
+        <span jhiTranslate="shoppedApp.recipeTag.home.title">Recipe Tags</span>
         <button *ngIf="!requesting && (!recipeTags || recipeTags.length == 0)"
                 [matTooltipHideDelay]="0"
                 [matTooltipShowDelay]="1000"
                 [routerLink]="['/recipe-tag/new']"
-                aria-label="Create a new recipe tag"
+                aria-label="Create a new Recipe tag"
                 class="float-right jh-create-entity create-recipe-tag mx-4 mb-3"
                 jhiMaterialColor="accent"
                 mat-mini-fab
-                matTooltip="Create a new recipe Tag">
+                matTooltip="Create a new Recipe Tag">
             <mat-icon>add</mat-icon>
         </button>
     </h2>
