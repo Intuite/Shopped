@@ -28,12 +28,12 @@
         </div>
     </div>
 
-    <div class="row justify-content-center">
+    <div class="row justify-content-center mt-4">
         <div class="col-md-8">
             <form name="form" role="form" (ngSubmit)="register()" [formGroup]="registerForm" *ngIf="!success">
                 <mat-form-field appearance="fill" class="form-group w-100">
                     <mat-label jhiTranslate="global.form.username.label">
-                        Username
+                        Username*
                     </mat-label>
                     <input matInput type="text" id="login" name="login"
                            placeholder="{{ 'global.form.username.placeholder' | translate }}"
@@ -70,7 +70,7 @@
 
                 <mat-form-field appearance="fill" class="form-group w-100">
                     <mat-label jhiTranslate="global.form.email.label">
-                        Email
+                        Email*
                     </mat-label>
                     <input matInput type="email" id="email" name="email"
                            placeholder="{{ 'global.form.email.placeholder' | translate }}"
@@ -107,7 +107,7 @@
                 <p>Enter numbers, lowercase, uppercase and special characters</p>
                 <mat-form-field appearance="fill" class="form-group w-100">
                     <mat-label jhiTranslate="global.form.newpassword.label">
-                        New password
+                        New password*
                     </mat-label>
                     <input matInput type="password" id="password" name="password" jhiMaterialColor="accent"
                            placeholder="{{ 'global.form.newpassword.placeholder' | translate }}"
