@@ -84,6 +84,20 @@ export class PostHomeComponent implements OnInit, AfterViewInit {
     }
   }
 
+  joinRecipe(): void {
+    for (let i = 0; i <= this.posts.length; i++) {
+      for (let j = 0; j <= this.recipes.length; j++) {
+        if (this.posts[i].recipeId === this.recipes[j].id) {
+          const test = {
+            post: this.posts[i],
+            recipe: this.recipes[j],
+          };
+          this.finalArray.push(test);
+        }
+      }
+    }
+  }
+
   byteSize(base64String: string): string {
     return this.dataUtils.byteSize(base64String);
   }

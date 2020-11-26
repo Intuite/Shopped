@@ -77,7 +77,7 @@
                             <span jhiTranslate="entity.action.view">View</span>
                         </button>
 
-                        <button [routerLink]="['/recipe', card.id, 'edit']"
+                        <button [hidden]="true" [routerLink]="['/recipe', card.id, 'edit']"
                                 class="btn btn-sm btn-secondary"
                                 type="button">
                             <fa-icon icon="pencil-alt"></fa-icon>
