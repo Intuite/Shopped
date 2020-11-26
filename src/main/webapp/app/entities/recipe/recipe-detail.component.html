@@ -1,63 +1,134 @@
 <div class="row justify-content-center">
+    <div class="col-10">
+        <button (click)="previousState()" class="btn btn-secondary" type="submit">
+            <fa-icon icon="arrow-left"></fa-icon>
+        </button>
+    </div>
     <div class="col-8">
-        <div *ngIf="recipe">
-            <h2><span jhiTranslate="shoppedApp.recipe.detail.title">Recipe</span> {{ recipe.id }}</h2>
 
-            <hr>
+        <div *ngIf="recipe?.userId === user?.id">
+            <mat-card>
+                <mat-card-content *ngIf="recipe">
+                    <div style="height: auto;">
+                        <div
+                            [ngStyle.gt-sm]="{ 'max-width': '900px' }"
+                            [ngStyle]="{ 'max-width': 'auto' }"
+                            gdAreas.gt-sm="recipePicture recipePicture recipePicture |
+                                           recipeInfo recipeInfo recipeInfo |
+                                           ingredientsTitle ingredientsTitle portions |
+                                           ingredientsList ingredientsList ingredientsList |
+                                           addToCart addToCart addToCart |
+                                           instructionsTitle instructionsTitle duration |
+                                           instructionsList instructionsList instructionsList |
+                                           tagsList tagsList tagsList |
+                                           exportButtons exportButtons exportButtons"
+                            gdAreas.sm="recipePicture recipePicture |
+                                        recipeInfo recipeInfo |
+                                        ingredientsTitle portions |
+                                        ingredientsList ingredientsList |
+                                        addToCart addToCart |
+                                        instructionsTitle duration|
+                                        instructionsList instructionsList |
+                                        tagsList tagsList|
+                                        exportButtons exportButtons"
+                            gdAreas.xs="recipePicture | recipeInfo | portions | ingredientsTitle| ingredientsList |
+                                        addToCart | duration | instructionsTitle | instructionsList |tagsList |
+                                        exportButtons"
+                            gdColumns.gt-sm="200px auto 200px"
+                            gdColumns.sm="50%!"
+                            gdColumns.xs="none"
+                            gdGap="1em"
+                            gdGap.gt-sm="20px">
 
-            <jhi-alert-error></jhi-alert-error>
+                            <div class="blocks-1 recipe-picture" gdArea="recipePicture">
+                                <img *ngIf="recipe.image"
+                                     [src]="'data:' + recipe.imageContentType + ';base64,' + recipe.image"
+                                     alt="recipe image"
+                                     class="recipe-image"/>
+                            </div>
 
-            <dl class="row-md jh-entity-details">
-                <dt><span jhiTranslate="shoppedApp.recipe.name">Name</span></dt>
-                <dd>
-                    <span>{{ recipe.name }}</span>
-                </dd>
-                <dt><span jhiTranslate="shoppedApp.recipe.portion">Portion</span></dt>
-                <dd>
-                    <span>{{ recipe.portion }}</span>
-                </dd>
-                <dt><span jhiTranslate="shoppedApp.recipe.description">Description</span></dt>
-                <dd>
-                    <span>{{ recipe.description }}</span>
-                </dd>
-                <dt><span jhiTranslate="shoppedApp.recipe.duration">Duration</span></dt>
-                <dd>
-                    <span>{{ recipe.duration }}</span>
-                </dd>
-                <dt><span jhiTranslate="shoppedApp.recipe.creation">Creation</span></dt>
-                <dd>
-                    <span>{{ recipe.creation }}</span>
-                </dd>
-                <dt><span jhiTranslate="shoppedApp.recipe.image">Image</span></dt>
-                <dd>
-                    <div *ngIf="recipe.image">
-                        <a (click)="openFile(recipe.imageContentType, recipe.image)">
-                            <img [src]="'data:' + recipe.imageContentType + ';base64,' + recipe.image" style="max-width: 100%;" alt="recipe image"/>
-                        </a>
-                        {{ recipe.imageContentType }}, {{ byteSize(recipe.image) }}
+                            <div class="blocks-2 recipe-element-center" gdArea="recipeInfo">
+                                <dd>
+                                    <div *ngIf="recipe.id">
+                                        <h2><b>{{ recipe.name }}</b></h2>
+                                    </div>
+                                </dd>
+                            </div>
+
+                            <div class="blocks-3 recipe-element-left recipe-subtitle" gdArea="ingredientsTitle">
+                                Ingredients:
+                            </div>
+
+                            <div class="blocks-4 recipe-element-right" gdArea="portions">
+                                <span class="recipe-icon-portion"></span> {{recipe.portion}}
+                            </div>
+
+                            <div class="blocks-5" gdArea="ingredientsList">
+                                <mat-list>
+                                    <div *ngFor="let ingredient of ingredients; first as first">
+                                        <mat-divider></mat-divider>
+                                        <mat-list-item>
+                                            <img
+                                                *ngIf="ingredient.image"
+                                                [src]="'data:' + ingredient.imageContentType + ';base64,' + ingredient.image"
+                                                alt="ingredient image"
+                                                matListAvatar
+                                            />
+                                            <mat-icon *ngIf="!ingredient.image" color="primary" matListIcon>
+                                                shopping_cart
+                                            </mat-icon>
+                                            <div matLine> {{ ingredient.name }} </div>
+                                            <div matLine>
+                                                <span>{{ ingredient.amount }}</span>
+                                                <strong>{{ ingredient.unitAbbrev }}</strong>
+                                            </div>
+                                        </mat-list-item>
+                                    </div>
+                                    <mat-divider></mat-divider>
+                                </mat-list>
+                            </div>
+
+                            <div class="blocks-6 recipe-element-center" gdArea="addToCart">
+                                <button class="text-white" color="primary" mat-raised-button>
+                                    <mat-icon>shopping_cart</mat-icon>
+                                    Add to cart
+                                </button>
+                            </div>
+
+                            <div class="blocks-7 recipe-element-left recipe-subtitle" gdArea="instructionsTitle">
+                                Instructions:
+                            </div>
+
+                            <div class="blocks-8 recipe-element-right" gdArea="duration">
+                                <span class="recipe-icon-duration"></span> {{recipe.duration}}min
+                            </div>
+
+                            <div class="blocks-9 recipe-element-center recipe-instructions" gdArea="instructionsList">
+                                {{ recipe.description }}
+                            </div>
+
+                            <div *ngIf="recipeTags !== null" class="blocks-10 recipe-element-left recipe-subtitle"
+                                 gdArea="tagsList">
+                                Tags:
+                                <mat-chip-list>
+                                    <mat-chip *ngFor="let tag of recipeTags" color="accent" selected="true">
+                                        {{tag.recipeTagName}}
+                                    </mat-chip>
+                                </mat-chip-list>
+                            </div>
+
+                            <div class="blocks-11 recipe-element-right" gdArea="exportButtons">
+                                <button class="recipe-save-buttons" type="submit">
+                                    <span class="recipe-icon-email"></span> Email
+                                </button>
+                                <button class="recipe-save-buttons" type="submit">
+                                    <span class="recipe-icon-pdf"></span> PDF
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                </dd>
-                <dt><span jhiTranslate="shoppedApp.recipe.status">Status</span></dt>
-                <dd>
-                    <span jhiTranslate="{{ 'shoppedApp.Status.' + recipe.status }}">{{ recipe.status }}</span>
-                </dd>
-                <dt><span jhiTranslate="shoppedApp.recipe.user">User</span></dt>
-                <dd>
-                    {{ recipe.userLogin }}
-                </dd>
-            </dl>
-
-            <button type="submit"
-                    (click)="previousState()"
-                    class="btn btn-info">
-                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
-            </button>
-
-            <button type="button"
-                    [routerLink]="['/recipe', recipe.id, 'edit']"
-                    class="btn btn-primary">
-                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
-            </button>
+                </mat-card-content>
+            </mat-card>
         </div>
     </div>
 </div>

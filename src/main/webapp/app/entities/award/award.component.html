@@ -1,27 +1,34 @@
 <div>
     <h2 id="page-heading">
         <span jhiTranslate="shoppedApp.award.home.title">Awards</span>
-
-       <!-- <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-award" [routerLink]="['/award/new']">
-            <fa-icon icon="plus"></fa-icon>
-            <span  jhiTranslate="shoppedApp.award.home.createLabel">
-            Create a new Award
-            </span>
-        </button>-->
+        <button *ngIf="!requesting && (!awards || awards.length == 0)"
+            [matTooltipHideDelay]="0"
+            [matTooltipShowDelay]="1000"
+            [routerLink]="['/award/new']"
+            aria-label="Create a new award"
+            class="float-right jh-create-entity create-recipe-tag mx-4 mb-3"
+            jhiMaterialColor="accent"
+            mat-mini-fab
+            matTooltip="Create a new award">
+            <mat-icon>add</mat-icon>
+        </button>
     </h2>
+
     <jhi-alert-error></jhi-alert-error>
 
     <jhi-alert></jhi-alert>
-    <jhi-buy-cookie></jhi-buy-cookie>
-    <div class="w-100" fxLayout="row" fxLayoutAlign="space-around center">
-        <mat-spinner *ngIf="!awards || awards.length == 0" diameter="50" strokeWidth="5"></mat-spinner>
+    <div *ngIf="requesting">
+        <div class="w-100" fxLayout="row" fxLayoutAlign="space-around center">
+            <mat-spinner diameter="50" strokeWidth="5"></mat-spinner>
+        </div>
     </div>
-    <div class="alert alert-warning" id="no-result" *ngIf="awards?.length === 0">
+
+    <div class="alert alert-warning" id="no-result" *ngIf="awards?.length === 0 || !awards && !requesting">
         <span jhiTranslate="shoppedApp.award.home.notFound">No awards found</span>
     </div>
 
-    <div class="table-responsive" id="entities" *ngIf="awards && awards.length > 0">
-        <jhi-award-table [data]="awards" [managementComponent]="this"></jhi-award-table>
+    <div class="table-responsive table-hover" id="entities" *ngIf="awards && awards.length > 0">
+        <jhi-award-table #table [data]="awards" [managementComponent]="this"></jhi-award-table>
     </div>
 
 </div>

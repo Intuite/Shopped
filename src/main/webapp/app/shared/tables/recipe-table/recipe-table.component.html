@@ -1,0 +1,80 @@
+<div class="mt-3" fxLayout fxLayoutAlign="space-between center">
+    <mat-form-field appearance="fill" fxFlex="100%">
+        <mat-label>
+            Search
+        </mat-label>
+        <mat-icon matSuffix>search</mat-icon>
+        <input (keyup)="filter($event)"
+               matInput
+               placeholder="Type a text filter"
+               type="text">
+    </mat-form-field>
+    <button
+        [hidden]=true
+        [matTooltipHideDelay]="0"
+        [matTooltipShowDelay]="1000"
+        [routerLink]="['/recipe/new']"
+        aria-label="Create a new recipe"
+        class="float-right jh-create-entity create-recipe mx-4 mb-3"
+        jhiMaterialColor="accent"
+        mat-mini-fab
+        matTooltip="Create a new recipe">
+        <mat-icon>add</mat-icon>
+    </button>
+</div>
+<jhi-wrapper-material-table #sort="matSort"
+                            [columns]="displayedColumns" [dataSource]="dataSource"
+                            matSort>
+
+    <ng-container matColumnDef="creation">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>Creation</th>
+        <td *matCellDef="let element" mat-cell>
+            <span>
+                {{ element.creation | date:'short' }}
+            </span>
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="userLogin">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>User</th>
+        <td *matCellDef="let element" mat-cell>
+            <span>
+                {{ element.userLogin }}
+            </span>
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>Name</th>
+        <td *matCellDef="let element" mat-cell>
+            <span>
+                {{ element.name }}
+            </span>
+        </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="status">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>Status</th>
+        <td *matCellDef="let element" mat-cell>
+            <span>
+                {{ element.status |titlecase }}
+            </span>
+        </td>
+    </ng-container>
+
+    <!-- Custom row definitions to be provided to the wrapper table. -->
+    <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+    <tr *matRowDef="let row; columns: displayedColumns; " mat-row></tr>
+</jhi-wrapper-material-table>
+<div *ngIf="dataSource.data && dataSource.data.length > 0 && managementComponent.tableLoaded">
+    <mat-paginator (page)="managementComponent.changePage($event.pageIndex);
+                    managementComponent.changePageSize($event.pageSize);
+                    managementComponent.navigate()"
+                   *ngIf="managementComponent.tableLoaded"
+                   [length]="managementComponent.totalItems"
+                   [pageIndex]="managementComponent.page"
+                   [pageSizeOptions]="[5, 10, 20, 50, 100]"
+                   [pageSize]="managementComponent.itemsPerPage">
+    </mat-paginator>
+</div>

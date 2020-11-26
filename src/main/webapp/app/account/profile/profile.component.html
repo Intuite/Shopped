@@ -1,0 +1,14 @@
+<div>
+    <div *ngIf="user"
+         fxFlexFill fxLayout="row" fxLayout.sm="column"
+         fxLayout.xs="column" fxLayoutGap="24px grid"
+         fxLayoutGap.sm="24px" fxLayoutGap.xs="24px"
+    >
+        <div fxFlex="20" fxFlex.md="35" fxFlex.xl="30">
+            <jhi-user-info [canEdit]="(account?.id == user?.id) || false" [user]="user"></jhi-user-info>
+        </div>
+        <div fxFlex>
+            <jhi-dashboard></jhi-dashboard>
+        </div>
+    </div>
+</div>

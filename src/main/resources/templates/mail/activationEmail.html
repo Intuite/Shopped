@@ -1,25 +1,57 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}" lang="en">
     <head>
-        <title th:text="#{email.activation.title}">JHipster activation</title>
+        <title th:text="#{email.activation.title}">Shopped account activation</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <link rel="icon" th:href="@{|${baseUrl}/favicon.ico|}" />
     </head>
     <body>
-        <p th:text="#{email.activation.greeting(${user.login})}">
-            Dear
-        </p>
-        <p th:text="#{email.activation.text1}">
-            Your JHipster account has been created, please click on the URL below to activate it:
-        </p>
-        <p>
-            <a th:with="url=(@{|${baseUrl}/account/activate?key=${user.activationKey}|})" th:href="${url}"
-            th:text="${url}">Activation link</a>
-        </p>
-        <p>
-            <span th:text="#{email.activation.text2}">Regards, </span>
-            <br/>
-            <em th:text="#{email.signature}">JHipster.</em>
-        </p>
+        <div>
+            <tr>
+                <td bgcolor="#fcf8f5">
+                    <table width="488" style="padding-left:5px;padding-right:5px;padding-bottom:10px;color:#212529">
+                        <tbody>
+                        <tr>
+                            <td width="488" bgcolor="#fcf8f5">
+                                <!--Agregar una linea con el logo de shopped para que se vea mas lindo -->
+                                <img src="https://i.postimg.cc/T3f9mdh5/banner-shopped.png"
+                                     style="width: 100%; height:55px; object-fit: cover;"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h2 th:text="#{email.activation.greeting(${user.login})}">
+                                    Dear
+                                </h2>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h3 th:text="#{email.activation.text1}">
+                                    Your JHipster account has been created, please click on the URL below to activate it:
+                                </h3>
+                                <p>
+                                    <a th:with="url=(@{|${baseUrl}/account/activate?key=${user.activationKey}|})" th:href="${url}"
+                                       th:text="${url}">Activation link</a>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>
+                                    <span th:text="#{email.activation.text2}">Regards, </span>
+                                    <br/>
+                                    <em th:text="#{email.signature}">JHipster.</em>
+                                </p>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </td>
+            </tr>
+        </div>
+        <img src="https://i.postimg.cc/pXDCphVt/banner-intuite.png"
+             style="width: 488px; height:37px; object-fit: cover; margin-left: 1px"/>
     </body>
 </html>

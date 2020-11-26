@@ -39,7 +39,7 @@ export const postRoute: Routes = [
     path: '',
     component: PostComponent,
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       defaultSort: 'id,asc',
       pageTitle: 'shoppedApp.post.home.title',
     },
@@ -52,7 +52,7 @@ export const postRoute: Routes = [
       post: PostResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.USER, Authority.ADMIN],
       pageTitle: 'shoppedApp.post.home.title',
     },
     canActivate: [UserRouteAccessService],

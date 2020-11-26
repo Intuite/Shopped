@@ -2,7 +2,7 @@ import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/cor
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
-import { TagType } from 'app/shared/model/tag-type.model';
+import { ITagType } from 'app/shared/model/tag-type.model';
 import { TagTypeComponent } from 'app/entities/tag-type/tag-type.component';
 
 @Component({
@@ -11,15 +11,16 @@ import { TagTypeComponent } from 'app/entities/tag-type/tag-type.component';
   styleUrls: ['./tag-type-table.component.scss'],
 })
 export class TagTypeTableComponent implements OnInit, AfterViewInit {
-  @Input() data!: TagType[];
+  @Input() data!: ITagType[];
   @Input() managementComponent!: TagTypeComponent;
 
-  displayedColumns: string[] = ['id', 'name', 'description', 'status', 'options'];
+  displayedColumns: string[] = ['name', 'description', 'status', 'options'];
 
-  dataSource = new MatTableDataSource<TagType>();
+  dataSource = new MatTableDataSource<ITagType>();
 
   @ViewChild('sort') sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  loaded = false;
 
   ngOnInit(): void {
     this.dataSource.data = this.data;
@@ -30,7 +31,7 @@ export class TagTypeTableComponent implements OnInit, AfterViewInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.filterPredicate = (data: any, filter) => {
       let dataStr = JSON.stringify(data).toLowerCase();
-      dataStr = dataStr.replace(/({|,)\s(.+?)\s:/g, '');
+      dataStr = dataStr.replace(/(\{|,)\s*(.+?)\s*:/g, '');
       return dataStr.includes(filter);
     };
   }
@@ -39,7 +40,7 @@ export class TagTypeTableComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = (e.target as HTMLInputElement).value.trim().toLocaleLowerCase();
   };
 
-  public reloadSource(data: TagType[]): void {
+  public reloadSource(data: ITagType[]): void {
     this.data = data;
     this.dataSource.data = data;
   }

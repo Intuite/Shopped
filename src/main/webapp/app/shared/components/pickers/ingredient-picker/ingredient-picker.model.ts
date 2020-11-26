@@ -1,5 +1,5 @@
-import { IIngredient } from 'app/shared/model/ingredient.model';
 import { FormArray, FormControl, Validators } from '@angular/forms';
+import { IIngredient } from 'app/shared/model/ingredient.model';
 
 // Total selections
 export class IngredientPicker {

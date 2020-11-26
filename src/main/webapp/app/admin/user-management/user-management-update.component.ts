@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
@@ -10,12 +10,13 @@ import { UserService } from 'app/core/user/user.service';
   selector: 'jhi-user-mgmt-update',
   templateUrl: './user-management-update.component.html',
 })
-export class UserManagementUpdateComponent implements OnInit {
+export class UserManagementUpdateComponent implements OnInit, AfterViewInit {
   user!: User;
   languages = LANGUAGES;
   authorities: string[] = [];
   isSaving = false;
-
+  editing = false;
+  loadingUser = true;
   editForm = this.fb.group({
     id: [],
     login: [
@@ -38,6 +39,9 @@ export class UserManagementUpdateComponent implements OnInit {
   constructor(private userService: UserService, private route: ActivatedRoute, private fb: FormBuilder) {}
 
   ngOnInit(): void {
+    this.userService.authorities().subscribe(authorities => {
+      this.authorities = authorities;
+    });
     this.route.data.subscribe(({ user }) => {
       if (user) {
         this.user = user;
@@ -47,9 +51,10 @@ export class UserManagementUpdateComponent implements OnInit {
         this.updateForm(user);
       }
     });
-    this.userService.authorities().subscribe(authorities => {
-      this.authorities = authorities;
-    });
+  }
+
+  ngAfterViewInit(): void {
+    this.editing = this.isEditing();
   }
 
   previousState(): void {
@@ -73,6 +78,8 @@ export class UserManagementUpdateComponent implements OnInit {
   }
 
   private updateForm(user: User): void {
+    let authority = '';
+    if (user.authorities) authority = user.authorities[0];
     this.editForm.patchValue({
       id: user.id,
       login: user.login,
@@ -81,8 +88,9 @@ export class UserManagementUpdateComponent implements OnInit {
       email: user.email,
       activated: user.activated,
       langKey: user.langKey,
-      authorities: user.authorities,
+      authorities: authority,
     });
+    this.loadingUser = false;
   }
 
   private updateUser(user: User): void {
@@ -92,7 +100,11 @@ export class UserManagementUpdateComponent implements OnInit {
     user.email = this.editForm.get(['email'])!.value;
     user.activated = this.editForm.get(['activated'])!.value;
     user.langKey = this.editForm.get(['langKey'])!.value;
-    user.authorities = this.editForm.get(['authorities'])!.value;
+    user.authorities = [this.editForm.get(['authorities'])!.value];
+  }
+
+  getAuthorityName(authority: string): string {
+    return authority.split('_')[1];
   }
 
   private onSaveSuccess(): void {
@@ -102,5 +114,9 @@ export class UserManagementUpdateComponent implements OnInit {
 
   private onSaveError(): void {
     this.isSaving = false;
+  }
+
+  isEditing(): boolean {
+    return this.editForm.get('id')!.value !== undefined;
   }
 }

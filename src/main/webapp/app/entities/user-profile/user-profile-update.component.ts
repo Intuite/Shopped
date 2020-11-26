@@ -10,7 +10,10 @@ import { IUserProfile, UserProfile } from 'app/shared/model/user-profile.model';
 import { UserProfileService } from './user-profile.service';
 import { AlertError } from 'app/shared/alert/alert-error.model';
 import { IUser } from 'app/core/user/user.model';
-import { UserService } from 'app/core/user/user.service';
+import { Status } from 'app/shared/model/enumerations/status.model';
+import * as moment from 'moment';
+import { AccountService } from 'app/core/auth/account.service';
+import { Account } from 'app/core/user/account.model';
 
 @Component({
   selector: 'jhi-user-profile-update',
@@ -18,25 +21,36 @@ import { UserService } from 'app/core/user/user.service';
   styleUrls: ['../../../content/scss/image_Select.scss'],
 })
 export class UserProfileUpdateComponent implements OnInit {
-  isSaving = false;
-  users: IUser[] = [];
-  birthDateDp: any;
+  isSavingUP = false;
+  isSavingU = false;
+  successUP = false;
+  successU = false;
+  currentUserProfile!: IUserProfile;
+  currentAccount!: Account;
+  editableStatus = false;
+  minDate = new Date(1915, 0, 1);
+  maxDate = new Date(2010, 0, 1);
+  startDate = new Date(1990, 0, 1);
+  // users: IUser[] = [];
 
   editForm = this.fb.group({
     id: [],
-    description: [],
+    description: ['', [Validators.maxLength(254)]],
     birthDate: [],
     image: [],
     imageContentType: [],
     status: [],
-    userId: [],
+    firstName: [undefined, [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+    lastName: [undefined, [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+    email: [undefined, [Validators.required, Validators.minLength(5), Validators.maxLength(254), Validators.email]],
+    // userId: [],
   });
 
   constructor(
     protected dataUtils: JhiDataUtils,
     protected eventManager: JhiEventManager,
     protected userProfileService: UserProfileService,
-    protected userService: UserService,
+    protected accountService: AccountService,
     protected elementRef: ElementRef,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
@@ -44,9 +58,10 @@ export class UserProfileUpdateComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ userProfile }) => {
-      this.updateForm(userProfile);
+      this.currentUserProfile = userProfile;
+      this.updateForm(this.currentUserProfile);
 
-      this.userService.query().subscribe((res: HttpResponse<IUser[]>) => (this.users = res.body || []));
+      // this.userService.query().subscribe((res: HttpResponse<IUser[]>) => (this.users = res.body || []));
     });
   }
 
@@ -54,16 +69,29 @@ export class UserProfileUpdateComponent implements OnInit {
     this.editForm.patchValue({
       id: userProfile.id,
       description: userProfile.description,
-      birthDate: userProfile.birthDate,
       image: userProfile.image,
       imageContentType: userProfile.imageContentType,
       status: userProfile.status,
       userId: userProfile.userId,
     });
+    if (!this.editableStatus)
+      this.editForm.patchValue({
+        status: this.getStatusCapitalized(userProfile.status),
+      });
+    if (userProfile.birthDate)
+      this.editForm.patchValue({
+        birthDate: moment(userProfile.birthDate).toISOString() || '',
+      });
+    if (this.currentUserProfile !== undefined) this.updateUserFields();
   }
 
   byteSize(base64String: string): string {
     return this.dataUtils.byteSize(base64String);
+  }
+
+  byteSizeNumber(base64String: string): number {
+    const st = this.dataUtils.byteSize(base64String).replace(/[^0-9]/g, '');
+    return parseInt(st, 10);
   }
 
   openFile(contentType: string, base64String: string): void {
@@ -93,26 +121,36 @@ export class UserProfileUpdateComponent implements OnInit {
   }
 
   save(): void {
-    this.isSaving = true;
-    const userProfile = this.createFromForm();
-    if (userProfile.id !== undefined) {
+    this.isSavingUP = true;
+    this.isSavingU = true;
+    const userProfile = this.createProfileFromForm();
+    const user = this.createUserFromForm();
+    if (userProfile.id !== undefined && user != null) {
       this.subscribeToSaveResponse(this.userProfileService.update(userProfile));
+      this.subscribeToRespond(this.accountService.save(user));
     } else {
       this.subscribeToSaveResponse(this.userProfileService.create(userProfile));
     }
   }
 
-  private createFromForm(): IUserProfile {
+  private createProfileFromForm(): IUserProfile {
     return {
       ...new UserProfile(),
       id: this.editForm.get(['id'])!.value,
       description: this.editForm.get(['description'])!.value,
-      birthDate: this.editForm.get(['birthDate'])!.value,
+      birthDate: moment(this.editForm.get(['birthDate'])!.value),
       imageContentType: this.editForm.get(['imageContentType'])!.value,
       image: this.editForm.get(['image'])!.value,
-      status: this.editForm.get(['status'])!.value,
-      userId: this.editForm.get(['userId'])!.value,
+      status: this.currentUserProfile.status,
+      userId: this.currentUserProfile.userId,
     };
+  }
+
+  private createUserFromForm(): Account {
+    this.currentAccount.firstName = this.editForm.get('firstName')!.value;
+    this.currentAccount.lastName = this.editForm.get('lastName')!.value;
+    this.currentAccount.email = this.editForm.get('email')!.value;
+    return this.currentAccount;
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IUserProfile>>): void {
@@ -123,15 +161,57 @@ export class UserProfileUpdateComponent implements OnInit {
   }
 
   protected onSaveSuccess(): void {
-    this.isSaving = false;
-    this.previousState();
+    this.isSavingUP = false;
+    this.successUP = true;
+    setTimeout(() => {
+      this.successUP = false;
+    }, 3000);
   }
 
   protected onSaveError(): void {
-    this.isSaving = false;
+    this.isSavingUP = false;
   }
 
   trackById(index: number, item: IUser): any {
     return item.id;
+  }
+
+  getStatusCapitalized(status?: Status): string {
+    if (!status) return 'Not defined';
+    const stStatus = status.toString();
+    return stStatus[0].toUpperCase() + stStatus.substr(1).toLowerCase();
+  }
+
+  private updateUserFields(): void {
+    // const userLogin = userProfile.userLogin;
+    // if (userLogin) {
+    this.accountService.identity().subscribe(resUser => {
+      if (resUser) {
+        this.editForm.patchValue({
+          firstName: resUser.firstName,
+          lastName: resUser.lastName,
+          email: resUser.email,
+        });
+        this.currentAccount = resUser;
+      }
+    });
+    // }
+  }
+
+  private subscribeToRespond(iUserObservable: Observable<IUser>): void {
+    iUserObservable.subscribe(
+      () => {
+        this.isSavingU = false;
+        this.successU = true;
+        this.accountService.authenticate(this.currentAccount);
+        setTimeout(() => {
+          this.successU = false;
+        }, 3000);
+      },
+      () => {
+        this.isSavingU = false;
+        this.successU = false;
+      }
+    );
   }
 }

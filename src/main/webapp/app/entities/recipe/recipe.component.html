@@ -1,92 +1,34 @@
 <div>
     <h2 id="page-heading">
-        <span jhiTranslate="shoppedApp.recipe.home.title">Recipes</span>
-
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-recipe" [routerLink]="['/recipe/new']">
-            <fa-icon icon="plus"></fa-icon>
-            <span  jhiTranslate="shoppedApp.recipe.home.createLabel">
-            Create a new Recipe
-            </span>
+        <span jhiTranslate="shoppedApp.recipe.home.title">recipes</span>
+        <button *ngIf="!requesting && (!recipes || recipes.length == 0)" [hidden]=true
+                [matTooltipHideDelay]="0"
+                [matTooltipShowDelay]="1000"
+                [routerLink]="['/recipe/new']"
+                aria-label="Create a new recipe"
+                class="float-right jh-create-entity create-recipe mx-4 mb-3"
+                jhiMaterialColor="accent"
+                mat-mini-fab
+                matTooltip="Create a new recipe">
+            <mat-icon>add</mat-icon>
         </button>
     </h2>
 
-    <jhi-alert-error></jhi-alert-error>
-
     <jhi-alert></jhi-alert>
 
-    <div class="alert alert-warning" id="no-result" *ngIf="recipes?.length === 0">
-        <span jhiTranslate="shoppedApp.recipe.home.notFound">No recipes found</span>
+    <div *ngIf="recipes && recipes.length > 0" class="table-responsive table-hover" id="entities">
+        <jhi-recipe-table #table [data]="recipes" [managementComponent]="this"></jhi-recipe-table>
     </div>
 
-    <div class="table-responsive" id="entities" *ngIf="recipes && recipes.length > 0">
-        <table class="table table-striped" aria-describedby="page-heading">
-            <thead>
-                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
-                    <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="name"><span jhiTranslate="shoppedApp.recipe.name">Name</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="portion"><span jhiTranslate="shoppedApp.recipe.portion">Portion</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="description"><span jhiTranslate="shoppedApp.recipe.description">Description</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="duration"><span jhiTranslate="shoppedApp.recipe.duration">Duration</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="creation"><span jhiTranslate="shoppedApp.recipe.creation">Creation</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="image"><span jhiTranslate="shoppedApp.recipe.image">Image</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="status"><span jhiTranslate="shoppedApp.recipe.status">Status</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="userLogin"><span jhiTranslate="shoppedApp.recipe.user">User</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let recipe of recipes ;trackBy: trackId">
-                    <td><a [routerLink]="['/recipe', recipe.id, 'view']">{{ recipe.id }}</a></td>
-                    <td>{{ recipe.name }}</td>
-                    <td>{{ recipe.portion }}</td>
-                    <td>{{ recipe.description }}</td>
-                    <td>{{ recipe.duration }}</td>
-                    <td>{{ recipe.creation | date:'medium' }}</td>
-                    <td>
-                        <a *ngIf="recipe.image" (click)="openFile(recipe.imageContentType, recipe.image)">
-                            <img [src]="'data:' + recipe.imageContentType + ';base64,' + recipe.image" style="max-height: 30px;" alt="recipe image"/>
-                        </a>
-                        <span *ngIf="recipe.image">{{ recipe.imageContentType }}, {{ byteSize(recipe.image) }}</span>
-                    </td>
-                    <td jhiTranslate="{{ 'shoppedApp.Status.' + recipe.status }}">{{ recipe.status }}</td>
-                    <td>
-                        {{ recipe.userLogin }}
-                    </td>
-                    <td class="text-right">
-                        <div class="btn-group">
-                            <button type="submit"
-                                    [routerLink]="['/recipe', recipe.id, 'view']"
-                                    class="btn btn-info btn-sm">
-                                <fa-icon icon="eye"></fa-icon>
-                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-                            </button>
-
-                            <button type="submit"
-                                    [routerLink]="['/recipe', recipe.id, 'edit']"
-                                    class="btn btn-primary btn-sm">
-                                <fa-icon icon="pencil-alt"></fa-icon>
-                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
-                            </button>
-
-                            <button type="submit" (click)="delete(recipe)"
-                                    class="btn btn-danger btn-sm">
-                                <fa-icon icon="times"></fa-icon>
-                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div *ngIf="recipes && recipes.length > 0">
-        <div class="row justify-content-center">
-            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
-        </div>
-
-        <div class="row justify-content-center">
-            <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
+    <div *ngIf="recipes?.length === 0 || !recipes" class="alert alert-warning" id="no-result">
+        <div>
+            <span jhiTranslate="shoppedApp.recipe.home.notFound">No recipes found</span>
         </div>
     </div>
+    <div *ngIf="requesting">
+        <div class="w-100" fxLayout="row" fxLayoutAlign="space-around center">
+            <mat-spinner diameter="50" strokeWidth="5"></mat-spinner>
+        </div>
+    </div>
+
 </div>

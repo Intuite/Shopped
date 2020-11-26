@@ -14,7 +14,7 @@ export class CatalogueTableComponent implements OnInit, AfterViewInit {
   @Input() data!: Catalogue[];
   @Input() managementComponent!: CatalogueComponent;
 
-  displayedColumns: string[] = ['id', 'idCatalogue', 'value', 'options'];
+  displayedColumns: string[] = ['idCatalogue', 'value', 'options'];
 
   dataSource = new MatTableDataSource<Catalogue>();
 

@@ -5,3 +5,35 @@
 .mat-form-field {
   margin-top: 16px;
 }
+
+.card {
+  min-height: 196px;
+}
+
+.tile {
+  height: 300px;
+}
+
+.header {
+  min-height: 40px;
+}
+
+.bg-blue {
+  background-color: #546de5;
+  color: white;
+}
+
+.txt-white {
+  color: white;
+}
+
+.mat-step-header .mat-step-icon-selected,
+.mat-step-header .mat-step-icon-state-done,
+.mat-step-header .mat-step-icon-state-edit {
+  color: white;
+}
+
+.bundle-img {
+  width: 36px;
+  height: 36px;
+}

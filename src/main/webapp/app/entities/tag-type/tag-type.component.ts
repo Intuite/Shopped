@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
 import { combineLatest, Subscription } from 'rxjs';
@@ -10,6 +10,8 @@ import { ITagType } from 'app/shared/model/tag-type.model';
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { TagTypeService } from './tag-type.service';
 import { TagTypeDeleteDialogComponent } from './tag-type-delete-dialog.component';
+import { Status } from 'app/shared/model/enumerations/status.model';
+import { TagTypeTableComponent } from 'app/shared/tables/tag-type-table/tag-type-table.component';
 
 @Component({
   selector: 'jhi-tag-type',
@@ -25,6 +27,8 @@ export class TagTypeComponent implements OnInit, OnDestroy {
   ascending!: boolean;
   ngbPaginationPage = 1;
   tableLoaded = false;
+  requesting = false;
+  @ViewChild('table', { static: false }) table!: TagTypeTableComponent;
 
   constructor(
     protected tagTypeService: TagTypeService,
@@ -90,6 +94,17 @@ export class TagTypeComponent implements OnInit, OnDestroy {
     });
   }
 
+  setStatus(element: ITagType, newStatus: boolean): void {
+    this.tagTypeService
+      .update({
+        ...element,
+        status: !newStatus ? (Status.ACTIVE.toUpperCase() as Status) : (Status.INACTIVE.toUpperCase() as Status),
+      })
+      .subscribe(() => {
+        this.loadPage(this.page);
+      });
+  }
+
   protected handleNavigation(): void {
     combineLatest(this.activatedRoute.data, this.activatedRoute.queryParamMap, (data: Data, params: ParamMap) => {
       const page = params.get('page');
@@ -112,6 +127,8 @@ export class TagTypeComponent implements OnInit, OnDestroy {
     this.page = page;
     this.tagTypes = data || [];
     this.ngbPaginationPage = this.page;
+    this.requesting = false;
+    if (this.tableLoaded) this.refresh();
     this.tableLoaded = true;
   }
 
@@ -119,25 +136,21 @@ export class TagTypeComponent implements OnInit, OnDestroy {
     this.ngbPaginationPage = this.page ?? 1;
   }
 
-  protected refresh(page: number): void {
-    this.page = page;
+  protected refresh(): void {
+    this.table.reloadSource(this.tagTypes as ITagType[]);
+    this.navigate();
   }
 
   private loadPage(page?: number): void {
     const pageToLoad: number = page || this.page || 0;
-    if (this.totalItems === 0) {
-      this.tagTypeService
-        .queryAll({
-          // page: pageToLoad - 1,
-          // size: 439,
-          sort: this.sort(),
-        })
-        .subscribe(
-          (res: HttpResponse<ITagType[]>) => this.onSuccess(res.body, res.headers, pageToLoad),
-          () => this.onError()
-        );
-    } else {
-      this.refresh(pageToLoad);
-    }
+    this.requesting = true;
+    this.tagTypeService
+      .queryAll({
+        sort: this.sort(),
+      })
+      .subscribe(
+        (res: HttpResponse<ITagType[]>) => this.onSuccess(res.body, res.headers, pageToLoad),
+        () => this.onError()
+      );
   }
 }

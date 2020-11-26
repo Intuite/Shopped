@@ -2,6 +2,7 @@ package com.intuite.shopped.service;
 
 import com.intuite.shopped.domain.UserProfile;
 import com.intuite.shopped.repository.UserProfileRepository;
+import com.intuite.shopped.security.SecurityUtils;
 import com.intuite.shopped.service.dto.UserProfileDTO;
 import com.intuite.shopped.service.mapper.UserProfileMapper;
 import org.slf4j.Logger;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
+import java.util.stream.DoubleStream;
 
 /**
  * Service Implementation for managing {@link UserProfile}.
@@ -80,5 +82,17 @@ public class UserProfileService {
     public void delete(Long id) {
         log.debug("Request to delete UserProfile : {}", id);
         userProfileRepository.deleteById(id);
+    }
+
+    /**
+     * Get one userProfile by id.
+     *
+     * @param id the id of the entity.
+     * @return the entity.
+     */
+    @Transactional(readOnly = true)
+    public Optional<UserProfileDTO> findByUser(Long id) {
+        return userProfileRepository.findOneByUserId(id)
+            .map(userProfileMapper::toDto);
     }
 }

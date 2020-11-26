@@ -1,4 +1,9 @@
 <div class="row justify-content-center">
+    <div class="col-10">
+        <button (click)="previousState()" class="btn btn-secondary" type="submit">
+            <fa-icon icon="arrow-left"></fa-icon>
+        </button>
+    </div>
     <div class="col-8">
         <form (ngSubmit)="save()" [formGroup]="editForm" name="editForm" novalidate role="form">
             <h2 id="jhi-ingredient-heading">{{ editForm.get('id')!.value !== undefined ? "Edit" : "Create" }}
@@ -13,30 +18,32 @@
                 </mat-form-field>
 
                 <div class="form-group">
-                    <label class="form-control-label" for="field_image"
-                           jhiTranslate="shoppedApp.ingredient.image">Image</label>
                     <div>
-                        <img
-                            *ngIf="editForm.get('image')!.value"
-                            [src]="'data:' + editForm.get('imageContentType')!.value + ';base64,' + editForm.get('image')!.value"
-                            alt="ingredient image" style="max-height: 100px;"/>
-                        <div *ngIf="editForm.get('image')!.value" class="form-text text-danger clearfix">
-                        <span class="pull-left">{{ editForm.get('imageContentType')!.value }}
-                            , {{ byteSize(editForm.get('image')!.value) }}</span>
-                            <button (click)="clearInputImage('image', 'imageContentType', 'file_image')"
-                                    class="btn btn-secondary btn-xs pull-right"
-                                    type="button">
+                        <img [src]="'data:' + editForm.get('imageContentType')!.value + ';base64,' + editForm.get('image')!.value"
+                            style="max-height: 100px;" *ngIf="editForm.get('image')!.value" alt="userProfile image"/>
+                        <div *ngIf="!editForm.get('image')!.value">
+                            <input type="file" id="file_image" (change)="setFileData($event, 'image', true)"
+                                   accept="image/*" jhiTranslate="entity.action.addimage" class="inputfile"/>
+                            <label for="file_image">
+                                <a type="button" class="text-white" mat-flat-button jhiMaterialColor="primary">
+                                    <fa-icon icon="image"></fa-icon>
+                                    Add Image
+                                </a>
+                            </label>
+                        </div>
+                        <div *ngIf="editForm.get('image')!.value" class="form-text clearfix">
+                            <span *ngIf="byteSizeNumber(editForm.get('image')!.value) >= 1000000" class="pull-left text-danger">
+                                Too large image!
+                            </span>
+
+                            <button type="button"
+                                    (click)="clearInputImage(
+                                    'image', 'imageContentType', 'file_image')"
+                                    class="btn btn-secondary btn-xs pull-right">
                                 <fa-icon icon="times"></fa-icon>
                             </button>
                         </div>
-                        <input (change)="setFileData($event, 'image', true)" accept="image/*" id="file_image"
-                               jhiTranslate="entity.action.addimage" type="file"/>
                     </div>
-                    <input class="form-control" formControlName="image" id="field_image" name="image"
-                           type="hidden"/>
-                    <input class="form-control" formControlName="imageContentType" id="field_imageContentType"
-                           name="imageContentType"
-                           type="hidden"/>
                 </div>
 
                 <mat-form-field appearance="fill" class="form-group w-100">

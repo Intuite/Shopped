@@ -12,6 +12,9 @@ import { IngredientService } from './ingredient.service';
 import { IngredientDeleteDialogComponent } from './ingredient-delete-dialog.component';
 import { Status } from 'app/shared/model/enumerations/status.model';
 import { IngredientTableComponent } from 'app/shared/tables/ingredient-table/ingredient-table.component';
+import { MatDialog } from '@angular/material/dialog';
+import { UnitDetailComponent } from 'app/entities/unit/unit-detail.component';
+import { IngredientDetailComponent } from 'app/entities/ingredient/ingredient-detail.component';
 
 @Component({
   selector: 'jhi-ingredient',
@@ -27,7 +30,7 @@ export class IngredientComponent implements OnInit, OnDestroy {
   ascending!: boolean;
   ngbPaginationPage = 0;
   tableLoaded = false;
-
+  requesting = false;
   @ViewChild('tbl', { static: false }) tbl!: IngredientTableComponent;
 
   constructor(
@@ -36,7 +39,8 @@ export class IngredientComponent implements OnInit, OnDestroy {
     protected dataUtils: JhiDataUtils,
     protected router: Router,
     protected eventManager: JhiEventManager,
-    protected modalService: NgbModal
+    protected modalService: NgbModal,
+    protected dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -114,6 +118,21 @@ export class IngredientComponent implements OnInit, OnDestroy {
       });
   }
 
+  view(element: any): void {
+    this.dialog.open(IngredientDetailComponent, {
+      maxWidth: '600px',
+      maxHeight: '90%',
+      width: '60%',
+      data: element,
+    });
+  }
+
+  viewType(id: number): void {
+    this.dialog.open(UnitDetailComponent, {
+      data: id,
+    });
+  }
+
   protected handleNavigation(): void {
     combineLatest(this.activatedRoute.data, this.activatedRoute.queryParamMap, (data: Data, params: ParamMap) => {
       const page = params.get('page');
@@ -132,34 +151,35 @@ export class IngredientComponent implements OnInit, OnDestroy {
   }
 
   protected onSuccess(data: IIngredient[] | null, headers: HttpHeaders, page: number): void {
-    this.totalItems = Number(headers.get('X-Total-Count'));
+    this.totalItems = this.ingredients?.length ?? 0;
     this.page = page;
     this.ingredients = data || [];
     this.ngbPaginationPage = this.page;
+    this.requesting = false;
+    if (this.tableLoaded) {
+      this.refresh();
+    }
     this.tableLoaded = true;
   }
-
   protected onError(): void {
     this.ngbPaginationPage = this.page ?? 1;
   }
 
-  protected refresh(page: number): void {
-    this.page = page;
+  protected refresh(): void {
+    this.tbl.reloadSource(this.ingredients as IIngredient[]);
+    this.navigate();
   }
 
-  private loadPage(page?: number): void {
+  loadPage(page?: number): void {
     const pageToLoad: number = page || this.page || 0;
-    if (this.totalItems === 0) {
-      this.ingredientService
-        .queryAll({
-          sort: this.sort(),
-        })
-        .subscribe(
-          (res: HttpResponse<IIngredient[]>) => this.onSuccess(res.body, res.headers, pageToLoad),
-          () => this.onError()
-        );
-    } else {
-      this.refresh(pageToLoad);
-    }
+    this.requesting = true;
+    this.ingredientService
+      .queryAll({
+        sort: this.sort(),
+      })
+      .subscribe(
+        (res: HttpResponse<IIngredient[]>) => this.onSuccess(res.body, res.headers, pageToLoad),
+        () => this.onError()
+      );
   }
 }

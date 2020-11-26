@@ -14,12 +14,13 @@ export class AwardTableComponent implements OnInit, AfterViewInit {
   @Input() data!: Award[];
   @Input() managementComponent!: AwardComponent;
 
-  displayedColumns: string[] = ['id', 'name', 'description', 'cost', 'image', 'status', 'options'];
+  displayedColumns: string[] = ['name', 'description', 'cost', 'image', 'status', 'options'];
 
   dataSource = new MatTableDataSource<Award>();
 
   @ViewChild('sort') sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  loaded = false;
 
   ngOnInit(): void {
     this.dataSource.data = this.data;

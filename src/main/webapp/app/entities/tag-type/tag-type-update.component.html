@@ -1,19 +1,24 @@
 <div class="row justify-content-center">
+    <div class="col-10">
+        <button (click)="previousState()" class="btn btn-secondary" type="submit">
+            <fa-icon icon="arrow-left"></fa-icon>
+        </button>
+    </div>
     <div class="col-8">
         <form (ngSubmit)="save()" [formGroup]="editForm" name="editForm" novalidate role="form">
             <h2 id="jhi-tag-type-heading">{{ editForm.get('id')!.value !== undefined ? "Edit" : "Create" }}
                 Tag Type</h2>
 
-            <jhi-alert-error></jhi-alert-error>
+            <jhi-alert></jhi-alert>
 
             <div>
-                <mat-form-field [hidden]="!editForm.get('id')!.value" appearance="fill" class="form-group w-100">
+                <mat-form-field [hidden]="true" appearance="fill" class="form-group w-100">
                     <mat-label jhiTranslate="global.field.id"></mat-label>
                     <input formControlName="id" id="id" matInput name="id" readonly type="text"/>
                 </mat-form-field>
 
                 <mat-form-field appearance="fill" class="form-group w-100">
-                    <mat-label jhiTranslate="shoppedApp.tagType.name"></mat-label>
+                    <mat-label>Name*</mat-label>
                     <input formControlName="name" id="field_name" matInput name="name" type="text"/>
                     <mat-error
                         *ngIf="editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)">
@@ -24,7 +29,7 @@
                 </mat-form-field>
 
                 <mat-form-field appearance="fill" class="form-group w-100">
-                    <mat-label jhiTranslate="shoppedApp.tagType.description"></mat-label>
+                    <mat-label>Description*</mat-label>
                     <input formControlName="description" id="field_description" matInput name="description"
                            type="text"/>
                     <mat-error
@@ -32,29 +37,17 @@
                         This field is required.
                     </mat-error>
                 </mat-form-field>
-
-                <mat-form-field appearance="fill" class="form-group w-100">
-                    <mat-label jhiTranslate="shoppedApp.tagType.status"></mat-label>
-                    <mat-select [(ngModel)]="statusOptions[0]" formControlName="status" id="status" name="status">
-                        <mat-option *ngFor="let status of statusOptions" [value]="status">
-                            {{status | capitalize }}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
             </div>
 
             <div>
-                <button (click)="previousState()" id="cancel-save" jhiMaterialColor="secondary" mat-raised-button
-                        type="button">
-                    <fa-icon icon="ban"></fa-icon>
-                    <span jhiTranslate="entity.action.cancel">Cancel</span>
+                <button (click)="previousState()" class="text-white" id="cancel-save" jhiMaterialColor="secondary"
+                        mat-raised-button type="button">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
                 </button>
 
-                <button [disabled]="editForm.invalid || isSaving" id="save-entity" jhiMaterialColor="primary"
-                        mat-raised-button
-                        type="submit">
-                    <fa-icon icon="save"></fa-icon>
-                    <span jhiTranslate="entity.action.save">Save</span>
+                <button [disabled]="editForm.invalid || isSaving" class="text-white" id="save-entity"
+                        jhiMaterialColor="primary" mat-raised-button type="submit">
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
                 </button>
             </div>
         </form>

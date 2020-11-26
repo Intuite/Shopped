@@ -8,7 +8,7 @@ import { IIngredient } from 'app/shared/model/ingredient.model';
   styleUrls: ['./selection.component.scss'],
 })
 export class SelectionComponent implements OnInit {
-  @Input() ingredientSelectedForm!: FormGroup;
+  @Input() form!: FormGroup;
   @Input() index!: number;
   @Output() deselect: EventEmitter<number> = new EventEmitter();
   ingredient!: IIngredient;
@@ -16,11 +16,11 @@ export class SelectionComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    const ing = this.ingredientSelectedForm.get('ingredient');
+    const ing = this.form.get('ingredient');
     this.ingredient = ing !== null ? ing.value : { name: 'null', unitAbbrev: 'null' };
   }
 
-  deselectItem(): void {
+  remove(): void {
     this.deselect.emit(this.index);
   }
 }

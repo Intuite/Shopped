@@ -12,9 +12,19 @@ import { PasswordResetInitComponent } from './password-reset/init/password-reset
 import { PasswordResetFinishComponent } from './password-reset/finish/password-reset-finish.component';
 import { SettingsComponent } from './settings/settings.component';
 import { accountState } from './account.route';
+import { ProfileComponent } from './profile/profile.component';
+import { UserInfoComponent } from './profile/user-info/user-info.component';
+import { DashboardComponent } from './profile/dashboard/dashboard.component';
+import { RecipesComponent } from './profile/dashboard/recipes/recipes.component';
+import { CollectionsComponent } from './profile/dashboard/collections/collections.component';
+import { CartComponent } from './profile/dashboard/cart/cart.component';
+import { ReportsComponent } from './profile/dashboard/reports/reports.component';
+import { PaymentsComponent } from './profile/dashboard/payments/payments.component';
+import { ShoppedTransactionModule } from 'app/entities/transaction/transaction.module';
+import { ShoppedRecipeModule } from 'app/entities/recipe/recipe.module';
 
 @NgModule({
-  imports: [ShoppedSharedModule, RouterModule.forChild(accountState)],
+  imports: [ShoppedSharedModule, RouterModule.forChild(accountState), ShoppedTransactionModule, ShoppedRecipeModule],
   declarations: [
     ActivateComponent,
     RegisterComponent,
@@ -24,6 +34,14 @@ import { accountState } from './account.route';
     PasswordResetFinishComponent,
     SessionsComponent,
     SettingsComponent,
+    ProfileComponent,
+    UserInfoComponent,
+    DashboardComponent,
+    RecipesComponent,
+    CollectionsComponent,
+    CartComponent,
+    ReportsComponent,
+    PaymentsComponent,
   ],
 })
 export class AccountModule {}

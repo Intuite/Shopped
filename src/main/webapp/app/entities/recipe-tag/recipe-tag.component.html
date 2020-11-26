@@ -1,21 +1,32 @@
 <div>
     <h2 id="page-heading">
         <span jhiTranslate="shoppedApp.recipeTag.home.title">Recipe Tags</span>
+        <button *ngIf="!requesting && (!recipeTags || recipeTags.length == 0)"
+                [matTooltipHideDelay]="0"
+                [matTooltipShowDelay]="1000"
+                [routerLink]="['/recipe-tag/new']"
+                aria-label="Create a new Recipe tag"
+                class="float-right jh-create-entity create-recipe-tag mx-4 mb-3"
+                jhiMaterialColor="accent"
+                mat-mini-fab
+                matTooltip="Create a new Recipe Tag">
+            <mat-icon>add</mat-icon>
+        </button>
     </h2>
-
-    <jhi-alert-error></jhi-alert-error>
 
     <jhi-alert></jhi-alert>
 
+    <div *ngIf="requesting">
+        <div class="w-100" fxLayout="row" fxLayoutAlign="space-around center">
+            <mat-spinner *ngIf="!recipeTags || recipeTags.length == 0" diameter="50" strokeWidth="5"></mat-spinner>
+        </div>
+    </div>
+
     <div *ngIf="recipeTags && recipeTags.length > 0" class="table-responsive table-hover" id="entities">
-        <jhi-recipe-tag-table [data]="recipeTags" [managementComponent]="this"></jhi-recipe-tag-table>
+        <jhi-recipe-tag-table #table [data]="recipeTags" [managementComponent]="this"></jhi-recipe-tag-table>
     </div>
 
-    <div *ngIf="recipeTags?.length === 0 || !recipeTags" class="alert alert-warning" id="no-result">
-        <span jhiTranslate="shoppedApp.ingredient.home.notFound">No Tag Types found</span>
-    </div>
-
-    <div class="w-100" fxLayout="row" fxLayoutAlign="space-around center">
-        <mat-spinner *ngIf="!recipeTags || recipeTags.length == 0" diameter="50" strokeWidth="5"></mat-spinner>
+    <div *ngIf="recipeTags?.length === 0 || !recipeTags && !requesting" class="alert alert-warning" id="no-result">
+        <span>No recipe Tags found</span>
     </div>
 </div>

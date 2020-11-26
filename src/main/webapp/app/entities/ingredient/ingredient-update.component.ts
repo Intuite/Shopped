@@ -16,6 +16,7 @@ import { Status } from 'app/shared/model/enumerations/status.model';
 @Component({
   selector: 'jhi-ingredient-update',
   templateUrl: './ingredient-update.component.html',
+  styleUrls: ['../../../content/scss/image_Select.scss'],
 })
 export class IngredientUpdateComponent implements OnInit {
   isSaving = false;
@@ -133,5 +134,10 @@ export class IngredientUpdateComponent implements OnInit {
       description: this.editForm.get(['description'])!.value,
       unitId: this.editForm.get(['unitId'])!.value,
     };
+  }
+
+  byteSizeNumber(base64String: string): number {
+    const st = this.dataUtils.byteSize(base64String).replace(/[^0-9]/g, '');
+    return parseInt(st, 10);
   }
 }

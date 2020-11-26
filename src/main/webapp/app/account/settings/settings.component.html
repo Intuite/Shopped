@@ -1,7 +1,7 @@
 <div>
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <h2 *ngIf="account">User settings for <b>{{ account.login }}</b></h2>
+            <h2 *ngIf="account"><b>{{ account.login }}</b> user information</h2>
 
             <div class="alert alert-success" *ngIf="success" jhiTranslate="settings.messages.success">
                 <strong>Settings saved!</strong>
@@ -66,9 +66,9 @@
                 </div>
 
                 <div class="form-group">
-                    <mat-form-field appearance="fill" class="form-group w-100">
+                    <mat-form-field appearance="fill" class="form-group w-100 mat-form-field-disabled">
                         <mat-label class="form-control-label" for="email" jhiTranslate="global.form.email.label">Email</mat-label>
-                        <input matInput type="email" id="email" name="email" placeholder="{{ 'global.form.email.placeholder' | translate }}"
+                        <input [readonly]="true" matInput type="email" id="email" name="email" placeholder="{{ 'global.form.email.placeholder' | translate }}"
                                formControlName="email">
                         <mat-error *ngIf="settingsForm.get('email')!.invalid && (settingsForm.get('email')!.dirty || settingsForm.get('email')!.touched)">
                             <small class="form-text text-danger"

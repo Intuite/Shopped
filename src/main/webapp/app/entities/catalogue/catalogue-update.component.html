@@ -1,4 +1,9 @@
 <div class="row justify-content-center">
+    <div class="col-10">
+        <button type="submit" class="btn btn-secondary" (click)="previousState()">
+            <fa-icon icon="arrow-left"></fa-icon>
+        </button>
+    </div>
     <div class="col-8">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
             <h2 id="jhi-ingredient-heading">{{ editForm.get('id')!.value !== undefined ? "Edit" : "Create" }}
@@ -7,13 +12,13 @@
             <div>
                 <jhi-alert-error></jhi-alert-error>
                 <jhi-alert></jhi-alert>
-                <mat-form-field class="form-group w-100" appearance="fill" [hidden]="!editForm.get('id')!.value">
-                    <mat-label for="id" jhiTranslate="global.field.id">ID</mat-label>
-                    <input matInput type="text" id="id" name="id" formControlName="id" readonly/>
-                </mat-form-field>
+<!--                <mat-form-field class="form-group w-100" appearance="fill" [hidden]="!editForm.get('id')!.value">-->
+<!--                    <mat-label for="id" jhiTranslate="global.field.id">ID</mat-label>-->
+<!--                    <input matInput type="text" id="id" name="id" formControlName="id" readonly/>-->
+<!--                </mat-form-field>-->
 
                 <mat-form-field appearance="fill" class="form-group w-100">
-                    <mat-label>Name</mat-label>
+                    <mat-label>Name*</mat-label>
                     <input formControlName="idCatalogue" id="field_name" matInput name="idCatalogue"
                            type="text"/>
                     <mat-error
@@ -25,7 +30,7 @@
                 </mat-form-field>
 
                 <mat-form-field appearance="fill" class="form-group w-100">
-                    <mat-label jhiTranslate="shoppedApp.catalogue.value">Value</mat-label>
+                    <mat-label>Value*</mat-label>
                     <input formControlName="value" id="field_value" matInput name="value"
                            type="text"/>
                     <mat-error

@@ -48,7 +48,7 @@ export class BundlePickerDialogComponent implements OnInit {
       })
       .subscribe(
         (res: HttpResponse<ICookies[]>) => this.onSuccess(res.body || undefined),
-        () => console.warn('se cayo')
+        () => console.warn('No wallet found for user: ' + this.account?.login)
       );
   }
 
@@ -56,12 +56,10 @@ export class BundlePickerDialogComponent implements OnInit {
     if (s) {
       this.bundle = s;
       this.bundleId = this.bundle.id || 0;
-      console.warn(this.bundleId);
     }
   }
 
-  /* getBundle(id: number): void {
-    this.service.find(id).subscribe((res: any) => this.bundle = res.body || new Bundle());
-
-  }*/
+  payed(): void {
+    console.warn('pay');
+  }
 }

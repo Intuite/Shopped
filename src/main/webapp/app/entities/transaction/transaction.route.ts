@@ -39,7 +39,7 @@ export const transactionRoute: Routes = [
     path: '',
     component: TransactionComponent,
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       defaultSort: 'id,asc',
       pageTitle: 'shoppedApp.transaction.home.title',
     },
@@ -52,7 +52,7 @@ export const transactionRoute: Routes = [
       transaction: TransactionResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       pageTitle: 'shoppedApp.transaction.home.title',
     },
     canActivate: [UserRouteAccessService],
@@ -64,7 +64,7 @@ export const transactionRoute: Routes = [
       transaction: TransactionResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       pageTitle: 'shoppedApp.transaction.home.title',
     },
     canActivate: [UserRouteAccessService],
@@ -76,7 +76,7 @@ export const transactionRoute: Routes = [
       transaction: TransactionResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       pageTitle: 'shoppedApp.transaction.home.title',
     },
     canActivate: [UserRouteAccessService],

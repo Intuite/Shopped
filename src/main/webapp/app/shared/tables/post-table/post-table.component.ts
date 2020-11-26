@@ -14,7 +14,7 @@ export class PostTableComponent implements OnInit, AfterViewInit {
   @Input() data!: IPost[];
   @Input() managementComponent!: PostComponent;
 
-  displayedColumns: string[] = ['id', 'recipeName', 'caption', 'userLogin', 'date', 'status', 'options'];
+  displayedColumns: string[] = ['date', 'recipeName', 'caption', 'userLogin', 'status', 'options'];
 
   dataSource = new MatTableDataSource<IPost>();
 
@@ -31,7 +31,7 @@ export class PostTableComponent implements OnInit, AfterViewInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.filterPredicate = (data: any, filter) => {
       let dataStr = JSON.stringify(data).toLowerCase();
-      dataStr = dataStr.replace(/({|,)\s(.+?)\s:/g, '');
+      dataStr = dataStr.replace(/(\{|,)\s(.+?)\s:/g, '');
       return dataStr.includes(filter);
     };
   }
