@@ -5,10 +5,11 @@ import { ShoppedSharedModule } from 'app/shared/shared.module';
 import { HOME_ROUTE } from './home.route';
 import { HomeComponent } from './home.component';
 import { MatChipsModule } from '@angular/material/chips';
-import { PostComponent } from 'app/home/post/post.component';
+import { PostHomeComponent } from './post-home/post-home.component';
+import { PostFilterPipe } from './post-home/post-filter.pipe';
 
 @NgModule({
-  imports: [ShoppedSharedModule, RouterModule.forChild([HOME_ROUTE]), MatChipsModule, PostComponent],
-  declarations: [HomeComponent],
+  imports: [ShoppedSharedModule, RouterModule.forChild([HOME_ROUTE]), MatChipsModule],
+  declarations: [HomeComponent, PostHomeComponent, PostFilterPipe],
 })
 export class ShoppedHomeModule {}
