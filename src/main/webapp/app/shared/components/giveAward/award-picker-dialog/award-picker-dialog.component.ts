@@ -161,7 +161,6 @@ export class AwardPickerDialogComponent implements OnInit {
         () => console.warn('log succesful'),
         () => console.warn('log failed')
       );
-      window.location.reload();
     }
   }
 
