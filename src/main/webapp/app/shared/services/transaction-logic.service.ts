@@ -34,6 +34,7 @@ export class TransactionLogicService {
         () => console.warn('success'),
         () => console.warn('error')
       );
+      window.location.reload();
     }
   }
 
