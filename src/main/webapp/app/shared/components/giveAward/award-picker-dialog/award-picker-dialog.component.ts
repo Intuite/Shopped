@@ -24,6 +24,7 @@ import { Log } from 'app/shared/model/log.model';
   styleUrls: ['./award-picker-dialog.component.scss'],
 })
 export class AwardPickerDialogComponent implements OnInit {
+  statusOptions = ['ACTIVE', 'INACTIVE'];
   award = new Award();
   account?: Account;
   awards: Award[] = [];
@@ -44,10 +45,14 @@ export class AwardPickerDialogComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.service.query().subscribe(
-      (res: HttpResponse<IAward[]>) => this.onSuccess(res.body),
-      () => this.onError()
-    );
+    this.service
+      .query({
+        ...(this.statusOptions[0] && { 'status.equals': this.statusOptions[0] }),
+      })
+      .subscribe(
+        (res: HttpResponse<IAward[]>) => this.onSuccess(res.body),
+        () => this.onError()
+      );
     this.accountService.identity().subscribe(res => this.onAccountSuccess(res || undefined));
     this.postService.find(this.data).subscribe(
       (res: HttpResponse<IPost>) => this.onSuccessPost(res.body || undefined),
