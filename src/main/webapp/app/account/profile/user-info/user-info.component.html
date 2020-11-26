@@ -6,7 +6,7 @@
     <mat-card-title-group>
         <mat-card-title>{{ user.firstName }} {{user.lastName }}</mat-card-title>
         <mat-card-subtitle>@{{ user.login }}</mat-card-subtitle>
-        <button *ngIf="canEdit" [routerLink]="['/user-profile', profile?.id, 'edit']" color="accent" mat-icon-button>
+        <button *ngIf="canEdit && profile" [routerLink]="['/user-profile', profile?.id, 'edit']" color="accent" mat-icon-button>
             <mat-icon>create</mat-icon>
         </button>
     </mat-card-title-group>

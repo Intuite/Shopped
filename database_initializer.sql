@@ -548,7 +548,8 @@ values (1,'Award','','ACTIVE');
 insert into user_profile(status, user_id)
 values ('ACTIVE', 1),
        ('ACTIVE', 2),
-       ('ACTIVE', 3);
+       ('ACTIVE', 3),
+       ('ACTIVE', 4);
 
 update jhi_user
 set email = 'teamintuite@gmail.com'
