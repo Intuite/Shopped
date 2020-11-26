@@ -26,7 +26,7 @@
 
     <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef> Print </th>
-        <td mat-cell *matCellDef="let element"> <button mat-flat-button (click)="print( element )"><fa-icon icon="download">element.id</fa-icon></button></td>
+        <td mat-cell *matCellDef="let element"> <button mat-flat-button jhiMaterialColor="accent" (click)="print( element )"><fa-icon icon="download">element.id</fa-icon></button></td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

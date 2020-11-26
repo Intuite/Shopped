@@ -57,7 +57,7 @@
                         <fa-icon icon="cookie-bite"></fa-icon>
                         {{award.cost}}</h2>
                     <div *ngIf="(cookie.amount || -1) >= (award.cost || 0)">
-                        <button mat-raised-button jhiMaterialColor="primary" align="center" [mat-dialog-close] (click)="
+                        <button mat-raised-button jhiMaterialColor="accent" align="center" [mat-dialog-close] (click)="
                             awardPost(award)">Next
                         </button>
                     </div>

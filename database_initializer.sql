@@ -263,7 +263,7 @@ values ('Vanilla', 1, 'ACTIVE'),
        ('Ginger', 8, 'ACTIVE'),
        ('Glucose', 8, 'ACTIVE'),
        ('Goat', 8, 'ACTIVE'),
-       ('Goat\'s cheese', 8, 'ACTIVE'),
+       ('Goat\s cheese', 8, 'ACTIVE'),
        ('Golden syrup', 8, 'ACTIVE'),
        ('Gorgonzola', 8, 'ACTIVE'),
        ('Gouda', 8, 'ACTIVE'),
@@ -539,6 +539,9 @@ values ('cookies',4.99,100),
 insert into catalogue (id, id_catalogue, value) values
 	(1,'award_tax', 5);
 
+insert into shopped.cookies (amount, user_id) values
+	(1000,3);
+
 insert into log_type (id, name, template, status)
 values (1,'Award','','ACTIVE');
 
@@ -554,3 +557,4 @@ where login = 'admin';
 
 select @uauser := ua.user_id from jhi_user_authority ua inner join jhi_user u on ua.user_id = u.id where u.login = 'admin' and ua.authority_name like 'ROLE_USER';
 delete from jhi_user_authority where user_id = @uauser and authority_name like 'ROLE_USER';
+
