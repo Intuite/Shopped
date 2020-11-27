@@ -1,7 +1,7 @@
 <div>
     <div class="recipe-list-title-wrapper">
         <div class="recipe-list-title-txt">
-            <h2><span>Latest posts by users</span></h2>
+            <h2><span>Latest posts</span></h2>
         </div>
     </div>
 
@@ -37,7 +37,7 @@
                                     {{card.date | date:"mediumDate"}}
                                 </div>
                                 <div class="recipe-card-element-left">
-                                    By:{{card.userLogin}}
+                                    By {{card.userLogin | titlecase}}
                                 </div>
 
                             </div>
