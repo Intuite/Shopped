@@ -40,7 +40,11 @@ export class RecipeTagUpdateComponent implements OnInit {
     this.activatedRoute.data.subscribe(({ recipeTag }) => {
       this.updateForm(recipeTag);
 
-      this.tagTypeService.query().subscribe((res: HttpResponse<ITagType[]>) => (this.tagtypes = res.body || []));
+      this.tagTypeService
+        .query({
+          ...{ 'status.equals': 'ACTIVE' },
+        })
+        .subscribe((res: HttpResponse<ITagType[]>) => (this.tagtypes = res.body || []));
     });
   }
 
