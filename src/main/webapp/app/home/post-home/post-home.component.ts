@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { JhiDataUtils } from 'ng-jhipster';
 
@@ -19,12 +19,12 @@ import { PostService } from 'app/entities/post/post.service';
   templateUrl: './post-home.component.html',
   styleUrls: ['./post-home.component.scss'],
 })
-export class PostHomeComponent implements OnInit, AfterViewInit {
-  recipes: IRecipe[] = [];
+export class PostHomeComponent implements OnInit {
+  // recipes: IRecipe[] = [];
   posts: IPost[] = [];
   finalArray: Array<{ post: IPost; recipe: IRecipe }> = [];
   account?: Account;
-  user!: IUser;
+  user?: IUser;
   statusOptions = ['ACTIVE', 'INACTIVE'];
   searchText = '';
 
@@ -52,16 +52,9 @@ export class PostHomeComponent implements OnInit, AfterViewInit {
     );
 
     this.postService.refreshNeeded$.subscribe(() => {
-      this.getRecipes();
+      // this.getRecipes();
       this.getPosts();
     });
-  }
-
-  getRecipes(): any {
-    this.recipeService.query().subscribe(
-      (res: HttpResponse<IRecipe[]>) => this.onSuccessRecipe(res.body),
-      () => this.onError()
-    );
   }
 
   getPosts(): any {
@@ -71,13 +64,11 @@ export class PostHomeComponent implements OnInit, AfterViewInit {
     );
   }
 
-  ngAfterViewInit(): void {}
-
   cleanPosts(): void {
     let i = 0;
     while (i < this.posts.length) {
       if (this.posts[i].status === this.statusOptions[1]) {
-        this.recipes.splice(i, 1);
+        this.posts.splice(i, 1);
       } else {
         i++;
       }
@@ -98,10 +89,6 @@ export class PostHomeComponent implements OnInit, AfterViewInit {
 
   private onError(): void {
     console.warn('There was an error');
-  }
-
-  private onSuccessRecipe(body: IRecipe[] | null): void {
-    this.recipes = body || [];
   }
 
   private onSuccessPost(body: IPost[] | null): void {
