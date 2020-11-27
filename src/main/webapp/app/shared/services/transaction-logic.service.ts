@@ -39,7 +39,6 @@ export class TransactionLogicService {
 
   private continue(transac: ITransaction): void {
     const user = transac.userId;
-    console.warn(user);
 
     this.cookiesService
       .query({

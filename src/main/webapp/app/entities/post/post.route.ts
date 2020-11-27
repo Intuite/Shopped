@@ -11,6 +11,8 @@ import { PostService } from './post.service';
 import { PostComponent } from './post.component';
 import { PostDetailComponent } from './post-detail.component';
 import { PostUpdateComponent } from './post-update.component';
+import { PostUserListComponent } from 'app/entities/post/post-user-list.component';
+import { RecipeResolve } from 'app/entities/recipe/recipe.route';
 
 @Injectable({ providedIn: 'root' })
 export class PostResolve implements Resolve<IPost> {
@@ -78,6 +80,18 @@ export const postRoute: Routes = [
     data: {
       authorities: [Authority.USER],
       pageTitle: 'shoppedApp.post.home.title',
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: 'list',
+    component: PostUserListComponent,
+    resolve: {
+      recipe: RecipeResolve,
+    },
+    data: {
+      authorities: [Authority.USER, Authority.ADMIN],
+      pageTitle: 'shoppedApp.recipe.home.title',
     },
     canActivate: [UserRouteAccessService],
   },

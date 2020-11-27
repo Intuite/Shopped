@@ -10,9 +10,10 @@ import { IUserProfile, UserProfile } from 'app/shared/model/user-profile.model';
 import { UserProfileService } from './user-profile.service';
 import { AlertError } from 'app/shared/alert/alert-error.model';
 import { IUser } from 'app/core/user/user.model';
-import { UserService } from 'app/core/user/user.service';
 import { Status } from 'app/shared/model/enumerations/status.model';
 import * as moment from 'moment';
+import { AccountService } from 'app/core/auth/account.service';
+import { Account } from 'app/core/user/account.model';
 
 @Component({
   selector: 'jhi-user-profile-update',
@@ -25,7 +26,7 @@ export class UserProfileUpdateComponent implements OnInit {
   successUP = false;
   successU = false;
   currentUserProfile!: IUserProfile;
-  currentUser!: IUser;
+  currentAccount!: Account;
   editableStatus = false;
   minDate = new Date(1915, 0, 1);
   maxDate = new Date(2010, 0, 1);
@@ -49,7 +50,7 @@ export class UserProfileUpdateComponent implements OnInit {
     protected dataUtils: JhiDataUtils,
     protected eventManager: JhiEventManager,
     protected userProfileService: UserProfileService,
-    protected userService: UserService,
+    protected accountService: AccountService,
     protected elementRef: ElementRef,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
@@ -81,11 +82,16 @@ export class UserProfileUpdateComponent implements OnInit {
       this.editForm.patchValue({
         birthDate: moment(userProfile.birthDate).toISOString() || '',
       });
-    if (this.currentUserProfile !== undefined) this.updateUserFields(userProfile);
+    if (this.currentUserProfile !== undefined) this.updateUserFields();
   }
 
   byteSize(base64String: string): string {
     return this.dataUtils.byteSize(base64String);
+  }
+
+  byteSizeNumber(base64String: string): number {
+    const st = this.dataUtils.byteSize(base64String).replace(/[^0-9]/g, '');
+    return parseInt(st, 10);
   }
 
   openFile(contentType: string, base64String: string): void {
@@ -121,7 +127,7 @@ export class UserProfileUpdateComponent implements OnInit {
     const user = this.createUserFromForm();
     if (userProfile.id !== undefined && user != null) {
       this.subscribeToSaveResponse(this.userProfileService.update(userProfile));
-      this.subscribeToRespond(this.userService.update(user));
+      this.subscribeToRespond(this.accountService.save(user));
     } else {
       this.subscribeToSaveResponse(this.userProfileService.create(userProfile));
     }
@@ -140,11 +146,11 @@ export class UserProfileUpdateComponent implements OnInit {
     };
   }
 
-  private createUserFromForm(): IUser {
-    this.currentUser.firstName = this.editForm.get('firstName')!.value;
-    this.currentUser.lastName = this.editForm.get('lastName')!.value;
-    this.currentUser.email = this.editForm.get('email')!.value;
-    return this.currentUser;
+  private createUserFromForm(): Account {
+    this.currentAccount.firstName = this.editForm.get('firstName')!.value;
+    this.currentAccount.lastName = this.editForm.get('lastName')!.value;
+    this.currentAccount.email = this.editForm.get('email')!.value;
+    return this.currentAccount;
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IUserProfile>>): void {
@@ -176,20 +182,20 @@ export class UserProfileUpdateComponent implements OnInit {
     return stStatus[0].toUpperCase() + stStatus.substr(1).toLowerCase();
   }
 
-  private updateUserFields(userProfile: UserProfile): void {
-    const userLogin = userProfile.userLogin;
-    if (userLogin) {
-      this.userService.find(userLogin).subscribe(resUser => {
-        if (resUser) {
-          this.editForm.patchValue({
-            firstName: resUser.firstName,
-            lastName: resUser.lastName,
-            email: resUser.email,
-          });
-          this.currentUser = resUser;
-        }
-      });
-    }
+  private updateUserFields(): void {
+    // const userLogin = userProfile.userLogin;
+    // if (userLogin) {
+    this.accountService.identity().subscribe(resUser => {
+      if (resUser) {
+        this.editForm.patchValue({
+          firstName: resUser.firstName,
+          lastName: resUser.lastName,
+          email: resUser.email,
+        });
+        this.currentAccount = resUser;
+      }
+    });
+    // }
   }
 
   private subscribeToRespond(iUserObservable: Observable<IUser>): void {
@@ -197,6 +203,7 @@ export class UserProfileUpdateComponent implements OnInit {
       () => {
         this.isSavingU = false;
         this.successU = true;
+        this.accountService.authenticate(this.currentAccount);
         setTimeout(() => {
           this.successU = false;
         }, 3000);

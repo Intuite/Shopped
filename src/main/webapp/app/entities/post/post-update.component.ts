@@ -30,7 +30,7 @@ export class PostUpdateComponent implements OnInit {
 
   editForm = this.fb.group({
     id: [],
-    caption: [],
+    caption: [null, [Validators.required, Validators.maxLength(50)]],
     date: [null, [Validators.required]],
     status: [],
     recipeId: [null, Validators.required],
@@ -157,7 +157,7 @@ export class PostUpdateComponent implements OnInit {
   }
 
   gotoAfterSave(): void {
-    // this.router.navigate(['/recipe', 'list']);
-    this.previousState();
+    this.router.navigate(['/']);
+    // this.previousState();
   }
 }

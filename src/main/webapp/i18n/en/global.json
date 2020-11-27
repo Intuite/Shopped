@@ -70,15 +70,15 @@
       "language": "Language"
     },
     "form": {
-      "username.label": "Username",
+      "username.label": "Username*",
       "username.placeholder": "Your username",
       "currentpassword.label": "Current password",
       "currentpassword.placeholder": "Current password",
-      "newpassword.label": "New password",
+      "newpassword.label": "New password*",
       "newpassword.placeholder": "Uppercase, lowercase, special character and numbers",
-      "confirmpassword.label": "New password confirmation",
+      "confirmpassword.label": "New password confirmation*",
       "confirmpassword.placeholder": "Confirm the new password",
-      "email.label": "Email",
+      "email.label": "Email*",
       "email.placeholder": "Your email"
     },
     "messages": {
