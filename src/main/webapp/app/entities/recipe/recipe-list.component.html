@@ -1,4 +1,4 @@
-<div>
+<div class="body-wrapper">
     <div class="recipe-list-title-wrapper">
         <div class="recipe-list-title-txt">
             <h2><span>My Recipes</span></h2>
@@ -32,12 +32,13 @@
     </div>
 
 
-    <dl class="row-md jh-entity-details">
-        <div class="recipe-card-content" fxLayout="row wrap" fxLayoutGap="16px grid">
+    <dl class="jh-entity-details">
+        <div class="recipe-card-content" fxLayout="row wrap" fxLayoutGap="6px grid">
             <div *ngFor="let card of recipes | recipeFilter:searchText" fxFlex="100%" fxFlex.gt-sm="33%" fxFlex.sm="50%"
                  fxFlex.xs="100%">
 
-                <mat-card class="mat-elevation-z4 col-sm-8">
+                <mat-card class="mat-elevation-z4 col-sm-12">
+
                     <mat-card-header>
                         <mat-card-title class="recipe-card-title">
                             {{ card.name }}
@@ -50,42 +51,28 @@
                             </button>
                         </div>
                     </mat-card-header>
-                    <div *ngIf="card.image">
-                        <div class="recipe-card-picture">
-                            <img [src]="'data:' + card.imageContentType + ';base64,' + card.image"
-                                 alt="card image"/>
+
+                    <a [routerLink]="['/recipe', card.id, 'view']">
+                        <div *ngIf="card.image">
+                            <div class="recipe-card-picture">
+                                <img [src]="'data:' + card.imageContentType + ';base64,' + card.image"
+                                     alt="card image"/>
+                            </div>
                         </div>
-                    </div>
-                    <div *ngIf="!card.image">
-                        <div class="recipe-card-picture">
-                            <img alt="Shopped logo" alt="Shopped Logo"
-                                 src='../../../content/images/placeholder-image.png'/>
+                        <div *ngIf="!card.image">
+                            <div class="recipe-card-picture">
+                                <img alt="Shopped logo" alt="Shopped Logo"
+                                     src='../../../content/images/placeholder-image.png'/>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                     <mat-card-content>
                         <div class="recipe-card-element-right">
                             <span class="recipe-card-icon-portion"></span>{{card.portion}}
                             <span class="recipe-card-icon-duration"></span>{{card.duration}} min
                         </div>
                     </mat-card-content>
-                    <mat-card-actions>
 
-                        <button [routerLink]="['/recipe', card.id, 'view']"
-                                class="btn btn-info btn-sm btn-primary"
-                                style="padding-left: 2px;" type="submit">
-                            <mat-icon class="recipe-card-icon-view">launch</mat-icon>
-                            <span jhiTranslate="entity.action.view">View</span>
-                        </button>
-
-                        <button [routerLink]="['/recipe', card.id, 'edit']"
-                                class="btn btn-sm btn-secondary"
-                                type="button">
-                            <fa-icon icon="pencil-alt"></fa-icon>
-                            &nbsp;
-                            <span jhiTranslate="entity.action.edit">Edit</span>
-                        </button>
-
-                    </mat-card-actions>
                 </mat-card>
             </div>
         </div>

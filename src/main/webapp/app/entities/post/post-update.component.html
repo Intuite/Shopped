@@ -52,14 +52,20 @@
                 </mat-form-field>
 
                 <mat-form-field appearance="fill" class="form-group w-100">
-                    <mat-label jhiTranslate="shoppedApp.post.caption"></mat-label>
+                    <mat-label>Caption*</mat-label>
                     <input formControlName="caption" id="field_caption" matInput name="caption"
                            type="text"/>
                     <mat-error
                         *ngIf="(editForm.get('caption')!.invalid && (editForm.get('caption')!.dirty ||
-                         editForm.get('caption')!.touched)) && editForm.get('caption')?.errors?.required"
-                        jhiTranslate="entity.validation.required">
-                        This field is required.
+                                editForm.get('caption')!.touched)) && editForm.get('caption')?.errors?.minlength"
+                        [translateValues]="{ min: 1 }" jhiTranslate="entity.validation.minlength">
+
+                    </mat-error>
+                    <mat-error *ngIf="(editForm.get('caption')!.invalid && (editForm.get('caption')!.dirty ||
+                                editForm.get('caption')!.touched)) && editForm.get('caption')?.errors?.maxlength"
+                               [translateValues]="{ max: 50 }"
+                               jhiTranslate="entity.validation.maxlength">
+                        This field cannot be longer than 50 characters.
                     </mat-error>
                 </mat-form-field>
 

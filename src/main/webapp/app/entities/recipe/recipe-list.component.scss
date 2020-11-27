@@ -1,5 +1,23 @@
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.body-wrapper {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.recipe-card-element-left {
+  text-align: right;
+}
+
 .recipe-card-element-right {
   text-align: right;
+}
+
+.recipe-card-element-center {
+  text-align: center;
 }
 
 .recipe-card-content {
