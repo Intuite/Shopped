@@ -35,3 +35,5 @@ spring:
       auth: true
       starttls.enable: true
       ssl.trust: smtp.gmail.com
+  liquibase:
+    contexts: prod, heroku
