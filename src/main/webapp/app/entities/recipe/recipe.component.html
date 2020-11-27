@@ -16,19 +16,18 @@
 
     <jhi-alert></jhi-alert>
 
+    <div *ngIf="requesting">
+        <div class="w-100" fxLayout="row" fxLayoutAlign="space-around center">
+            <mat-spinner *ngIf="!recipes || recipes.length == 0" diameter="50" strokeWidth="5"></mat-spinner>
+        </div>
+    </div>
+
     <div *ngIf="recipes && recipes.length > 0" class="table-responsive table-hover" id="entities">
         <jhi-recipe-table #table [data]="recipes" [managementComponent]="this"></jhi-recipe-table>
     </div>
 
-    <div *ngIf="recipes?.length === 0 || !recipes" class="alert alert-warning" id="no-result">
-        <div>
-            <span jhiTranslate="shoppedApp.recipe.home.notFound">No recipes found</span>
-        </div>
-    </div>
-    <div *ngIf="requesting">
-        <div class="w-100" fxLayout="row" fxLayoutAlign="space-around center">
-            <mat-spinner diameter="50" strokeWidth="5"></mat-spinner>
-        </div>
+    <div *ngIf="recipes?.length === 0 || !recipes && !requesting" class="alert alert-warning" id="no-result">
+        <span>No recipes found</span>
     </div>
 
 </div>
