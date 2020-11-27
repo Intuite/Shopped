@@ -1124,6 +1124,7 @@
                             <verbose>true</verbose>
                             <logging>debug</logging>
                             <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
+                            <contexts>!test</contexts>
                         </configuration>
                     </plugin>
                     <plugin>
