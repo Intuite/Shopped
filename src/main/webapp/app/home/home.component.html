@@ -1,55 +1,66 @@
 <div *ngIf="account === null">
 
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img src="/content/images/carousel1.jpg" class="d-block w-100" alt="..." />
-      <div fxLayout="column" fxLayoutAlign="center center" class="carousel-item-content">
-        <h1 class="mat-display-3 text-center">Start your culinary journey</h1>
-        <button routerLink="account/register" class="text-white" mat-raised-button color="primary">
-          <span jhiTranslate="global.menu.account.register">Register</span>
-        </button>
-      </div>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img
+                alt="Cooking outside"
+                class="d-block w-100"
+                src="/content/images/lp-1.jpg"/>
+            <div class="carousel-item-content" fxLayout="column" fxLayoutAlign="center center">
+                <h1 class="mat-display-3 text-center">Start your culinary journey</h1>
+                <button class="text-white" color="primary" mat-raised-button routerLink="account/register">
+                    <span jhiTranslate="global.menu.account.register">Register</span>
+                </button>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <div class="my-4" fxLayout="column" fxLayoutAlign="center center">
-    <img class="title-img" src="/content/images/logo-shopped-700X471.png" alt="Shopped logo" />
-  </div>
+    <div class="my-4" fxLayout="column" fxLayoutAlign="center center">
+        <img alt="Shopped logo" class="title-img" src="/content/images/logo-shopped-700X471.png"/>
+    </div>
 
-  <div fxLayout="column" fxLayoutAlign="none center" fxLayoutGap="24px" class="card-container">
+    <div class="card-container" fxLayout="column" fxLayoutAlign="none center" fxLayoutGap="24px">
 
-    <section fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutAlign="start none" class="mat-elevation-z3">
-      <img fxFlex="40" fxFlex.lt-md="auto" class="sct-img" src="/content/images/girl-cook.jpg" alt="Girl cooking" />
-      <div fxFlex fxLayout="column" fxLayoutAlign="center center">
-        <h1 class="mat-title">Make your own recipes!</h1>
-        <p>Easy and simple. Just write down the necessary steps for your friends to follow</p>
-      </div>
-    </section>
+        <section class="mat-elevation-z3" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column"
+                 fxLayoutAlign="start none">
+            <img alt="Girl cooking" class="sct-img" fxFlex="40"
+                 fxFlex.lt-md="auto"
+                 src="/content/images/lp-2.jpg"/>
+            <div fxFlex fxLayout="column" fxLayoutAlign="center center">
+                <h1>Make your own recipes!</h1>
+                <p>Easy and simple. Just write down the necessary steps for your friends to follow</p>
+            </div>
+        </section>
 
-    <section fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutAlign="start none" class="mat-elevation-z3">
-      <img
-        fxFlex="40"
-        fxFlex.lt-md="auto"
-        fxFlexOrder="1"
-        fxFlexOrder.gt-sm="2"
-        class="sct-img middle"
-        src="/content/images/making-photograph-of-english-breakfast.jpg"
-        alt="Ingredient table"
-      />
-      <div fxFlex fxFlexOrder="2" fxFlexOrder.gt-sm="1" fxLayout="column" fxLayoutAlign="center center">
-        <h1>Share your recipes!</h1>
-        <p>Nothing is more fun than sharing your little secrets and cooking tips with people from all over the world</p>
-      </div>
-    </section>
+        <section class="mat-elevation-z3" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column"
+                 fxLayoutAlign="start none">
+            <img
+                alt="Ingredient table"
+                class="sct-img middle"
+                fxFlex="40"
+                fxFlex.lt-md="auto"
+                fxFlexOrder="1"
+                fxFlexOrder.gt-sm="2"
+                src="/content/images/lp-3.jpg"
+            />
+            <div fxFlex fxFlexOrder="2" fxFlexOrder.gt-sm="1" fxLayout="column" fxLayoutAlign="center center">
+                <h1>Share your recipes!</h1>
+                <p>Nothing is more fun than sharing your little secrets and cooking tips with people from all over the
+                    world</p>
+            </div>
+        </section>
 
-    <section fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutAlign="start none" class="mat-elevation-z3">
-      <img fxFlex="40" fxFlex.lt-md="auto" class="sct-img" src="/content/images/heart-bread.jpg" alt="Break shaped like a heart" />
-      <div fxFlex fxLayout="column" fxLayoutAlign="center center">
-        <h1>Earn awards!</h1>
-        <p>Win real money with our prize system, where the best recipes are awarded by the community</p>
-      </div>
-    </section>
-  </div>
+        <section class="mat-elevation-z3" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column"
+                 fxLayoutAlign="start none">
+            <img alt="Break shaped like a heart" class="sct-img" fxFlex="40"
+                 fxFlex.lt-md="auto"
+                 src="/content/images/lp-4.jpg"/>
+            <div fxFlex fxLayout="column" fxLayoutAlign="center center">
+                <h1>Earn awards!</h1>
+                <p>Win real money with our prize system, where the best recipes are awarded by the community</p>
+            </div>
+        </section>
+    </div>
 </div>
 <div *ngIf="account">
     <jhi-post-home></jhi-post-home>

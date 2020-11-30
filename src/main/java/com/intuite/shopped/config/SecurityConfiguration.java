@@ -101,7 +101,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .permitAll()
         .and()
             .headers()
-            .contentSecurityPolicy("default-src 'self'; frame-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' data:; font-src 'self' https://fonts.gstatic.com data:")
+            .contentSecurityPolicy("default-src 'self' *.paypal.com *.paypalobjects.com; frame-src 'self' data: *.sandbox.paypal.com/; script-src 'self' 'nonce-xxxx' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com *.paypal.com *.paypalobjects.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' data:; font-src 'self' https://fonts.gstatic.com data:")
         .and()
             .referrerPolicy(ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN)
         .and()
@@ -124,3 +124,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         // @formatter:on
     }
 }
+
+// script-src 'nonce-xxxx' 'strict-dynamic' 'unsafe-inline' 'unsafe-eval' 'self' *.paypal.com *.paypalobjects.com *.braintreegateway.com https://www.gstatic.com; default-src 'self'
+
