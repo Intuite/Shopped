@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Cookies } from 'app/shared/model/cookies.model';
 
 @Component({
   selector: 'jhi-withdraw-cookies-modal',
@@ -7,9 +8,9 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./withdraw-cookies-modal.component.scss'],
 })
 export class WithdrawCookiesModalComponent implements OnInit {
-  constructor(@Inject(MAT_DIALOG_DATA) public data: number) {}
+  cookieAmount = 0;
 
-  ngOnInit(): void {
-    console.warn(this.data);
-  }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: Cookies) {}
+
+  ngOnInit(): void {}
 }

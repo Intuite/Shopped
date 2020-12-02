@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { Bundle, IBundle } from 'app/shared/model/bundle.model';
-import { BundlePickerDialogComponent } from 'app/shared/components/buy-cookie/bundle-picker-dialog/bundle-picker-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Cookies, ICookies } from 'app/shared/model/cookies.model';
 import { AccountService } from 'app/core/auth/account.service';
