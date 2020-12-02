@@ -26,7 +26,7 @@ import { CheckboxComponent } from './components/checkbox/checkbox.component';
 import { PostTableComponent } from './tables/post-table/post-table.component';
 
 import { GiveAwardComponent } from './components/give-award/give-award.component';
-import { AwardPickerDialogComponent } from './components/giveAward/award-picker-dialog/award-picker-dialog.component';
+import { AwardPickerDialogComponent } from './components/award-picker-dialog/award-picker-dialog.component';
 import { BuyCookieComponent } from './components/buy-cookie/buy-cookie.component';
 import { BundlePickerDialogComponent } from './components/buy-cookie/bundle-picker-dialog/bundle-picker-dialog.component';
 import { CheckOutComponent } from './components/check-out/check-out.component';
@@ -57,6 +57,8 @@ import { AwardViewerComponent } from './components/award-viewer/award-viewer.com
 import { RecipeListComponent } from './components/recipe-list/recipe-list.component';
 import { ChipListComponent } from './components/chip-list/chip-list.component';
 import { NgxPayPalModule } from 'ngx-paypal';
+import { WithdrawCookiesComponent } from './components/withdraw-cookies/withdraw-cookies.component';
+import { WithdrawCookiesModalComponent } from './components/withdraw-cookies-modal/withdraw-cookies-modal.component';
 
 @NgModule({
   imports: [JhMaterialModule, ShoppedSharedLibsModule, FlexModule, RouterModule, ExtendedModule, NgxPayPalModule],
@@ -107,6 +109,8 @@ import { NgxPayPalModule } from 'ngx-paypal';
     AwardViewerComponent,
     RecipeListComponent,
     ChipListComponent,
+    WithdrawCookiesComponent,
+    WithdrawCookiesModalComponent,
   ],
   entryComponents: [LoginModalComponent],
   exports: [
@@ -152,6 +156,7 @@ import { NgxPayPalModule } from 'ngx-paypal';
     AwardViewerComponent,
     RecipeListComponent,
     ChipListComponent,
+    WithdrawCookiesComponent,
   ],
 })
 export class ShoppedSharedModule {}
