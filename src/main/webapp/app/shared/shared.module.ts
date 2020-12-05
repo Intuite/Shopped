@@ -59,9 +59,13 @@ import { ChipListComponent } from './components/chip-list/chip-list.component';
 import { NgxPayPalModule } from 'ngx-paypal';
 import { WithdrawCookiesComponent } from './components/withdraw-cookies/withdraw-cookies.component';
 import { WithdrawCookiesModalComponent } from './components/withdraw-cookies-modal/withdraw-cookies-modal.component';
+import { BarChartComponent } from './components/bar-chart/bar-chart.component';
+import { PieChartComponent } from './components/pie-chart/pie-chart.component';
+import { LineChartComponent } from './components/line-chart/line-chart.component';
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
-  imports: [JhMaterialModule, ShoppedSharedLibsModule, FlexModule, RouterModule, ExtendedModule, NgxPayPalModule],
+  imports: [JhMaterialModule, ShoppedSharedLibsModule, FlexModule, RouterModule, ExtendedModule, NgxPayPalModule, ChartsModule],
   declarations: [
     FindLanguageFromKeyPipe,
     AlertComponent,
@@ -111,6 +115,9 @@ import { WithdrawCookiesModalComponent } from './components/withdraw-cookies-mod
     ChipListComponent,
     WithdrawCookiesComponent,
     WithdrawCookiesModalComponent,
+    BarChartComponent,
+    PieChartComponent,
+    LineChartComponent,
   ],
   entryComponents: [LoginModalComponent],
   exports: [
@@ -157,6 +164,9 @@ import { WithdrawCookiesModalComponent } from './components/withdraw-cookies-mod
     RecipeListComponent,
     ChipListComponent,
     WithdrawCookiesComponent,
+    BarChartComponent,
+    LineChartComponent,
+    PieChartComponent,
   ],
 })
 export class ShoppedSharedModule {}

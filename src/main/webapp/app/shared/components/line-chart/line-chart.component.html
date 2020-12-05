@@ -1,0 +1,13 @@
+<div class="flex-item">
+    <div style="display: block;" [ngStyle]="{'width' : width + 'px'}">
+        <canvas baseChart
+                [datasets]="ChartData"
+                [labels]="ChartLabels"
+                [options]="ChartOptions"
+                [colors]="ChartColors"
+                [legend]="ChartLegend"
+                [chartType]="ChartType"
+                [plugins]="lineChartPlugins"
+        ></canvas>
+    </div>
+</div>
