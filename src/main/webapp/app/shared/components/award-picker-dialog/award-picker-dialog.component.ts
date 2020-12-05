@@ -58,7 +58,7 @@ export class AwardPickerDialogComponent implements OnInit {
       (res: HttpResponse<IPost>) => this.onSuccessPost(res.body || undefined),
       () => console.warn('no such post')
     );
-    this.catalogueService.find(1).subscribe((res: HttpResponse<ICatalogue>) => this.setBundle(res.body || undefined));
+    this.catalogueService.find(1).subscribe((res: HttpResponse<ICatalogue>) => this.setCatalogue(res.body || undefined));
   }
 
   onAccountSuccess(account: Account | undefined): void {
@@ -164,7 +164,7 @@ export class AwardPickerDialogComponent implements OnInit {
     }
   }
 
-  private setBundle(param: ICatalogue | undefined): void {
+  private setCatalogue(param: ICatalogue | undefined): void {
     if (param !== undefined) {
       this.catalogue = param;
     }

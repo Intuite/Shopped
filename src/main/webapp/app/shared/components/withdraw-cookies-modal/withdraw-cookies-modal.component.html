@@ -29,18 +29,22 @@
                         class="space"></div>
                 </div>
                 <mat-form-field appearance="fill" class="form-group w-100">
-                    <mat-label>Withdrawal Amount</mat-label>
+                    <mat-label>Withdrawn Cookies</mat-label>
                     <input type="number" class="" matInput
                            placeholder="{{data.amount}}"
                            [(ngModel)]="cookieAmount">
                     <mat-hint></mat-hint>
                 </mat-form-field>
-                {{cookieAmount}}
+                <div class="row w-100 d-flex justified" align="center">
+                    <label class="marg-r">Total:</label>
+                    <span class="">{{cookieAmount / catalogue}}</span>
+                </div>
+                <div class="row buttonBar">
+                    <button mat-raised-button [mat-dialog-close] class="marg-r">Cancel</button>
+                    <button mat-raised-button color="accent" (click)="open()" >Withdraw</button>
+                </div>
             </div>
         </div>
     </div>
 </mat-dialog-content>
-<mat-dialog-actions align="end">
-    <button mat-button [mat-dialog-close]>Cancel</button>
-</mat-dialog-actions>
 

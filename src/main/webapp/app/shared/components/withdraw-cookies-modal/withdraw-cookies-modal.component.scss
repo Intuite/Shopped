@@ -5,3 +5,19 @@
 .space {
   height: 20px;
 }
+
+.justified {
+  justify-content: flex-end;
+  margin-top: 25px;
+}
+
+.marg-r {
+  margin-right: 10px;
+}
+
+.buttonBar {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  margin-top: 25px;
+}
