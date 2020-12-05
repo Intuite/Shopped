@@ -56,6 +56,7 @@ import { ViewTransactionsComponent } from './components/view-transactions/view-t
 import { AwardViewerComponent } from './components/award-viewer/award-viewer.component';
 import { RecipeListComponent } from './components/recipe-list/recipe-list.component';
 import { ChipListComponent } from './components/chip-list/chip-list.component';
+import { UserPickerComponent } from './components/pickers/user-picker/user-picker.component';
 
 @NgModule({
   imports: [JhMaterialModule, ShoppedSharedLibsModule, FlexModule, RouterModule, ExtendedModule],
@@ -106,6 +107,7 @@ import { ChipListComponent } from './components/chip-list/chip-list.component';
     AwardViewerComponent,
     RecipeListComponent,
     ChipListComponent,
+    UserPickerComponent,
   ],
   entryComponents: [LoginModalComponent],
   exports: [
