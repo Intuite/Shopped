@@ -108,7 +108,7 @@ jhipster:
       # security key (this key should be unique for your application, and kept secret)
       key: ff957ed2b624f07b53f8d4b9069cd077e34cca5c5689080321acc87a77e56f9da52c1e6ee3fbec205af32d6d476882ba5c9f
   mail: # specific JHipster mail property, for standard properties see MailProperties
-    base-url: http://my-server-url-to-change # Modify according to your server's URL
+    base-url: https://shoppedapp.herokuapp.com # Modify according to your server's URL
   metrics:
     logs: # Reports metrics in the logs
       enabled: false
