@@ -63,6 +63,7 @@ import { BarChartComponent } from './components/bar-chart/bar-chart.component';
 import { PieChartComponent } from './components/pie-chart/pie-chart.component';
 import { LineChartComponent } from './components/line-chart/line-chart.component';
 import { ChartsModule } from 'ng2-charts';
+import { UserPickerComponent } from './components/pickers/user-picker/user-picker.component';
 
 @NgModule({
   imports: [JhMaterialModule, ShoppedSharedLibsModule, FlexModule, RouterModule, ExtendedModule, NgxPayPalModule, ChartsModule],
@@ -113,6 +114,7 @@ import { ChartsModule } from 'ng2-charts';
     AwardViewerComponent,
     RecipeListComponent,
     ChipListComponent,
+    UserPickerComponent,
     WithdrawCookiesComponent,
     WithdrawCookiesModalComponent,
     BarChartComponent,
