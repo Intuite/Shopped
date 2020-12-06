@@ -125,7 +125,7 @@ export class UserManagementComponent implements OnInit, OnDestroy {
   private onSuccess(users: User[] | null, headers: HttpHeaders): void {
     this.totalItems = Number(headers.get('X-Total-Count'));
     this.users = users;
-    if (this.tableLoaded) this.table.reloadSource(users as User[]);
+    if (this.tableLoaded && this.table) this.table.reloadSource(users as User[]);
     this.tableLoaded = true;
     this.requesting = false;
   }

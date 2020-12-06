@@ -1,36 +1,38 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import * as moment from 'moment';
-import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
-import { JhiDataUtils, JhiFileLoadError, JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
+import { JhiDataUtils, JhiEventManager, JhiEventWithContent, JhiFileLoadError } from 'ng-jhipster';
 
-import { ICollection, Collection } from 'app/shared/model/collection.model';
+import { Collection, ICollection } from 'app/shared/model/collection.model';
 import { CollectionService } from './collection.service';
 import { AlertError } from 'app/shared/alert/alert-error.model';
 import { IUser } from 'app/core/user/user.model';
 import { UserService } from 'app/core/user/user.service';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Account } from 'app/core/user/account.model';
+import { Status } from 'app/shared/model/enumerations/status.model';
 
 @Component({
   selector: 'jhi-collection-update',
   templateUrl: './collection-update.component.html',
+  styleUrls: ['../../../content/scss/image_Select.scss'],
 })
 export class CollectionUpdateComponent implements OnInit {
   isSaving = false;
-  users: IUser[] = [];
+  currentAccount?: Account;
+  collection?: ICollection;
+  errorData = false;
 
   editForm = this.fb.group({
     id: [],
     name: [null, [Validators.required]],
     description: [null, [Validators.required]],
-    created: [],
     image: [],
     imageContentType: [],
-    status: [],
-    userId: [null, Validators.required],
   });
 
   constructor(
@@ -40,33 +42,27 @@ export class CollectionUpdateComponent implements OnInit {
     protected userService: UserService,
     protected elementRef: ElementRef,
     protected activatedRoute: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private activeModal: NgbActiveModal
   ) {}
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ collection }) => {
-      if (!collection.id) {
-        const today = moment().startOf('day');
-        collection.created = today;
-      }
-
-      this.updateForm(collection);
-
-      this.userService.query().subscribe((res: HttpResponse<IUser[]>) => (this.users = res.body || []));
-    });
+    if (this.currentAccount) this.updateForm(this.collection);
+    else {
+      this.errorData = true;
+    }
   }
 
-  updateForm(collection: ICollection): void {
-    this.editForm.patchValue({
-      id: collection.id,
-      name: collection.name,
-      description: collection.description,
-      created: collection.created ? collection.created.format(DATE_TIME_FORMAT) : null,
-      image: collection.image,
-      imageContentType: collection.imageContentType,
-      status: collection.status,
-      userId: collection.userId,
-    });
+  updateForm(collection?: ICollection): void {
+    if (this.collection) {
+      this.editForm.patchValue({
+        id: collection?.id,
+        name: collection?.name,
+        description: collection?.description,
+        image: collection?.image,
+        imageContentType: collection?.imageContentType,
+      });
+    }
   }
 
   byteSize(base64String: string): string {
@@ -95,14 +91,22 @@ export class CollectionUpdateComponent implements OnInit {
     }
   }
 
-  previousState(): void {
-    window.history.back();
+  // previousState(): void {
+  //   window.history.back();
+  // }
+
+  close(): void {
+    this.activeModal.close();
+  }
+
+  cancel(): void {
+    this.activeModal.dismiss();
   }
 
   save(): void {
     this.isSaving = true;
     const collection = this.createFromForm();
-    if (collection.id !== undefined) {
+    if (collection.id !== undefined && collection.id !== null) {
       this.subscribeToSaveResponse(this.collectionService.update(collection));
     } else {
       this.subscribeToSaveResponse(this.collectionService.create(collection));
@@ -115,11 +119,11 @@ export class CollectionUpdateComponent implements OnInit {
       id: this.editForm.get(['id'])!.value,
       name: this.editForm.get(['name'])!.value,
       description: this.editForm.get(['description'])!.value,
-      created: this.editForm.get(['created'])!.value ? moment(this.editForm.get(['created'])!.value, DATE_TIME_FORMAT) : undefined,
+      created: moment(),
       imageContentType: this.editForm.get(['imageContentType'])!.value,
       image: this.editForm.get(['image'])!.value,
-      status: this.editForm.get(['status'])!.value,
-      userId: this.editForm.get(['userId'])!.value,
+      status: 'ACTIVE' as Status,
+      userId: this.currentAccount?.id,
     };
   }
 
@@ -132,7 +136,8 @@ export class CollectionUpdateComponent implements OnInit {
 
   protected onSaveSuccess(): void {
     this.isSaving = false;
-    this.previousState();
+    this.eventManager.broadcast('collectionListModification');
+    this.close();
   }
 
   protected onSaveError(): void {
@@ -141,5 +146,10 @@ export class CollectionUpdateComponent implements OnInit {
 
   trackById(index: number, item: IUser): any {
     return item.id;
+  }
+
+  byteSizeNumber(base64String: string): number {
+    const st = this.dataUtils.byteSize(base64String).replace(/[^0-9]/g, '');
+    return parseInt(st, 10);
   }
 }
