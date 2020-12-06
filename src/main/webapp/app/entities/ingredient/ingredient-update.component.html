@@ -9,10 +9,10 @@
             <h2 id="jhi-ingredient-heading">{{ editForm.get('id')!.value !== undefined ? "Edit" : "Create" }}
                 Ingredient</h2>
 
-            <jhi-alert-error></jhi-alert-error>
+            <jhi-alert></jhi-alert>
 
             <div>
-                <mat-form-field [hidden]="!editForm.get('id')!.value" appearance="fill" class="form-group w-100">
+                <mat-form-field [hidden]="true">
                     <mat-label jhiTranslate="global.field.id"></mat-label>
                     <input formControlName="id" id="id" matInput name="id" readonly type="text"/>
                 </mat-form-field>
@@ -21,20 +21,25 @@
                     <div>
                         <img
                             *ngIf="editForm.get('image')!.value"
-                            [src]="'data:' + editForm.get('imageContentType')!.value + ';base64,' + editForm.get('image')!.value"
-                            alt="Ingredient image" style="max-height: 100px;"/>
+                            [src]="'data:' + editForm.get('imageContentType')!.value + ';base64,' + editForm.get('image')!.value" alt="userProfile image" style="max-height: 100px;"/>
                         <div *ngIf="!editForm.get('image')!.value">
                             <input (change)="setFileData($event, 'image', true)" accept="image/*" class="inputfile"
                                    id="file_image" jhiTranslate="entity.action.addimage" type="file"/>
                             <label for="file_image">
-                                <a jhiMaterialColor="primary" mat-flat-button type="button">
+                                <a class="text-white" jhiMaterialColor="primary" mat-flat-button type="button">
                                     <fa-icon icon="image"></fa-icon>
                                     Add Image
                                 </a>
                             </label>
                         </div>
-                        <div *ngIf="editForm.get('image')!.value" class="form-text text-danger clearfix">
-                            <button (click)="clearInputImage('image', 'imageContentType', 'file_image')"
+                        <div *ngIf="editForm.get('image')!.value" class="form-text clearfix">
+                            <span *ngIf="byteSizeNumber(editForm.get('image')!.value) >= 1000000"
+                                  class="pull-left text-danger">
+                                Too large image!
+                            </span>
+
+                            <button (click)="clearInputImage(
+                                    'image', 'imageContentType', 'file_image')"
                                     class="btn btn-secondary btn-xs pull-right"
                                     type="button">
                                 <fa-icon icon="times"></fa-icon>

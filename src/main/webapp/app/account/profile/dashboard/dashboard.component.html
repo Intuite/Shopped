@@ -6,7 +6,7 @@
 <!--        </ng-template>-->
 <!--        <jhi-dashboard-cart></jhi-dashboard-cart>-->
 <!--    </mat-tab>-->
-    <mat-tab>
+    <mat-tab *ngIf="account!.id!==3">
         <ng-template mat-tab-label>
             <mat-icon>fastfood</mat-icon>
             Recipes

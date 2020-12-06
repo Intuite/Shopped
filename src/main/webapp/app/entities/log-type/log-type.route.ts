@@ -39,7 +39,7 @@ export const logTypeRoute: Routes = [
     path: '',
     component: LogTypeComponent,
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       defaultSort: 'id,asc',
       pageTitle: 'shoppedApp.logType.home.title',
     },
@@ -52,7 +52,7 @@ export const logTypeRoute: Routes = [
       logType: LogTypeResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       pageTitle: 'shoppedApp.logType.home.title',
     },
     canActivate: [UserRouteAccessService],
@@ -64,7 +64,7 @@ export const logTypeRoute: Routes = [
       logType: LogTypeResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       pageTitle: 'shoppedApp.logType.home.title',
     },
     canActivate: [UserRouteAccessService],

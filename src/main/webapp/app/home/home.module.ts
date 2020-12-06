@@ -5,9 +5,12 @@ import { ShoppedSharedModule } from 'app/shared/shared.module';
 import { HOME_ROUTE } from './home.route';
 import { HomeComponent } from './home.component';
 import { MatChipsModule } from '@angular/material/chips';
+import { PostHomeComponent } from './post-home/post-home.component';
+import { PostFilterPipe } from './post-home/post-filter.pipe';
+import { ReversePipe } from './post-home/reverse.pipe';
 
 @NgModule({
   imports: [ShoppedSharedModule, RouterModule.forChild([HOME_ROUTE]), MatChipsModule],
-  declarations: [HomeComponent],
+  declarations: [HomeComponent, PostHomeComponent, PostFilterPipe, ReversePipe],
 })
 export class ShoppedHomeModule {}

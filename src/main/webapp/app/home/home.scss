@@ -1,32 +1,3 @@
-/* ==========================================================================
-Main page styles
-========================================================================== */
-
-.hipster {
-  display: inline-block;
-  width: 347px;
-  height: 497px;
-  background: url('../../content/images/jhipster_family_member_3.svg') no-repeat center top;
-  background-size: contain;
-}
-
-/* wait autoprefixer update to allow simple generation of high pixel density media query */
-@media only screen and (-webkit-min-device-pixel-ratio: 2),
-  only screen and (-moz-min-device-pixel-ratio: 2),
-  only screen and (-o-min-device-pixel-ratio: 2/1),
-  only screen and (min-resolution: 192dpi),
-  only screen and (min-resolution: 2dppx) {
-  .hipster {
-    background: url('../../content/images/jhipster_family_member_3.svg') no-repeat center top;
-    background-size: contain;
-  }
-}
-ngb-carousel .wrapper {
-  position: relative;
-  height: 0;
-  padding-top: 45%; /* Keep ratio for 900x500 images */
-}
-
 ngb-carousel .wrapper > img {
   position: absolute;
   top: 0;
@@ -36,7 +7,7 @@ ngb-carousel .wrapper > img {
 }
 
 .slide-1 {
-  background: url('../../content/images/carrusel-landingpage-01.png') no-repeat center center;
+  //background: url('../../content/images/carrusel-landingpage-01.png') no-repeat center center;
   background-size: contain;
   background-repeat: no-repeat;
   width: 100%;
@@ -44,7 +15,7 @@ ngb-carousel .wrapper > img {
 }
 
 .slide-2 {
-  background: url('../../content/images/carrusel-landingpage-02.png') no-repeat center center;
+  //background: url('../../content/images/carrusel-landingpage-02.png') no-repeat center center;
   background-size: contain;
   background-repeat: no-repeat;
   width: 100%;
@@ -52,9 +23,72 @@ ngb-carousel .wrapper > img {
 }
 
 .slide-3 {
-  background: url('../../content/images/carrusel-landingpage-03.png') no-repeat center center;
+  //background: url('../../content/images/carrusel-landingpage-03.png') no-repeat center center;
   background-size: contain;
   background-repeat: no-repeat;
   width: 100%;
   height: 0;
+}
+
+.card-container {
+  padding: 4rem 0px;
+  background-color: darken($color: white, $amount: 5);
+  display: block;
+
+  section {
+    border-radius: 15px;
+    width: 80%;
+    background-color: white;
+
+    div {
+      padding: 4rem;
+      text-align: center;
+    }
+  }
+}
+
+.carousel-item {
+  max-height: 70vh;
+
+  .carousel-item-content {
+    background: rgba(0, 0, 0, 0.3);
+    color: white;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+  }
+}
+
+.title-img {
+  width: 400px;
+}
+
+.sct-img {
+  max-width: 600px;
+  border-radius: 15px 0px 0px 15px;
+
+  &.middle {
+    border-radius: 0px 15px 15px 0px;
+  }
+}
+
+/* Using SCSS variables to store breakpoints */
+$min-sm: 600px;
+$max-sm: 959.99px;
+@media (max-width: $max-sm) {
+  .title-img {
+    width: 350px;
+  }
+  .sct-img {
+    max-width: 800px;
+    border-radius: 15px 15px 0px 0px;
+
+    &.middle {
+      border-radius: 15px 15px 0px 0px;
+    }
+  }
+  section {
+    margin: 0px 16px;
+  }
 }
