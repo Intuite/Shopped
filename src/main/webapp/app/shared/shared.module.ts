@@ -57,6 +57,7 @@ import { AwardViewerComponent } from './components/award-viewer/award-viewer.com
 import { RecipeListComponent } from './components/recipe-list/recipe-list.component';
 import { ChipListComponent } from './components/chip-list/chip-list.component';
 import { NgxPayPalModule } from 'ngx-paypal';
+import { UserPickerComponent } from './components/pickers/user-picker/user-picker.component';
 
 @NgModule({
   imports: [JhMaterialModule, ShoppedSharedLibsModule, FlexModule, RouterModule, ExtendedModule, NgxPayPalModule],
@@ -107,6 +108,7 @@ import { NgxPayPalModule } from 'ngx-paypal';
     AwardViewerComponent,
     RecipeListComponent,
     ChipListComponent,
+    UserPickerComponent,
   ],
   entryComponents: [LoginModalComponent],
   exports: [
