@@ -22,7 +22,6 @@ export class CartIngredientService {
 
   update(ci: ICartIngredient): Observable<HttpResponse<ICartHasIngredient>> {
     const chi = this.unmap(ci);
-    console.warn(chi);
     return this.chiService.update(chi);
   }
 

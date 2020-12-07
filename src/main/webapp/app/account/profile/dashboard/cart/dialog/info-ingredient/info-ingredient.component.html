@@ -56,13 +56,17 @@
                 <mat-form-field appearance="fill">
                     <mat-label>Amount</mat-label>
                     <input
+                        [disabled]="data.cartHasIngredientId === undefined"
                         autocomplete="off"
                         formControlName="amount"
                         matInput
                         type="number"
                     />
                     <span matSuffix>{{ data.unitAbbrev }}</span>
-                    <mat-hint *ngIf="form.value.amount === data.amount">
+                    <mat-hint *ngIf="data.cartHasIngredientId === undefined">To edit this ingredient, save cart changes
+                        first
+                    </mat-hint>
+                    <mat-hint *ngIf="form.value.amount === data.amount && data.cartHasIngredientId !== undefined">
                         No changes here
                     </mat-hint>
                     <mat-error

@@ -38,7 +38,12 @@ export class CartComponent implements OnInit {
     this.service.initTasks();
   }
 
-  closeCart(): void {}
+  closeCart(): void {
+    this.service.cart.status = Status.INACTIVE.toUpperCase() as Status;
+    this.cartService.update(this.service.cart).subscribe(res => {
+      this.initializeCart();
+    });
+  }
 
   saveCart(): void {
     this.service.saveChanges();

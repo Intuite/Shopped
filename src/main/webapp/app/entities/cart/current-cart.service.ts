@@ -9,6 +9,7 @@ import { ICartIngredient } from 'app/shared/model/cart-ingredient.model';
 import { CartIngredientService } from 'app/entities/cart/cart-ingredient.service';
 import { CartService } from 'app/entities/cart/cart.service';
 import { Account } from 'app/core/user/account.model';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -22,12 +23,14 @@ export class CurrentCartService {
   ci$ = new Subject<ICartIngredient>();
   hasChanges$ = new Subject();
   changes: Observable<HttpResponse<ICartHasIngredient>>[] = [];
+  requesting?: boolean;
 
   constructor(
     private ciService: CartIngredientService,
     private chiService: CartHasIngredientService,
     private iService: IngredientService,
-    private service: CartService
+    private service: CartService,
+    private _router: Router
   ) {}
 
   deleteCartIngredient(ci: ICartIngredient): void {
@@ -61,6 +64,7 @@ export class CurrentCartService {
       });
       this.setCartIngredients();
     } else if (a !== null) {
+      this.requesting = true;
       this.service
         .create({
           userLogin: a.login,
@@ -77,6 +81,7 @@ export class CurrentCartService {
               }, 1000);
             });
             this.setCartIngredients();
+            this.requesting = false;
           }
         });
     }
@@ -85,8 +90,8 @@ export class CurrentCartService {
   setCartIngredients(): void {
     const queries: Observable<ICartIngredient>[] = [];
     if (this.cart.id !== undefined) {
+      this.requesting = true;
       this.chiService.findByCart(this.cart.id).subscribe(response => {
-        console.warn(response);
         if (response.body !== null) {
           this.ci = [];
           this.ci$.next();
@@ -115,6 +120,7 @@ export class CurrentCartService {
       });
     }
     forkJoin(queries).subscribe();
+    this.requesting = false;
   }
 
   addIngredients(ciList: ICartIngredient[]): void {
@@ -122,7 +128,6 @@ export class CurrentCartService {
       const current = this.ci.find(fci => fci.id === ci.id);
       if (current && current.amount !== undefined && ci.amount !== undefined) {
         current.amount = current.amount + ci.amount;
-        console.warn(current);
         this.changes.push(this.ciService.update(current));
         this.ci$.next(ci);
       } else {
@@ -136,10 +141,10 @@ export class CurrentCartService {
 
   saveChanges(): void {
     const obs = forkJoin(this.changes);
-    obs.subscribe();
-    this.changes = [];
+    obs.subscribe(() => {
+      window.location.reload();
+    });
     this.hasChanges$.next();
-    this.setCartIngredients();
   }
 
   updateCartIngredientAmount(ci: ICartIngredient): void {
