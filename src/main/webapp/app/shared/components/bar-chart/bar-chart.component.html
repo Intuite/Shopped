@@ -1,0 +1,14 @@
+<div class="flex-item">
+    <div style="display: block;" [ngStyle]="{'width' : width + 'px'}">
+        <canvas baseChart
+                [datasets]="barChartData"
+                [labels]="barChartLabels"
+                [options]="barChartOptions"
+                [plugins]="barChartPlugins"
+                [colors]="ChartColors"
+                [legend]="barChartLegend"
+                [chartType]="barChartType">
+        </canvas>
+    </div>
+</div>
+

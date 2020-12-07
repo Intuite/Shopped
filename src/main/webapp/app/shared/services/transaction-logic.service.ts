@@ -20,6 +20,12 @@ export class TransactionLogicService {
     protected router: Router
   ) {}
 
+  processTransactionWithdraw(transac: ITransaction): void {
+    this.transactionService.create(transac).subscribe(
+      res => ((transac = res.body || transac), this.withdraw(transac)),
+      () => console.warn('error')
+    );
+  }
   processTransactionBuy(transac: ITransaction): void {
     this.transactionService.create(transac).subscribe(
       res => ((transac = res.body || transac), this.continue(transac)),
@@ -48,5 +54,28 @@ export class TransactionLogicService {
         (res: HttpResponse<ICookies[]>) => this.addCookies(res.body, transac.cookiesAmount),
         () => console.warn('no wallet found')
       );
+  }
+
+  private withdraw(transac: ITransaction): void {
+    const user = transac.userId;
+
+    this.cookiesService
+      .query({
+        ...(user && { 'userId.equals': user }),
+      })
+      .subscribe(
+        (res: HttpResponse<ICookies[]>) => this.reduceCookies(res.body, transac.cookiesAmount),
+        () => console.warn('no wallet found')
+      );
+  }
+
+  private reduceCookies(wallet: ICookies[] | null, amount: number | undefined): void {
+    if (wallet !== null) {
+      wallet[0].amount = (wallet[0].amount || 0) - (amount || 0);
+      this.cookiesService.update(wallet[0]).subscribe(
+        () => console.warn('success'),
+        () => console.warn('error')
+      );
+    }
   }
 }

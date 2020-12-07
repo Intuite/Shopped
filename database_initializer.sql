@@ -8,7 +8,7 @@ values ('Food Time', 'Moment of day', 'ACTIVE'),
        ('Festivity', 'Event of the year', 'ACTIVE'),
        ('Dish Type', 'Category in menu','ACTIVE'),
 	   ('Taste', 'How te recipe taste','ACTIVE');
-	          
+
 # INITIALIZE RECIPE TAGS
 insert into recipe_tag (name, description, status, type_id)
 values ('Breakfast','Food recomended for breakfast', 'ACTIVE', 1),
@@ -16,7 +16,7 @@ values ('Breakfast','Food recomended for breakfast', 'ACTIVE', 1),
        ('Lunch','Food recomended for lunch','ACTIVE', 1),
        ('Snack', 'Food recomended for a snack', 'ACTIVE', 1),
        ('Tea time', 'Food recomended durin tea time', 'ACTIVE', 1),
-       ('Dinner', 'Food recomended for dinner', 'ACTIVE', 1),  
+       ('Dinner', 'Food recomended for dinner', 'ACTIVE', 1),
        ('American', 'From the country of USA', 'INACTIVE', 2),
        ('Latin american', 'From a latin american country', 'ACTIVE', 2),
        ('Mexican', 'From the country of Mexico', 'ACTIVE', 2),
@@ -33,7 +33,7 @@ values ('Breakfast','Food recomended for breakfast', 'ACTIVE', 1),
        ('Holy week', 'For a holy week event', 'ACTIVE', 3),
        ('Easter', 'For a easter event', 'ACTIVE', 3),
        ('Baby shower', 'For a baby shower', 'ACTIVE', 3),
-       ('Family reunion','For a family reunion event','ACTIVE', 3),	
+       ('Family reunion','For a family reunion event','ACTIVE', 3),
        ('Pasta', 'Menu type pasta', 'ACTIVE', 4),
        ('Sushi', 'Menu type sushi', 'ACTIVE', 4),
        ('Soup', 'Menu type soup', 'ACTIVE',  4),
@@ -42,10 +42,10 @@ values ('Breakfast','Food recomended for breakfast', 'ACTIVE', 1),
 	   ('Rice', 'Menu type rice','ACTIVE', 4),
 	   ('Meat special', 'Menu type meats', 'ACTIVE', 4),
 	   ('Sea food','Menu type sea food', 'ACTIVE', 4),
-	   ('Sweet', 'Food that is categorized by the sweet taste it has', 'ACTIVE', 5), 
-       ('Salty', 'Food that is categorized by the salty taste it has', 'ACTIVE',5),  
-       ('Sour', 'Food that is categorized by the sour taste it has', 'ACTIVE',5),    
-       ('Spicy', 'Food that is categorized by the spicy taste it has', 'ACTIVE',5),  
+	   ('Sweet', 'Food that is categorized by the sweet taste it has', 'ACTIVE', 5),
+       ('Salty', 'Food that is categorized by the salty taste it has', 'ACTIVE',5),
+       ('Sour', 'Food that is categorized by the sour taste it has', 'ACTIVE',5),
+       ('Spicy', 'Food that is categorized by the spicy taste it has', 'ACTIVE',5),
        ('Bitter', 'Food that is categorized by the bitter taste it has', 'ACTIVE',5);
 
 # INITIALIZE UNITS
@@ -140,6 +140,9 @@ values ('cookies',4.99,100),
 insert into catalogue (id, id_catalogue, value) values
 	(1,'award_tax', 5);
 
+insert into catalogue (id, id_catalogue, value) values
+	(2,'cookie_withdraw_price', 40);
+
 insert into log_type (id, name, template, status)
 values (1,'Award','','ACTIVE');
 
@@ -177,7 +180,7 @@ values ('Chicken Lasagna', 15,
 	Uncover, top with cheese and bake 20-30 minutes more.'
 	, 105, '2020-11-26 01:00:00'
 	,'ACTIVE', 4),
-	
+
 	('Chocolate Chip Cookies', 24,
 	 'Step 1
 	Preheat oven to 350 degrees F (175 degrees C).
@@ -189,13 +192,13 @@ values ('Chicken Lasagna', 15,
 	Bake for about 10 minutes in the preheated oven, or until edges are nicely browned.
 	'
 	, 30, '2020-11-26 02:00:00','ACTIVE', 4),
-	
+
 	('Crispy Fried Chicken', 12,
 	 'In a large shallow dish, combine 2-2/3 cups flour, 2 tablespoons garlic salt, 1 tablespoon paprika, 2-1/2 teaspoons pepper and 2-1/2 teaspoons poultry seasoning. In another shallow dish, beat eggs and 1-1/2 cups water; add 1 teaspoon salt and the remaining 1-1/3 cup flour and 1/2 teaspoon pepper. Dip chicken in egg mixture, then place in the flour mixture, a few pieces at a time. Turn to coat.
 	In a deep-fat fryer, heat oil to 375°. Working in batches, fry chicken, several pieces at a time, until golden brown and a thermometer inserted into chicken reads 165°, about 7-8 minutes on each side. Drain on paper towels.
 	'
 	, 30, '2020-11-26 03:00:00','ACTIVE', 4),
-	
+
 	('Vegetable Soup', 6,
 	 'Heat two tablespoons of the olive oil in a stockpot pot or Dutch oven over medium heat. Add the onions, carrots, celery, and the tomato paste. Cook, stirring often until the vegetables have softened and the onions are translucent; 8 to 10 minutes.
 
@@ -209,7 +212,7 @@ values ('Chicken Lasagna', 15,
 
 	Remove the pot from the heat and remove the bay leaves. Stir in the cider vinegar (or lemon juice) and the remaining tablespoon of olive oil. Taste and season with more salt, pepper or vinegar. Serve.'
 	, 40, '2020-11-26 04:00:00','ACTIVE', 4),
-	
+
 	('Garlic Shrimp Spaghetti', 4,
 	 'Cook the pasta: Bring a large pot of salted water to the boil, add pasta and cook al dente. Rinse, drain, and set aside.
 	Cook the broth: In a skillet with oil add garlic, then sun-dried tomatoes, smoked paprika, and broth. Cook until softened.
@@ -217,14 +220,14 @@ values ('Chicken Lasagna', 15,
 	Combine with pasta: Add the pasta and toss well, until nicely coated.
 	'
 	, 40, '2020-11-26 05:00:00','ACTIVE', 4),
-	
+
 	('Greek Salad', 4,
 	 'Make the dressing: In a small bowl, whisk together the olive oil, vinegar, garlic, oregano, mustard, salt, and several grinds of pepper.
 
 	On a large platter, arrange the cucumber, green pepper, baby tomatoes, feta cheese, onions, and olives. Drizzle with the dressing and very gently toss. Sprinkle with a few generous pinches of oregano and top with the mint leaves. Season to taste and serve.
 	'
 	, 15, '2020-11-26 06:00:00','ACTIVE', 4),
-	
+
 	('Grilled Salmon', 6,
 	 'Step 1
 	Season salmon fillets with pepper, garlic salt, and salt.
@@ -256,7 +259,7 @@ values ('Chicken Lasagna', 15,
 	In a large bowl, use your hands to combine beef, pork, sausage, onion, and garlic. Season with salt and pepper, then gently stir in bread crumb mixture, eggs and parsley until just combined. Form mixture into 1" balls.
 	In a large high-sided skillet over medium heat, heat oil. Working in batches, sear meatballs on all sides to develop a crust. Set meatballs aside, reduce heat to medium-low, and add sauce to skillet. Bring sauce to a simmer then immediately add meatballs back to skillet. Cover and simmer until cooked through, about 8 minutes more.'
 	, 60, '2020-11-26 09:00:00','ACTIVE', 4),
-	
+
 	('Spicy Tuna Sushi Roll', 4,
 	 'Step 1
 	Bring the rice, water, and vinegar to a boil in a saucepan over high heat. Reduce heat to medium-low, cover, and simmer until the rice is tender, and the liquid has been absorbed, 20 to 25 minutes. Let stand, covered, for about 10 minutes to absorb any excess water. Set rice aside to cool.
@@ -271,7 +274,7 @@ values ('Chicken Lasagna', 15,
 	Pick up the edge of the bamboo rolling sheet, fold the bottom edge of the sheet up, enclosing the filling, and tightly roll the sushi into a thick cylinder. Once the sushi is rolled, wrap it in the mat and gently squeeze to compact it tightly. Cut each roll into 6 pieces, and refrigerate until serve
 	'
 	, 75, '2020-11-26 10:00:00','ACTIVE', 4);
-			
+
 # INITIALIZE RECIPESHASRECIPETAG
 insert into recipe_has_recipe_tag  (status, recipe_id, recipe_tag_id)
 values  ('ACTIVE', 1, 6),
@@ -279,31 +282,31 @@ values  ('ACTIVE', 1, 6),
 		('ACTIVE', 1, 25),
 		('ACTIVE', 2, 4),
 		('ACTIVE', 2, 7),
-		('ACTIVE', 2, 29),		
+		('ACTIVE', 2, 29),
 		('ACTIVE', 3, 3),
 		('ACTIVE', 3, 7),
-		('ACTIVE', 3, 31),		
+		('ACTIVE', 3, 31),
 		('ACTIVE', 4, 6),
 		('ACTIVE', 4, 10),
-		('ACTIVE', 4, 27),		
+		('ACTIVE', 4, 27),
 		('ACTIVE', 5, 17),
 		('ACTIVE', 5, 25),
-		('ACTIVE', 5, 32),		
+		('ACTIVE', 5, 32),
 		('ACTIVE', 6, 13),
-		('ACTIVE', 6, 28),		
+		('ACTIVE', 6, 28),
 		('ACTIVE', 7, 3),
 		('ACTIVE', 7, 21),
-		('ACTIVE', 7, 32),		
+		('ACTIVE', 7, 32),
 		('ACTIVE', 8, 5),
 		('ACTIVE', 8, 19),
-		('ACTIVE', 8, 29),		
+		('ACTIVE', 8, 29),
 		('ACTIVE', 9, 3),
 		('ACTIVE', 9, 24),
-		('ACTIVE', 9, 31),		
+		('ACTIVE', 9, 31),
 		('ACTIVE', 10, 6),
 		('ACTIVE', 10, 11),
 		('ACTIVE', 10, 26);
-	
+
 # INITIALIZE RECIPESHASINGREDIENT
 insert into recipe_has_ingredient (amount, status, ingredient_id, recipe_id)
 values  (12, 'ACTIVE', 1, 1),
@@ -311,15 +314,15 @@ values  (12, 'ACTIVE', 1, 1),
 		(3, 'ACTIVE', 3, 1),
 		(10, 'ACTIVE', 4, 1),
 		(400, 'ACTIVE', 5, 1),
-		(2, 'ACTIVE', 6, 1),				
-		(2, 'ACTIVE', 7, 1),			
+		(2, 'ACTIVE', 6, 1),
+		(2, 'ACTIVE', 7, 1),
 		(100, 'ACTIVE', 8, 2),
 		(2, 'ACTIVE', 6, 2),
 		(100, 'ACTIVE', 17, 2),
 		(2, 'ACTIVE', 18, 2),
 		(20, 'ACTIVE', 19, 2),
 		(300, 'ACTIVE', 11, 2),
-		(150, 'ACTIVE', 21, 2),				
+		(150, 'ACTIVE', 21, 2),
 		(200, 'ACTIVE', 11, 3),
 		(20, 'ACTIVE', 10, 3),
 		(5, 'ACTIVE', 24, 3),
@@ -332,35 +335,35 @@ values  (12, 'ACTIVE', 1, 1),
 		(20, 'ACTIVE', 10, 4),
 		(500, 'ACTIVE', 34, 4),
 		(600, 'ACTIVE', 13, 4),
-		(200, 'ACTIVE', 35, 4),		
+		(200, 'ACTIVE', 35, 4),
 		(435, 'ACTIVE', 39, 5),
 		(800, 'ACTIVE', 40, 5),
 		(40, 'ACTIVE', 28, 5),
 		(500, 'ACTIVE', 34, 5),
 		(100, 'ACTIVE', 41, 5),
-		(60, 'ACTIVE', 13, 5),		
+		(60, 'ACTIVE', 13, 5),
 		(30, 'ACTIVE', 28, 6),
 		(40, 'ACTIVE', 43, 6),
 		(30, 'ACTIVE', 44, 6),
 		(250, 'ACTIVE', 45, 6),
 		(200, 'ACTIVE', 34, 6),
 		(80, 'ACTIVE', 48, 6),
-		(50, 'ACTIVE', 47, 6),		
+		(50, 'ACTIVE', 47, 6),
 		(1000, 'ACTIVE', 49, 7),
 		(50, 'ACTIVE', 50, 7),
 		(30, 'ACTIVE', 17, 7),
-		(50, 'ACTIVE', 27, 7),		
+		(50, 'ACTIVE', 27, 7),
 		(220, 'ACTIVE', 11, 8),
 		(6, 'ACTIVE', 6, 8),
 		(180, 'ACTIVE', 27, 8),
-		(25, 'ACTIVE', 51, 8),				
+		(25, 'ACTIVE', 51, 8),
 		(150, 'ACTIVE', 53, 9),
 		(150, 'ACTIVE', 12, 9),
 		(500, 'ACTIVE', 54, 9),
 		(500, 'ACTIVE', 55, 9),
-		(30, 'ACTIVE', 10, 9),	
+		(30, 'ACTIVE', 10, 9),
 		(300, 'ACTIVE', 58, 10),
 		(20, 'ACTIVE', 59, 10),
 		(150, 'ACTIVE', 60, 10),
 		(100, 'ACTIVE', 29, 10),
-		(1, 'ACTIVE', 66, 10);								
+		(1, 'ACTIVE', 66, 10);

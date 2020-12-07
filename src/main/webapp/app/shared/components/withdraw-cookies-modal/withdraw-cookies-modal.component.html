@@ -1,0 +1,50 @@
+<mat-dialog-content class="mat-typography">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6" align="center">
+                <h2>Available Funds</h2>
+                <mat-progress-spinner
+                    class="example-margin"
+                    color="primary"
+                    mode="determinate"
+                    [value]="100 - (cookieAmount * 100 / (data.amount || 0))">
+                </mat-progress-spinner>
+                <mat-divider class="mt-3 mb-3"></mat-divider>
+                <span>Current Funds</span>
+                {{data.amount}}
+                <br>
+                <span>New Funds</span>
+                {{(data.amount || 0) - (cookieAmount || 0 )}}
+            </div>
+            <div class="col-md-6 input-amount">
+                <div>
+                    <mat-error *ngIf="cookieAmount > (data.amount || 0)">
+                        Not enough cookies
+                    </mat-error>
+                    <mat-error *ngIf="cookieAmount < 0">
+                        Must be a valid number
+                    </mat-error>
+                    <div
+                        *ngIf="(cookieAmount > 0 && cookieAmount < (data.amount || 0)) || (cookieAmount === null || cookieAmount === 0)"
+                        class="space"></div>
+                </div>
+                <mat-form-field appearance="fill" class="form-group w-100">
+                    <mat-label>Withdrawn Cookies</mat-label>
+                    <input type="number" class="" matInput
+                           placeholder="{{data.amount}}"
+                           [(ngModel)]="cookieAmount">
+                    <mat-hint></mat-hint>
+                </mat-form-field>
+                <div class="row w-100 d-flex justified" align="center">
+                    <label class="marg-r">Total:</label>
+                    <span class="">{{cookieAmount / catalogue}}</span>
+                </div>
+                <div class="row buttonBar">
+                    <button mat-raised-button [mat-dialog-close] class="marg-r">Cancel</button>
+                    <button mat-raised-button color="accent" (click)="open()" >Withdraw</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>
+
