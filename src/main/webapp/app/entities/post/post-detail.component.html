@@ -60,9 +60,21 @@
                             </div>
 
                             <div class="blocks-2 post-element-left" gdArea="socialInfo">
-                                <span class="post-icon-bite"></span>
-                                    {{this.countBite.body.length}}
-                                <span class="post-icon-comment"></span>
+                                <div [ngSwitch]="followerStatus">
+                                    <a (click)="addFollower()" *ngSwitchCase="false">
+                                        <button class="text-white" color="accent" mat-raised-button>
+                                            Follow User
+                                        </button>
+                                    </a>
+
+                                    <a *ngSwitchCase="true">
+                                        <button class="text-white" color="accent" mat-raised-button>
+                                            Following
+                                        </button>
+                                    </a>
+                                </div>
+
+
                             </div>
 
                             <div class="blocks-3 post-element-right" gdArea="awardsButtons">
@@ -74,6 +86,7 @@
 
                             <div class="blocks-4 post-element-center" gdArea="userInfo">
                                 <dd> By {{ post.userLogin }} <br/></dd>
+
                                 <dd><span>{{ post.date | date:"mediumDate" }}</span></dd>
                             </div>
 
@@ -84,6 +97,15 @@
                                     </div>
                                 </dd>
                                 <dd><span style="font-style: italic">{{ post.caption }}</span></dd>
+                                <dd>
+                                    <span class="post-icon-bite"></span>
+
+                                    <span class="post-icon-comment"></span>
+                                </dd>
+                                <dd>
+                                    {{this.countBite.body.length}}
+                                    {{this.countBite.body.length}}
+                                </dd>
                             </div>
 
                             <div class="blocks-6 post-element-left post-subtitle" gdArea="ingredientsTitle">
@@ -151,9 +173,9 @@
                             </div>
 
                             <div class="blocks-14 post-element-center post-bite" gdArea="biteButton">
-                                <button class="post-bite-button" type="submit">
+                                <button class="post-bite-button">
                                     <div [ngSwitch]="biteStatus">
-                                        <a (click)="addBite()"  *ngSwitchCase="false">
+                                        <a (click)="addBite()" *ngSwitchCase="false">
                                             <div class="container-bite">
                                                 <div class="post-bite-div">
                                                     <span class="post-icon-heart-white"></span>

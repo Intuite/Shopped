@@ -221,3 +221,23 @@
   background-size: contain;
   margin-right: 5px;
 }
+
+.post-icon-follower {
+  height: 24px;
+  width: 24px;
+  display: inline-block;
+  vertical-align: middle;
+  background: url('../../../content/images/social-icon.png') no-repeat center center;
+  background-size: contain;
+  margin-right: 5px;
+}
+
+.post-icon-following {
+  height: 24px;
+  width: 24px;
+  display: inline-block;
+  vertical-align: middle;
+  background: url('../../../content/images/social-white-icon.png') no-repeat center center;
+  background-size: contain;
+  margin-right: 5px;
+}

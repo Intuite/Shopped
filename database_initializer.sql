@@ -148,7 +148,13 @@ values (1,'Award','','ACTIVE'),
 	   (2,'Post create','','ACTIVE'),
 	   (3,'Post view','','ACTIVE'),
 	   (4,'Post bite','','ACTIVE'),
-	   (5,'Post comment','','ACTIVE');
+	   (5,'Post comment','','ACTIVE'),
+	   (6,'Follower','','ACTIVE');
+	   
+insert into notification_type (id, name, status)
+values (1,'Bite','ACTIVE'),
+	   (2,'Comment','ACTIVE'),
+	   (3,'Follower','ACTIVE');
 
 insert into user_profile(status, user_id)
 values ('ACTIVE', 1),
