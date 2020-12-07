@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { JhiDataUtils } from 'ng-jhipster';
-
-import { Recipe, IRecipe } from 'app/shared/model/recipe.model';
-
+import { IRecipe } from 'app/shared/model/recipe.model';
 import { RecipeService } from 'app/entities/recipe/recipe.service';
 import { HttpResponse } from '@angular/common/http';
 import { Account } from 'app/core/user/account.model';
@@ -22,8 +20,7 @@ import { PostService } from 'app/entities/post/post.service';
 })
 export class PostHomeComponent implements OnInit {
   // recipes: IRecipe[] = [];
-  recipe = new Recipe();
-
+  recipe: any;
   posts: IPost[] = [];
   finalArray: any[] = [];
   account?: Account;
@@ -81,9 +78,11 @@ export class PostHomeComponent implements OnInit {
 
   joinRecipe(): void {
     for (let i = 0; i <= this.posts.length; i++) {
-      const recipeFind = this.recipeService.find(this.posts[i].recipeId);
+      this.recipe = this.recipeService.find(this.posts[i].recipeId);
       const cardInfo = {
         id: this.posts[i].id,
+        image: this.recipe.image,
+        imageType: this.recipe.imageContentType,
         caption: this.posts[i].caption,
         date: this.posts[i].date,
         userLogin: this.posts[i].userLogin,

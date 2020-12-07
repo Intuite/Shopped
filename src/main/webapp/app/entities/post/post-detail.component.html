@@ -61,8 +61,8 @@
 
                             <div class="blocks-2 post-element-left" gdArea="socialInfo">
                                 <span class="post-icon-bite"></span>
+                                    {{this.countBite.body.length}}
                                 <span class="post-icon-comment"></span>
-                                <span class="post-icon-view"></span>
                             </div>
 
                             <div class="blocks-3 post-element-right" gdArea="awardsButtons">
@@ -152,13 +152,27 @@
 
                             <div class="blocks-14 post-element-center post-bite" gdArea="biteButton">
                                 <button class="post-bite-button" type="submit">
-                                    <div class="container-bite">
-                                        <div class="post-bite-div">
-                                            <span class="post-icon-heart-white"></span>
-                                        </div>
-                                        <div class="post-bite-div">
-                                            <span class="post-bite-text-above">Tried this recipe?</span>
-                                            <span class="post-bite-text-below">Leave a bite if you like it!</span>
+                                    <div [ngSwitch]="biteStatus">
+                                        <a (click)="addBite()"  *ngSwitchCase="false">
+                                            <div class="container-bite">
+                                                <div class="post-bite-div">
+                                                    <span class="post-icon-heart-white"></span>
+                                                </div>
+                                                <div class="post-bite-div">
+                                                    <span class="post-bite-text-above">Tried this recipe?</span>
+                                                    <span
+                                                        class="post-bite-text-below">Leave a bite if you like it!</span>
+                                                </div>
+                                            </div>
+                                        </a>
+
+                                        <div class="container-bite" *ngSwitchCase="true">
+                                            <div class="post-bite-div">
+                                                <span class="post-icon-bite-white"></span>
+                                            </div>
+                                            <div class="post-bite-div">
+                                                <span class="post-bite-text-middle">You like this recipe!</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </button>

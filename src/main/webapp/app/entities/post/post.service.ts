@@ -6,6 +6,7 @@ import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
 import { IPost } from 'app/shared/model/post.model';
 import { tap } from 'rxjs/operators';
+import { BiteService } from 'app/entities/bite/bite.service';
 
 type EntityResponseType = HttpResponse<IPost>;
 type EntityArrayResponseType = HttpResponse<IPost[]>;
@@ -16,10 +17,16 @@ export class PostService {
 
   refreshNeeded$ = new Subject<void>();
 
-  constructor(protected http: HttpClient) {}
+  constructor(protected http: HttpClient, protected biteService: BiteService) {}
 
   getRefreshNeed(): any {
     return this.refreshNeeded$;
+  }
+
+  countBites(id: number | undefined): Observable<HttpResponse<any>> {
+    return this.biteService.query({
+      ...{ 'postId.equals': id },
+    });
   }
 
   create(post: IPost): Observable<EntityResponseType> {

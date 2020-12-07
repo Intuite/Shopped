@@ -12,6 +12,11 @@ import { Account } from 'app/core/user/account.model';
 import { Log } from 'app/shared/model/log.model';
 import { LogService } from 'app/entities/log/log.service';
 import * as moment from 'moment';
+import { Bite } from 'app/shared/model/bite.model';
+import { BiteService } from 'app/entities/bite/bite.service';
+import { PostService } from 'app/entities/post/post.service';
+import { NotificationService } from 'app/entities/notification/notification.service';
+import { Notification } from 'app/shared/model/notification.model';
 
 interface FullIngredient {
   id?: number;
@@ -34,6 +39,9 @@ export class PostDetailComponent implements OnInit {
   recipeTags!: IRecipeHasRecipeTag[] | null;
   ingredients: FullIngredient[] = [];
   account?: Account | undefined;
+  biteStatus = false;
+  statusOptions = ['ACTIVE', 'INACTIVE'];
+  countBite: any = 0;
 
   constructor(
     protected recipeService: RecipeService,
@@ -41,7 +49,10 @@ export class PostDetailComponent implements OnInit {
     protected dataUtils: JhiDataUtils,
     protected activatedRoute: ActivatedRoute,
     protected accountService: AccountService,
-    private logService: LogService
+    protected postService: PostService,
+    private logService: LogService,
+    private biteService: BiteService,
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -52,6 +63,7 @@ export class PostDetailComponent implements OnInit {
       () => this.onError()
     );
     this.saveHistory();
+    this.countBites();
   }
 
   byteSize(base64String: string): string {
@@ -78,8 +90,8 @@ export class PostDetailComponent implements OnInit {
     this.logService
       .create(new Log(undefined, description, moment().startOf('minute'), 'Post view', 3, this.account?.login, this.account?.id))
       .subscribe(
-        () => console.warn('log succesful'),
-        () => console.warn('log failed')
+        () => console.warn('Post view log succesful'),
+        () => console.warn('Post view log failed')
       );
   }
 
@@ -108,5 +120,67 @@ export class PostDetailComponent implements OnInit {
         this.recipeService.findRecipeHasRecipeTags(this.post?.recipeId).subscribe(recipeTags => (this.recipeTags = recipeTags.body));
       }
     });
+  }
+
+  addBite(): void {
+    this.biteService
+      .create(new Bite(undefined, moment().startOf('minute'), this.post?.status, this.post?.id, this.account?.login, this.account?.id))
+      .subscribe(
+        () => (this.saveHistoryBite(), this.addNotificationBite(), this.countBites(), (this.biteStatus = true)),
+        () => console.warn('bite failed')
+      );
+  }
+
+  saveHistoryBite(): void {
+    const description = JSON.stringify({
+      user: this.account?.login,
+      postId: this.post?.id,
+    });
+    this.logService
+      .create(new Log(undefined, description, moment().startOf('minute'), 'Post bite', 4, this.account?.login, this.account?.id))
+      .subscribe(
+        () => console.warn('Post bite log succesful'),
+        () => console.warn('Post bite log failed')
+      );
+  }
+
+  addNotificationBite(): void {
+    const content = JSON.stringify({
+      user: this.account?.login,
+      postRecipeName: this.post?.recipeName,
+    });
+    this.notificationService
+      .create(
+        new Notification(
+          undefined,
+          content,
+          moment().startOf('minute'),
+          this.post?.status,
+          'Bite',
+          1,
+          this.account?.login,
+          this.account?.id
+        )
+      )
+      .subscribe(
+        () => console.warn('Notification bite succesful'),
+        () => console.warn('Notification bite failed')
+      );
+  }
+
+  countBites(): void {
+    this.postService.countBites(this.post?.id).subscribe(res => ((this.countBite = res), this.checkBiteStatus()));
+  }
+
+  checkBiteStatus(): void {
+    let i = 0;
+    let found = false;
+    while (i < this.countBite.body.length && found === false) {
+      if (this.countBite.body[i].userId === this.account?.id) {
+        this.biteStatus = true;
+        found = true;
+      }
+      i++;
+    }
   }
 }

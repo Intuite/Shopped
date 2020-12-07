@@ -146,7 +146,9 @@ insert into catalogue (id, id_catalogue, value) values
 insert into log_type (id, name, template, status)
 values (1,'Award','','ACTIVE'),
 	   (2,'Post create','','ACTIVE'),
-	   (3,'Post view','','ACTIVE');
+	   (3,'Post view','','ACTIVE'),
+	   (4,'Post bite','','ACTIVE'),
+	   (5,'Post comment','','ACTIVE');
 
 insert into user_profile(status, user_id)
 values ('ACTIVE', 1),
