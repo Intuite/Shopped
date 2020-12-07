@@ -8,9 +8,11 @@ import { Observable } from 'rxjs';
 import { ICollectionHasRecipe, CollectionHasRecipe } from 'app/shared/model/collection-has-recipe.model';
 import { CollectionHasRecipeService } from './collection-has-recipe.service';
 import { ICollection } from 'app/shared/model/collection.model';
-import { CollectionService } from 'app/entities/collection/collection.service';
 import { IRecipe } from 'app/shared/model/recipe.model';
 import { RecipeService } from 'app/entities/recipe/recipe.service';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { JhiEventManager } from 'ng-jhipster';
+import { Status } from 'app/shared/model/enumerations/status.model';
 
 type SelectableEntity = ICollection | IRecipe;
 
@@ -20,45 +22,43 @@ type SelectableEntity = ICollection | IRecipe;
 })
 export class CollectionHasRecipeUpdateComponent implements OnInit {
   isSaving = false;
-  collections: ICollection[] = [];
   recipes: IRecipe[] = [];
+  currentCollection?: ICollection;
 
   editForm = this.fb.group({
-    id: [],
-    status: [],
-    collectionId: [null, Validators.required],
     recipeId: [null, Validators.required],
   });
 
   constructor(
     protected collectionHasRecipeService: CollectionHasRecipeService,
-    protected collectionService: CollectionService,
     protected recipeService: RecipeService,
     protected activatedRoute: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private activeModal: NgbActiveModal,
+    protected eventManager: JhiEventManager
   ) {}
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ collectionHasRecipe }) => {
-      this.updateForm(collectionHasRecipe);
-
-      this.collectionService.query().subscribe((res: HttpResponse<ICollection[]>) => (this.collections = res.body || []));
-
-      this.recipeService.query().subscribe((res: HttpResponse<IRecipe[]>) => (this.recipes = res.body || []));
-    });
+    this.updateForm();
+    this.recipeService.query().subscribe((res: HttpResponse<IRecipe[]>) => (this.recipes = res.body || []));
   }
 
-  updateForm(collectionHasRecipe: ICollectionHasRecipe): void {
+  updateForm(): void {
     this.editForm.patchValue({
-      id: collectionHasRecipe.id,
-      status: collectionHasRecipe.status,
-      collectionId: collectionHasRecipe.collectionId,
-      recipeId: collectionHasRecipe.recipeId,
+      recipeId: null,
     });
   }
 
-  previousState(): void {
-    window.history.back();
+  // previousState(): void {
+  //   window.history.back();
+  // }
+
+  close(): void {
+    this.activeModal.close();
+  }
+
+  cancel(): void {
+    this.activeModal.dismiss();
   }
 
   save(): void {
@@ -74,9 +74,8 @@ export class CollectionHasRecipeUpdateComponent implements OnInit {
   private createFromForm(): ICollectionHasRecipe {
     return {
       ...new CollectionHasRecipe(),
-      id: this.editForm.get(['id'])!.value,
-      status: this.editForm.get(['status'])!.value,
-      collectionId: this.editForm.get(['collectionId'])!.value,
+      status: 'ACTIVE' as Status,
+      collectionId: this.currentCollection?.id,
       recipeId: this.editForm.get(['recipeId'])!.value,
     };
   }
@@ -90,7 +89,8 @@ export class CollectionHasRecipeUpdateComponent implements OnInit {
 
   protected onSaveSuccess(): void {
     this.isSaving = false;
-    this.previousState();
+    this.eventManager.broadcast('collectionHasRecipeListModification');
+    this.close();
   }
 
   protected onSaveError(): void {

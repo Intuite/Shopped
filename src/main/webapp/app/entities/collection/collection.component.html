@@ -39,7 +39,7 @@
                                 <mat-icon>more_vert</mat-icon>
                             </button>
                             <mat-menu #menu="matMenu">
-                                <button mat-menu-item [routerLink]="['/collection', collection.id, 'view']">
+                                <button mat-menu-item (click)="view(collection)">
                                     <mat-icon>arrow_forward</mat-icon>
                                     <span>See posts</span>
                                 </button>
@@ -55,7 +55,7 @@
                         </div>
                     </mat-card-header>
 
-                    <a [routerLink]="['/collection', collection.id, 'view']">
+                    <a (click)="view(collection)">
                         <div *ngIf="collection.image">
                             <div class="collection-card-picture">
                                 <img [src]="'data:' + collection.imageContentType + ';base64,' + collection.image"

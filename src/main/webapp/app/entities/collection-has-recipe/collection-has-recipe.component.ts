@@ -3,20 +3,29 @@ import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, ParamMap, Router, Data } from '@angular/router';
 import { Subscription, combineLatest } from 'rxjs';
 import { JhiEventManager } from 'ng-jhipster';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { ICollectionHasRecipe } from 'app/shared/model/collection-has-recipe.model';
 
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
-import { CollectionHasRecipeService } from './collection-has-recipe.service';
 import { CollectionHasRecipeDeleteDialogComponent } from './collection-has-recipe-delete-dialog.component';
+import { PageEvent } from '@angular/material/paginator';
+import { IRecipe } from 'app/shared/model/recipe.model';
+import { RecipeService } from 'app/entities/recipe/recipe.service';
+import { CollectionHasRecipeService } from 'app/entities/collection-has-recipe/collection-has-recipe.service';
+import { ICollection } from 'app/shared/model/collection.model';
+import { CollectionHasRecipeUpdateComponent } from 'app/entities/collection-has-recipe/collection-has-recipe-update.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'jhi-collection-has-recipe',
   templateUrl: './collection-has-recipe.component.html',
+  styleUrls: ['./collection-has-recipe.scss'],
 })
 export class CollectionHasRecipeComponent implements OnInit, OnDestroy {
-  collectionHasRecipes?: ICollectionHasRecipe[];
+  collection?: ICollection;
+  collectionHasRecipes?: ICollectionHasRecipe[] | null;
+  recipes?: IRecipe[];
   eventSubscriber?: Subscription;
   totalItems = 0;
   itemsPerPage = ITEMS_PER_PAGE;
@@ -24,47 +33,98 @@ export class CollectionHasRecipeComponent implements OnInit, OnDestroy {
   predicate!: string;
   ascending!: boolean;
   ngbPaginationPage = 1;
+  requesting = false;
+  pageEvent!: PageEvent;
+  temporalEntry?: ICollectionHasRecipe;
+  searchText = '';
+  dataLoaded = false;
 
   constructor(
     protected collectionHasRecipeService: CollectionHasRecipeService,
+    protected recipeService: RecipeService,
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
     protected eventManager: JhiEventManager,
-    protected modalService: NgbModal
+    protected modalService: NgbModal,
+    private activeModal: NgbActiveModal,
+    public dialog: MatDialog
   ) {}
 
-  loadPage(page?: number, dontNavigate?: boolean): void {
-    const pageToLoad: number = page || this.page || 1;
-
-    this.collectionHasRecipeService
-      .query({
-        page: pageToLoad - 1,
-        size: this.itemsPerPage,
-        sort: this.sort(),
-      })
-      .subscribe(
-        (res: HttpResponse<ICollectionHasRecipe[]>) => this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate),
-        () => this.onError()
-      );
+  loadAll(): void {
+    if (this.collection?.id) this.retrieveCollectionHasRecipes(this.collection.id);
   }
 
   ngOnInit(): void {
     this.handleNavigation();
     this.registerChangeInCollectionHasRecipes();
+    this.loadAll();
+  }
+
+  retrieveRecipes(collectionHasRecipesIds: number[]): any {
+    this.recipeService
+      .query({
+        ...{ 'id.in': collectionHasRecipesIds },
+      })
+      .subscribe(
+        (res: HttpResponse<IRecipe[]>) => this.onSuccess(res.body, res.headers),
+        () => this.onError()
+      );
+  }
+
+  retrieveCollectionHasRecipe(collectionId: number, recipeId: number): void {
+    this.collectionHasRecipeService
+      .queryAll({
+        ...{ 'collectionId.equals': collectionId },
+        ...{ 'recipeId.equals': recipeId },
+      })
+      .subscribe(
+        (res: HttpResponse<ICollectionHasRecipe[]>) => {
+          this.collectionHasRecipes = res.body || null;
+        },
+        () => {}
+      );
+  }
+
+  retrieveCollectionHasRecipes(collectionId: number): void {
+    this.requesting = true;
+    this.collectionHasRecipeService
+      .queryAll({
+        ...{ 'collectionId.equals': collectionId },
+      })
+      .subscribe(
+        (res: HttpResponse<ICollectionHasRecipe[]>) => {
+          if (res.body) {
+            this.temporalEntry = res.body[0] || null;
+            this.retrieveRecipes(this.getRecipesIds(res.body));
+          }
+        },
+        () => {
+          this.requesting = false;
+        }
+      );
+  }
+
+  getRecipesIds(entries: ICollectionHasRecipe[]): number[] {
+    const recipeIds: number[] = [];
+    for (const entry of entries) {
+      if (entry?.id)
+        if (entry.recipeId != null) {
+          recipeIds?.push(entry.recipeId);
+        }
+    }
+    return recipeIds;
   }
 
   protected handleNavigation(): void {
     combineLatest(this.activatedRoute.data, this.activatedRoute.queryParamMap, (data: Data, params: ParamMap) => {
       const page = params.get('page');
-      const pageNumber = page !== null ? +page : 1;
+      this.page = page !== null ? +page : 1;
+      const pageSize = params.get('size');
+      this.itemsPerPage = pageSize !== null ? +pageSize : ITEMS_PER_PAGE;
       const sort = (params.get('sort') ?? data['defaultSort']).split(',');
-      const predicate = sort[0];
-      const ascending = sort[1] === 'asc';
-      if (pageNumber !== this.page || predicate !== this.predicate || ascending !== this.ascending) {
-        this.predicate = predicate;
-        this.ascending = ascending;
-        this.loadPage(pageNumber, true);
-      }
+      this.predicate = sort[0];
+      this.ascending = sort[1] === 'asc';
+      this.loadAll();
     }).subscribe();
   }
 
@@ -80,39 +140,60 @@ export class CollectionHasRecipeComponent implements OnInit, OnDestroy {
   }
 
   registerChangeInCollectionHasRecipes(): void {
-    this.eventSubscriber = this.eventManager.subscribe('collectionHasRecipeListModification', () => this.loadPage());
+    this.eventSubscriber = this.eventManager.subscribe('collectionHasRecipeListModification', () => {
+      this.loadAll();
+    });
   }
 
-  delete(collectionHasRecipe: ICollectionHasRecipe): void {
-    const modalRef = this.modalService.open(CollectionHasRecipeDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
-    modalRef.componentInstance.collectionHasRecipe = collectionHasRecipe;
+  create(): void {
+    const modalRef = this.modalService.open(CollectionHasRecipeUpdateComponent, { size: 'lg', backdrop: 'static', centered: true });
+    modalRef.componentInstance.currentCollection = this.collection;
   }
 
-  sort(): string[] {
-    const result = [this.predicate + ',' + (this.ascending ? 'asc' : 'desc')];
-    if (this.predicate !== 'id') {
-      result.push('id');
-    }
-    return result;
-  }
-
-  protected onSuccess(data: ICollectionHasRecipe[] | null, headers: HttpHeaders, page: number, navigate: boolean): void {
-    this.totalItems = Number(headers.get('X-Total-Count'));
-    this.page = page;
-    if (navigate) {
-      this.router.navigate(['/collection-has-recipe'], {
-        queryParams: {
-          page: this.page,
-          size: this.itemsPerPage,
-          sort: this.predicate + ',' + (this.ascending ? 'asc' : 'desc'),
+  delete(recipe: IRecipe): void {
+    this.collectionHasRecipeService
+      .queryAll({
+        ...{ 'collectionId.equals': this.collection?.id },
+        ...{ 'recipeId.equals': recipe.id },
+      })
+      .subscribe(
+        (res: HttpResponse<ICollectionHasRecipe[]>) => {
+          if (res.body) {
+            const tempEntry = res.body[0] || null;
+            const modalRef = this.modalService.open(CollectionHasRecipeDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+            modalRef.componentInstance.collectionHasRecipe = tempEntry;
+          }
         },
-      });
-    }
-    this.collectionHasRecipes = data || [];
+        () => {}
+      );
+  }
+
+  // sort(): string[] {
+  //   const result = [this.predicate + ',' + (this.ascending ? 'asc' : 'desc')];
+  //   if (this.predicate !== 'id') {
+  //     result.push('id');
+  //   }
+  //   return result;
+  // }
+
+  protected onSuccess(data: IRecipe[] | null, headers: HttpHeaders): void {
+    this.totalItems = Number(headers.get('X-Total-Count'));
+    this.recipes = data || [];
     this.ngbPaginationPage = this.page;
+    this.requesting = false;
+    this.dataLoaded = true;
   }
 
   protected onError(): void {
     this.ngbPaginationPage = this.page ?? 1;
+    this.requesting = false;
+  }
+
+  close(): void {
+    this.activeModal.close();
+  }
+
+  cancel(): void {
+    this.activeModal.dismiss();
   }
 }
