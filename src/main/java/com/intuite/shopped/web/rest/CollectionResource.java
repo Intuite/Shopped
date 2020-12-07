@@ -105,6 +105,18 @@ public class CollectionResource {
     }
 
     /**
+     * {@code GET /users} : get all collections.
+     *
+     * @param criteria the information specify.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body all users.
+     */
+    @GetMapping("/collections/all")
+    public ResponseEntity<List<CollectionDTO>> getAllUsers(CollectionCriteria criteria) {
+        List<CollectionDTO> list = collectionQueryService.findByCriteria(criteria);
+        return ResponseEntity.ok().body(list);
+    }
+
+    /**
      * {@code GET  /collections/count} : count all the collections.
      *
      * @param criteria the criteria which the requested entities should match.
