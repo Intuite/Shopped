@@ -19,6 +19,8 @@ import { NotificationService } from 'app/entities/notification/notification.serv
 import { Notification } from 'app/shared/model/notification.model';
 import { Follower } from 'app/shared/model/follower.model';
 import { FollowerService } from 'app/entities/follower/follower.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CommentUpdateComponent } from 'app/entities/comment/comment-update.component';
 
 interface FullIngredient {
   id?: number;
@@ -46,6 +48,7 @@ export class PostDetailComponent implements OnInit {
   countBite: any = 0;
   followerStatus = false;
   countFollower: any = 0;
+  countComments: any = 0;
 
   constructor(
     protected recipeService: RecipeService,
@@ -57,7 +60,8 @@ export class PostDetailComponent implements OnInit {
     protected followService: FollowerService,
     private logService: LogService,
     private biteService: BiteService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    protected modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
@@ -70,6 +74,7 @@ export class PostDetailComponent implements OnInit {
     this.saveHistory();
     this.countBites();
     this.countFollowers();
+    this.findComments();
   }
 
   byteSize(base64String: string): string {
@@ -259,5 +264,14 @@ export class PostDetailComponent implements OnInit {
       }
       i++;
     }
+  }
+
+  addComment(): void {
+    const modalRef = this.modalService.open(CommentUpdateComponent, { size: 'md', backdrop: 'static', centered: true });
+    modalRef.componentInstance.post = this.post;
+  }
+
+  findComments(): void {
+    this.postService.findComments(this.post?.id).subscribe(res => (this.countComments = res.body));
   }
 }

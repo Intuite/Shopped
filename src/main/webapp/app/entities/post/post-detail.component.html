@@ -212,7 +212,11 @@
 
                             <div class="blocks-16 post-element-left post-reply" gdArea="reply">
                                 Leave a reply:
-                                <hr>
+                                <a (click)="addComment()">
+                                    <button class="text-white" color="warn" mat-raised-button>
+                                        Add Comment
+                                    </button>
+                                </a>
                             </div>
 
                             <div class="blocks-17 post-element-left post-subtitle" gdArea="commentsTitle">
@@ -222,7 +226,25 @@
                             </div>
 
                             <div class="blocks-18 post-element-center" gdArea="commentsList">
-                                Comments List
+                                <mat-list>
+                                    <div *ngFor="let comment of countComments">
+                                        <mat-divider></mat-divider>
+                                        <mat-list-item>
+                                            <div matLine>
+                                                <span>
+                                                {{ comment.userLogin }}
+                                                </span>
+                                            </div>
+                                            <div matLine>
+                                                <span>{{ comment.content }}</span>
+                                            </div>
+                                            <div matLine>
+                                                <span>{{ comment.created | date:"mediumDate" }}</span>
+                                            </div>
+                                        </mat-list-item>
+                                    </div>
+                                    <mat-divider></mat-divider>
+                                </mat-list>
                             </div>
 
                         </div>
