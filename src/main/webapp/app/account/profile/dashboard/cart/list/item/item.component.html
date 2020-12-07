@@ -1,0 +1,27 @@
+<mat-list-item>
+    <img *ngIf="ci.image" [src]="ci.image" alt="List ci image" matListAvatar/>
+    <mat-icon *ngIf="!ci.image" color="primary" matListIcon>
+        shopping_cart
+    </mat-icon>
+    <div matLine>{{ ci.name }}</div>
+    <div matLine>
+        {{ ci.amount }} <strong>{{ ci.unitAbbrev }}</strong>
+    </div>
+    <button (click)="delete()" mat-icon-button>
+        <mat-icon color="warn">delete</mat-icon>
+    </button>
+    <button (click)="info()" mat-icon-button>
+        <mat-icon color="primary">info</mat-icon>
+    </button>
+    <button
+        (click)="toggle()"
+        [disabled]="this.ci.cartHasIngredientId === undefined"
+        [matTooltipDisabled]="this.ci.cartHasIngredientId !== undefined"
+        [ngSwitch]="ci.status"
+        mat-icon-button
+        matTooltip="You must save changes to edit this item"
+    >
+        <mat-icon *ngSwitchCase="'ACTIVE'" color="accent">check_box</mat-icon>
+        <mat-icon *ngSwitchDefault>check_box_outline_blank</mat-icon>
+    </button>
+</mat-list-item>
