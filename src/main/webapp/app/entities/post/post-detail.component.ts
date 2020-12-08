@@ -266,9 +266,10 @@ export class PostDetailComponent implements OnInit {
     }
   }
 
-  addComment(): void {
+  addComment(post: IPost, account: Account | undefined): void {
     const modalRef = this.modalService.open(CommentUpdateComponent, { size: 'md', backdrop: 'static', centered: true });
-    modalRef.componentInstance.post = this.post;
+    modalRef.componentInstance.post = post;
+    modalRef.componentInstance.account = account;
   }
 
   findComments(): void {
