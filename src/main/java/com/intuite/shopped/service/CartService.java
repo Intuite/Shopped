@@ -1,17 +1,18 @@
 package com.intuite.shopped.service;
 
 import com.intuite.shopped.domain.Cart;
+import com.intuite.shopped.domain.enumeration.Status;
 import com.intuite.shopped.repository.CartRepository;
 import com.intuite.shopped.service.dto.CartDTO;
 import com.intuite.shopped.service.mapper.CartMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
 import java.util.Optional;
 
 /**
@@ -39,6 +40,8 @@ public class CartService {
      * @return the persisted entity.
      */
     public CartDTO save(CartDTO cartDTO) {
+        cartDTO.setCreated(Instant.now());
+        cartDTO.setStatus(Status.ACTIVE);
         log.debug("Request to save Cart : {}", cartDTO);
         Cart cart = cartMapper.toEntity(cartDTO);
         cart = cartRepository.save(cart);

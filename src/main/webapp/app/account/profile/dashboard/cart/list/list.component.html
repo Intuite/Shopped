@@ -1,0 +1,23 @@
+<mat-list>
+    <div *ngIf="civ.length > 0; else notif">
+        <jhi-cart-list-item
+            (itemToggled)="checkVisibility($event)"
+            *ngFor="let item of civ"
+            [ci]="item"
+        ></jhi-cart-list-item>
+    </div>
+    <ng-template #notif>
+        <div *ngIf="civ.length === 0 || service.itemsLoaded; else spinner">
+            <mat-list-item>
+                <mat-icon color="primary" matListIcon>view_list</mat-icon>
+                <div matLine>Seems like there are no ingredients left to buy.</div>
+                <div matLine>Add some more, or close the cart.</div>
+            </mat-list-item>
+        </div>
+        <ng-template #spinner>
+            <div fxLayout="row" fxLayoutAlign="center center">
+                <mat-spinner></mat-spinner>
+            </div>
+        </ng-template>
+    </ng-template>
+</mat-list>
