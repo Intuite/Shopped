@@ -21,6 +21,7 @@ import { Follower } from 'app/shared/model/follower.model';
 import { FollowerService } from 'app/entities/follower/follower.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommentUpdateComponent } from 'app/entities/comment/comment-update.component';
+import { CommentService } from 'app/entities/comment/comment.service';
 
 interface FullIngredient {
   id?: number;
@@ -58,6 +59,7 @@ export class PostDetailComponent implements OnInit {
     protected accountService: AccountService,
     protected postService: PostService,
     protected followService: FollowerService,
+    protected commentService: CommentService,
     private logService: LogService,
     private biteService: BiteService,
     private notificationService: NotificationService,
@@ -75,6 +77,9 @@ export class PostDetailComponent implements OnInit {
     this.countBites();
     this.countFollowers();
     this.findComments();
+    this.commentService.refreshNeeded$.subscribe(() => {
+      this.findComments();
+    });
   }
 
   byteSize(base64String: string): string {

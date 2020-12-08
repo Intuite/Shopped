@@ -1,6 +1,4 @@
 <div fxFlex="100%">
-    {{post|json}}
-    {{account|json}}
     <div class="row justify-content-center">
         <div class="col-8">
             <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
@@ -13,9 +11,9 @@
                     </mat-form-field>
 
                     <mat-form-field appearance="fill" class="form-group w-100">
-                        <mat-label>Content*</mat-label>
-                        <input formControlName="content" id="field_content" matInput name="content"
-                               type="text"/>
+                        <mat-label>Comment*</mat-label>
+                        <textarea  formControlName="content" id="field_content" matInput name="content"
+                                   type="text" style="height: 100px"></textarea>
                         <mat-error
                             *ngIf="(editForm.get('content')!.invalid && (editForm.get('content')!.dirty ||
                                 editForm.get('content')!.touched)) && editForm.get('content')?.errors?.minlength"
