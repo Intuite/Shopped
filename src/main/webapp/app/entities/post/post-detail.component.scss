@@ -241,3 +241,37 @@
   background-size: contain;
   margin-right: 5px;
 }
+
+.comment-user {
+  float: left;
+  font-size: 20px;
+}
+
+.comment-content {
+  float: left;
+  clear: left;
+  height: auto;
+  font-size: 16px;
+  max-width: inherit;
+  margin-top: 10px;
+  margin-left: 25px;
+  margin-right: 10px;
+  text-align: left;
+}
+
+.comment-date {
+  float: left;
+  clear: left;
+  opacity: 70%;
+  font-size: 14px;
+}
+
+.comment-line {
+  width: inherit;
+  height: 5px;
+}
+
+.post-comment {
+  overflow-y: scroll;
+  max-height: 400px;
+}

@@ -221,29 +221,27 @@
 
                             <div class="blocks-17 post-element-left post-subtitle" gdArea="commentsTitle">
                                 Comments:
-                                <br>
-                                <hr>
                             </div>
 
-                            <div class="blocks-18 post-element-center" gdArea="commentsList">
+                            <div class="blocks-18 post-element-center post-comment" gdArea="commentsList">
                                 <mat-list>
                                     <div *ngFor="let comment of countComments">
-                                        <mat-divider></mat-divider>
-                                        <mat-list-item>
-                                            <div matLine>
-                                                <span>
-                                                {{ comment.userLogin }}
-                                                </span>
-                                            </div>
-                                            <div matLine>
-                                                <span>{{ comment.content }}</span>
-                                            </div>
-                                            <div matLine>
-                                                <span>{{ comment.created | date:"mediumDate" }}</span>
+                                        <hr>
+                                        <mat-list-item style="height: auto">
+                                            <div>
+                                                <div class="comment-user">
+                                                    <strong>{{ comment.userLogin | titlecase}}</strong>
+                                                </div>
+                                                <div class="comment-date">
+                                                    <span>{{ comment.created | date:"short" }}</span>
+                                                </div>
+                                                <div class="comment-content">
+                                                    {{ comment.content }}
+                                                </div>
                                             </div>
                                         </mat-list-item>
+
                                     </div>
-                                    <mat-divider></mat-divider>
                                 </mat-list>
                             </div>
 
