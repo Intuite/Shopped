@@ -1,9 +1,9 @@
 <div fxFlex="100%">
     <div class="row justify-content-center">
-        <div class="col-8">
+        <div class="col-8" style="margin-top: 50px; margin-bottom: 50px">
             <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
                 <h2 id="jhi-comment-heading">Add a public comment</h2>
-
+                <jhi-alert-error></jhi-alert-error>
                 <div>
                     <mat-form-field appearance="fill" class="form-group w-100" [hidden]="true">
                         <mat-label jhiTranslate="global.field.id"></mat-label>
@@ -13,7 +13,7 @@
                     <mat-form-field appearance="fill" class="form-group w-100">
                         <mat-label>Comment*</mat-label>
                         <textarea  formControlName="content" id="field_content" matInput name="content"
-                                   type="text" style="height: 100px"></textarea>
+                                   type="text" style="height: 75px"></textarea>
                         <mat-error
                             *ngIf="(editForm.get('content')!.invalid && (editForm.get('content')!.dirty ||
                                 editForm.get('content')!.touched)) && editForm.get('content')?.errors?.minlength"
@@ -22,9 +22,9 @@
                         </mat-error>
                         <mat-error *ngIf="(editForm.get('content')!.invalid && (editForm.get('content')!.dirty ||
                                 editForm.get('content')!.touched)) && editForm.get('content')?.errors?.maxlength"
-                                   [translateValues]="{ max: 150 }"
+                                   [translateValues]="{ max: 200 }"
                                    jhiTranslate="entity.validation.maxlength">
-                            This field cannot be longer than 50 characters.
+                            This field cannot be longer than 200 characters.
                         </mat-error>
                     </mat-form-field>
 
