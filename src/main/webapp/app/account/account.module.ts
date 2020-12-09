@@ -22,6 +22,7 @@ import { ReportsComponent } from './profile/dashboard/reports/reports.component'
 import { PaymentsComponent } from './profile/dashboard/payments/payments.component';
 import { ShoppedTransactionModule } from 'app/entities/transaction/transaction.module';
 import { ShoppedRecipeModule } from 'app/entities/recipe/recipe.module';
+import { AnaliticaComponent } from './profile/dashboard/analitica/analitica.component';
 
 @NgModule({
   imports: [ShoppedSharedModule, RouterModule.forChild(accountState), ShoppedTransactionModule, ShoppedRecipeModule],
@@ -42,6 +43,7 @@ import { ShoppedRecipeModule } from 'app/entities/recipe/recipe.module';
     CartComponent,
     ReportsComponent,
     PaymentsComponent,
+    AnaliticaComponent,
   ],
 })
 export class AccountModule {}
