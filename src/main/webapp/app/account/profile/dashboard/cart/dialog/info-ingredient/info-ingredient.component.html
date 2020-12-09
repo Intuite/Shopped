@@ -1,0 +1,103 @@
+<mat-card class="mat-elevation-z0" style="padding: 0px">
+    <div fxLayout="row" fxLayoutAlign="space-between none">
+        <div
+            fxFlex
+            fxLayout="row"
+            fxLayoutAlign="start none"
+            fxLayoutGap="16px"
+        >
+            <img
+                *ngIf="data.image"
+                [src]="data.image"
+                alt="List data image"
+                matCardAvatar
+            />
+            <mat-icon *ngIf="!data.image" color="primary" matCardAvatar>
+                shopping_cart
+            </mat-icon>
+            <div fxLayout="column">
+                <mat-card-title>{{ data.name }}</mat-card-title>
+                <mat-card-subtitle>
+                    {{ data.amount }}
+                    <strong>{{ data.unitAbbrev }}</strong>
+                </mat-card-subtitle>
+            </div>
+        </div>
+        <button [ngSwitch]="data.status" disabled mat-icon-button>
+            <mat-icon *ngSwitchCase="'ACTIVE'">check_box</mat-icon>
+            <mat-icon *ngSwitchDefault>check_box_outline_blank</mat-icon>
+        </button>
+    </div>
+    <mat-card-content
+        [formGroup]="form"
+        fxLayout="row"
+        fxLayoutAlign="space-between start"
+        mat-dialog-content
+    >
+        <div>
+            <h5>Recipes</h5>
+            <mat-list>
+                <mat-list-item>
+                    <mat-icon color="primary" matListIcon>fastfood</mat-icon>
+                    <div matLine>
+                        There are no recipes in the cart linked to this
+                        ingredient.
+                    </div>
+                    <div matLine>
+                        Add recipes to your cart with this ingredient to see
+                        more information
+                    </div>
+                </mat-list-item>
+            </mat-list>
+        </div>
+        <div>
+            <h5>Update Amount</h5>
+            <form [formGroup]="form">
+                <mat-form-field appearance="fill">
+                    <mat-label>Amount</mat-label>
+                    <input
+                        [disabled]="data.cartHasIngredientId === undefined"
+                        autocomplete="off"
+                        formControlName="amount"
+                        matInput
+                        type="number"
+                    />
+                    <span matSuffix>{{ data.unitAbbrev }}</span>
+                    <mat-hint *ngIf="data.cartHasIngredientId === undefined">To edit this ingredient, save cart changes
+                        first
+                    </mat-hint>
+                    <mat-hint *ngIf="form.value.amount === data.amount && data.cartHasIngredientId !== undefined">
+                        No changes here
+                    </mat-hint>
+                    <mat-error
+                        *ngIf="
+                            (form.get('amount')!.invalid &&
+                                form.get('amount')!.dirty) ||
+                            form.get('amount')!.touched
+                        "
+                    >
+                        <small *ngIf="form.get('amount')?.errors?.required"
+                        >An amount is required</small
+                        >
+
+                        <small *ngIf="form.get('amount')?.errors?.min"
+                        >The value must be greater than 1</small
+                        >
+                    </mat-error>
+                </mat-form-field>
+            </form>
+        </div>
+    </mat-card-content>
+    <mat-card-actions align="end" mat-dialog-actions>
+        <button mat-button mat-dialog-close>Cancel</button>
+        <button
+            (click)="updateAmount()"
+            [disabled]="form.invalid || form.value.amount === data.amount"
+            color="accent"
+            mat-raised-button
+            type="submit"
+        >
+            Save
+        </button>
+    </mat-card-actions>
+</mat-card>

@@ -1,29 +1,27 @@
 package com.intuite.shopped.service.dto;
 
-import io.swagger.annotations.ApiModel;
-import java.time.Instant;
-import javax.validation.constraints.*;
-import java.io.Serializable;
 import com.intuite.shopped.domain.enumeration.Status;
+import io.swagger.annotations.ApiModel;
+
+import java.io.Serializable;
+import java.time.Instant;
 
 /**
  * A DTO for the {@link com.intuite.shopped.domain.Cart} entity.
  */
 @ApiModel(description = "For managing\ningredients and recipes.\n@author Isaac Miranda")
 public class CartDTO implements Serializable {
-    
+
     private Long id;
 
-    @NotNull
     private Instant created;
 
     private Status status;
 
-
     private Long userId;
 
     private String userLogin;
-    
+
     public Long getId() {
         return id;
     }

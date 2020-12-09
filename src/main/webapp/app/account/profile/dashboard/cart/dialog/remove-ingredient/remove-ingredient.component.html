@@ -1,0 +1,16 @@
+<div mat-dialog-title style="text-align: center">
+    Do you wish to remove <i color="accent">{{ data.name }}</i> from your cart?
+</div>
+<mat-divider></mat-divider>
+<div align="center" mat-dialog-actions>
+    <button mat-button mat-dialog-close>No</button>
+    <button
+        [mat-dialog-close]="data"
+        cdkFocusInitial
+        class="text-white"
+        color="primary"
+        mat-raised-button
+    >
+        Yes
+    </button>
+</div>

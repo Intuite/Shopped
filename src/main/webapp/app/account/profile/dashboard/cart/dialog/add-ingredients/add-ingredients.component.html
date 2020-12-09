@@ -1,0 +1,16 @@
+<mat-card-title-group mat-dialog-title>
+    <mat-card-title>Add Ingredients</mat-card-title>
+    <mat-card-subtitle>
+        Select the ingredients you need, don't worry, the amounts you select
+        will be added to any ingredient you already have in your cart.
+    </mat-card-subtitle>
+</mat-card-title-group>
+<mat-card-content mat-dialog-content>
+    <jhi-ingredient-picker #ingredientPicker></jhi-ingredient-picker>
+</mat-card-content>
+<mat-card-actions align="end" mat-dialog-actions>
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button (click)="addIngredientsToCart()" class="text-white" color="primary" mat-raised-button>
+        Save
+    </button>
+</mat-card-actions>

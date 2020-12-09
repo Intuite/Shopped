@@ -28,9 +28,10 @@
                 </button>
             </li>
             <!-- DASHBOARD LINK -->
-            <li *ngSwitchCase="true" [routerLinkActiveOptions]="{ exact: true }" class="nav-item" routerLinkActive="active">
-                <button *ngIf="currentAccount" (click)="collapseNavbar()" class="nav-link" mat-button
-                        [routerLink]="['/account/profile', currentAccount.login]"
+            <li *ngSwitchCase="true" [routerLinkActiveOptions]="{ exact: true }" class="nav-item"
+                routerLinkActive="active">
+                <button (click)="collapseNavbar()" *ngIf="currentAccount" [routerLink]="['/account/profile', currentAccount.login]" class="nav-link"
+                        mat-button
                 >
                   <span>
                     <fa-icon icon="user"></fa-icon>
@@ -64,25 +65,25 @@
                           <span>Platform</span>
                         </span>
                     </button>
-                    <button mat-menu-item [matMenuTriggerFor]="foodManagementMenu">
+                    <button [matMenuTriggerFor]="foodManagementMenu" mat-menu-item>
                         <span>
                           <fa-icon icon="utensils"></fa-icon>
                           <span>Food management</span>
                         </span>
                     </button>
-                    <button mat-menu-item [matMenuTriggerFor]="postsMenu">
+                    <button [matMenuTriggerFor]="postsMenu" mat-menu-item>
                         <span>
                           <fa-icon icon="user-plus"></fa-icon>
                           <span>Posts</span>
                         </span>
                     </button>
-                    <button mat-menu-item [matMenuTriggerFor]="cookiesMenu">
+                    <button [matMenuTriggerFor]="cookiesMenu" mat-menu-item>
                         <span>
                           <fa-icon icon="cookie-bite"></fa-icon>
                           <span>Cookies</span>
                         </span>
                     </button>
-                    <button [hidden]="true" mat-menu-item [matMenuTriggerFor]="otherMenu">
+                    <button [hidden]="true" [matMenuTriggerFor]="otherMenu" mat-menu-item>
                         <span>
                           <fa-icon icon="asterisk"></fa-icon>
                           <span>Other</span>
@@ -96,7 +97,7 @@
                         <fa-icon [fixedWidth]="true" icon="user"></fa-icon>
                         <span jhiTranslate="global.menu.admin.userManagement">User management</span>
                     </button>
-                    <button mat-menu-item [matMenuTriggerFor]="moderationMenu">
+                    <button [matMenuTriggerFor]="moderationMenu" mat-menu-item>
                         <fa-icon [fixedWidth]="true" icon="users-cog"></fa-icon>
                         <span>Moderation</span>
                     </button>
@@ -115,7 +116,7 @@
                         <fa-icon [fixedWidth]="true" icon="list"></fa-icon>
                         <span jhiTranslate="global.menu.admin.configuration">Configuration</span>
                     </button>
-                    <button mat-menu-item [matMenuTriggerFor]="logsMenu">
+                    <button [matMenuTriggerFor]="logsMenu" mat-menu-item>
                         <fa-icon [fixedWidth]="true" icon="users-cog"></fa-icon>
                         <span>Logs</span>
                     </button>
@@ -197,9 +198,9 @@
 
                 <mat-menu #foodManagementMenu="matMenu" xPosition="before">
                     <button (click)="collapseNavbar()"
+                            [matMenuTriggerFor]="tagTypesMenu"
                             class="dropdown-item"
-                            mat-menu-item
-                            [matMenuTriggerFor]="tagTypesMenu">
+                            mat-menu-item>
                         <span>
                           <fa-icon [fixedWidth]="true" icon="tag"></fa-icon>
                           <span>Tags</span>
@@ -315,7 +316,7 @@
                     </button>
                 </mat-menu>
 
-                <mat-menu [hidden]="true" #otherMenu="matMenu" xPosition="before">
+                <mat-menu #otherMenu="matMenu" [hidden]="true" xPosition="before">
                     <button
                         (click)="collapseNavbar()"
                         [routerLinkActiveOptions]="{ exact: true }"
@@ -344,6 +345,7 @@
             <!-- USER FOOD MENU -->
             <li
                 *jhiHasAnyAuthority="'ROLE_USER'"
+                [hidden]="true"
                 [routerLinkActiveOptions]="{ exact: true }"
                 class="nav-item dropdown pointer"
                 display="dynamic"
@@ -384,10 +386,10 @@
             </li>
 
             <!-- USER CART LINK -->
-            <li  *jhiHasAnyAuthority="'ROLE_USER'"
-                 [routerLinkActiveOptions]="{ exact: true }"
-                 class="nav-item" routerLinkActive="active"
-                 [hidden]="true"
+            <li *jhiHasAnyAuthority="'ROLE_USER'"
+                [hidden]="true"
+                [routerLinkActiveOptions]="{ exact: true }" class="nav-item"
+                routerLinkActive="active"
             >
                 <button
                     (click)="collapseNavbar()"
@@ -403,9 +405,9 @@
             </li>
 
             <!-- MODERATOR MODERATION MENU -->
-            <li  *jhiHasAnyAuthority="'ROLE_MODERATOR'"
-                 [routerLinkActiveOptions]="{ exact: true }"
-                 class="nav-item" routerLinkActive="active"
+            <li *jhiHasAnyAuthority="'ROLE_MODERATOR'"
+                [routerLinkActiveOptions]="{ exact: true }"
+                class="nav-item" routerLinkActive="active"
             >
                 <button [matMenuTriggerFor]="moderationMenu" class="nav-link dropdown-toggle" id="mod-button"
                         mat-button>
@@ -473,19 +475,19 @@
 
             <!-- ACCOUNT MENU -->
             <li
+                *ngSwitchCase="false"
                 [routerLinkActiveOptions]="{ exact: false }"
                 class="nav-item dropdown pointer"
                 display="dynamic"
                 ngbDropdown
                 routerLinkActive="active"
-                *ngSwitchCase="false"
             >
                 <button [matMenuTriggerFor]="accountMenu" class="nav-link dropdown-toggle" mat-button>
                   <span *ngIf="!getImageUrl()">
                     <fa-icon icon="user"></fa-icon>
                     <span jhiTranslate="global.menu.account.main"> Account </span>
                   </span>
-                        <span *ngIf="getImageUrl()">
+                    <span *ngIf="getImageUrl()">
                     <img [src]="getImageUrl()" alt="Avatar" class="profile-image rounded-circle"/>
                   </span>
                 </button>
@@ -501,8 +503,9 @@
                     </button>
                 </mat-menu>
             </li>
-            <li *ngSwitchCase="true" [routerLinkActiveOptions]="{ exact: true }" class="nav-item" routerLinkActive="active">
-                <button *ngIf="currentAccount" (click)="logout()" class="nav-link" mat-button>
+            <li *ngSwitchCase="true" [routerLinkActiveOptions]="{ exact: true }" class="nav-item"
+                routerLinkActive="active">
+                <button (click)="logout()" *ngIf="currentAccount" class="nav-link" mat-button>
                   <span>
                     <fa-icon icon="sign-out-alt"></fa-icon>
                     <span>Sign out</span>
