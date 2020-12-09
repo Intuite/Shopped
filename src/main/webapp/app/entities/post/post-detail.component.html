@@ -67,7 +67,7 @@
 
                             <div class="blocks-3 post-element-right" gdArea="awardsButtons">
                                 <jhi-award-viewer [postId]=post.id></jhi-award-viewer>
-                                <div style="float: right" *ngIf="account!.id !== 3">
+                                <div *ngIf="account!.id !== 3" style="float: right">
                                     <jhi-give-award [data]=post.id></jhi-give-award>
                                 </div>
                             </div>
@@ -113,6 +113,11 @@
                                                 <span>{{ ingredient.amount }}</span>
                                                 <strong>{{ ingredient.unitAbbrev }}</strong>
                                             </div>
+                                            <button (click)="addIngredientToCart(ingredient)" color="accent"
+                                                    mat-icon-button
+                                                    matTooltip="Add ingredient to cart">
+                                                <mat-icon>next_plan</mat-icon>
+                                            </button>
                                         </mat-list-item>
                                     </div>
                                     <mat-divider></mat-divider>

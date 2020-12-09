@@ -9,6 +9,8 @@ import { IRecipeHasRecipeTag } from 'app/shared/model/recipe-has-recipe-tag.mode
 import { IngredientService } from 'app/entities/ingredient/ingredient.service';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/user/account.model';
+import { CartService } from 'app/entities/cart/cart.service';
+import { IIngredient } from 'app/shared/model/ingredient.model';
 
 interface FullIngredient {
   id?: number;
@@ -37,7 +39,8 @@ export class PostDetailComponent implements OnInit {
     protected ingredientService: IngredientService,
     protected dataUtils: JhiDataUtils,
     protected activatedRoute: ActivatedRoute,
-    protected accountService: AccountService
+    protected accountService: AccountService,
+    public cartService: CartService
   ) {}
 
   ngOnInit(): void {
@@ -63,6 +66,10 @@ export class PostDetailComponent implements OnInit {
 
   onError(): void {
     console.warn('There was an error');
+  }
+
+  addIngredientToCart(ing: IIngredient): void {
+    if (this.account !== undefined) this.cartService.addIngredient(ing, this.account);
   }
 
   protected onSuccess(): void {

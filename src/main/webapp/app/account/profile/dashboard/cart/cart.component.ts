@@ -40,7 +40,7 @@ export class CartComponent implements OnInit {
 
   closeCart(): void {
     this.service.cart.status = Status.INACTIVE.toUpperCase() as Status;
-    this.cartService.update(this.service.cart).subscribe(res => {
+    this.cartService.update(this.service.cart).subscribe(() => {
       this.initializeCart();
     });
   }
