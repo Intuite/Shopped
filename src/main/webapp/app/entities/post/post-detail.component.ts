@@ -2,26 +2,28 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { JhiDataUtils } from 'ng-jhipster';
-import { IPost } from 'app/shared/model/post.model';
-import { IRecipe } from 'app/shared/model/recipe.model';
-import { RecipeService } from 'app/entities/recipe/recipe.service';
-import { IRecipeHasRecipeTag } from 'app/shared/model/recipe-has-recipe-tag.model';
-import { IngredientService } from 'app/entities/ingredient/ingredient.service';
+import * as moment from 'moment';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/user/account.model';
 import { Log } from 'app/shared/model/log.model';
 import { LogService } from 'app/entities/log/log.service';
-import * as moment from 'moment';
+import { Notification } from 'app/shared/model/notification.model';
+import { NotificationService } from 'app/entities/notification/notification.service';
+
+import { IPost } from 'app/shared/model/post.model';
+import { PostService } from 'app/entities/post/post.service';
+import { IRecipe } from 'app/shared/model/recipe.model';
+import { RecipeService } from 'app/entities/recipe/recipe.service';
+import { IRecipeHasRecipeTag } from 'app/shared/model/recipe-has-recipe-tag.model';
+import { IngredientService } from 'app/entities/ingredient/ingredient.service';
 import { Bite } from 'app/shared/model/bite.model';
 import { BiteService } from 'app/entities/bite/bite.service';
-import { PostService } from 'app/entities/post/post.service';
-import { NotificationService } from 'app/entities/notification/notification.service';
-import { Notification } from 'app/shared/model/notification.model';
 import { Follower } from 'app/shared/model/follower.model';
 import { FollowerService } from 'app/entities/follower/follower.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { CommentUpdateComponent } from 'app/entities/comment/comment-update.component';
 import { CommentService } from 'app/entities/comment/comment.service';
+import { CommentUpdateComponent } from 'app/entities/comment/comment-update.component';
 
 interface FullIngredient {
   id?: number;
@@ -73,7 +75,8 @@ export class PostDetailComponent implements OnInit {
       () => this.onSuccess(),
       () => this.onError()
     );
-    this.saveHistory();
+
+    this.saveViewHistory();
     this.countBites();
     this.countFollowers();
     this.findComments();
@@ -98,7 +101,7 @@ export class PostDetailComponent implements OnInit {
     console.warn('There was an error');
   }
 
-  saveHistory(): void {
+  saveViewHistory(): void {
     const description = JSON.stringify({
       user: this.account?.login,
       postId: this.post?.id,

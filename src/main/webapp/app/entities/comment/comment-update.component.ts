@@ -17,6 +17,10 @@ import { IUser } from 'app/core/user/user.model';
 import { UserService } from 'app/core/user/user.service';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/user/account.model';
+import { Log } from 'app/shared/model/log.model';
+import { Notification } from 'app/shared/model/notification.model';
+import { NotificationService } from 'app/entities/notification/notification.service';
+import { LogService } from 'app/entities/log/log.service';
 
 type SelectableEntity = IPost | IUser;
 
@@ -49,7 +53,9 @@ export class CommentUpdateComponent implements OnInit {
     private fb: FormBuilder,
     public activeModal: NgbActiveModal,
     protected eventManager: JhiEventManager,
-    protected accountService: AccountService
+    protected accountService: AccountService,
+    private logService: LogService,
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -104,6 +110,8 @@ export class CommentUpdateComponent implements OnInit {
 
   protected onSaveSuccess(): void {
     this.isSaving = false;
+    this.saveHistoryComment();
+    this.addNotificationComment();
     this.activeModal.close();
   }
 
@@ -113,5 +121,41 @@ export class CommentUpdateComponent implements OnInit {
 
   trackById(index: number, item: SelectableEntity): any {
     return item.id;
+  }
+
+  saveHistoryComment(): void {
+    const description = JSON.stringify({
+      postRecipeName: this.post?.recipeName,
+      userComment: this.account?.login,
+    });
+    this.logService
+      .create(new Log(undefined, description, moment().startOf('minute'), 'Post comment', 5, this.account?.login, this.account?.id))
+      .subscribe(
+        () => console.warn('Comment log succesful'),
+        () => console.warn('Comment log failed')
+      );
+  }
+
+  addNotificationComment(): void {
+    const content = JSON.stringify({
+      userComment: this.account?.login,
+    });
+    this.notificationService
+      .create(
+        new Notification(
+          undefined,
+          content,
+          moment().startOf('minute'),
+          this.post?.status,
+          'Comment',
+          2,
+          this.account?.login,
+          this.account?.id
+        )
+      )
+      .subscribe(
+        () => console.warn('Notification comment succesful'),
+        () => console.warn('Notification comment failed')
+      );
   }
 }

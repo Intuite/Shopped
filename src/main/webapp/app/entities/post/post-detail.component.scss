@@ -113,7 +113,8 @@
 .post-icon-bite {
   height: 24px;
   width: 24px;
-  display: inline-block;
+  float: left;
+  clear: left;
   vertical-align: middle;
   background: url('../../../content/images/bite-icon.png') no-repeat center center;
   background-size: contain;
@@ -123,8 +124,10 @@
 .post-count {
   height: 24px;
   width: 24px;
-  display: inline-block;
+  float: left;
+  clear: left;
   vertical-align: middle;
+  text-align: center;
 }
 
 .post-icon-duration {
@@ -140,7 +143,8 @@
 .post-icon-comment {
   height: 24px;
   width: 24px;
-  display: inline-block;
+  float: left;
+  clear: left;
   vertical-align: middle;
   background: url('../../../content/images/comment-icon.png') no-repeat center center;
   background-size: contain;

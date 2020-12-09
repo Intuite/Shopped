@@ -78,14 +78,14 @@
                             </div>
 
                             <div class="blocks-3 post-element-right" gdArea="awardsButtons">
-                                     <jhi-award-viewer [postId]=post.id></jhi-award-viewer>
-                                     <div style="float: right" *ngIf="account!.id !== 3">
-                                        <jhi-give-award [data]=post.id></jhi-give-award>
-                                     </div>
+                                <jhi-award-viewer [postId]=post.id></jhi-award-viewer>
+                                <div style="float: right" *ngIf="account!.id !== 3">
+                                    <jhi-give-award [data]=post.id></jhi-give-award>
+                                </div>
                             </div>
 
                             <div class="blocks-4 post-element-center" gdArea="userInfo">
-                                <dd> By {{ post.userLogin }} <br/></dd>
+                                <dd> By {{ post.userLogin}} <br/></dd>
 
                                 <dd><span>{{ post.date | date:"mediumDate" }}</span></dd>
                             </div>
@@ -98,13 +98,14 @@
                                 </dd>
                                 <dd><span style="font-style: italic">{{ post.caption }}</span></dd>
                                 <dd>
-                                    <span class="post-icon-bite"></span>
-
-                                    <span class="post-icon-comment"></span>
-                                </dd>
-                                <dd>
-                                    <span class="post-count">{{this.countBite.body.length}}</span>
-                                    <span class="post-count">{{this.countComments.length}}</span>
+                                    <div style="display: inline-block">
+                                        <span class="post-icon-bite"></span>
+                                        <span class="post-count">{{this.countBite.body.length}}</span>
+                                    </div>
+                                    <div style="display: inline-block">
+                                        <span class="post-icon-comment"></span>
+                                        <span class="post-count">{{this.countComments.length}}</span>
+                                    </div>
                                 </dd>
                             </div>
 
@@ -213,7 +214,7 @@
                             <div class="blocks-16 post-element-left post-reply" gdArea="reply">
                                 Leave a reply:
                                 <a (click)="this.addComment(post,account)">
-                                    <button class="text-white" color="warn" mat-raised-button>
+                                    <button class="text-white" color="primary" mat-raised-button>
                                         Add Comment
                                     </button>
                                 </a>
