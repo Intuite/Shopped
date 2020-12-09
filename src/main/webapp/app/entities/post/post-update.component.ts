@@ -15,6 +15,9 @@ import { RecipeService } from 'app/entities/recipe/recipe.service';
 import { IUser } from 'app/core/user/user.model';
 import { UserService } from 'app/core/user/user.service';
 import { AccountService } from 'app/core/auth/account.service';
+import { Log } from 'app/shared/model/log.model';
+import { LogService } from 'app/entities/log/log.service';
+import { Account } from 'app/core/user/account.model';
 
 type SelectableEntity = IRecipe | IUser;
 
@@ -27,6 +30,8 @@ export class PostUpdateComponent implements OnInit {
   recipes: IRecipe[] = [];
   statusOptions = ['ACTIVE', 'INACTIVE'];
   user!: IUser;
+  account?: Account | undefined;
+  post?: IPost;
 
   editForm = this.fb.group({
     id: [],
@@ -44,7 +49,8 @@ export class PostUpdateComponent implements OnInit {
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
     private accountService: AccountService,
-    private router: Router
+    private router: Router,
+    private logService: LogService
   ) {}
 
   ngOnInit(): void {
@@ -54,11 +60,7 @@ export class PostUpdateComponent implements OnInit {
         post.date = today;
       }
 
-      this.accountService.getAuthenticationState().subscribe(account => {
-        if (account) {
-          this.userService.find(account.login).subscribe(user => (this.user = user));
-        }
-      });
+      this.accountService.identity().subscribe(res => (this.account = res || undefined));
 
       this.updateForm(post);
 
@@ -90,7 +92,7 @@ export class PostUpdateComponent implements OnInit {
   cleanRecipes(): void {
     let i = 0;
     while (i < this.recipes.length) {
-      if (this.recipes[i].userId !== this.user.id || this.recipes[i].status === this.statusOptions[1]) {
+      if (this.recipes[i].userId !== this.account?.id || this.recipes[i].status === this.statusOptions[1]) {
         this.recipes.splice(i, 1);
       } else {
         i++;
@@ -120,6 +122,7 @@ export class PostUpdateComponent implements OnInit {
       this.subscribeToSaveResponse(this.postService.update(post));
     } else {
       this.subscribeToSaveResponse(this.postService.create(post));
+      this.saveHistory();
     }
   }
 
@@ -131,7 +134,7 @@ export class PostUpdateComponent implements OnInit {
       date: this.editForm.get(['date'])!.value ? moment(this.editForm.get(['date'])!.value, DATE_TIME_FORMAT) : undefined,
       status: this.editForm.get(['status'])!.value,
       recipeId: this.editForm.get(['recipeId'])!.value,
-      userId: this.user.id,
+      userId: this.account?.id,
     };
   }
 
@@ -144,7 +147,6 @@ export class PostUpdateComponent implements OnInit {
 
   protected onSaveSuccess(): void {
     this.isSaving = false;
-    // this.previousState();
     this.gotoAfterSave();
   }
 
@@ -159,5 +161,17 @@ export class PostUpdateComponent implements OnInit {
   gotoAfterSave(): void {
     this.router.navigate(['/']);
     // this.previousState();
+  }
+
+  saveHistory(): void {
+    const description = JSON.stringify({
+      user: this.account?.login,
+    });
+    this.logService
+      .create(new Log(undefined, description, moment().startOf('minute'), 'Post create', 2, this.account?.login, this.account?.id))
+      .subscribe(
+        () => console.warn('log succesful'),
+        () => console.warn('log failed')
+      );
   }
 }

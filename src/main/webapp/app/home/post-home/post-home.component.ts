@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { JhiDataUtils } from 'ng-jhipster';
-
 import { IRecipe } from 'app/shared/model/recipe.model';
 import { RecipeService } from 'app/entities/recipe/recipe.service';
 import { HttpResponse } from '@angular/common/http';
@@ -21,8 +20,9 @@ import { PostService } from 'app/entities/post/post.service';
 })
 export class PostHomeComponent implements OnInit {
   // recipes: IRecipe[] = [];
+  recipe: any;
   posts: IPost[] = [];
-  finalArray: Array<{ post: IPost; recipe: IRecipe }> = [];
+  finalArray: any[] = [];
   account?: Account;
   user?: IUser;
   statusOptions = ['ACTIVE', 'INACTIVE'];
@@ -72,6 +72,23 @@ export class PostHomeComponent implements OnInit {
       } else {
         i++;
       }
+    }
+    this.joinRecipe();
+  }
+
+  joinRecipe(): void {
+    for (let i = 0; i <= this.posts.length; i++) {
+      this.recipe = this.recipeService.find(this.posts[i].recipeId);
+      const cardInfo = {
+        id: this.posts[i].id,
+        image: this.recipe.image,
+        imageType: this.recipe.imageContentType,
+        caption: this.posts[i].caption,
+        date: this.posts[i].date,
+        userLogin: this.posts[i].userLogin,
+        recipeName: this.posts[i].recipeName,
+      };
+      this.finalArray.push(cardInfo);
     }
   }
 
