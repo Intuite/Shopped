@@ -17,12 +17,18 @@ import { UserInfoComponent } from './profile/user-info/user-info.component';
 import { DashboardComponent } from './profile/dashboard/dashboard.component';
 import { RecipesComponent } from './profile/dashboard/recipes/recipes.component';
 import { CollectionsComponent } from './profile/dashboard/collections/collections.component';
-import { CartComponent } from './profile/dashboard/cart/cart.component';
 import { ReportsComponent } from './profile/dashboard/reports/reports.component';
 import { PaymentsComponent } from './profile/dashboard/payments/payments.component';
 import { ShoppedTransactionModule } from 'app/entities/transaction/transaction.module';
 import { ShoppedRecipeModule } from 'app/entities/recipe/recipe.module';
 import { AnaliticaComponent } from './profile/dashboard/analitica/analitica.component';
+// Cart
+import { CartComponent } from 'app/account/profile/dashboard/cart/cart.component';
+import { ListComponent as CartIngredientListComponent } from 'app/account/profile/dashboard/cart/list/list.component';
+import { AddIngredientsComponent as CartAddIngredientsComponent } from 'app/account/profile/dashboard/cart/dialog/add-ingredients/add-ingredients.component';
+import { InfoIngredientComponent as CartIngredientInfoComponent } from 'app/account/profile/dashboard/cart/dialog/info-ingredient/info-ingredient.component';
+import { RemoveIngredientComponent as CartIngredientRemoveComponent } from 'app/account/profile/dashboard/cart/dialog/remove-ingredient/remove-ingredient.component';
+import { ItemComponent as CartItemComponent } from 'app/account/profile/dashboard/cart/list/item/item.component';
 
 @NgModule({
   imports: [ShoppedSharedModule, RouterModule.forChild(accountState), ShoppedTransactionModule, ShoppedRecipeModule],
@@ -40,9 +46,15 @@ import { AnaliticaComponent } from './profile/dashboard/analitica/analitica.comp
     DashboardComponent,
     RecipesComponent,
     CollectionsComponent,
-    CartComponent,
     ReportsComponent,
     PaymentsComponent,
+
+    CartComponent,
+    CartIngredientListComponent,
+    CartAddIngredientsComponent,
+    CartIngredientInfoComponent,
+    CartIngredientRemoveComponent,
+    CartItemComponent,
     AnaliticaComponent,
   ],
 })
