@@ -21,6 +21,6 @@ import { RecipeFilterPipe } from './recipe-filter.pipe';
     RecipeFilterPipe,
   ],
   entryComponents: [RecipeDeleteDialogComponent],
-  exports: [RecipeComponent, RecipeListComponent],
+  exports: [RecipeComponent, RecipeListComponent, RecipeFilterPipe],
 })
 export class ShoppedRecipeModule {}
