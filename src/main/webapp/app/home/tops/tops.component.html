@@ -1,0 +1,20 @@
+<div fxFlex="100%">
+    <h1>Bites from Posts</h1>
+    <mat-list>
+        <div *ngFor="let top of bites">
+            <hr>
+            <a [routerLink]="['/post', top.postId, 'view']">
+            <mat-list-item style="height: auto">
+                <div>
+                    <div>
+                        <strong>Bite:{{top.id}}</strong>
+                    </div>
+                    <div>
+                        <strong>Post:{{top.postId}}</strong>
+                    </div>
+                </div>
+            </mat-list-item>
+            </a>
+        </div>
+    </mat-list>
+</div>

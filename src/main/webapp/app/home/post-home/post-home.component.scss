@@ -14,7 +14,7 @@ a {
 }
 
 .recipe-card-element-center {
-  text-align: center;
+  text-align-last: center;
   font-style: italic;
 }
 
@@ -60,7 +60,7 @@ a {
 }
 
 .recipe-card-picture {
-  height: 150px;
+  height: 250px;
   width: auto;
   display: inline-block;
   vertical-align: middle;
@@ -70,7 +70,7 @@ a {
 }
 
 .recipe-card-picture img {
-  height: 150px;
+  height: 250px;
   width: 100%;
   object-fit: cover;
   object-position: center;

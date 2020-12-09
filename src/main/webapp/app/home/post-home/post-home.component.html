@@ -8,7 +8,7 @@
     <div *ngIf="posts">
         <dl class="jh-entity-details">
             <div class="recipe-card-content" fxLayout="row wrap" fxLayoutGap="16px grid">
-                <div *ngFor="let card of finalArray" fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%"
+                <div *ngFor="let card of cardPosts" fxFlex="100%" fxFlex.gt-sm="100%" fxFlex.sm="100%"
                      fxFlex.xs="100%">
 
                     <a [routerLink]="['/post', card.id, 'view']">
@@ -34,11 +34,14 @@
 
                             <mat-card-content>
                                 <div>
-                                    <div class="recipe-card-element-right">
+                                    <div class="recipe-card-element-left">
+                                        By {{card.userLogin}} &nbsp;
                                         {{card.date | date:"mediumDate"}}
                                     </div>
-                                    <div class="recipe-card-element-left">
-                                        By {{card.userLogin | titlecase}}
+
+                                    <div class="recipe-card-element-right">
+                                        <span class="recipe-card-icon-portion"></span>{{card.portion}}
+                                        <span class="recipe-card-icon-duration"></span>{{card.duration}} min
                                     </div>
 
                                 </div>

@@ -9,6 +9,7 @@ import { tap } from 'rxjs/operators';
 import { BiteService } from 'app/entities/bite/bite.service';
 import { FollowerService } from 'app/entities/follower/follower.service';
 import { CommentService } from 'app/entities/comment/comment.service';
+import { RecipeService } from 'app/entities/recipe/recipe.service';
 
 type EntityResponseType = HttpResponse<IPost>;
 type EntityArrayResponseType = HttpResponse<IPost[]>;
@@ -23,7 +24,8 @@ export class PostService {
     protected http: HttpClient,
     protected biteService: BiteService,
     protected followerService: FollowerService,
-    protected commentService: CommentService
+    protected commentService: CommentService,
+    protected recipeService: RecipeService
   ) {}
 
   getRefreshNeed(): any {
@@ -45,6 +47,12 @@ export class PostService {
   findComments(id: number | undefined): Observable<HttpResponse<any>> {
     return this.commentService.query({
       ...{ 'postId.equals': id },
+    });
+  }
+
+  findRecipe(id: number | undefined): Observable<HttpResponse<any>> {
+    return this.recipeService.query({
+      ...{ 'recipeId.equals': id },
     });
   }
 
