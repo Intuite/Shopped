@@ -2,13 +2,28 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { JhiDataUtils } from 'ng-jhipster';
+import * as moment from 'moment';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
+import { AccountService } from 'app/core/auth/account.service';
+import { Account } from 'app/core/user/account.model';
+import { Log } from 'app/shared/model/log.model';
+import { LogService } from 'app/entities/log/log.service';
+import { Notification } from 'app/shared/model/notification.model';
+import { NotificationService } from 'app/entities/notification/notification.service';
+
 import { IPost } from 'app/shared/model/post.model';
+import { PostService } from 'app/entities/post/post.service';
 import { IRecipe } from 'app/shared/model/recipe.model';
 import { RecipeService } from 'app/entities/recipe/recipe.service';
 import { IRecipeHasRecipeTag } from 'app/shared/model/recipe-has-recipe-tag.model';
 import { IngredientService } from 'app/entities/ingredient/ingredient.service';
-import { AccountService } from 'app/core/auth/account.service';
-import { Account } from 'app/core/user/account.model';
+import { Bite } from 'app/shared/model/bite.model';
+import { BiteService } from 'app/entities/bite/bite.service';
+import { Follower } from 'app/shared/model/follower.model';
+import { FollowerService } from 'app/entities/follower/follower.service';
+import { CommentService } from 'app/entities/comment/comment.service';
+import { CommentUpdateComponent } from 'app/entities/comment/comment-update.component';
 import { CartService } from 'app/entities/cart/cart.service';
 import { IIngredient } from 'app/shared/model/ingredient.model';
 
@@ -33,6 +48,12 @@ export class PostDetailComponent implements OnInit {
   recipeTags!: IRecipeHasRecipeTag[] | null;
   ingredients: FullIngredient[] = [];
   account?: Account | undefined;
+  biteStatus = false;
+  statusOptions = ['ACTIVE', 'INACTIVE'];
+  countBite: any = 0;
+  followerStatus = false;
+  countFollower: any = 0;
+  countComments: any = 0;
 
   constructor(
     protected recipeService: RecipeService,
@@ -40,6 +61,13 @@ export class PostDetailComponent implements OnInit {
     protected dataUtils: JhiDataUtils,
     protected activatedRoute: ActivatedRoute,
     protected accountService: AccountService,
+    protected postService: PostService,
+    protected followService: FollowerService,
+    protected commentService: CommentService,
+    private logService: LogService,
+    private biteService: BiteService,
+    private notificationService: NotificationService,
+    protected modalService: NgbModal,
     public cartService: CartService
   ) {}
 
@@ -50,6 +78,14 @@ export class PostDetailComponent implements OnInit {
       () => this.onSuccess(),
       () => this.onError()
     );
+
+    this.saveViewHistory();
+    this.countBites();
+    this.countFollowers();
+    this.findComments();
+    this.commentService.refreshNeeded$.subscribe(() => {
+      this.findComments();
+    });
   }
 
   byteSize(base64String: string): string {
@@ -68,8 +104,164 @@ export class PostDetailComponent implements OnInit {
     console.warn('There was an error');
   }
 
+  saveViewHistory(): void {
+    const description = JSON.stringify({
+      user: this.account?.login,
+      postId: this.post?.id,
+    });
+    this.logService
+      .create(new Log(undefined, description, moment().startOf('minute'), 'Post view', 3, this.account?.login, this.account?.id))
+      .subscribe(
+        () => console.warn('Post view log succesful'),
+        () => console.warn('Post view log failed')
+      );
+  }
+
   addIngredientToCart(ing: IIngredient): void {
     if (this.account !== undefined) this.cartService.addIngredient(ing, this.account);
+  }
+
+  addBite(): void {
+    this.biteService
+      .create(new Bite(undefined, moment().startOf('minute'), this.post?.status, this.post?.id, this.account?.login, this.account?.id))
+      .subscribe(
+        () => (this.saveHistoryBite(), this.addNotificationBite(), this.countBites(), (this.biteStatus = true)),
+        () => console.warn('bite failed')
+      );
+  }
+
+  saveHistoryBite(): void {
+    const description = JSON.stringify({
+      user: this.account?.login,
+      postId: this.post?.id,
+    });
+    this.logService
+      .create(new Log(undefined, description, moment().startOf('minute'), 'Post bite', 4, this.account?.login, this.account?.id))
+      .subscribe(
+        () => console.warn('Post bite log succesful'),
+        () => console.warn('Post bite log failed')
+      );
+  }
+
+  addNotificationBite(): void {
+    const content = JSON.stringify({
+      user: this.account?.login,
+      postRecipeName: this.post?.recipeName,
+    });
+    this.notificationService
+      .create(
+        new Notification(
+          undefined,
+          content,
+          moment().startOf('minute'),
+          this.post?.status,
+          'Bite',
+          1,
+          this.account?.login,
+          this.account?.id
+        )
+      )
+      .subscribe(
+        () => console.warn('Notification bite succesful'),
+        () => console.warn('Notification bite failed')
+      );
+  }
+
+  countBites(): void {
+    this.postService.countBites(this.post?.id).subscribe(res => ((this.countBite = res), this.checkBiteStatus()));
+  }
+
+  checkBiteStatus(): void {
+    let i = 0;
+    let found = false;
+    while (i < this.countBite.body.length && found === false) {
+      if (this.countBite.body[i].userId === this.account?.id) {
+        this.biteStatus = true;
+        found = true;
+      }
+      i++;
+    }
+  }
+
+  addFollower(): void {
+    this.followService
+      .create(
+        new Follower(
+          undefined,
+          moment().startOf('minute'),
+          this.post?.status,
+          this.post?.userLogin,
+          this.post?.userId,
+          this.account?.login,
+          this.account?.id
+        )
+      )
+      .subscribe(
+        () => (this.saveHistoryFollower(), this.addNotificationFollower(), (this.followerStatus = true)),
+        () => console.warn('bite failed')
+      );
+  }
+
+  saveHistoryFollower(): void {
+    const description = JSON.stringify({
+      userFollowed: this.post?.userLogin,
+      userFollowing: this.account?.login,
+    });
+    this.logService
+      .create(new Log(undefined, description, moment().startOf('minute'), 'Follower', 6, this.account?.login, this.account?.id))
+      .subscribe(
+        () => console.warn('Follower log succesful'),
+        () => console.warn('Follower log failed')
+      );
+  }
+
+  addNotificationFollower(): void {
+    const content = JSON.stringify({
+      userFollowing: this.account?.login,
+    });
+    this.notificationService
+      .create(
+        new Notification(
+          undefined,
+          content,
+          moment().startOf('minute'),
+          this.post?.status,
+          'Follower',
+          3,
+          this.account?.login,
+          this.account?.id
+        )
+      )
+      .subscribe(
+        () => console.warn('Notification follower succesful'),
+        () => console.warn('Notification follower failed')
+      );
+  }
+
+  countFollowers(): void {
+    this.postService.countFollowers(this.post?.userId).subscribe(res => ((this.countFollower = res), this.checkFollowerStatus()));
+  }
+
+  checkFollowerStatus(): void {
+    let i = 0;
+    let found = false;
+    while (i < this.countFollower.body.length && found === false) {
+      if (this.countFollower.body[i].userId === this.account?.id) {
+        this.followerStatus = true;
+        found = true;
+      }
+      i++;
+    }
+  }
+
+  addComment(post: IPost, account: Account | undefined): void {
+    const modalRef = this.modalService.open(CommentUpdateComponent, { size: 'md', backdrop: 'static', centered: true });
+    modalRef.componentInstance.post = post;
+    modalRef.componentInstance.account = account;
+  }
+
+  findComments(): void {
+    this.postService.findComments(this.post?.id).subscribe(res => (this.countComments = res.body));
   }
 
   protected onSuccess(): void {

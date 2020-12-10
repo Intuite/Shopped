@@ -21,6 +21,7 @@ import { ReportsComponent } from './profile/dashboard/reports/reports.component'
 import { PaymentsComponent } from './profile/dashboard/payments/payments.component';
 import { ShoppedTransactionModule } from 'app/entities/transaction/transaction.module';
 import { ShoppedRecipeModule } from 'app/entities/recipe/recipe.module';
+import { AnaliticaComponent } from './profile/dashboard/analitica/analitica.component';
 // Cart
 import { CartComponent } from 'app/account/profile/dashboard/cart/cart.component';
 import { ListComponent as CartIngredientListComponent } from 'app/account/profile/dashboard/cart/list/list.component';
@@ -54,6 +55,7 @@ import { ItemComponent as CartItemComponent } from 'app/account/profile/dashboar
     CartIngredientInfoComponent,
     CartIngredientRemoveComponent,
     CartItemComponent,
+    AnaliticaComponent,
   ],
 })
 export class AccountModule {}
