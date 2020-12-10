@@ -1,0 +1,75 @@
+<div class="container tab-container mt-4">
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+        <div>
+            <h2 class="text-left">
+                Analitics
+            </h2>
+        </div>
+        <div>
+            <button mat-raised-button color="accent" (click)="makeDaily()" class="mr-2">Daily</button>
+            <button mat-raised-button color="accent" (click)="makeWeekly()" class="mr-2">Weekly</button>
+            <button mat-raised-button color="accent" (click)="makeMonthly()">Monthly</button>
+        </div>
+    </div>
+    <div class="row">
+        <div align="center" class="col tab-container">
+            <mat-card>
+                <h3>Cookie Income/Expenses</h3>
+                <mat-card-content>
+                    <jhi-pie-chart
+                        [pieChartData]="data"
+                        [pieChartLabels]="labels"
+                        [width]="520">
+                    </jhi-pie-chart>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <div align="center" class="col tab-container">
+            <mat-card>
+                <h3>Cookie Movement</h3>
+                <mat-card-content>
+                    <jhi-line-chart [ChartData]="lineData"
+                                    [ChartLabels]="lineLabel"
+                                    [width]="520">
+                    </jhi-line-chart>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-8 constHeight">
+            <mat-card>
+                <h3>Awards</h3>
+                <mat-card-content align="center">
+                    <jhi-bar-chart
+                        [barChartData]="barData"
+                        [barChartLabels]="barLabel"
+                        [width]="700">
+                    </jhi-bar-chart>
+
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <div class="col-4 constHeight">
+            <mat-card class="h-100">
+                <h3>Trending</h3>
+                <mat-card-content>
+                    <mat-selection-list #awards [multiple]="false">
+                        <mat-list-option *ngFor="let key of keys" [value]="">
+                            <div class="justify-content-center padT">
+                                <div class="float-left">{{key}}</div>
+                                <div class="float-right">{{commendation[key]}}</div>
+                            </div>
+                        </mat-list-option>
+                    </mat-selection-list>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+    <div class="row mt-3 table-transac">
+        <div class="col">
+            <jhi-view-transactions></jhi-view-transactions>
+        </div>
+    </div>
+</div>
+

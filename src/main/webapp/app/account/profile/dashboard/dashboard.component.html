@@ -27,11 +27,18 @@
         </ng-template>
         <jhi-dashboard-payments></jhi-dashboard-payments>
     </mat-tab>
-    <mat-tab>
+    <mat-tab *ngIf="account!.id==3">
         <ng-template mat-tab-label>
             <mat-icon>payment</mat-icon>
             Analitica
         </ng-template>
         <jhi-analitica></jhi-analitica>
+    </mat-tab>
+    <mat-tab *ngIf="account!.id!==3">
+        <ng-template mat-tab-label>
+            <mat-icon>payment</mat-icon>
+            Analitica
+        </ng-template>
+        <jhi-analitica-p [id]="account!.id"></jhi-analitica-p>
     </mat-tab>
 </mat-tab-group>
