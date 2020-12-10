@@ -82,6 +82,12 @@
                                                 <span>{{ ingredient.amount }}</span>
                                                 <strong>{{ ingredient.unitAbbrev }}</strong>
                                             </div>
+                                            <button (click)="addIngredientToCart(ingredient)" *ngIf="account!.id!==3"
+                                                    color="accent"
+                                                    mat-icon-button
+                                                    matTooltip="Add ingredient to cart">
+                                                <mat-icon>next_plan</mat-icon>
+                                            </button>
                                         </mat-list-item>
                                     </div>
                                     <mat-divider></mat-divider>
@@ -89,7 +95,8 @@
                             </div>
 
                             <div class="blocks-6 recipe-element-center" gdArea="addToCart">
-                                <button class="text-white" color="primary" mat-raised-button>
+                                <button (click)="addRecipeToCart()" class="text-white" color="primary"
+                                        mat-raised-button>
                                     <mat-icon>shopping_cart</mat-icon>
                                     Add to cart
                                 </button>
