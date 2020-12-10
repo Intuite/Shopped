@@ -1,17 +1,17 @@
 <mat-tab-group mat-align-tabs="center" mat-stretch-tabs>
-    <mat-tab>
-        <ng-template mat-tab-label>
-            <mat-icon>shopping_cart</mat-icon>
-            Cart
-        </ng-template>
-        <jhi-dashboard-cart [account]="account"></jhi-dashboard-cart>
-    </mat-tab>
     <mat-tab *ngIf="account!.id!==3">
         <ng-template mat-tab-label>
             <mat-icon>fastfood</mat-icon>
             Recipes
         </ng-template>
         <jhi-dashboard-recipes></jhi-dashboard-recipes>
+    </mat-tab>
+    <mat-tab *ngIf="isUsersCart && account!.id!==3">
+        <ng-template mat-tab-label>
+            <mat-icon>shopping_cart</mat-icon>
+            Cart
+        </ng-template>
+        <jhi-dashboard-cart [account]="account"></jhi-dashboard-cart>
     </mat-tab>
     <!--    <mat-tab>-->
     <!--        <ng-template mat-tab-label>-->

@@ -24,6 +24,8 @@ import { Follower } from 'app/shared/model/follower.model';
 import { FollowerService } from 'app/entities/follower/follower.service';
 import { CommentService } from 'app/entities/comment/comment.service';
 import { CommentUpdateComponent } from 'app/entities/comment/comment-update.component';
+import { CartService } from 'app/entities/cart/cart.service';
+import { IIngredient } from 'app/shared/model/ingredient.model';
 
 interface FullIngredient {
   id?: number;
@@ -65,7 +67,8 @@ export class PostDetailComponent implements OnInit {
     private logService: LogService,
     private biteService: BiteService,
     private notificationService: NotificationService,
-    protected modalService: NgbModal
+    protected modalService: NgbModal,
+    public cartService: CartService
   ) {}
 
   ngOnInit(): void {
@@ -114,31 +117,8 @@ export class PostDetailComponent implements OnInit {
       );
   }
 
-  protected onSuccess(): void {
-    this.recipeService.find(this.post?.recipeId).subscribe(response => {
-      this.recipe = response.body;
-      if (this.post?.recipeId !== undefined) {
-        this.recipeService.findRecipeHasIngredients(this.post.recipeId).subscribe(recipeHasIng => {
-          if (recipeHasIng.body !== null) {
-            recipeHasIng.body.forEach(ing => {
-              if (ing.id !== undefined) {
-                this.ingredientService.find(ing.id).subscribe(fullIng => {
-                  this.ingredients.push({
-                    id: ing.ingredientId,
-                    name: ing.ingredientName,
-                    amount: ing.amount,
-                    unitAbbrev: fullIng.body!.unitAbbrev,
-                    image: fullIng.body?.image,
-                    imageContentType: fullIng.body?.imageContentType,
-                  });
-                });
-              }
-            });
-          }
-        });
-        this.recipeService.findRecipeHasRecipeTags(this.post?.recipeId).subscribe(recipeTags => (this.recipeTags = recipeTags.body));
-      }
-    });
+  addIngredientToCart(ing: IIngredient): void {
+    if (this.account !== undefined) this.cartService.addIngredient(ing, this.account);
   }
 
   addBite(): void {
@@ -282,5 +262,32 @@ export class PostDetailComponent implements OnInit {
 
   findComments(): void {
     this.postService.findComments(this.post?.id).subscribe(res => (this.countComments = res.body));
+  }
+
+  protected onSuccess(): void {
+    this.recipeService.find(this.post?.recipeId).subscribe(response => {
+      this.recipe = response.body;
+      if (this.post?.recipeId !== undefined) {
+        this.recipeService.findRecipeHasIngredients(this.post.recipeId).subscribe(recipeHasIng => {
+          if (recipeHasIng.body !== null) {
+            recipeHasIng.body.forEach(ing => {
+              if (ing.id !== undefined) {
+                this.ingredientService.find(ing.id).subscribe(fullIng => {
+                  this.ingredients.push({
+                    id: ing.ingredientId,
+                    name: ing.ingredientName,
+                    amount: ing.amount,
+                    unitAbbrev: fullIng.body!.unitAbbrev,
+                    image: fullIng.body?.image,
+                    imageContentType: fullIng.body?.imageContentType,
+                  });
+                });
+              }
+            });
+          }
+        });
+        this.recipeService.findRecipeHasRecipeTags(this.post?.recipeId).subscribe(recipeTags => (this.recipeTags = recipeTags.body));
+      }
+    });
   }
 }
