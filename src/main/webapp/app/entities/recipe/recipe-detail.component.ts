@@ -10,6 +10,9 @@ import { AccountService } from 'app/core/auth/account.service';
 import { IRecipeHasRecipeTag } from 'app/shared/model/recipe-has-recipe-tag.model';
 import { IngredientService } from 'app/entities/ingredient/ingredient.service';
 import { RecipeService } from 'app/entities/recipe/recipe.service';
+import { IIngredient } from 'app/shared/model/ingredient.model';
+import { CartService } from 'app/entities/cart/cart.service';
+import { Account } from 'app/core/user/account.model';
 
 interface FullIngredient {
   id?: number;
@@ -30,6 +33,7 @@ export class RecipeDetailComponent implements OnInit {
   eventSubscriber?: Subscription;
   statusOptions = ['ACTIVE', 'INACTIVE'];
   user!: IUser;
+  account!: Account;
   recipeTags!: IRecipeHasRecipeTag[] | null;
   ingredients: FullIngredient[] = [];
 
@@ -39,7 +43,8 @@ export class RecipeDetailComponent implements OnInit {
     private accountService: AccountService,
     protected userService: UserService,
     protected recipeService: RecipeService,
-    protected ingredientService: IngredientService
+    protected ingredientService: IngredientService,
+    private cartService: CartService
   ) {}
 
   ngOnInit(): void {
@@ -67,9 +72,14 @@ export class RecipeDetailComponent implements OnInit {
     });
     this.accountService.getAuthenticationState().subscribe(account => {
       if (account) {
+        this.account = account;
         this.userService.find(account.login).subscribe(user => (this.user = user));
       }
     });
+  }
+
+  addIngredientToCart(ing: IIngredient): void {
+    if (this.account !== undefined) this.cartService.addIngredient(ing, this.account);
   }
 
   byteSize(base64String: string): string {
@@ -82,5 +92,9 @@ export class RecipeDetailComponent implements OnInit {
 
   previousState(): void {
     window.history.back();
+  }
+
+  addRecipeToCart(): void {
+    if (this.account !== undefined) this.cartService.addRecipe(this.recipe, this.account);
   }
 }

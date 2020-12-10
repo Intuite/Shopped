@@ -12,6 +12,9 @@ import { CartHasIngredientService } from 'app/entities/cart-has-ingredient/cart-
 import { Status } from 'app/shared/model/enumerations/status.model';
 import { Account } from 'app/core/user/account.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { IRecipe } from 'app/shared/model/recipe.model';
+import { CartHasRecipeService } from 'app/entities/cart-has-recipe/cart-has-recipe.service';
+import { RecipeHasIngredientService } from 'app/entities/recipe-has-ingredient/recipe-has-ingredient.service';
 
 type EntityResponseType = HttpResponse<ICart>;
 type EntityArrayResponseType = HttpResponse<ICart[]>;
@@ -20,7 +23,13 @@ type EntityArrayResponseType = HttpResponse<ICart[]>;
 export class CartService {
   public resourceUrl = SERVER_API_URL + 'api/carts';
 
-  constructor(protected http: HttpClient, private chiService: CartHasIngredientService, private snackBar: MatSnackBar) {}
+  constructor(
+    protected http: HttpClient,
+    private chiService: CartHasIngredientService,
+    private chrService: CartHasRecipeService,
+    private rhiService: RecipeHasIngredientService,
+    private snackBar: MatSnackBar
+  ) {}
 
   create(cart: ICart): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(cart);
@@ -74,6 +83,10 @@ export class CartService {
     });
   }
 
+  addRecipe(recipe: IRecipe | null, account: Account): void {
+    console.warn(`${recipe} | ${account}`);
+  }
+
   protected convertDateFromClient(cart: ICart): ICart {
     const copy: ICart = Object.assign({}, cart, {
       created: cart.created && cart.created.isValid() ? cart.created.toJSON() : undefined,
@@ -97,32 +110,40 @@ export class CartService {
     return res;
   }
 
-  private addCartHasIngredient(ing: IIngredient, cartId: number | undefined): void {
+  private addCartHasIngredient(ing: IIngredient, cid: number | undefined): void {
     const chi = {
       amount: 1,
-      status: Status.INACTIVE.toUpperCase() as Status,
-      cartId,
+      status: Status.PENDING.toUpperCase() as Status,
+      cartId: cid,
       ingredientName: ing.name,
       ingredientId: ing.id,
     };
-    this.chiService.query({ 'ingredientId.equals': ing.id, 'cartId.equals': cartId }).subscribe(exists => {
-      if (exists.body !== null && exists.body.length === 0) {
-        this.chiService.create(chi).subscribe(() => {
-          if (chi) {
-            this.snackBar.open(`1 ${ing.unitAbbrev} of ${ing.name} was added to your cart`, 'Thanks!', {
-              duration: 4000,
-              horizontalPosition: 'center',
-              verticalPosition: 'bottom',
-            });
-          }
-        });
-      } else {
-        this.snackBar.open('You already have that ingredient in your cart', 'Ok', {
-          duration: 2000,
-          horizontalPosition: 'center',
-          verticalPosition: 'bottom',
-        });
-      }
-    });
+    console.warn(chi);
+    this.chiService
+      .query({
+        'ingredientId.equals': ing.id,
+        'cartId.equals': cid,
+        'status.in': ['PENDING', 'ACTIVE'],
+      })
+      .subscribe(exists => {
+        console.warn(exists.body);
+        if (exists.body !== null && exists.body.length === 0) {
+          this.chiService.create(chi).subscribe(() => {
+            if (chi) {
+              this.snackBar.open(`1 ${ing.unitAbbrev} of ${ing.name} was added to your cart`, 'Thanks!', {
+                duration: 4000,
+                horizontalPosition: 'center',
+                verticalPosition: 'bottom',
+              });
+            }
+          });
+        } else {
+          this.snackBar.open('You already have that ingredient in your cart', 'Ok', {
+            duration: 2000,
+            horizontalPosition: 'center',
+            verticalPosition: 'bottom',
+          });
+        }
+      });
   }
 }

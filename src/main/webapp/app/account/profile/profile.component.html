@@ -8,7 +8,7 @@
             <jhi-user-info [canEdit]="(account?.id == user?.id) || false" [user]="user"></jhi-user-info>
         </div>
         <div fxFlex>
-            <jhi-dashboard></jhi-dashboard>
+            <jhi-dashboard [account]="account"></jhi-dashboard>
         </div>
     </div>
 </div>
