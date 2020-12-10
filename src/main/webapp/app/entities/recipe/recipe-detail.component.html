@@ -82,7 +82,8 @@
                                                 <span>{{ ingredient.amount }}</span>
                                                 <strong>{{ ingredient.unitAbbrev }}</strong>
                                             </div>
-                                            <button (click)="addIngredientToCart(ingredient)" color="accent"
+                                            <button (click)="addIngredientToCart(ingredient)" *ngIf="account!.id!==3"
+                                                    color="accent"
                                                     mat-icon-button
                                                     matTooltip="Add ingredient to cart">
                                                 <mat-icon>next_plan</mat-icon>

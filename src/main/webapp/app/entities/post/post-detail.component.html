@@ -136,8 +136,8 @@
                                                 <span>{{ ingredient.amount }}</span>
                                                 <strong>{{ ingredient.unitAbbrev }}</strong>
                                             </div>
-                                            <button (click)="addIngredientToCart(ingredient)" color="accent"
-                                                    mat-icon-button
+                                            <button (click)="addIngredientToCart(ingredient)" *ngIf="account!.id!==3"
+                                                    color="accent" mat-icon-button
                                                     matTooltip="Add ingredient to cart">
                                                 <mat-icon>next_plan</mat-icon>
                                             </button>
@@ -194,7 +194,7 @@
                                             </div>
                                         </a>
 
-                                        <div class="container-bite" *ngSwitchCase="true">
+                                        <div *ngSwitchCase="true" class="container-bite">
                                             <div class="post-bite-div">
                                                 <span class="post-icon-bite-white"></span>
                                             </div>

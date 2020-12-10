@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/user/account.model';
 import { CartService } from 'app/entities/cart/cart.service';
+import { User } from 'app/core/user/user.model';
 
 @Component({
   selector: 'jhi-dashboard',
@@ -11,23 +12,18 @@ import { CartService } from 'app/entities/cart/cart.service';
 })
 export class DashboardComponent implements OnInit {
   @Input() account!: Account | null;
+  @Input() user!: User | null;
   authSubscription?: Subscription;
   isUsersCart = false;
 
   constructor(private accountService: AccountService, private cartService: CartService) {}
 
   ngOnInit(): void {
-    console.warn(this.account);
     this.setIsCurrentUserCart();
   }
 
   setIsCurrentUserCart(): void {
-    if (this.account !== null && this.account.login !== undefined)
-      this.cartService
-        .query({
-          'userId.equals': this.account.id,
-          'status.equals': 'ACTIVE',
-        })
-        .subscribe(() => (this.isUsersCart = true));
+    if (this.user !== null && this.user.login !== undefined && this.account !== null && this.account.login !== undefined)
+      this.isUsersCart = this.user.login === this.account.login;
   }
 }

@@ -15,6 +15,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { IRecipe } from 'app/shared/model/recipe.model';
 import { CartHasRecipeService } from 'app/entities/cart-has-recipe/cart-has-recipe.service';
 import { RecipeHasIngredientService } from 'app/entities/recipe-has-ingredient/recipe-has-ingredient.service';
+import { ICartHasRecipe } from 'app/shared/model/cart-has-recipe.model';
 
 type EntityResponseType = HttpResponse<ICart>;
 type EntityArrayResponseType = HttpResponse<ICart[]>;
@@ -84,7 +85,31 @@ export class CartService {
   }
 
   addRecipe(recipe: IRecipe | null, account: Account): void {
-    console.warn(`${recipe} | ${account}`);
+    this.query({
+      'userId.equals': account.id,
+      'status.equals': 'ACTIVE',
+    }).subscribe(cartResponse => {
+      console.warn(cartResponse.body);
+      if (cartResponse.body !== null && cartResponse.body.length > 0 && recipe !== null) {
+        const chr: ICartHasRecipe = {
+          cartId: cartResponse.body[0].id,
+          recipeId: recipe.id,
+          recipeName: recipe.name,
+          status: Status.ACTIVE.toUpperCase() as Status,
+        };
+        this.chrService.create(chr).subscribe(res => {
+          if (res.body !== null) {
+            const rcp = res.body;
+            this.rhiService.query({ 'recipeId.equals': chr.recipeName }).subscribe(rhi => {
+              const recipeIngredients = rhi.body;
+              recipeIngredients?.forEach(ri => {
+                console.warn(ri);
+              });
+            });
+          }
+        });
+      }
+    });
   }
 
   protected convertDateFromClient(cart: ICart): ICart {

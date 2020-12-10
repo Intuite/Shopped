@@ -6,7 +6,7 @@
         </ng-template>
         <jhi-dashboard-recipes></jhi-dashboard-recipes>
     </mat-tab>
-    <mat-tab *ngIf="isUsersCart">
+    <mat-tab *ngIf="isUsersCart && account!.id!==3">
         <ng-template mat-tab-label>
             <mat-icon>shopping_cart</mat-icon>
             Cart
