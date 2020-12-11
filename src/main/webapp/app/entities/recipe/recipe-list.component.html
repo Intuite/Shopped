@@ -45,6 +45,12 @@
                         </mat-card-title>
 
                         <div class="recipe-card-disable-button">
+                            <button [routerLink]="['/recipe/', card.id, 'edit']"
+                                    aria-label="Close" data-dismiss="modal" class="close" type="button"
+                                    type="submit">
+                                <fa-icon style="font-size: 12px" icon="pencil-alt"></fa-icon>
+                            </button>
+                            
                             <button aria-label="Close" data-dismiss="modal" class="close" type="button"
                                     (click)="this.delete(card)">
                                 <span aria-hidden="true">x</span>

@@ -5,6 +5,16 @@ import { JhiEventManager } from 'ng-jhipster';
 
 import { IBite } from 'app/shared/model/bite.model';
 import { BiteService } from 'app/entities/bite/bite.service';
+import { Status } from 'app/shared/model/enumerations/status.model';
+
+interface TopItem {
+  id?: number;
+  status?: Status;
+  recipeName?: string;
+  recipeId?: number;
+  userLogin?: string;
+  userId?: number;
+}
 
 @Component({
   selector: 'jhi-tops',

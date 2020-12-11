@@ -2,12 +2,13 @@
     <mat-card-content>
         <h3>Top Posts</h3>
         <mat-list>
-            <div *ngFor="let top of bites">
+            <div *ngFor="let top of bites; let i = index">
                 <hr>
                 <a [routerLink]="['/post', top.postId, 'view']">
                     <mat-list-item style="height: auto">
                         <div>
                             <div>
+                                {{i+1}}.
                                 <strong>Bite:{{top.id}}</strong>
                             </div>
                             <div>

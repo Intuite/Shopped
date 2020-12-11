@@ -72,7 +72,7 @@ export class PostHomeComponent implements OnInit {
 
   getPosts(): any {
     this.postService.query().subscribe(
-      (res: HttpResponse<IRecipe[]>) => (this.onSuccessPost(res.body), this.cardPosts.reverse()),
+      (res: HttpResponse<IRecipe[]>) => this.onSuccessPost(res.body),
       () => this.onError()
     );
   }
@@ -130,6 +130,7 @@ export class PostHomeComponent implements OnInit {
 
   private onSuccessPost(body: IPost[] | null): void {
     this.posts = body || [];
+    this.posts.reverse();
     this.cleanPosts();
   }
 }
