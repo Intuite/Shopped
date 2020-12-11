@@ -1,1 +1,35 @@
-<p>recomend works!</p>
+<div fxFlex="100%">
+    <mat-card-content>
+        <div *ngIf="recomendedItems">
+            <h5>Recomended for you</h5>
+            <mat-list>
+                <div *ngFor="let item of recomendedItems; let i = index">
+                    <div *ngIf="i<3">
+                        <hr>
+                        <a [routerLink]="['/post', item.id, 'view']">
+                            <mat-list-item style="height: auto">
+                                <div>
+                                    <div *ngIf="item.image">
+                                        <div class="recipe-card-picture">
+                                            <img [src]="'data:' + item.imageContentType + ';base64,' + item.image"
+                                                 alt="card image"/>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="!item.image">
+                                        <div class="recipe-card-picture">
+                                            <img alt="Shopped logo" alt="Shopped Logo"
+                                                 src='../../../content/images/placeholder-image.png'/>
+                                        </div>
+                                    </div>
+                                    <div style="float:left;">
+                                        <strong>{{item.recipeName}}</strong>
+                                    </div>
+                                </div>
+                            </mat-list-item>
+                        </a>
+                    </div>
+                </div>
+            </mat-list>
+        </div>
+    </mat-card-content>
+</div>
