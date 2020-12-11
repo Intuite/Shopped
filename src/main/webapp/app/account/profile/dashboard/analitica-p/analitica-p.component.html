@@ -1,0 +1,93 @@
+<div class="container tab-container mt-4">
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+        <div>
+            <h2 class="text-left">
+                Analitics
+            </h2>
+        </div>
+        <div>
+            <button mat-raised-button color="accent" (click)="makeDaily()" class="mr-2">Daily</button>
+            <button mat-raised-button color="accent" (click)="makeWeekly()" class="mr-2">Weekly</button>
+            <button mat-raised-button color="accent" (click)="makeMonthly()">Monthly</button>
+        </div>
+    </div>
+    <div class="row">
+        <div align="center" class="col tab-container">
+            <mat-card>
+                <h3>Cookie Income/Expenses</h3>
+                <mat-card-content>
+                    <div *ngIf="!pieEmpty">
+                        <jhi-pie-chart
+                            [pieChartData]="data"
+                            [pieChartLabels]="labels"
+                            [width]="520">
+                        </jhi-pie-chart>
+                    </div>
+                    <div *ngIf="pieEmpty" align="center">
+                        <p align="center">No transaction for the selected time frame</p>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <div align="center" class="col tab-container">
+            <mat-card>
+                <h3>Cookie Movement</h3>
+                <mat-card-content>
+                    <div *ngIf="!line1Empty">
+                        <jhi-line-chart [ChartData]="lineData"
+                                        [ChartLabels]="lineLabel"
+                                        [width]="520">
+                        </jhi-line-chart>
+                    </div>
+                    <div *ngIf="line1Empty" align="center">
+                        <p align="center">No Cookie movements in the selected time frame</p>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-8 constHeight">
+            <mat-card class="h-100">
+                <h3>Awards</h3>
+                <mat-card-content align="center">
+                    <div *ngIf="!line2Empty">
+                        <jhi-line-chart [ChartData]="awardData"
+                                        [ChartLabels]="awardLabel"
+                                        [width]="700">
+                        </jhi-line-chart>
+                    </div>
+                    <div *ngIf="line1Empty" align="center">
+                        <p align="center">No awards in the selected time frame</p>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <div class="col-4 constHeight">
+            <mat-card class="h-100">
+                <h3>Trending</h3>
+                <mat-card-content>
+                    <div *ngIf="!topEmpty">
+                        <mat-selection-list #award [multiple]="false">
+                            <mat-list-option *ngFor="let key of keys" [value]="">
+                                <div class="justify-content-center padT">
+                                    <div class="float-left">{{names[key]}}</div>
+                                    <div class="float-right">{{awards[key]}}</div>
+                                </div>
+                            </mat-list-option>
+                        </mat-selection-list>
+                    </div>
+                    <div *ngIf="topEmpty" align="center">
+                        <p align="center">No awards given in this time frame</p>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+    <div class="row mt-3 table-transac">
+        <div class="col">
+            <jhi-view-transactions></jhi-view-transactions>
+        </div>
+    </div>
+</div>
+

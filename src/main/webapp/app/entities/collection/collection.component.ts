@@ -14,6 +14,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { Account } from 'app/core/user/account.model';
 import { AccountService } from 'app/core/auth/account.service';
 import { CollectionUpdateComponent } from 'app/entities/collection/collection-update.component';
+import { CollectionHasRecipeComponent } from 'app/entities/collection-has-recipe/collection-has-recipe.component';
 
 @Component({
   selector: 'jhi-collection',
@@ -33,6 +34,7 @@ export class CollectionComponent implements OnInit, OnDestroy {
   pageEvent!: PageEvent;
   currentAccount: Account | null = null;
   dataLoaded = false;
+  searchText = '';
 
   constructor(
     protected collectionService: CollectionService,
@@ -124,6 +126,11 @@ export class CollectionComponent implements OnInit, OnDestroy {
 
   delete(collection: ICollection): void {
     const modalRef = this.modalService.open(CollectionDeleteDialogComponent, { size: 'lg', backdrop: 'static', centered: true });
+    modalRef.componentInstance.collection = collection;
+  }
+
+  view(collection: ICollection): void {
+    const modalRef = this.modalService.open(CollectionHasRecipeComponent, { size: 'xl', backdrop: 'static', centered: true });
     modalRef.componentInstance.collection = collection;
   }
 

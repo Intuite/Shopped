@@ -3,14 +3,8 @@ import { HttpResponse } from '@angular/common/http';
 import { Resolve, ActivatedRouteSnapshot, Routes, Router } from '@angular/router';
 import { Observable, of, EMPTY } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
-
-import { Authority } from 'app/shared/constants/authority.constants';
-import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
 import { ICollectionHasRecipe, CollectionHasRecipe } from 'app/shared/model/collection-has-recipe.model';
 import { CollectionHasRecipeService } from './collection-has-recipe.service';
-import { CollectionHasRecipeComponent } from './collection-has-recipe.component';
-import { CollectionHasRecipeDetailComponent } from './collection-has-recipe-detail.component';
-import { CollectionHasRecipeUpdateComponent } from './collection-has-recipe-update.component';
 
 @Injectable({ providedIn: 'root' })
 export class CollectionHasRecipeResolve implements Resolve<ICollectionHasRecipe> {
@@ -35,50 +29,50 @@ export class CollectionHasRecipeResolve implements Resolve<ICollectionHasRecipe>
 }
 
 export const collectionHasRecipeRoute: Routes = [
-  {
-    path: '',
-    component: CollectionHasRecipeComponent,
-    data: {
-      authorities: [Authority.USER],
-      defaultSort: 'id,asc',
-      pageTitle: 'shoppedApp.collectionHasRecipe.home.title',
-    },
-    canActivate: [UserRouteAccessService],
-  },
-  {
-    path: ':id/view',
-    component: CollectionHasRecipeDetailComponent,
-    resolve: {
-      collectionHasRecipe: CollectionHasRecipeResolve,
-    },
-    data: {
-      authorities: [Authority.USER],
-      pageTitle: 'shoppedApp.collectionHasRecipe.home.title',
-    },
-    canActivate: [UserRouteAccessService],
-  },
-  {
-    path: 'new',
-    component: CollectionHasRecipeUpdateComponent,
-    resolve: {
-      collectionHasRecipe: CollectionHasRecipeResolve,
-    },
-    data: {
-      authorities: [Authority.USER],
-      pageTitle: 'shoppedApp.collectionHasRecipe.home.title',
-    },
-    canActivate: [UserRouteAccessService],
-  },
-  {
-    path: ':id/edit',
-    component: CollectionHasRecipeUpdateComponent,
-    resolve: {
-      collectionHasRecipe: CollectionHasRecipeResolve,
-    },
-    data: {
-      authorities: [Authority.USER],
-      pageTitle: 'shoppedApp.collectionHasRecipe.home.title',
-    },
-    canActivate: [UserRouteAccessService],
-  },
+  // {
+  //   path: '',
+  //   component: CollectionHasRecipeComponent,
+  //   data: {
+  //     authorities: [Authority.USER],
+  //     defaultSort: 'id,asc',
+  //     pageTitle: 'shoppedApp.collectionHasRecipe.home.title',
+  //   },
+  //   canActivate: [UserRouteAccessService],
+  // },
+  // {
+  //   path: ':id/view',
+  //   component: CollectionHasRecipeDetailComponent,
+  //   resolve: {
+  //     collectionHasRecipe: CollectionHasRecipeResolve,
+  //   },
+  //   data: {
+  //     authorities: [Authority.USER],
+  //     pageTitle: 'shoppedApp.collectionHasRecipe.home.title',
+  //   },
+  //   canActivate: [UserRouteAccessService],
+  // },
+  // {
+  //   path: 'new',
+  //   component: CollectionHasRecipeUpdateComponent,
+  //   resolve: {
+  //     collectionHasRecipe: CollectionHasRecipeResolve,
+  //   },
+  //   data: {
+  //     authorities: [Authority.USER],
+  //     pageTitle: 'shoppedApp.collectionHasRecipe.home.title',
+  //   },
+  //   canActivate: [UserRouteAccessService],
+  // },
+  // {
+  //   path: ':id/edit',
+  //   component: CollectionHasRecipeUpdateComponent,
+  //   resolve: {
+  //     collectionHasRecipe: CollectionHasRecipeResolve,
+  //   },
+  //   data: {
+  //     authorities: [Authority.USER],
+  //     pageTitle: 'shoppedApp.collectionHasRecipe.home.title',
+  //   },
+  //   canActivate: [UserRouteAccessService],
+  // },
 ];
