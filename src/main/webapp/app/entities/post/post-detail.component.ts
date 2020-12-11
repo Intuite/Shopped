@@ -26,6 +26,10 @@ import { Bite } from 'app/shared/model/bite.model';
 import { BiteService } from 'app/entities/bite/bite.service';
 import { Follower } from 'app/shared/model/follower.model';
 import { FollowerService } from 'app/entities/follower/follower.service';
+import { ReportPostUpdateComponent } from 'app/entities/report-post/report-post-update.component';
+import { ReportPostService } from 'app/entities/report-post/report-post.service';
+import { IReportType } from 'app/shared/model/report-type.model';
+import { ReportTypeService } from 'app/entities/report-type/report-type.service';
 import { CommentService } from 'app/entities/comment/comment.service';
 import { CommentUpdateComponent } from 'app/entities/comment/comment-update.component';
 import { CartService } from 'app/entities/cart/cart.service';
@@ -60,6 +64,8 @@ export class PostDetailComponent implements OnInit {
   countFollower: any = 0;
   countComments: any = 0;
   collections: ICollection[] = [];
+  reportStatus = false;
+  reporttypes: IReportType[] = [];
 
   constructor(
     protected recipeService: RecipeService,
@@ -69,11 +75,14 @@ export class PostDetailComponent implements OnInit {
     protected postService: PostService,
     protected followService: FollowerService,
     protected commentService: CommentService,
+    protected reportPostService: ReportPostService,
+    protected reportTypeService: ReportTypeService,
     private logService: LogService,
     private biteService: BiteService,
     private notificationService: NotificationService,
     public cartService: CartService,
     protected modalService: NgbModal,
+    protected modalReportService: NgbModal,
     protected accountService: AccountService,
     protected collectionService: CollectionService
   ) {}
@@ -85,6 +94,8 @@ export class PostDetailComponent implements OnInit {
       () => this.onSuccess(),
       () => this.onError()
     );
+
+    this.reportTypeService.query().subscribe((res: HttpResponse<IReportType[]>) => (this.reporttypes = res.body || []));
 
     this.saveViewHistory();
     this.countBites();
@@ -274,6 +285,14 @@ export class PostDetailComponent implements OnInit {
       }
       i++;
     }
+  }
+
+  addReport(post: IPost, account: Account | undefined, reporttypes: IReportType[]): void {
+    const modalReportRef = this.modalReportService.open(ReportPostUpdateComponent, { size: 'md', backdrop: 'static', centered: true });
+    modalReportRef.componentInstance.post = post;
+    modalReportRef.componentInstance.account = account;
+    modalReportRef.componentInstance.reporttypes = reporttypes;
+    this.reportStatus = true;
   }
 
   addComment(post: IPost, account: Account | undefined): void {
