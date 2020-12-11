@@ -42,7 +42,7 @@ export class PostHomeComponent implements OnInit {
   cardPosts: CardPost[] = [];
   account?: Account;
   user?: IUser;
-  statusOptions = ['ACTIVE', 'INACTIVE'];
+  statusOptions = ['ACTIVE', 'INACTIVE', 'BLOCKED'];
   searchText = '';
 
   constructor(
@@ -63,20 +63,16 @@ export class PostHomeComponent implements OnInit {
       }
     });
 
-    this.postService.query().subscribe(
-      (res: HttpResponse<IRecipe[]>) => this.onSuccessPost(res.body),
-      () => this.onError()
-    );
+    this.getPosts();
 
     this.postService.refreshNeeded$.subscribe(() => {
-      // this.getRecipes();
       this.getPosts();
     });
   }
 
   getPosts(): any {
     this.postService.query().subscribe(
-      (res: HttpResponse<IRecipe[]>) => this.onSuccessPost(res.body),
+      (res: HttpResponse<IRecipe[]>) => (this.onSuccessPost(res.body), this.cardPosts.reverse()),
       () => this.onError()
     );
   }
@@ -84,7 +80,7 @@ export class PostHomeComponent implements OnInit {
   cleanPosts(): void {
     let i = 0;
     while (i < this.posts.length) {
-      if (this.posts[i].status === this.statusOptions[1]) {
+      if (this.posts[i].status === this.statusOptions[1] || this.posts[i].status === this.statusOptions[2]) {
         this.posts.splice(i, 1);
       } else {
         i++;
