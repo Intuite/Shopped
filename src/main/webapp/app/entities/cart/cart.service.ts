@@ -16,6 +16,8 @@ import { IRecipe } from 'app/shared/model/recipe.model';
 import { CartHasRecipeService } from 'app/entities/cart-has-recipe/cart-has-recipe.service';
 import { RecipeHasIngredientService } from 'app/entities/recipe-has-ingredient/recipe-has-ingredient.service';
 import { ICartHasRecipe } from 'app/shared/model/cart-has-recipe.model';
+import { ICartHasIngredient } from 'app/shared/model/cart-has-ingredient.model';
+import { ICartIngredient } from 'app/shared/model/cart-ingredient.model';
 
 type EntityResponseType = HttpResponse<ICart>;
 type EntityArrayResponseType = HttpResponse<ICart[]>;
@@ -68,7 +70,6 @@ export class CartService {
       'userId.equals': a.id,
       'status.equals': 'ACTIVE',
     }).subscribe(cartResponse => {
-      console.warn(cartResponse.body);
       if (cartResponse.body !== null && cartResponse.body.length > 0) {
         this.addCartHasIngredient(ing, cartResponse.body[0].id);
       } else {
@@ -84,31 +85,21 @@ export class CartService {
     });
   }
 
-  addRecipe(recipe: IRecipe | null, account: Account): void {
-    this.query({
-      'userId.equals': account.id,
-      'status.equals': 'ACTIVE',
-    }).subscribe(cartResponse => {
-      console.warn(cartResponse.body);
-      if (cartResponse.body !== null && cartResponse.body.length > 0 && recipe !== null) {
-        const chr: ICartHasRecipe = {
-          cartId: cartResponse.body[0].id,
-          recipeId: recipe.id,
-          recipeName: recipe.name,
-          status: Status.ACTIVE.toUpperCase() as Status,
-        };
-        this.chrService.create(chr).subscribe(res => {
-          if (res.body !== null) {
-            const rcp = res.body;
-            this.rhiService.query({ 'recipeId.equals': chr.recipeName }).subscribe(rhi => {
-              const recipeIngredients = rhi.body;
-              recipeIngredients?.forEach(ri => {
-                console.warn(ri);
-              });
-            });
-          }
-        });
-      }
+  // TODO validar si la receta ya fue agregada previamente
+  // TODO sumar los amounts de los ingredientes
+  // TODO si la receta ya estaba, solo agregar los amounts y notificar a la persona cuantas veces ha sido agregada la receta al cart
+  addRecipe(recipe: IRecipe, cartIngredients: ICartIngredient[], account: Account): void {
+    this.query({ 'userId.equals': account.id, 'status.equals': 'ACTIVE' }).subscribe(response => {
+      if (response.body !== null && response.body.length > 0)
+        this.addCartHasRecipe(this.chrService.map(recipe, response.body[0].id), cartIngredients);
+    });
+  }
+
+  launchSnackbar(msg: string, action: string, seconds: number): void {
+    this.snackBar.open(msg, action, {
+      duration: seconds * 1000,
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom',
     });
   }
 
@@ -135,6 +126,69 @@ export class CartService {
     return res;
   }
 
+  private addCartHasRecipe(chr: ICartHasRecipe, cartIngredients: ICartIngredient[]): void {
+    this.chrService.findByCart(chr.cartId!).subscribe(chrResponse => {
+      const recipeList = chrResponse.body!;
+      if (recipeList.length === 0) {
+        this.chrService.create(chr).subscribe(res => {
+          if (res.body !== null) {
+            this.insertIngredientsFromRecipe(
+              cartIngredients.map(x => {
+                x.cartId = chr.cartId;
+                return x;
+              })
+            );
+          }
+        });
+      } else {
+        const equals = recipeList.find(r => r.recipeName === chr.recipeName);
+        if (equals !== undefined) this.launchSnackbar('You have this recipe in your cart', 'Thanks!', 4);
+        else {
+          this.chrService.create(chr).subscribe(res => {
+            if (res.body !== null) {
+              this.insertIngredientsFromRecipe(
+                cartIngredients.map(x => {
+                  x.cartId = chr.cartId;
+                  return x;
+                })
+              );
+            }
+          });
+        }
+      }
+    });
+  }
+
+  private insertIngredientsFromRecipe(cartIngredients: ICartIngredient[]): void {
+    const cartHasIngredients: Observable<HttpResponse<ICartHasIngredient>>[] = [];
+    cartIngredients.forEach(ci => {
+      const chi: ICartHasIngredient = {
+        ingredientId: ci.id,
+        ingredientName: ci.name,
+        amount: ci.amount,
+        cartId: ci.cartId!,
+        status: Status.PENDING.toUpperCase() as Status,
+      };
+      this.chiService
+        .query({
+          'cartId.equals': ci.cartId,
+          'ingredientId.equals': ci.id,
+          'status.in': ['ACTIVE', 'PENDING'],
+        })
+        .subscribe(cartIngredientResponse => {
+          const cibody = cartIngredientResponse.body;
+          let obs: Observable<HttpResponse<ICartIngredient>>;
+          if (cibody !== null && cibody[0] !== undefined) {
+            chi.amount = cibody[0].amount! + chi.amount!;
+            obs = this.chiService.update(chi);
+          } else {
+            obs = this.chiService.create(chi);
+          }
+          obs.subscribe(() => this.launchSnackbar('This recipe was added to your cart', 'Thanks!', 4));
+        });
+    });
+  }
+
   private addCartHasIngredient(ing: IIngredient, cid: number | undefined): void {
     const chi = {
       amount: 1,
@@ -143,7 +197,6 @@ export class CartService {
       ingredientName: ing.name,
       ingredientId: ing.id,
     };
-    console.warn(chi);
     this.chiService
       .query({
         'ingredientId.equals': ing.id,
@@ -155,19 +208,11 @@ export class CartService {
         if (exists.body !== null && exists.body.length === 0) {
           this.chiService.create(chi).subscribe(() => {
             if (chi) {
-              this.snackBar.open(`1 ${ing.unitAbbrev} of ${ing.name} was added to your cart`, 'Thanks!', {
-                duration: 4000,
-                horizontalPosition: 'center',
-                verticalPosition: 'bottom',
-              });
+              this.launchSnackbar(`1 ${ing.unitAbbrev} of ${ing.name} was added to your cart`, 'Thanks!', 3);
             }
           });
         } else {
-          this.snackBar.open('You already have that ingredient in your cart', 'Ok', {
-            duration: 2000,
-            horizontalPosition: 'center',
-            verticalPosition: 'bottom',
-          });
+          this.launchSnackbar('You already have that ingredient in your cart', 'Ok', 2);
         }
       });
   }
