@@ -3,10 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { JhiDataUtils } from 'ng-jhipster';
 import * as moment from 'moment';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { AccountService } from 'app/core/auth/account.service';
-import { Account } from 'app/core/user/account.model';
 import { Log } from 'app/shared/model/log.model';
 import { LogService } from 'app/entities/log/log.service';
 import { Notification } from 'app/shared/model/notification.model';
@@ -18,20 +15,22 @@ import { IRecipe } from 'app/shared/model/recipe.model';
 import { RecipeService } from 'app/entities/recipe/recipe.service';
 import { IRecipeHasRecipeTag } from 'app/shared/model/recipe-has-recipe-tag.model';
 import { IngredientService } from 'app/entities/ingredient/ingredient.service';
+import { AccountService } from 'app/core/auth/account.service';
+import { Account } from 'app/core/user/account.model';
+import { CollectionHasRecipeUpdateComponent } from 'app/entities/collection-has-recipe/collection-has-recipe-update.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ICollection } from 'app/shared/model/collection.model';
+import { CollectionService } from 'app/entities/collection/collection.service';
+import { HttpResponse } from '@angular/common/http';
 import { Bite } from 'app/shared/model/bite.model';
 import { BiteService } from 'app/entities/bite/bite.service';
 import { Follower } from 'app/shared/model/follower.model';
 import { FollowerService } from 'app/entities/follower/follower.service';
-import { ReportPostUpdateComponent } from 'app/entities/report-post/report-post-update.component';
-import { ReportPostService } from 'app/entities/report-post/report-post.service';
-import { IReportType } from 'app/shared/model/report-type.model';
-import { ReportTypeService } from 'app/entities/report-type/report-type.service';
 import { CommentService } from 'app/entities/comment/comment.service';
 import { CommentUpdateComponent } from 'app/entities/comment/comment-update.component';
 import { CartService } from 'app/entities/cart/cart.service';
 import { IIngredient } from 'app/shared/model/ingredient.model';
 import { ICartIngredient } from 'app/shared/model/cart-ingredient.model';
-import { HttpResponse } from '@angular/common/http';
 
 interface FullIngredient {
   id?: number;
@@ -60,26 +59,23 @@ export class PostDetailComponent implements OnInit {
   followerStatus = false;
   countFollower: any = 0;
   countComments: any = 0;
-  reportStatus = false;
-  reporttypes: IReportType[] = [];
+  collections: ICollection[] = [];
 
   constructor(
     protected recipeService: RecipeService,
     protected ingredientService: IngredientService,
     protected dataUtils: JhiDataUtils,
     protected activatedRoute: ActivatedRoute,
-    protected accountService: AccountService,
     protected postService: PostService,
     protected followService: FollowerService,
     protected commentService: CommentService,
-    protected reportPostService: ReportPostService,
-    protected reportTypeService: ReportTypeService,
     private logService: LogService,
     private biteService: BiteService,
     private notificationService: NotificationService,
+    public cartService: CartService,
     protected modalService: NgbModal,
-    protected modalReportService: NgbModal,
-    public cartService: CartService
+    protected accountService: AccountService,
+    protected collectionService: CollectionService
   ) {}
 
   ngOnInit(): void {
@@ -90,8 +86,6 @@ export class PostDetailComponent implements OnInit {
       () => this.onError()
     );
 
-    this.reportTypeService.query().subscribe((res: HttpResponse<IReportType[]>) => (this.reporttypes = res.body || []));
-
     this.saveViewHistory();
     this.countBites();
     this.countFollowers();
@@ -99,6 +93,7 @@ export class PostDetailComponent implements OnInit {
     this.commentService.refreshNeeded$.subscribe(() => {
       this.findComments();
     });
+    this.collectionService.query().subscribe((res: HttpResponse<ICollection[]>) => (this.collections = res.body || []));
   }
 
   byteSize(base64String: string): string {
@@ -281,14 +276,6 @@ export class PostDetailComponent implements OnInit {
     }
   }
 
-  addReport(post: IPost, account: Account | undefined, reporttypes: IReportType[]): void {
-    const modalReportRef = this.modalReportService.open(ReportPostUpdateComponent, { size: 'md', backdrop: 'static', centered: true });
-    modalReportRef.componentInstance.post = post;
-    modalReportRef.componentInstance.account = account;
-    modalReportRef.componentInstance.reporttypes = reporttypes;
-    // this.reportStatus = true;
-  }
-
   addComment(post: IPost, account: Account | undefined): void {
     const modalRef = this.modalService.open(CommentUpdateComponent, { size: 'md', backdrop: 'static', centered: true });
     modalRef.componentInstance.post = post;
@@ -324,5 +311,11 @@ export class PostDetailComponent implements OnInit {
         this.recipeService.findRecipeHasRecipeTags(this.post?.recipeId).subscribe(recipeTags => (this.recipeTags = recipeTags.body));
       }
     });
+  }
+
+  create(collection: ICollection): void {
+    const modalRef = this.modalService.open(CollectionHasRecipeUpdateComponent, { size: 'lg', backdrop: 'static', centered: true });
+    modalRef.componentInstance.currentCollection = collection;
+    modalRef.componentInstance.currentRecipe = this.recipe;
   }
 }
