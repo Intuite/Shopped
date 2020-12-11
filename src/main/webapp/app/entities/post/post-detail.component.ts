@@ -3,10 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { JhiDataUtils } from 'ng-jhipster';
 import * as moment from 'moment';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { AccountService } from 'app/core/auth/account.service';
-import { Account } from 'app/core/user/account.model';
 import { Log } from 'app/shared/model/log.model';
 import { LogService } from 'app/entities/log/log.service';
 import { Notification } from 'app/shared/model/notification.model';
@@ -18,6 +15,13 @@ import { IRecipe } from 'app/shared/model/recipe.model';
 import { RecipeService } from 'app/entities/recipe/recipe.service';
 import { IRecipeHasRecipeTag } from 'app/shared/model/recipe-has-recipe-tag.model';
 import { IngredientService } from 'app/entities/ingredient/ingredient.service';
+import { AccountService } from 'app/core/auth/account.service';
+import { Account } from 'app/core/user/account.model';
+import { CollectionHasRecipeUpdateComponent } from 'app/entities/collection-has-recipe/collection-has-recipe-update.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ICollection } from 'app/shared/model/collection.model';
+import { CollectionService } from 'app/entities/collection/collection.service';
+import { HttpResponse } from '@angular/common/http';
 import { Bite } from 'app/shared/model/bite.model';
 import { BiteService } from 'app/entities/bite/bite.service';
 import { Follower } from 'app/shared/model/follower.model';
@@ -55,21 +59,23 @@ export class PostDetailComponent implements OnInit {
   followerStatus = false;
   countFollower: any = 0;
   countComments: any = 0;
+  collections: ICollection[] = [];
 
   constructor(
     protected recipeService: RecipeService,
     protected ingredientService: IngredientService,
     protected dataUtils: JhiDataUtils,
     protected activatedRoute: ActivatedRoute,
-    protected accountService: AccountService,
     protected postService: PostService,
     protected followService: FollowerService,
     protected commentService: CommentService,
     private logService: LogService,
     private biteService: BiteService,
     private notificationService: NotificationService,
+    public cartService: CartService,
     protected modalService: NgbModal,
-    public cartService: CartService
+    protected accountService: AccountService,
+    protected collectionService: CollectionService
   ) {}
 
   ngOnInit(): void {
@@ -87,6 +93,7 @@ export class PostDetailComponent implements OnInit {
     this.commentService.refreshNeeded$.subscribe(() => {
       this.findComments();
     });
+    this.collectionService.query().subscribe((res: HttpResponse<ICollection[]>) => (this.collections = res.body || []));
   }
 
   byteSize(base64String: string): string {
@@ -304,5 +311,11 @@ export class PostDetailComponent implements OnInit {
         this.recipeService.findRecipeHasRecipeTags(this.post?.recipeId).subscribe(recipeTags => (this.recipeTags = recipeTags.body));
       }
     });
+  }
+
+  create(collection: ICollection): void {
+    const modalRef = this.modalService.open(CollectionHasRecipeUpdateComponent, { size: 'lg', backdrop: 'static', centered: true });
+    modalRef.componentInstance.currentCollection = collection;
+    modalRef.componentInstance.currentRecipe = this.recipe;
   }
 }

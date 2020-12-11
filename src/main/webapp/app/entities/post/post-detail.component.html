@@ -153,6 +153,19 @@
                                     <mat-icon>shopping_cart</mat-icon>
                                     Add to cart
                                 </button>
+                                <span *ngIf="collections">
+                                    <button class="text-white" color="primary" mat-raised-button
+                                            [matMenuTriggerFor]="collectionsMenu">
+                                        <mat-icon>bookmark_border</mat-icon>
+                                        Add to collection
+                                    </button>
+                                    <mat-menu #collectionsMenu="matMenu">
+                                        <button *ngFor="let collection of collections" (click)="create(collection)"
+                                                mat-menu-item>
+                                            {{ collection.name }}
+                                        </button>
+                                    </mat-menu>
+                                </span>
                             </div>
 
                             <div class="blocks-10 post-element-left post-subtitle" gdArea="instructionsTitle">
