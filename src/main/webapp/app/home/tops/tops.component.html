@@ -1,23 +1,26 @@
 <div fxFlex="100%">
     <mat-card-content>
-        <h3>Top Posts</h3>
-        <mat-list>
-            <div *ngFor="let top of bites; let i = index">
-                <hr>
-                <a [routerLink]="['/post', top.postId, 'view']">
-                    <mat-list-item style="height: auto">
-                        <div>
-                            <div>
-                                {{i+1}}.
-                                <strong>Bite:{{top.id}}</strong>
-                            </div>
-                            <div>
-                                <strong>Post:{{top.postId}}</strong>
-                            </div>
-                        </div>
-                    </mat-list-item>
-                </a>
-            </div>
-        </mat-list>
+        <h4>Most popular recipes</h4>
+        <div *ngIf="topItems">
+            <mat-list>
+                <div *ngFor="let item of topItems; let i = index">
+                    <div *ngIf="i<3">
+                        <hr>
+                        <a [routerLink]="['/post', item.id, 'view']">
+                            <mat-list-item style="height: auto">
+                                <div>
+                                    <div style="float:left;">
+                                        <strong >{{i + 1}}.{{item.recipeName}}</strong>
+                                    </div>
+                                    <div style="float:right; clear: both">
+                                        <span >By:{{item.userLogin}}</span>
+                                    </div>
+                                </div>
+                            </mat-list-item>
+                        </a>
+                    </div>
+                </div>
+            </mat-list>
+        </div>
         <mat-card-content>
 </div>

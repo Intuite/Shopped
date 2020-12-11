@@ -5,7 +5,7 @@
                 <h2><span>Search result</span></h2>
             </div>
             <div *ngIf="!searchText">
-                <h2><span>Latest posts</span></h2>
+                <h2><span>Latest recipes</span></h2>
             </div>
         </div>
     </div>
@@ -58,7 +58,7 @@
                                             {{card.date | date:"mediumDate"}}
                                         </div>
 
-                                        <div class="recipe-card-element-right">
+                                        <div class="recipe-card-element-right" >
                                             <span class="recipe-card-icon-portion"></span>{{card.portion}}
                                             <span class="recipe-card-icon-duration"></span>{{card.duration}} min
                                         </div>
@@ -67,7 +67,7 @@
                                 </mat-card-content>
                                 <mat-card-actions>
                                     <div *ngIf="card.caption">
-                                        <div class="recipe-card-element-center">
+                                        <div class="recipe-card-element-center" style="clear: both">
                                             <p>{{card.caption}}</p>
                                         </div>
                                     </div>
