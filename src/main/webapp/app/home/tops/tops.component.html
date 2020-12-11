@@ -1,0 +1,27 @@
+<div fxFlex="100%">
+    <mat-card-content>
+        <h5>Most popular recipes</h5>
+        <div *ngIf="topItems">
+            <mat-list>
+                <div *ngFor="let item of topItems; let i = index">
+                    <div *ngIf="i<5">
+                        <hr>
+                        <a [routerLink]="['/post', item.id, 'view']">
+                            <mat-list-item style="height: auto">
+                                <div>
+                                    <div style="float:left;">
+                                        <strong>{{i + 1}}.{{item.recipeName}}</strong>
+                                    </div>
+                                    <div style="float:right; clear: both">
+                                        <span>By:{{item.userLogin}}</span>
+                                    </div>
+                                </div>
+                            </mat-list-item>
+                        </a>
+                    </div>
+                </div>
+            </mat-list>
+        </div>
+    </mat-card-content>
+</div>
+

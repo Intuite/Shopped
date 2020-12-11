@@ -13,9 +13,11 @@
         </button>
     </h2>
 
-    <jhi-alert-error></jhi-alert-error>
+    <div class="my-1" style="min-height: 80px">
+        <jhi-alert-error></jhi-alert-error>
 
-    <jhi-alert></jhi-alert>
+        <jhi-alert></jhi-alert>
+    </div>
 
     <div *ngIf="requesting"
          class="w-100" fxLayout="row" fxLayoutAlign="space-around center">
@@ -23,12 +25,24 @@
     </div>
 
     <div *ngIf="collections && collections.length > 0">
-        <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-evenly center">
-            <div *ngFor="let collection of collections
+        <div class="mt-3" fxLayout fxLayoutAlign="space-between center">
+            <mat-form-field appearance="fill" fxFlex="100%">
+                <mat-label>
+                    Search
+                </mat-label>
+                <mat-icon matSuffix>search</mat-icon>
+                <input [(ngModel)]="searchText"
+                       matInput
+                       placeholder="Type a text filter"
+                       type="text">
+            </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-evenly left">
+            <div class="col-md-4 col-lg-4 col-xl-4" *ngFor="let collection of collections
          |slice:
          ((paginator.pageIndex)*paginator.pageSize):
          ((paginator.pageIndex+1)*paginator.pageSize)">
-                <mat-card class="mat-elevation-z4 col-sm-12 mt-4">
+                <mat-card class="mat-elevation-z4 col-sm-12 mt-4 text-center">
 
                     <mat-card-header>
                         <mat-card-title class="collection-card-title">
@@ -39,9 +53,9 @@
                                 <mat-icon>more_vert</mat-icon>
                             </button>
                             <mat-menu #menu="matMenu">
-                                <button mat-menu-item [routerLink]="['/collection', collection.id, 'view']">
+                                <button mat-menu-item (click)="view(collection)">
                                     <mat-icon>arrow_forward</mat-icon>
-                                    <span>See posts</span>
+                                    <span>See recipes</span>
                                 </button>
                                 <button mat-menu-item (click)="edit(collection)">
                                     <mat-icon>create</mat-icon>
@@ -55,7 +69,7 @@
                         </div>
                     </mat-card-header>
 
-                    <a [routerLink]="['/collection', collection.id, 'view']">
+                    <a (click)="view(collection)">
                         <div *ngIf="collection.image">
                             <div class="collection-card-picture">
                                 <img [src]="'data:' + collection.imageContentType + ';base64,' + collection.image"
@@ -70,6 +84,9 @@
                         </div>
                     </a>
                     <mat-card-content>
+                        <div>
+                            {{ collection.description }}
+                        </div>
                         <div class="recipe-card-element-right">
                             <span class="collection-card-icon-created"></span>
                             {{collection.created |  date:'dd/MM/yy HH:mm'}}

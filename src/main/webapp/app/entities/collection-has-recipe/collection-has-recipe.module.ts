@@ -7,9 +7,10 @@ import { CollectionHasRecipeDetailComponent } from './collection-has-recipe-deta
 import { CollectionHasRecipeUpdateComponent } from './collection-has-recipe-update.component';
 import { CollectionHasRecipeDeleteDialogComponent } from './collection-has-recipe-delete-dialog.component';
 import { collectionHasRecipeRoute } from './collection-has-recipe.route';
+import { ShoppedRecipeModule } from 'app/entities/recipe/recipe.module';
 
 @NgModule({
-  imports: [ShoppedSharedModule, RouterModule.forChild(collectionHasRecipeRoute)],
+  imports: [ShoppedSharedModule, RouterModule.forChild(collectionHasRecipeRoute), ShoppedRecipeModule],
   declarations: [
     CollectionHasRecipeComponent,
     CollectionHasRecipeDetailComponent,

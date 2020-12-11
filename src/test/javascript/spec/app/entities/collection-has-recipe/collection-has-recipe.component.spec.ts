@@ -77,7 +77,7 @@ describe('Component Tests', () => {
       );
 
       // WHEN
-      comp.loadPage(1);
+      comp.loadAll(1);
 
       // THEN
       expect(service.query).toHaveBeenCalled();

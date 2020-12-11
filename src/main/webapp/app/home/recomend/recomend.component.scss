@@ -1,0 +1,16 @@
+.recipe-card-picture {
+  height: inherit;
+  width: auto;
+  display: inline-block;
+  vertical-align: middle;
+  background-size: cover;
+  background: url('../../../content/images/placeholder-square.png') no-repeat center center;
+  margin-bottom: 3px;
+}
+
+.recipe-card-picture img {
+  height: inherit;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+}

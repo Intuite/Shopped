@@ -1,16 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { ICollectionHasRecipe, CollectionHasRecipe } from 'app/shared/model/collection-has-recipe.model';
 import { CollectionHasRecipeService } from './collection-has-recipe.service';
 import { ICollection } from 'app/shared/model/collection.model';
-import { CollectionService } from 'app/entities/collection/collection.service';
 import { IRecipe } from 'app/shared/model/recipe.model';
 import { RecipeService } from 'app/entities/recipe/recipe.service';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { JhiEventManager } from 'ng-jhipster';
+import { Status } from 'app/shared/model/enumerations/status.model';
+import { CollectionHasRecipeComponent } from 'app/entities/collection-has-recipe/collection-has-recipe.component';
 
 type SelectableEntity = ICollection | IRecipe;
 
@@ -20,50 +23,41 @@ type SelectableEntity = ICollection | IRecipe;
 })
 export class CollectionHasRecipeUpdateComponent implements OnInit {
   isSaving = false;
-  collections: ICollection[] = [];
   recipes: IRecipe[] = [];
-
-  editForm = this.fb.group({
-    id: [],
-    status: [],
-    collectionId: [null, Validators.required],
-    recipeId: [null, Validators.required],
-  });
+  // collections: ICollection[] = [];
+  currentCollection?: ICollection;
+  currentRecipe?: IRecipe;
 
   constructor(
     protected collectionHasRecipeService: CollectionHasRecipeService,
-    protected collectionService: CollectionService,
+    // protected collectionService: CollectionService,
     protected recipeService: RecipeService,
     protected activatedRoute: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private activeModal: NgbActiveModal,
+    protected eventManager: JhiEventManager,
+    protected modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ collectionHasRecipe }) => {
-      this.updateForm(collectionHasRecipe);
-
-      this.collectionService.query().subscribe((res: HttpResponse<ICollection[]>) => (this.collections = res.body || []));
-
-      this.recipeService.query().subscribe((res: HttpResponse<IRecipe[]>) => (this.recipes = res.body || []));
-    });
+    // this.collectionService.query().subscribe((res: HttpResponse<ICollection[]>) => (this.collections = res.body || []));
   }
 
-  updateForm(collectionHasRecipe: ICollectionHasRecipe): void {
-    this.editForm.patchValue({
-      id: collectionHasRecipe.id,
-      status: collectionHasRecipe.status,
-      collectionId: collectionHasRecipe.collectionId,
-      recipeId: collectionHasRecipe.recipeId,
-    });
+  // previousState(): void {
+  //   window.history.back();
+  // }
+
+  close(): void {
+    this.activeModal.close();
   }
 
-  previousState(): void {
-    window.history.back();
+  cancel(): void {
+    this.activeModal.dismiss();
   }
 
   save(): void {
     this.isSaving = true;
-    const collectionHasRecipe = this.createFromForm();
+    const collectionHasRecipe = this.buildEntry();
     if (collectionHasRecipe.id !== undefined) {
       this.subscribeToSaveResponse(this.collectionHasRecipeService.update(collectionHasRecipe));
     } else {
@@ -71,13 +65,17 @@ export class CollectionHasRecipeUpdateComponent implements OnInit {
     }
   }
 
-  private createFromForm(): ICollectionHasRecipe {
+  viewCollectionContent(collection: ICollection): void {
+    const modalRef = this.modalService.open(CollectionHasRecipeComponent, { size: 'xl', backdrop: 'static', centered: true });
+    modalRef.componentInstance.collection = collection;
+  }
+
+  private buildEntry(): ICollectionHasRecipe {
     return {
       ...new CollectionHasRecipe(),
-      id: this.editForm.get(['id'])!.value,
-      status: this.editForm.get(['status'])!.value,
-      collectionId: this.editForm.get(['collectionId'])!.value,
-      recipeId: this.editForm.get(['recipeId'])!.value,
+      status: 'ACTIVE' as Status,
+      collectionId: this.currentCollection?.id,
+      recipeId: this.currentRecipe?.id,
     };
   }
 
@@ -90,7 +88,9 @@ export class CollectionHasRecipeUpdateComponent implements OnInit {
 
   protected onSaveSuccess(): void {
     this.isSaving = false;
-    this.previousState();
+    this.eventManager.broadcast('collectionHasRecipeListModification');
+    // this.close();
+    if (this.currentCollection) this.viewCollectionContent(this.currentCollection);
   }
 
   protected onSaveError(): void {

@@ -60,20 +60,33 @@
                             </div>
 
                             <div class="blocks-2 post-element-left" gdArea="socialInfo">
-                                <span class="post-icon-bite"></span>
-                                <span class="post-icon-comment"></span>
-                                <span class="post-icon-view"></span>
+                                <div [ngSwitch]="followerStatus">
+                                    <a (click)="addFollower()" *ngSwitchCase="false">
+                                        <button class="text-white" color="primary" mat-raised-button>
+                                            Follow User
+                                        </button>
+                                    </a>
+
+                                    <a *ngSwitchCase="true">
+                                        <button class="text-white" color="accent" mat-raised-button>
+                                            Following
+                                        </button>
+                                    </a>
+                                </div>
+
+
                             </div>
 
                             <div class="blocks-3 post-element-right" gdArea="awardsButtons">
                                 <jhi-award-viewer [postId]=post.id></jhi-award-viewer>
-                                <div style="float: right" *ngIf="account!.id !== 3">
+                                <div *ngIf="account!.id !== 3" style="float: right">
                                     <jhi-give-award [data]=post.id></jhi-give-award>
                                 </div>
                             </div>
 
                             <div class="blocks-4 post-element-center" gdArea="userInfo">
-                                <dd> By {{ post.userLogin }} <br/></dd>
+                                <dd> By {{ post.userLogin}} <br/></dd>
+
                                 <dd><span>{{ post.date | date:"mediumDate" }}</span></dd>
                             </div>
 
@@ -84,6 +97,16 @@
                                     </div>
                                 </dd>
                                 <dd><span style="font-style: italic">{{ post.caption }}</span></dd>
+                                <dd>
+                                    <div style="display: inline-block">
+                                        <span class="post-icon-bite"></span>
+                                        <span class="post-count">{{this.countBite.body.length}}</span>
+                                    </div>
+                                    <div style="display: inline-block">
+                                        <span class="post-icon-comment"></span>
+                                        <span class="post-count">{{this.countComments.length}}</span>
+                                    </div>
+                                </dd>
                             </div>
 
                             <div class="blocks-6 post-element-left post-subtitle" gdArea="ingredientsTitle">
@@ -113,6 +136,11 @@
                                                 <span>{{ ingredient.amount }}</span>
                                                 <strong>{{ ingredient.unitAbbrev }}</strong>
                                             </div>
+                                            <button (click)="addIngredientToCart(ingredient)" *ngIf="account!.id!==3"
+                                                    color="accent" mat-icon-button
+                                                    matTooltip="Add ingredient to cart">
+                                                <mat-icon>next_plan</mat-icon>
+                                            </button>
                                         </mat-list-item>
                                     </div>
                                     <mat-divider></mat-divider>
@@ -120,10 +148,24 @@
                             </div>
 
                             <div class="blocks-9 post-element-center" gdArea="addToCart">
-                                <button class="text-white" color="primary" mat-raised-button>
+                                <button (click)="addRecipeToCart()" class="text-white" color="primary"
+                                        mat-raised-button>
                                     <mat-icon>shopping_cart</mat-icon>
                                     Add to cart
                                 </button>
+                                <span *ngIf="collections">
+                                    <button class="text-white" color="primary" mat-raised-button
+                                            [matMenuTriggerFor]="collectionsMenu">
+                                        <mat-icon>bookmark_border</mat-icon>
+                                        Add to collection
+                                    </button>
+                                    <mat-menu #collectionsMenu="matMenu">
+                                        <button *ngFor="let collection of collections" (click)="create(collection)"
+                                                mat-menu-item>
+                                            {{ collection.name }}
+                                        </button>
+                                    </mat-menu>
+                                </span>
                             </div>
 
                             <div class="blocks-10 post-element-left post-subtitle" gdArea="instructionsTitle">
@@ -151,14 +193,28 @@
                             </div>
 
                             <div class="blocks-14 post-element-center post-bite" gdArea="biteButton">
-                                <button class="post-bite-button" type="submit">
-                                    <div class="container-bite">
-                                        <div class="post-bite-div">
-                                            <span class="post-icon-heart-white"></span>
-                                        </div>
-                                        <div class="post-bite-div">
-                                            <span class="post-bite-text-above">Tried this recipe?</span>
-                                            <span class="post-bite-text-below">Leave a bite if you like it!</span>
+                                <button class="post-bite-button">
+                                    <div [ngSwitch]="biteStatus">
+                                        <a (click)="addBite()" *ngSwitchCase="false">
+                                            <div class="container-bite">
+                                                <div class="post-bite-div">
+                                                    <span class="post-icon-heart-white"></span>
+                                                </div>
+                                                <div class="post-bite-div">
+                                                    <span class="post-bite-text-above">Tried this recipe?</span>
+                                                    <span
+                                                        class="post-bite-text-below">Leave a bite if you like it!</span>
+                                                </div>
+                                            </div>
+                                        </a>
+
+                                        <div *ngSwitchCase="true" class="container-bite">
+                                            <div class="post-bite-div">
+                                                <span class="post-icon-bite-white"></span>
+                                            </div>
+                                            <div class="post-bite-div">
+                                                <span class="post-bite-text-middle">You like this recipe!</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </button>
@@ -176,17 +232,37 @@
 
                             <div class="blocks-16 post-element-left post-reply" gdArea="reply">
                                 Leave a reply:
-                                <hr>
+                                <a (click)="this.addComment(post,account)">
+                                    <button class="text-white" color="primary" mat-raised-button>
+                                        Add Comment
+                                    </button>
+                                </a>
                             </div>
 
                             <div class="blocks-17 post-element-left post-subtitle" gdArea="commentsTitle">
                                 Comments:
-                                <br>
-                                <hr>
                             </div>
 
-                            <div class="blocks-18 post-element-center" gdArea="commentsList">
-                                Comments List
+                            <div class="blocks-18 post-element-center post-comment" gdArea="commentsList">
+                                <mat-list>
+                                    <div *ngFor="let comment of countComments">
+                                        <hr>
+                                        <mat-list-item style="height: auto">
+                                            <div>
+                                                <div class="comment-user">
+                                                    <strong>{{ comment.userLogin | titlecase}}</strong>
+                                                </div>
+                                                <div class="comment-date">
+                                                    <span>{{ comment.created | date:"short" }}</span>
+                                                </div>
+                                                <div class="comment-content">
+                                                    {{ comment.content }}
+                                                </div>
+                                            </div>
+                                        </mat-list-item>
+
+                                    </div>
+                                </mat-list>
                             </div>
 
                         </div>

@@ -56,6 +56,14 @@
   clear: left;
 }
 
+.post-bite-text-middle {
+  padding-top: 10px;
+  font-size: 20px;
+  color: white;
+  float: left;
+  clear: left;
+}
+
 .post-instructions {
   border-style: groove;
   padding: 15px;
@@ -105,11 +113,21 @@
 .post-icon-bite {
   height: 24px;
   width: 24px;
-  display: inline-block;
+  float: left;
+  clear: left;
   vertical-align: middle;
   background: url('../../../content/images/bite-icon.png') no-repeat center center;
   background-size: contain;
   margin-right: 3px;
+}
+
+.post-count {
+  height: 24px;
+  width: 24px;
+  float: left;
+  clear: left;
+  vertical-align: middle;
+  text-align: center;
 }
 
 .post-icon-duration {
@@ -125,7 +143,8 @@
 .post-icon-comment {
   height: 24px;
   width: 24px;
-  display: inline-block;
+  float: left;
+  clear: left;
   vertical-align: middle;
   background: url('../../../content/images/comment-icon.png') no-repeat center center;
   background-size: contain;
@@ -212,4 +231,55 @@
   background: url('../../../content/images/bookmark-icon.png') no-repeat center center;
   background-size: contain;
   margin-right: 5px;
+}
+
+.post-icon-follower {
+  height: 24px;
+  width: 24px;
+  display: inline-block;
+  vertical-align: middle;
+  background: url('../../../content/images/social-icon.png') no-repeat center center;
+  background-size: contain;
+  margin-right: 5px;
+}
+
+.post-icon-following {
+  height: 24px;
+  width: 24px;
+  display: inline-block;
+  vertical-align: middle;
+  background: url('../../../content/images/social-white-icon.png') no-repeat center center;
+  background-size: contain;
+  margin-right: 5px;
+}
+
+.comment-user {
+  float: left;
+  font-size: 20px;
+}
+
+.comment-content {
+  float: left;
+  clear: left;
+  height: auto;
+  font-size: 16px;
+  width: inherit;
+  max-width: inherit;
+  margin-top: 10px;
+  margin-left: 25px;
+  margin-right: 10px;
+  text-align: left;
+  word-wrap: break-word;
+}
+
+.comment-date {
+  float: left;
+  clear: left;
+  opacity: 70%;
+  font-size: 14px;
+}
+
+.post-comment {
+  overflow-y: scroll;
+  max-height: 400px;
 }

@@ -82,6 +82,12 @@
                                                 <span>{{ ingredient.amount }}</span>
                                                 <strong>{{ ingredient.unitAbbrev }}</strong>
                                             </div>
+                                            <button (click)="addIngredientToCart(ingredient)" *ngIf="account!.id!==3"
+                                                    color="accent"
+                                                    mat-icon-button
+                                                    matTooltip="Add ingredient to cart">
+                                                <mat-icon>next_plan</mat-icon>
+                                            </button>
                                         </mat-list-item>
                                     </div>
                                     <mat-divider></mat-divider>
@@ -89,10 +95,24 @@
                             </div>
 
                             <div class="blocks-6 recipe-element-center" gdArea="addToCart">
-                                <button class="text-white" color="primary" mat-raised-button>
+                                <button (click)="addRecipeToCart()" class="text-white" color="primary"
+                                        mat-raised-button>
                                     <mat-icon>shopping_cart</mat-icon>
                                     Add to cart
                                 </button>
+                                <span *ngIf="collections">
+                                    <button class="text-white" color="primary" mat-raised-button
+                                            [matMenuTriggerFor]="collectionsMenu">
+                                        <mat-icon>bookmark_border</mat-icon>
+                                        Add to collection
+                                    </button>
+                                    <mat-menu #collectionsMenu="matMenu">
+                                        <button *ngFor="let collection of collections" (click)="create(collection)"
+                                                mat-menu-item>
+                                            {{ collection.name }}
+                                        </button>
+                                    </mat-menu>
+                                </span>
                             </div>
 
                             <div class="blocks-7 recipe-element-left recipe-subtitle" gdArea="instructionsTitle">
