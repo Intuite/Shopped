@@ -17,6 +17,7 @@ import { CommendationService } from 'app/entities/commendation/commendation.serv
 import { Commendation } from 'app/shared/model/commendation.model';
 import moment from 'moment';
 import { Log } from 'app/shared/model/log.model';
+import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 
 @Component({
   selector: 'jhi-award-picker-dialog',
@@ -86,6 +87,7 @@ export class AwardPickerDialogComponent implements OnInit {
   }
 
   awardPost(award: Award): void {
+    console.warn('awardPost called');
     this.cookieService
       .query({
         ...(this.post.userId && { 'userId.equals': this.post.userId }),
@@ -110,6 +112,7 @@ export class AwardPickerDialogComponent implements OnInit {
   }
 
   private onRecipientFound(data: ICookies[], award: Award): void {
+    console.warn('on recipient found called');
     let wallet: Cookies;
     if (data !== null && data !== undefined) {
       wallet = data[0];
@@ -156,11 +159,24 @@ export class AwardPickerDialogComponent implements OnInit {
         awardId: this.award.id,
         awardCost: this.award.cost,
         tax: +tax,
+        postId: this.data,
       });
-      this.logService.create(new Log(undefined, description, moment(), 'Award', 1, this.account?.login, this.account?.id)).subscribe(
-        () => console.warn('log succesful'),
-        () => console.warn('log failed')
-      );
+      this.logService
+        .create(
+          new Log(
+            undefined,
+            description,
+            new Date() ? moment(new Date(), DATE_TIME_FORMAT) : undefined,
+            'Award',
+            1,
+            this.account?.login,
+            this.account?.id
+          )
+        )
+        .subscribe(
+          () => console.warn('log succesful'),
+          () => console.warn('log failed')
+        );
     }
   }
 

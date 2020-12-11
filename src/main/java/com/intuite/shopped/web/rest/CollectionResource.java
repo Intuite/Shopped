@@ -108,7 +108,7 @@ public class CollectionResource {
      * {@code GET /users} : get all collections.
      *
      * @param criteria the information specify.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body all users.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body all collections.
      */
     @GetMapping("/collections/all")
     public ResponseEntity<List<CollectionDTO>> getAllUsers(CollectionCriteria criteria) {

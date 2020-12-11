@@ -8,7 +8,6 @@ import { ICollection, Collection } from 'app/shared/model/collection.model';
 import { CollectionService } from './collection.service';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
 import { Authority } from 'app/shared/constants/authority.constants';
-import { CollectionDetailComponent } from 'app/entities/collection/collection-detail.component';
 import { CollectionComponent } from 'app/entities/collection/collection.component';
 
 @Injectable({ providedIn: 'root' })
@@ -44,18 +43,18 @@ export const collectionRoute: Routes = [
     },
     canActivate: [UserRouteAccessService],
   },
-  {
-    path: ':id/view',
-    component: CollectionDetailComponent,
-    resolve: {
-      collection: CollectionResolve,
-    },
-    data: {
-      authorities: [Authority.USER],
-      pageTitle: 'shoppedApp.collection.home.title',
-    },
-    canActivate: [UserRouteAccessService],
-  },
+  // {
+  //   path: ':id/view',
+  //   component: CollectionDetailComponent,
+  //   resolve: {
+  //     collection: CollectionResolve,
+  //   },
+  //   data: {
+  //     authorities: [Authority.USER],
+  //     pageTitle: 'shoppedApp.collection.home.title',
+  //   },
+  //   canActivate: [UserRouteAccessService],
+  // },
   // {
   //   path: 'new',
   //   component: CollectionUpdateComponent,

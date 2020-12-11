@@ -14,6 +14,11 @@ import { IIngredient } from 'app/shared/model/ingredient.model';
 import { CartService } from 'app/entities/cart/cart.service';
 import { Account } from 'app/core/user/account.model';
 import { ICartIngredient } from 'app/shared/model/cart-ingredient.model';
+import { CollectionHasRecipeUpdateComponent } from 'app/entities/collection-has-recipe/collection-has-recipe-update.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ICollection } from 'app/shared/model/collection.model';
+import { HttpResponse } from '@angular/common/http';
+import { CollectionService } from 'app/entities/collection/collection.service';
 
 interface FullIngredient {
   id?: number;
@@ -37,6 +42,7 @@ export class RecipeDetailComponent implements OnInit {
   account!: Account;
   recipeTags!: IRecipeHasRecipeTag[] | null;
   ingredients: FullIngredient[] = [];
+  collections: ICollection[] = [];
 
   constructor(
     protected dataUtils: JhiDataUtils,
@@ -44,8 +50,10 @@ export class RecipeDetailComponent implements OnInit {
     private accountService: AccountService,
     protected userService: UserService,
     protected recipeService: RecipeService,
+    private cartService: CartService,
+    protected modalService: NgbModal,
     protected ingredientService: IngredientService,
-    private cartService: CartService
+    protected collectionService: CollectionService
   ) {}
 
   ngOnInit(): void {
@@ -77,6 +85,7 @@ export class RecipeDetailComponent implements OnInit {
         this.userService.find(account.login).subscribe(user => (this.user = user));
       }
     });
+    this.collectionService.query().subscribe((res: HttpResponse<ICollection[]>) => (this.collections = res.body || []));
   }
 
   addIngredientToCart(ing: IIngredient): void {
@@ -107,5 +116,11 @@ export class RecipeDetailComponent implements OnInit {
       });
       this.cartService.addRecipe(this.recipe, ning, this.account);
     }
+  }
+
+  create(collection: ICollection): void {
+    const modalRef = this.modalService.open(CollectionHasRecipeUpdateComponent, { size: 'lg', backdrop: 'static', centered: true });
+    modalRef.componentInstance.currentCollection = collection;
+    modalRef.componentInstance.currentRecipe = this.recipe;
   }
 }
