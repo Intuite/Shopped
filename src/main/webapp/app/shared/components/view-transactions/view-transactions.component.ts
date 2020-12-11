@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Account } from 'app/core/user/account.model';
 import { Transaction } from 'app/shared/model/transaction.model';
 import { AccountService } from 'app/core/auth/account.service';
@@ -40,30 +40,18 @@ class Invoice {
   templateUrl: './view-transactions.component.html',
   styleUrls: ['./view-transactions.component.scss'],
 })
-export class ViewTransactionsComponent implements OnInit, OnDestroy {
+export class ViewTransactionsComponent implements OnInit {
   invoice = new Invoice();
   account?: Account;
   transactions: Transaction[] = [];
   displayedColumns: string[] = ['cost', 'description', 'cookies', 'date', 'id'];
-  private id: NodeJS.Timeout | undefined;
 
   constructor(private accountService: AccountService, private transactionService: TransactionService, private datePipe: DatePipe) {}
 
   ngOnInit(): void {
-    this.load();
-    this.id = setInterval(() => {
-      this.load();
-    }, 3000);
-  }
-  ngOnDestroy(): void {
-    if (this.id) {
-      clearInterval(this.id);
-    }
-  }
-
-  private load(): void {
     this.accountService.identity().subscribe(res => this.onSuccess(res || undefined));
   }
+
   print(transaction: Transaction): void {
     this.invoice.products.push(new Product('cookie bundle x' + transaction.cookiesAmount, transaction.amount || 0, 1));
     const docDefinition = {

@@ -10,6 +10,10 @@ import { AccountService } from 'app/core/auth/account.service';
 import { IRecipeHasRecipeTag } from 'app/shared/model/recipe-has-recipe-tag.model';
 import { IngredientService } from 'app/entities/ingredient/ingredient.service';
 import { RecipeService } from 'app/entities/recipe/recipe.service';
+import { IIngredient } from 'app/shared/model/ingredient.model';
+import { CartService } from 'app/entities/cart/cart.service';
+import { Account } from 'app/core/user/account.model';
+import { ICartIngredient } from 'app/shared/model/cart-ingredient.model';
 import { CollectionHasRecipeUpdateComponent } from 'app/entities/collection-has-recipe/collection-has-recipe-update.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ICollection } from 'app/shared/model/collection.model';
@@ -35,6 +39,7 @@ export class RecipeDetailComponent implements OnInit {
   eventSubscriber?: Subscription;
   statusOptions = ['ACTIVE', 'INACTIVE'];
   user!: IUser;
+  account!: Account;
   recipeTags!: IRecipeHasRecipeTag[] | null;
   ingredients: FullIngredient[] = [];
   collections: ICollection[] = [];
@@ -45,6 +50,7 @@ export class RecipeDetailComponent implements OnInit {
     private accountService: AccountService,
     protected userService: UserService,
     protected recipeService: RecipeService,
+    private cartService: CartService,
     protected modalService: NgbModal,
     protected ingredientService: IngredientService,
     protected collectionService: CollectionService
@@ -75,10 +81,15 @@ export class RecipeDetailComponent implements OnInit {
     });
     this.accountService.getAuthenticationState().subscribe(account => {
       if (account) {
+        this.account = account;
         this.userService.find(account.login).subscribe(user => (this.user = user));
       }
     });
     this.collectionService.query().subscribe((res: HttpResponse<ICollection[]>) => (this.collections = res.body || []));
+  }
+
+  addIngredientToCart(ing: IIngredient): void {
+    if (this.account !== undefined) this.cartService.addIngredient(ing, this.account);
   }
 
   byteSize(base64String: string): string {
@@ -91,6 +102,20 @@ export class RecipeDetailComponent implements OnInit {
 
   previousState(): void {
     window.history.back();
+  }
+
+  addRecipeToCart(): void {
+    if (this.account !== undefined && this.recipe !== undefined && this.recipe !== null) {
+      const ning = this.ingredients.map(fi => {
+        const ing: ICartIngredient = {
+          id: fi.id,
+          name: fi.name,
+          amount: fi.amount,
+        };
+        return ing;
+      });
+      this.cartService.addRecipe(this.recipe, ning, this.account);
+    }
   }
 
   create(collection: ICollection): void {

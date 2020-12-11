@@ -1,5 +1,7 @@
 <mat-list-item>
-    <img *ngIf="ci.image" [src]="ci.image" alt="List ci image" matListAvatar/>
+    <img *ngIf="ci.image"
+         [src]="'data:' + ci.imageContentType + ';base64,' + ci.image"
+         alt="List ci image" matListAvatar/>
     <mat-icon *ngIf="!ci.image" color="primary" matListIcon>
         shopping_cart
     </mat-icon>
