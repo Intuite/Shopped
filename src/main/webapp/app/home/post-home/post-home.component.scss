@@ -14,7 +14,7 @@ a {
 }
 
 .recipe-card-element-center {
-  text-align: center;
+  text-align-last: center;
   font-style: italic;
 }
 
@@ -23,12 +23,12 @@ a {
 }
 
 .recipe-card-content > mat-card {
-  width: 200px;
+  width: 100%;
 }
 
 .recipe-card-title {
   height: 20px;
-  width: auto;
+  width: 100%;
 }
 .recipe-card-icon-view {
   font-size: 16px;
@@ -60,8 +60,8 @@ a {
 }
 
 .recipe-card-picture {
-  height: 150px;
-  width: auto;
+  height: 250px;
+  width: 100%;
   display: inline-block;
   vertical-align: middle;
   background-size: cover;
@@ -70,7 +70,7 @@ a {
 }
 
 .recipe-card-picture img {
-  height: 150px;
+  height: 250px;
   width: 100%;
   object-fit: cover;
   object-position: center;
@@ -97,7 +97,7 @@ a {
 
 .recipe-list-empty {
   height: 400px;
-  width: auto;
+  width: 100%;
 }
 
 .recipe-card-disable-button {
