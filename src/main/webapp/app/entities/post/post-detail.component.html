@@ -182,11 +182,16 @@
                             </div>
 
                             <div class="blocks-13 post-element-right" gdArea="exportButtons">
-                                <a (click)="this.addReport(post,account,reporttypes)">
                                 <button class="post-save-buttons" type="submit">
-                                            <span class="post-icon-report"></span> Report
+                                <div [ngSwitch]="reportStatus">
+                                    <a (click)="this.addReport(post,account,reporttypes)" *ngSwitchCase="false">
+                                        <span class="post-icon-report"></span> Report
+                                    </a>
+                                    <a *ngSwitchCase="true">
+                                        <span class="post-icon-report"></span> Reported
+                                    </a>
+                                </div>
                                 </button>
-                                </a>
                                 <button class="post-save-buttons" type="submit">
                                     <span class="post-icon-pdf"></span> PDF
                                 </button>
