@@ -34,10 +34,21 @@
         fxLayoutAlign="space-between start"
         mat-dialog-content
     >
+        <div *ngIf="requesting" fxFlex fxLayout="column">
+            <h5>Recipes</h5>
+            <div fxLayout="row" fxLayoutAlign="center center">
+                <mat-spinner></mat-spinner>
+            </div>
+        </div>
         <div>
             <h5>Recipes</h5>
-            <mat-list>
-                <mat-list-item>
+            <mat-list *ngIf="!requesting">
+                <mat-list-item *ngFor="let recipe of this.recipeIngredientInfo.value">
+                    <mat-icon color="primary" matListIcon>fastfood</mat-icon>
+                    <div matLine>{{ recipe.recipeName }}</div>
+                    <div matLine>Needs at least {{ recipe.amount }} <strong>{{data.unitAbbrev}}</strong></div>
+                </mat-list-item>
+                <mat-list-item *ngIf="recipeIngredientInfo.value.length === 0">
                     <mat-icon color="primary" matListIcon>fastfood</mat-icon>
                     <div matLine>
                         There are no recipes in the cart linked to this
