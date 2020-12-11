@@ -26,6 +26,7 @@ import { CommentService } from 'app/entities/comment/comment.service';
 import { CommentUpdateComponent } from 'app/entities/comment/comment-update.component';
 import { CartService } from 'app/entities/cart/cart.service';
 import { IIngredient } from 'app/shared/model/ingredient.model';
+import { ICartIngredient } from 'app/shared/model/cart-ingredient.model';
 
 interface FullIngredient {
   id?: number;
@@ -115,6 +116,20 @@ export class PostDetailComponent implements OnInit {
         () => console.warn('Post view log succesful'),
         () => console.warn('Post view log failed')
       );
+  }
+
+  addRecipeToCart(): void {
+    if (this.account !== undefined && this.recipe !== undefined && this.recipe !== null) {
+      const ning = this.ingredients.map(fi => {
+        const ing: ICartIngredient = {
+          id: fi.id,
+          name: fi.name,
+          amount: fi.amount,
+        };
+        return ing;
+      });
+      this.cartService.addRecipe(this.recipe, ning, this.account);
+    }
   }
 
   addIngredientToCart(ing: IIngredient): void {
