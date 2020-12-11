@@ -66,7 +66,6 @@
                                             Follow User
                                         </button>
                                     </a>
-
                                     <a *ngSwitchCase="true">
                                         <button class="text-white" color="accent" mat-raised-button>
                                             Following
@@ -74,14 +73,16 @@
                                     </a>
                                 </div>
 
-
                             </div>
 
                             <div class="blocks-3 post-element-right" gdArea="awardsButtons">
+                                <!--
                                 <jhi-award-viewer [postId]=post.id></jhi-award-viewer>
                                 <div *ngIf="account!.id !== 3" style="float: right">
                                     <jhi-give-award [data]=post.id></jhi-give-award>
                                 </div>
+
+                                -->
                             </div>
 
                             <div class="blocks-4 post-element-center" gdArea="userInfo">
@@ -168,9 +169,11 @@
                             </div>
 
                             <div class="blocks-13 post-element-right" gdArea="exportButtons">
+                                <a (click)="this.addReport(post,account,reporttypes)">
                                 <button class="post-save-buttons" type="submit">
-                                    <span class="post-icon-email"></span> Email
+                                            <span class="post-icon-report"></span> Report
                                 </button>
+                                </a>
                                 <button class="post-save-buttons" type="submit">
                                     <span class="post-icon-pdf"></span> PDF
                                 </button>
@@ -219,6 +222,7 @@
 
                             <div class="blocks-16 post-element-left post-reply" gdArea="reply">
                                 Leave a reply:
+
                                 <a (click)="this.addComment(post,account)">
                                     <button class="text-white" color="primary" mat-raised-button>
                                         Add Comment

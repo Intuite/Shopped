@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { JhiEventManager } from 'ng-jhipster';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -15,6 +17,10 @@ import { IPost } from 'app/shared/model/post.model';
 import { PostService } from 'app/entities/post/post.service';
 import { IUser } from 'app/core/user/user.model';
 import { UserService } from 'app/core/user/user.service';
+import { Account } from 'app/core/user/account.model';
+import { AccountService } from 'app/core/auth/account.service';
+import { Log } from 'app/shared/model/log.model';
+import { LogService } from 'app/entities/log/log.service';
 
 type SelectableEntity = IReportType | IPost | IUser;
 
@@ -23,18 +29,21 @@ type SelectableEntity = IReportType | IPost | IUser;
   templateUrl: './report-post-update.component.html',
 })
 export class ReportPostUpdateComponent implements OnInit {
-  isSaving = false;
+  post?: IPost;
+  account?: Account | undefined;
   reporttypes: IReportType[] = [];
+  isSaving = false;
   posts: IPost[] = [];
   users: IUser[] = [];
+  statusOptions = ['ACTIVE', 'INACTIVE'];
 
   editForm = this.fb.group({
     id: [],
-    created: [null, [Validators.required]],
+    created: [],
     status: [],
     typeId: [null, Validators.required],
-    postId: [null, Validators.required],
-    userId: [null, Validators.required],
+    postId: [],
+    userId: [],
   });
 
   constructor(
@@ -43,13 +52,17 @@ export class ReportPostUpdateComponent implements OnInit {
     protected postService: PostService,
     protected userService: UserService,
     protected activatedRoute: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    public activeModal: NgbActiveModal,
+    protected eventManager: JhiEventManager,
+    protected accountService: AccountService,
+    private logService: LogService
   ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ reportPost }) => {
       if (!reportPost.id) {
-        const today = moment().startOf('day');
+        const today = moment().startOf('minute');
         reportPost.created = today;
       }
 
@@ -75,7 +88,7 @@ export class ReportPostUpdateComponent implements OnInit {
   }
 
   previousState(): void {
-    window.history.back();
+    this.activeModal.dismiss();
   }
 
   save(): void {
@@ -91,12 +104,12 @@ export class ReportPostUpdateComponent implements OnInit {
   private createFromForm(): IReportPost {
     return {
       ...new ReportPost(),
-      id: this.editForm.get(['id'])!.value,
-      created: this.editForm.get(['created'])!.value ? moment(this.editForm.get(['created'])!.value, DATE_TIME_FORMAT) : undefined,
-      status: this.editForm.get(['status'])!.value,
+      id: undefined,
+      created: moment().startOf('minute'),
+      status: this.post?.status,
       typeId: this.editForm.get(['typeId'])!.value,
-      postId: this.editForm.get(['postId'])!.value,
-      userId: this.editForm.get(['userId'])!.value,
+      postId: this.post?.id,
+      userId: this.account?.id,
     };
   }
 
@@ -109,7 +122,8 @@ export class ReportPostUpdateComponent implements OnInit {
 
   protected onSaveSuccess(): void {
     this.isSaving = false;
-    this.previousState();
+    this.saveHistoryReportPost();
+    this.activeModal.close();
   }
 
   protected onSaveError(): void {
@@ -118,5 +132,18 @@ export class ReportPostUpdateComponent implements OnInit {
 
   trackById(index: number, item: SelectableEntity): any {
     return item.id;
+  }
+
+  saveHistoryReportPost(): void {
+    const description = JSON.stringify({
+      postRecipeName: this.post?.recipeName,
+      userReporting: this.account?.login,
+    });
+    this.logService
+      .create(new Log(undefined, description, moment().startOf('minute'), 'Report post', 7, this.account?.login, this.account?.id))
+      .subscribe(
+        () => console.warn('Report post log succesful'),
+        () => console.warn('Report post log failed')
+      );
   }
 }
