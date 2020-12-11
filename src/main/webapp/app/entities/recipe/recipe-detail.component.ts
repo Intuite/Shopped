@@ -13,6 +13,7 @@ import { RecipeService } from 'app/entities/recipe/recipe.service';
 import { IIngredient } from 'app/shared/model/ingredient.model';
 import { CartService } from 'app/entities/cart/cart.service';
 import { Account } from 'app/core/user/account.model';
+import { ICartIngredient } from 'app/shared/model/cart-ingredient.model';
 
 interface FullIngredient {
   id?: number;
@@ -95,6 +96,16 @@ export class RecipeDetailComponent implements OnInit {
   }
 
   addRecipeToCart(): void {
-    if (this.account !== undefined) this.cartService.addRecipe(this.recipe, this.account);
+    if (this.account !== undefined && this.recipe !== undefined && this.recipe !== null) {
+      const ning = this.ingredients.map(fi => {
+        const ing: ICartIngredient = {
+          id: fi.id,
+          name: fi.name,
+          amount: fi.amount,
+        };
+        return ing;
+      });
+      this.cartService.addRecipe(this.recipe, ning, this.account);
+    }
   }
 }
