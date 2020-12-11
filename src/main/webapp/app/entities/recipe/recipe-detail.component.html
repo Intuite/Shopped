@@ -93,10 +93,19 @@
                                     <mat-icon>shopping_cart</mat-icon>
                                     Add to cart
                                 </button>
-                                <button class="text-white" color="primary" mat-raised-button>
-                                    <mat-icon>bookmark_border</mat-icon>
-                                    Add to collection
-                                </button>
+                                <span *ngIf="collections">
+                                    <button class="text-white" color="primary" mat-raised-button
+                                            [matMenuTriggerFor]="collectionsMenu">
+                                        <mat-icon>bookmark_border</mat-icon>
+                                        Add to collection
+                                    </button>
+                                    <mat-menu #collectionsMenu="matMenu">
+                                        <button *ngFor="let collection of collections" (click)="create(collection)"
+                                                mat-menu-item>
+                                            {{ collection.name }}
+                                        </button>
+                                    </mat-menu>
+                                </span>
                             </div>
 
                             <div class="blocks-7 recipe-element-left recipe-subtitle" gdArea="instructionsTitle">

@@ -1,45 +1,27 @@
-<div class="modal-header">
-    <h4 class="modal-title" jhiTranslate="entity.delete.title">
-        Add recipe to {{ currentCollection?.name?currentCollection?.name:'collection' }}
-    </h4>
+<form *ngIf="currentCollection && currentRecipe" name="deleteForm" (ngSubmit)="save()">
+    <div class="modal-header">
+        <h4 class="modal-title" jhiTranslate="entity.delete.title">Confirm delete operation</h4>
 
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
-            (click)="cancel()">&times;</button>
-</div>
-<div class="modal-body">
-    <div class="">
-        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-            <h2 id="jhi-collection-has-recipe-heading">Add a recipe to your collection</h2>
-
-            <div>
-                <jhi-alert-error></jhi-alert-error>
-
-                <div class="form-group w-100">
-                    <label>Recipe</label>
-                    <select id="field_recipe" name="recipe" formControlName="recipeId">
-                        <option [ngValue]="recipeOption.id" *ngFor="let recipeOption of recipes; trackBy: trackById">
-                            {{ recipeOption.name }}
-                        </option>
-                    </select>
-                    <div *ngIf="editForm.get('recipeId')!.invalid && (editForm.get('recipeId')!.dirty || editForm.get('recipeId')!.touched)">
-                        <small class="form-text text-danger"
-                               *ngIf="editForm.get('recipeId')?.errors?.required" jhiTranslate="entity.validation.required">
-                            This field is required.
-                        </small>
-                    </div>
-                </div>
-            </div>
-
-            <div>
-                <button  type="button" class="text-white" mat-flat-button jhiMaterialColor="secondary"
-                         id="cancel-save" (click)="cancel()">
-                    <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
-                </button>
-
-                <button class="text-white" mat-flat-button jhiMaterialColor="warn" type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving">
-                    <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
-                </button>
-            </div>
-        </form>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="cancel()">&times;</button>
     </div>
-</div>
+
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+
+        <p id="jhi-delete-collectionHasRecipe-heading">
+            Are you sure you want to add the recipe
+            {{ currentRecipe.name }} to {{ currentCollection.name }} collection?
+        </p>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="text-white" mat-flat-button jhiMaterialColor="secondary" data-dismiss="modal" (click)="cancel()">
+            <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <span class="mx-2"></span>
+        <button id="jhi-confirm-delete-collectionHasRecipe" type="submit" class="text-white" mat-flat-button jhiMaterialColor="primary">
+            <fa-icon icon="plus"></fa-icon>&nbsp;<span>Add</span>
+        </button>
+    </div>
+</form>

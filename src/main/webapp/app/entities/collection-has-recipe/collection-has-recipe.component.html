@@ -9,7 +9,8 @@
 <div class="modal-body">
     <div class="" style="min-height: 400px">
         <h2 id="page-heading">
-            <span>My Collections</span>
+            <span *ngIf="collection">{{ collection.name }} collection recipes</span>
+            <span *ngIf="!collection">Collection recipes</span>
 <!--            <button *ngIf="collection"-->
 <!--                    [matTooltipHideDelay]="0"-->
 <!--                    [matTooltipShowDelay]="1000"-->
@@ -66,7 +67,7 @@
                             </div>
                         </mat-card-header>
 
-                        <a [routerLink]="['/recipe', recipe.id, 'view']">
+                        <a [routerLink]="['/recipe', recipe.id, 'view']" (click)="close()">
                             <div *ngIf="recipe.image">
                                 <div class="recipe-card-picture">
                                     <img [src]="'data:' + recipe.imageContentType + ';base64,' + recipe.image"

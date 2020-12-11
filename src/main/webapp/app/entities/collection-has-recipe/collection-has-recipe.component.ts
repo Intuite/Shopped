@@ -14,8 +14,6 @@ import { IRecipe } from 'app/shared/model/recipe.model';
 import { RecipeService } from 'app/entities/recipe/recipe.service';
 import { CollectionHasRecipeService } from 'app/entities/collection-has-recipe/collection-has-recipe.service';
 import { ICollection } from 'app/shared/model/collection.model';
-import { CollectionHasRecipeUpdateComponent } from 'app/entities/collection-has-recipe/collection-has-recipe-update.component';
-import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'jhi-collection-has-recipe',
@@ -46,8 +44,7 @@ export class CollectionHasRecipeComponent implements OnInit, OnDestroy {
     protected router: Router,
     protected eventManager: JhiEventManager,
     protected modalService: NgbModal,
-    private activeModal: NgbActiveModal,
-    public dialog: MatDialog
+    private activeModal: NgbActiveModal
   ) {}
 
   loadAll(): void {
@@ -145,10 +142,10 @@ export class CollectionHasRecipeComponent implements OnInit, OnDestroy {
     });
   }
 
-  create(): void {
-    const modalRef = this.modalService.open(CollectionHasRecipeUpdateComponent, { size: 'lg', backdrop: 'static', centered: true });
-    modalRef.componentInstance.currentCollection = this.collection;
-  }
+  // create(): void {
+  //   const modalRef = this.modalService.open(CollectionHasRecipeUpdateComponent, { size: 'lg', backdrop: 'static', centered: true });
+  //   modalRef.componentInstance.currentCollection = this.collection;
+  // }
 
   delete(recipe: IRecipe): void {
     this.collectionHasRecipeService
@@ -160,7 +157,11 @@ export class CollectionHasRecipeComponent implements OnInit, OnDestroy {
         (res: HttpResponse<ICollectionHasRecipe[]>) => {
           if (res.body) {
             const tempEntry = res.body[0] || null;
-            const modalRef = this.modalService.open(CollectionHasRecipeDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+            const modalRef = this.modalService.open(CollectionHasRecipeDeleteDialogComponent, {
+              size: 'lg',
+              backdrop: 'static',
+              centered: true,
+            });
             modalRef.componentInstance.collectionHasRecipe = tempEntry;
           }
         },

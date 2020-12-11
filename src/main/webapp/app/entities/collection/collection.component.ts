@@ -34,6 +34,7 @@ export class CollectionComponent implements OnInit, OnDestroy {
   pageEvent!: PageEvent;
   currentAccount: Account | null = null;
   dataLoaded = false;
+  searchText = '';
 
   constructor(
     protected collectionService: CollectionService,

@@ -25,7 +25,19 @@
     </div>
 
     <div *ngIf="collections && collections.length > 0">
-        <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-evenly center">
+        <div class="mt-3" fxLayout fxLayoutAlign="space-between center">
+            <mat-form-field appearance="fill" fxFlex="100%">
+                <mat-label>
+                    Search
+                </mat-label>
+                <mat-icon matSuffix>search</mat-icon>
+                <input [(ngModel)]="searchText"
+                       matInput
+                       placeholder="Type a text filter"
+                       type="text">
+            </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-evenly left">
             <div *ngFor="let collection of collections
          |slice:
          ((paginator.pageIndex)*paginator.pageSize):
@@ -61,7 +73,7 @@
                         <div *ngIf="collection.image">
                             <div class="collection-card-picture">
                                 <img [src]="'data:' + collection.imageContentType + ';base64,' + collection.image"
-                                     alt="card image"/>
+                                     alt="card image" style="max-width: 900px"/>
                             </div>
                         </div>
                         <div *ngIf="!collection.image">

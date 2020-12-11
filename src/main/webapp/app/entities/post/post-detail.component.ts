@@ -9,6 +9,11 @@ import { IRecipeHasRecipeTag } from 'app/shared/model/recipe-has-recipe-tag.mode
 import { IngredientService } from 'app/entities/ingredient/ingredient.service';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/user/account.model';
+import { CollectionHasRecipeUpdateComponent } from 'app/entities/collection-has-recipe/collection-has-recipe-update.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ICollection } from 'app/shared/model/collection.model';
+import { CollectionService } from 'app/entities/collection/collection.service';
+import { HttpResponse } from '@angular/common/http';
 
 interface FullIngredient {
   id?: number;
@@ -31,13 +36,16 @@ export class PostDetailComponent implements OnInit {
   recipeTags!: IRecipeHasRecipeTag[] | null;
   ingredients: FullIngredient[] = [];
   account?: Account | undefined;
+  collections: ICollection[] = [];
 
   constructor(
     protected recipeService: RecipeService,
     protected ingredientService: IngredientService,
     protected dataUtils: JhiDataUtils,
     protected activatedRoute: ActivatedRoute,
-    protected accountService: AccountService
+    protected modalService: NgbModal,
+    protected accountService: AccountService,
+    protected collectionService: CollectionService
   ) {}
 
   ngOnInit(): void {
@@ -47,6 +55,7 @@ export class PostDetailComponent implements OnInit {
       () => this.onSuccess(),
       () => this.onError()
     );
+    this.collectionService.query().subscribe((res: HttpResponse<ICollection[]>) => (this.collections = res.body || []));
   }
 
   byteSize(base64String: string): string {
@@ -90,5 +99,11 @@ export class PostDetailComponent implements OnInit {
         this.recipeService.findRecipeHasRecipeTags(this.post?.recipeId).subscribe(recipeTags => (this.recipeTags = recipeTags.body));
       }
     });
+  }
+
+  create(collection: ICollection): void {
+    const modalRef = this.modalService.open(CollectionHasRecipeUpdateComponent, { size: 'lg', backdrop: 'static', centered: true });
+    modalRef.componentInstance.currentCollection = collection;
+    modalRef.componentInstance.currentRecipe = this.recipe;
   }
 }

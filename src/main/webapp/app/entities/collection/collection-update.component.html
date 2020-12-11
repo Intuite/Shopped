@@ -40,8 +40,8 @@
 
                 <mat-form-field class="form-group w-100" appearance="fill">
                     <mat-label>Description</mat-label>
-                    <input matInput type="text" name="description" id="field_description"
-                           formControlName="description"/>
+                    <textarea matInput type="text" name="description" id="field_description"
+                              formControlName="description"></textarea>
                     <mat-error *ngIf="editForm.get('description')!.invalid && (editForm.get('description')!.dirty || editForm.get('description')!.touched)">
                         <small class="form-text text-danger"
                                *ngIf="editForm.get('description')?.errors?.required" jhiTranslate="entity.validation.required">
