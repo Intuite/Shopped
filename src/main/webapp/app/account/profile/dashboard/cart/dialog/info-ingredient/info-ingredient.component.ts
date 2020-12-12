@@ -51,7 +51,7 @@ export class InfoIngredientComponent implements OnInit {
       const recipeList = chrList.body !== null ? chrList.body : [];
       recipeList.forEach(chr => {
         this.recipeHasIngredientService.query({ 'recipeId.equals': chr.recipeId, 'ingredientId.equals': this.data.id }).subscribe(x => {
-          if (x.body !== null && x.body.length > 0) this.recipeIngredientInfo.next(x.body);
+          if (x.body !== null && x.body.length > 0) this.recipeIngredientInfo.next(x.body.concat(this.recipeIngredientInfo.value));
           else this.requesting = false;
         });
       });
