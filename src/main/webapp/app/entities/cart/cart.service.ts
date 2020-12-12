@@ -160,7 +160,6 @@ export class CartService {
   }
 
   private insertIngredientsFromRecipe(cartIngredients: ICartIngredient[]): void {
-    const cartHasIngredients: Observable<HttpResponse<ICartHasIngredient>>[] = [];
     cartIngredients.forEach(ci => {
       const chi: ICartHasIngredient = {
         ingredientId: ci.id,

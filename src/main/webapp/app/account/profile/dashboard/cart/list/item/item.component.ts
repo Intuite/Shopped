@@ -35,6 +35,7 @@ export class ItemComponent implements OnInit {
   info(): void {
     this.dialog.open(InfoIngredientComponent, {
       data: this.ci,
+      minWidth: '60%',
     });
   }
 
