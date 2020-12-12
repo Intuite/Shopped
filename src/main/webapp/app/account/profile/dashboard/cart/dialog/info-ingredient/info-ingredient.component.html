@@ -40,12 +40,16 @@
                 <mat-spinner></mat-spinner>
             </div>
         </div>
-        <div>
+        <div *ngIf="!requesting">
             <h5>Recipes</h5>
-            <mat-list *ngIf="!requesting">
+            <mat-list>
                 <mat-list-item *ngFor="let recipe of this.recipeIngredientInfo.value">
                     <mat-icon color="primary" matListIcon>fastfood</mat-icon>
-                    <div matLine>{{ recipe.recipeName }}</div>
+                    <div matLine>
+                        <a (click)="close()" [routerLink]="['/recipe', recipe.recipeId, 'view']">
+                            {{ recipe.recipeName }}
+                        </a>
+                    </div>
                     <div matLine>Needs at least {{ recipe.amount }} <strong>{{data.unitAbbrev}}</strong></div>
                 </mat-list-item>
                 <mat-list-item *ngIf="recipeIngredientInfo.value.length === 0">
