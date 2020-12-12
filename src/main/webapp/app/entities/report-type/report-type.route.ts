@@ -39,7 +39,7 @@ export const reportTypeRoute: Routes = [
     path: '',
     component: ReportTypeComponent,
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       defaultSort: 'id,asc',
       pageTitle: 'shoppedApp.reportType.home.title',
     },
@@ -52,7 +52,7 @@ export const reportTypeRoute: Routes = [
       reportType: ReportTypeResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       pageTitle: 'shoppedApp.reportType.home.title',
     },
     canActivate: [UserRouteAccessService],
@@ -64,7 +64,7 @@ export const reportTypeRoute: Routes = [
       reportType: ReportTypeResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       pageTitle: 'shoppedApp.reportType.home.title',
     },
     canActivate: [UserRouteAccessService],
@@ -76,7 +76,7 @@ export const reportTypeRoute: Routes = [
       reportType: ReportTypeResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       pageTitle: 'shoppedApp.reportType.home.title',
     },
     canActivate: [UserRouteAccessService],
