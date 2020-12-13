@@ -6,6 +6,7 @@ import { CartService } from 'app/entities/cart/cart.service';
 import { Status } from 'app/shared/model/enumerations/status.model';
 import { CurrentCartService } from 'app/entities/cart/current-cart.service';
 import { Account } from 'app/core/user/account.model';
+import { CartHasRecipeService } from 'app/entities/cart-has-recipe/cart-has-recipe.service';
 
 @Component({
   selector: 'jhi-dashboard-cart',
@@ -17,13 +18,20 @@ export class CartComponent implements OnInit {
 
   act = Status.ACTIVE;
   pen = Status.PENDING;
+  cartView = true;
 
+  hasRecipes = false;
   stats = '0/0';
   changes = 0;
 
   visibilityAll$ = new BehaviorSubject<boolean>(true);
 
-  constructor(public cartService: CartService, public service: CurrentCartService, public dialog: MatDialog) {}
+  constructor(
+    public cartService: CartService,
+    public service: CurrentCartService,
+    public dialog: MatDialog,
+    public chrService: CartHasRecipeService
+  ) {}
 
   ngOnInit(): void {
     this.service.stats$.subscribe((x: string) => (this.stats = x));
@@ -51,6 +59,20 @@ export class CartComponent implements OnInit {
     this.visibilityAll$.next(!this.visibilityAll$.value);
   }
 
+  showRecipeList(): void {
+    this.cartView = false;
+    this.checkIfHasRecipes(this.service.cart.id!);
+  }
+
+  showCart(): void {
+    this.cartView = true;
+    this.checkIfHasRecipes(this.service.cart.id!);
+  }
+
+  setHasRecipes(val: boolean): void {
+    if (!val) this.showCart();
+  }
+
   private initializeCart(): void {
     if (this.account !== null && this.account.login !== undefined)
       this.cartService
@@ -58,6 +80,17 @@ export class CartComponent implements OnInit {
           'userId.equals': this.account.id,
           'status.equals': 'ACTIVE',
         })
-        .subscribe(response => this.service.setCart(response.body, this.account));
+        .subscribe(response => {
+          this.service.setCart(response.body, this.account);
+          if (response.body !== null && response.body.length > 0) {
+            this.checkIfHasRecipes(response.body[0].id!);
+          }
+        });
+  }
+
+  private checkIfHasRecipes(cartId: number): void {
+    this.chrService.query({ 'cartId.equals': cartId }).subscribe(chrResponse => {
+      this.hasRecipes = chrResponse.body !== null && chrResponse.body.length > 0;
+    });
   }
 }

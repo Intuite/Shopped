@@ -30,6 +30,7 @@ import { InfoIngredientComponent as CartIngredientInfoComponent } from 'app/acco
 import { RemoveIngredientComponent as CartIngredientRemoveComponent } from 'app/account/profile/dashboard/cart/dialog/remove-ingredient/remove-ingredient.component';
 import { ItemComponent as CartItemComponent } from 'app/account/profile/dashboard/cart/list/item/item.component';
 import { AnaliticaPComponent } from './profile/dashboard/analitica-p/analitica-p.component';
+import { RecipeListComponent } from './profile/dashboard/cart/recipe-list/recipe-list.component';
 
 @NgModule({
   imports: [ShoppedSharedModule, RouterModule.forChild(accountState), ShoppedTransactionModule, ShoppedRecipeModule],
@@ -58,6 +59,7 @@ import { AnaliticaPComponent } from './profile/dashboard/analitica-p/analitica-p
     CartItemComponent,
     AnaliticaComponent,
     AnaliticaPComponent,
+    RecipeListComponent,
   ],
 })
 export class AccountModule {}
