@@ -178,7 +178,9 @@ export class CartService {
           const cibody = cartIngredientResponse.body;
           let obs: Observable<HttpResponse<ICartIngredient>>;
           if (cibody !== null && cibody[0] !== undefined) {
-            chi.amount = cibody[0].amount! + chi.amount!;
+            const current = cibody[0];
+            chi.amount = current.amount! + chi.amount!;
+            chi.id = current.id;
             obs = this.chiService.update(chi);
           } else {
             obs = this.chiService.create(chi);

@@ -8,7 +8,7 @@
         >
             <img
                 *ngIf="data.image"
-                [src]="data.image"
+                [src]="'data:' + data.imageContentType + ';base64,' + data.image"
                 alt="List data image"
                 matCardAvatar
             />
@@ -31,6 +31,7 @@
     <mat-card-content
         [formGroup]="form"
         fxLayout="row"
+        fxLayout.lt-md="column"
         fxLayoutAlign="space-between start"
         mat-dialog-content
     >
@@ -40,7 +41,7 @@
                 <mat-spinner></mat-spinner>
             </div>
         </div>
-        <div *ngIf="!requesting">
+        <div *ngIf="!requesting" fxFlex.lt-md fxLayout="column">
             <h5>Recipes</h5>
             <mat-list>
                 <mat-list-item *ngFor="let recipe of this.recipeIngredientInfo.value">
