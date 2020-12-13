@@ -69,6 +69,10 @@ export class CartComponent implements OnInit {
     this.checkIfHasRecipes(this.service.cart.id!);
   }
 
+  setHasRecipes(val: boolean): void {
+    if (!val) this.showCart();
+  }
+
   private initializeCart(): void {
     if (this.account !== null && this.account.login !== undefined)
       this.cartService

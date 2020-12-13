@@ -80,7 +80,7 @@
     <div *ngIf="!cartView">
         <mat-card-content>
             <mat-divider></mat-divider>
-            <jhi-cart-recipe-list></jhi-cart-recipe-list>
+            <jhi-cart-recipe-list (emptyEmitter)="setHasRecipes($event)"></jhi-cart-recipe-list>
         </mat-card-content>
     </div>
 </mat-card>

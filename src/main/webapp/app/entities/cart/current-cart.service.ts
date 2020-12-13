@@ -176,8 +176,8 @@ export class CurrentCartService {
     this.stats$.next(this.getFraction());
   }
 
-  deleteCartRecipe(chr: ICartHasRecipe): void {
-    this.chrService.delete(chr.id!).subscribe();
+  deleteCartRecipe(chr: ICartHasRecipe): Observable<HttpResponse<ICartHasRecipe>> {
+    return this.chrService.delete(chr.id!);
   }
 
   private getFraction(): string {

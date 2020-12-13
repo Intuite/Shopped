@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CurrentCartService } from 'app/entities/cart/current-cart.service';
 import { CartHasRecipeService } from 'app/entities/cart-has-recipe/cart-has-recipe.service';
 import { ICartHasRecipe } from 'app/shared/model/cart-has-recipe.model';
@@ -13,6 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class RecipeListComponent implements OnInit {
   recipeList!: ICartHasRecipe[];
+  @Output() emptyEmitter = new EventEmitter<boolean>();
 
   constructor(
     private rhiService: RecipeHasIngredientService,
@@ -37,7 +38,7 @@ export class RecipeListComponent implements OnInit {
     dialogRef.afterClosed().subscribe((response: any) => {
       if (response) {
         this.recipeList.splice(index, 1);
-        this.service.deleteCartRecipe(chr);
+        this.service.deleteCartRecipe(chr).subscribe(() => this.emptyEmitter.emit(this.recipeList.length > 0));
       }
     });
   }
