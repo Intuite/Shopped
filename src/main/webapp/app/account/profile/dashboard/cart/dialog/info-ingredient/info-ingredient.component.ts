@@ -32,10 +32,8 @@ export class InfoIngredientComponent implements OnInit {
     this.form = this.fb.group({
       amount: [this.data.amount, [Validators.required, Validators.min(1)]],
     });
-    this.recipeIngredientInfo.subscribe(x => {
-      this.requesting = !(x.length > 0);
-      console.warn(x);
-      console.warn(this.requesting);
+    this.recipeIngredientInfo.subscribe(() => {
+      this.requesting = false;
     });
   }
 
@@ -46,15 +44,24 @@ export class InfoIngredientComponent implements OnInit {
   }
 
   getRecipeInfo(): void {
-    this.requesting = false;
+    this.requesting = true;
     this.cartHasRecipeService.findByCart(this.data.cartId!).subscribe(chrList => {
       const recipeList = chrList.body !== null ? chrList.body : [];
       recipeList.forEach(chr => {
-        this.recipeHasIngredientService.query({ 'recipeId.equals': chr.recipeId, 'ingredientId.equals': this.data.id }).subscribe(x => {
-          if (x.body !== null && x.body.length > 0) this.recipeIngredientInfo.next(x.body);
-          else this.requesting = false;
-        });
+        this.recipeHasIngredientService
+          .query({
+            'recipeId.equals': chr.recipeId,
+            'ingredientId.equals': this.data.id,
+          })
+          .subscribe(x => {
+            if (x.body !== null && x.body.length > 0) this.recipeIngredientInfo.next(x.body.concat(this.recipeIngredientInfo.value));
+            this.requesting = false;
+          });
       });
     });
+  }
+
+  close(): void {
+    this.dialogRef.close();
   }
 }

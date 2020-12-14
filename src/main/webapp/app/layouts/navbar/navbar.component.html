@@ -28,9 +28,9 @@
                 </button>
             </li>
             <!-- DASHBOARD LINK -->
-            <li  *ngIf="accountLoaded && currentAccount" [routerLinkActiveOptions]="{ exact: true }" class="nav-item"
+            <li *ngSwitchCase="true" [routerLinkActiveOptions]="{ exact: true }" class="nav-item"
                 routerLinkActive="active">
-                <button (click)="collapseNavbar()" [routerLink]="['/account/profile', currentAccount.login]" class="nav-link"
+                <button *ngIf="accountLoaded && currentAccount" (click)="collapseNavbar()" [routerLink]="['/account/profile', currentAccount.login]" class="nav-link"
                         mat-button
                 >
                   <span>
