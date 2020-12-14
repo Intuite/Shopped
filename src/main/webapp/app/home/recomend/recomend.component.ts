@@ -5,10 +5,8 @@ import { JhiEventManager } from 'ng-jhipster';
 
 import { IBite } from 'app/shared/model/bite.model';
 import { BiteService } from 'app/entities/bite/bite.service';
-import { Status } from 'app/shared/model/enumerations/status.model';
 import { PostService } from 'app/entities/post/post.service';
 import { RecipeService } from 'app/entities/recipe/recipe.service';
-import { Moment } from 'moment';
 
 interface RecomendedPost {
   id?: number;

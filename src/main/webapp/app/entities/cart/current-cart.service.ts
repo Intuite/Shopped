@@ -10,6 +10,9 @@ import { CartIngredientService } from 'app/entities/cart/cart-ingredient.service
 import { CartService } from 'app/entities/cart/cart.service';
 import { Account } from 'app/core/user/account.model';
 import { Router } from '@angular/router';
+import { ICartHasRecipe } from 'app/shared/model/cart-has-recipe.model';
+import { CartHasRecipeService } from 'app/entities/cart-has-recipe/cart-has-recipe.service';
+import { RecipeHasIngredientService } from 'app/entities/recipe-has-ingredient/recipe-has-ingredient.service';
 
 @Injectable({
   providedIn: 'root',
@@ -28,6 +31,8 @@ export class CurrentCartService {
   constructor(
     private ciService: CartIngredientService,
     private chiService: CartHasIngredientService,
+    private chrService: CartHasRecipeService,
+    private rhiService: RecipeHasIngredientService,
     private iService: IngredientService,
     private service: CartService,
     private _router: Router
@@ -126,14 +131,20 @@ export class CurrentCartService {
   addIngredients(ciList: ICartIngredient[]): void {
     ciList.forEach(ci => {
       const current = this.ci.find(fci => fci.id === ci.id);
+      console.warn(`${current} = Current`);
       if (current && current.amount !== undefined && ci.amount !== undefined) {
+        console.warn(`Updated the amount of ${current.name}`);
+        console.warn(`${current.amount} = Current amount`);
+        console.warn(`${ci.amount} = Ci amount`);
         current.amount = current.amount + ci.amount;
         this.changes.push(this.ciService.update(current));
-        this.ci$.next(ci);
+        this.ci$.next(current);
+        console.warn(`${current.amount} = Current amount after update`);
       } else {
         ci.cartId = this.cart.id;
         this.changes.push(this.ciService.create(ci));
         this.ci$.next(ci);
+        console.warn(`${ci.amount} = Ci amount without update`);
       }
       this.hasChanges$.next();
     });
@@ -163,6 +174,10 @@ export class CurrentCartService {
 
   setStats(): void {
     this.stats$.next(this.getFraction());
+  }
+
+  deleteCartRecipe(chr: ICartHasRecipe): Observable<HttpResponse<ICartHasRecipe>> {
+    return this.chrService.delete(chr.id!);
   }
 
   private getFraction(): string {
