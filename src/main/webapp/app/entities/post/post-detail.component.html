@@ -76,13 +76,10 @@
                             </div>
 
                             <div class="blocks-3 post-element-right" gdArea="awardsButtons">
-                                <!--
                                 <jhi-award-viewer [postId]=post.id></jhi-award-viewer>
                                 <div *ngIf="account!.id !== 3" style="float: right">
                                     <jhi-give-award [data]=post.id></jhi-give-award>
                                 </div>
-
-                                -->
                             </div>
 
                             <div class="blocks-4 post-element-center" gdArea="userInfo">
@@ -183,19 +180,27 @@
 
                             <div class="blocks-13 post-element-right" gdArea="exportButtons">
                                 <button class="post-save-buttons" type="submit">
-                                <div [ngSwitch]="reportStatus">
-                                    <a (click)="this.addReport(post,account,reporttypes)" *ngSwitchCase="false">
-                                        <fa-icon icon="flag" class="post-font-report"></fa-icon> Report
-                                    </a>
-                                    <a *ngSwitchCase="true">
-                                        <fa-icon icon="flag" class="post-font-reported"></fa-icon> Reported
-                                    </a>
-                                </div>
+                                    <div [ngSwitch]="reportStatus">
+                                        <a (click)="this.addReport(post,account,reporttypes)" *ngSwitchCase="false">
+                                            <fa-icon icon="flag" class="post-font-report"></fa-icon>
+                                            <span>Report</span>
+                                        </a>
+                                        <a *ngSwitchCase="true">
+                                            <fa-icon icon="flag" class="post-font-reported"></fa-icon>
+                                            <span>Reported</span>
+                                        </a>
+                                    </div>
                                 </button>
 
                                 <button class="post-save-buttons" type="submit">
-                                    <span class="post-icon-bookmark"></span> Bookmark
+                                    <a (click)="this.saveRecipe()">
+                                        <fa-icon icon="save" class="post-font-save"></fa-icon>
+                                        <div style="clear:both">
+                                            <span>Save Recipe</span>
+                                        </div>
+                                    </a>
                                 </button>
+
                             </div>
 
                             <div class="blocks-14 post-element-center post-bite" gdArea="biteButton">

@@ -11,7 +11,7 @@ import { NotificationService } from 'app/entities/notification/notification.serv
 
 import { IPost } from 'app/shared/model/post.model';
 import { PostService } from 'app/entities/post/post.service';
-import { IRecipe } from 'app/shared/model/recipe.model';
+import { IRecipe, Recipe } from 'app/shared/model/recipe.model';
 import { RecipeService } from 'app/entities/recipe/recipe.service';
 import { IRecipeHasRecipeTag } from 'app/shared/model/recipe-has-recipe-tag.model';
 import { IngredientService } from 'app/entities/ingredient/ingredient.service';
@@ -354,5 +354,42 @@ export class PostDetailComponent implements OnInit {
     const modalRef = this.modalService.open(CollectionHasRecipeUpdateComponent, { size: 'lg', backdrop: 'static', centered: true });
     modalRef.componentInstance.currentCollection = collection;
     modalRef.componentInstance.currentRecipe = this.recipe;
+  }
+
+  saveRecipe(): void {
+    this.recipeService
+      .create(
+        new Recipe(
+          undefined,
+          this.recipe?.name,
+          this.recipe?.portion,
+          this.recipe?.description,
+          this.recipe?.duration,
+          moment().startOf('minute'),
+          this.recipe?.imageContentType,
+          this.recipe?.image,
+          this.post?.status,
+          this.account?.login,
+          this.account?.id
+        )
+      )
+      .subscribe(
+        () => this.saveHistorysaveRecipe(),
+        () => console.warn('copy recipe failed')
+      );
+  }
+
+  saveHistorysaveRecipe(): void {
+    const description = JSON.stringify({
+      recipeIdSaved: this.recipe?.id,
+      recipeNameSaved: this.recipe?.name,
+      userSaving: this.account?.login,
+    });
+    this.logService
+      .create(new Log(undefined, description, moment().startOf('minute'), 'Save recipe', 7, this.account?.login, this.account?.id))
+      .subscribe(
+        () => console.warn('Follower log succesful'),
+        () => console.warn('Follower log failed')
+      );
   }
 }
