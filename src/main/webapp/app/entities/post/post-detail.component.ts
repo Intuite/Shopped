@@ -66,6 +66,7 @@ export class PostDetailComponent implements OnInit {
   collections: ICollection[] = [];
   reportStatus = false;
   reporttypes: IReportType[] = [];
+  countReportPost: any = 0;
 
   constructor(
     protected recipeService: RecipeService,
@@ -101,6 +102,7 @@ export class PostDetailComponent implements OnInit {
     this.countBites();
     this.countFollowers();
     this.findComments();
+    this.findReport();
     this.commentService.refreshNeeded$.subscribe(() => {
       this.findComments();
     });
@@ -198,6 +200,22 @@ export class PostDetailComponent implements OnInit {
         () => console.warn('Notification bite succesful'),
         () => console.warn('Notification bite failed')
       );
+  }
+
+  findReport(): void {
+    this.postService.findReport(this.post?.id).subscribe(res => ((this.countReportPost = res), this.checkReportStatus()));
+  }
+
+  checkReportStatus(): void {
+    let i = 0;
+    let found = false;
+    while (i < this.countReportPost.body.length && found === false) {
+      if (this.countReportPost.body[i].userId === this.account?.id) {
+        this.reportStatus = true;
+        found = true;
+      }
+      i++;
+    }
   }
 
   countBites(): void {

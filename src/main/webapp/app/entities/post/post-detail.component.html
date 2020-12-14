@@ -185,16 +185,14 @@
                                 <button class="post-save-buttons" type="submit">
                                 <div [ngSwitch]="reportStatus">
                                     <a (click)="this.addReport(post,account,reporttypes)" *ngSwitchCase="false">
-                                        <span class="post-icon-report"></span> Report
+                                        <fa-icon icon="flag" class="post-font-report"></fa-icon> Report
                                     </a>
                                     <a *ngSwitchCase="true">
-                                        <span class="post-icon-report"></span> Reported
+                                        <fa-icon icon="flag" class="post-font-reported"></fa-icon> Reported
                                     </a>
                                 </div>
                                 </button>
-                                <button class="post-save-buttons" type="submit">
-                                    <span class="post-icon-pdf"></span> PDF
-                                </button>
+
                                 <button class="post-save-buttons" type="submit">
                                     <span class="post-icon-bookmark"></span> Bookmark
                                 </button>
@@ -280,4 +278,5 @@
             </mat-card>
         </div>
     </div>
+
 </div>
