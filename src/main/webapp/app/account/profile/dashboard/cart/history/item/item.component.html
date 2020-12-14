@@ -1,0 +1,46 @@
+<mat-card-title-group mat-dialog-title>
+    <mat-card-title>{{ data.created!.format('MMMM Do YYYY') }}</mat-card-title>
+    <mat-card-subtitle>{{ data.created!.fromNow() }}</mat-card-subtitle>
+</mat-card-title-group>
+<mat-card-content mat-dialog-content>
+    <mat-divider></mat-divider>
+    <mat-list>
+        <h3 *ngIf="recipeList.length > 0" matSubheader>Recipes</h3>
+        <mat-list-item *ngFor="let element of recipeList">
+            <img *ngIf="element.image"
+                 [src]="'data:' + element.imageContentType + ';base64,' + element.image"
+                 alt="List ci image" matListAvatar/>
+            <mat-icon *ngIf="!element.image" color="primary" matListIcon>fastfood</mat-icon>
+            <div matLine>
+                <a (click)="close()" [routerLink]="['/recipe', element.id, 'view']">
+                    {{element.name}}
+                </a>
+            </div>
+        </mat-list-item>
+        <mat-divider *ngIf="recipeList.length > 0"></mat-divider>
+        <h3 *ngIf="recipeList.length > 0" matSubheader>Ingredients</h3>
+        <mat-list-item *ngFor="let element of ingredientList">
+            <img *ngIf="element.image"
+                 [src]="'data:' + element.imageContentType + ';base64,' + element.image"
+                 alt="Ingredient image" matListAvatar/>
+            <mat-icon *ngIf="!element.image" color="primary" matListIcon>
+                shopping_cart
+            </mat-icon>
+            <div matLine>{{ element.name }}</div>
+            <div matLine>
+                {{ element.amount }} <strong>{{ element.unitAbbrev }}</strong>
+            </div>
+            <button
+                [ngSwitch]="element.status"
+                disabled
+                mat-icon-button
+            >
+                <mat-icon *ngSwitchCase="'ACTIVE'" color="accent">check_box</mat-icon>
+                <mat-icon *ngSwitchDefault>check_box_outline_blank</mat-icon>
+            </button>
+        </mat-list-item>
+    </mat-list>
+</mat-card-content>
+<mat-card-actions align="end" mat-dialog-actions>
+    <button mat-button mat-dialog-close>Close</button>
+</mat-card-actions>
