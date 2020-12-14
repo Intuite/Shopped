@@ -20,6 +20,7 @@ import { ActiveMenuDirective } from './layouts/navbar/active-menu.directive';
 import { ErrorComponent } from './layouts/error/error.component';
 import { NgxPayPalModule } from 'ngx-paypal';
 import { ChartsModule } from 'ng2-charts';
+import { EventEmitterServiceService } from 'app/shared/services/event-emitter-service.service';
 
 @NgModule({
   imports: [
@@ -36,6 +37,7 @@ import { ChartsModule } from 'ng2-charts';
     NgxPayPalModule,
     ChartsModule,
   ],
+  providers: [EventEmitterServiceService],
   declarations: [MainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent],
   bootstrap: [MainComponent],
 })

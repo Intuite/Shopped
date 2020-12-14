@@ -16,11 +16,16 @@
             <mat-card>
                 <h3>Cookie Income/Expenses</h3>
                 <mat-card-content>
-                    <jhi-pie-chart
-                        [pieChartData]="data"
-                        [pieChartLabels]="labels"
-                        [width]="520">
-                    </jhi-pie-chart>
+                    <div *ngIf="!cookieEmpty">
+                        <jhi-pie-chart
+                            [pieChartData]="data"
+                            [pieChartLabels]="labels"
+                            [width]="520">
+                        </jhi-pie-chart>
+                    </div>
+                    <div *ngIf="cookieEmpty" align="center">
+                        <p align="center">No transaction for the selected time frame</p>
+                    </div>
                 </mat-card-content>
             </mat-card>
         </div>
@@ -28,26 +33,35 @@
             <mat-card>
                 <h3>App Income/Expenses</h3>
                 <mat-card-content>
-                    <jhi-pie-chart
-                        [pieChartData]="moneyData"
-                        [pieChartLabels]="moneyLabels"
-                        [width]="520">
-                    </jhi-pie-chart>
+                    <div *ngIf="!moneyEmpty">
+                        <jhi-pie-chart
+                            [pieChartData]="moneyData"
+                            [pieChartLabels]="moneyLabels"
+                            [width]="520">
+                        </jhi-pie-chart>
+                    </div>
+                    <div *ngIf="moneyEmpty" align="center">
+                        <p align="center">No transaction for the selected time frame</p>
+                    </div>
                 </mat-card-content>
             </mat-card>
         </div>
     </div>
     <div class="row mt-4">
         <div class="col-8 constHeight">
-            <mat-card>
+            <mat-card class="h-100">
                 <h3>Awards</h3>
                 <mat-card-content align="center">
-                    <jhi-bar-chart
-                        [barChartData]="barData"
-                        [barChartLabels]="barLabel"
-                        [width]="700">
-                    </jhi-bar-chart>
-
+                    <div *ngIf="!awardEmpty">
+                        <jhi-bar-chart
+                            [barChartData]="barData"
+                            [barChartLabels]="barLabel"
+                            [width]="700">
+                        </jhi-bar-chart>
+                    </div>
+                    <div *ngIf="awardEmpty" align="center">
+                        <p align="center">No awards for the selected time frame</p>
+                    </div>
                 </mat-card-content>
             </mat-card>
         </div>
@@ -55,14 +69,19 @@
             <mat-card class="h-100">
                 <h3>Trending</h3>
                 <mat-card-content>
-                    <mat-selection-list #awards [multiple]="false">
-                        <mat-list-option *ngFor="let key of keys" [value]="">
-                            <div class="justify-content-center padT">
-                                <div class="float-left">{{key}}</div>
-                                <div class="float-right">{{commendation[key]}}</div>
-                            </div>
-                        </mat-list-option>
-                    </mat-selection-list>
+                    <div *ngIf="!awardEmpty">
+                        <mat-selection-list #awards [multiple]="false">
+                            <mat-list-option *ngFor="let key of keys" [value]="">
+                                <div class="justify-content-center padT">
+                                    <div class="float-left">{{key}}</div>
+                                    <div class="float-right">{{commendation[key]}}</div>
+                                </div>
+                            </mat-list-option>
+                        </mat-selection-list>
+                    </div>
+                    <div *ngIf="awardEmpty" align="center">
+                        <p align="center">No awards for the selected time frame</p>
+                    </div>
                 </mat-card-content>
             </mat-card>
         </div>
