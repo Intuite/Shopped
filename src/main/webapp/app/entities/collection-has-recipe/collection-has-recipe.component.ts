@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, ParamMap, Router, Data } from '@angular/router';
 import { Subscription, combineLatest } from 'rxjs';
@@ -14,6 +14,8 @@ import { IRecipe } from 'app/shared/model/recipe.model';
 import { RecipeService } from 'app/entities/recipe/recipe.service';
 import { CollectionHasRecipeService } from 'app/entities/collection-has-recipe/collection-has-recipe.service';
 import { ICollection } from 'app/shared/model/collection.model';
+import { RecipeTagPickerComponent } from 'app/shared/components/pickers/recipe-tag-picker/recipe-tag-picker.component';
+import { IRecipeTag } from 'app/shared/model/recipe-tag.model';
 
 @Component({
   selector: 'jhi-collection-has-recipe',
@@ -36,6 +38,8 @@ export class CollectionHasRecipeComponent implements OnInit, OnDestroy {
   temporalEntry?: ICollectionHasRecipe;
   searchText = '';
   dataLoaded = false;
+  @ViewChild('recipeTagPk') recipePiker!: RecipeTagPickerComponent;
+  recipeTags: IRecipeTag[] = [];
 
   constructor(
     protected collectionHasRecipeService: CollectionHasRecipeService,
@@ -196,5 +200,9 @@ export class CollectionHasRecipeComponent implements OnInit, OnDestroy {
 
   cancel(): void {
     this.activeModal.dismiss();
+  }
+
+  setRecipeTags(): void {
+    this.recipeTags = this.recipePiker.getRecipeTags();
   }
 }
