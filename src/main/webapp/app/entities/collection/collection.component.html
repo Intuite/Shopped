@@ -40,7 +40,7 @@
         <div class="my-3">
             <button mat-flat-button (click)="orderAsc = !orderAsc">
                 Sort
-                <mat-icon matSuffix>keyboard_arrow_down</mat-icon>
+                <mat-icon matSuffix>{{sort_icon}}</mat-icon>
             </button>
         </div>
         <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-evenly" class="row card-group">
@@ -77,18 +77,18 @@
                         <div *ngIf="collection.image">
                             <div class="collection-card-picture">
                                 <img [src]="'data:' + collection.imageContentType + ';base64,' + collection.image"
-                                     alt="card image"/>
+                                     alt="card image" class="rounded-circle"/>
                             </div>
                         </div>
                         <div *ngIf="!collection.image">
                             <div class="collection-card-picture">
-                                <img alt="Shopped logo" alt="Shopped Logo"
-                                     src='../../../content/images/placeholder-image.png'/>
+                                <img alt="Shopped logo" class="rounded-circle"
+                                     src='../../../content/images/placeholder-image.png' />
                             </div>
                         </div>
                     </a>
                     <mat-card-content>
-                        <div>
+                        <div class="my-3">
                             {{ collection.description }}
                         </div>
                         <div class="recipe-card-element-right">

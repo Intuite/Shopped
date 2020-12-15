@@ -36,6 +36,7 @@ export class CollectionComponent implements OnInit, OnDestroy {
   dataLoaded = false;
   searchText = '';
   orderAsc = false;
+  sort_icon = 'import_export';
 
   constructor(
     protected collectionService: CollectionService,
@@ -152,5 +153,9 @@ export class CollectionComponent implements OnInit, OnDestroy {
 
   protected onError(): void {
     this.requesting = false;
+  }
+
+  invertOrder(): void {
+    this.orderAsc = !this.orderAsc;
   }
 }
