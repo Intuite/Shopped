@@ -111,20 +111,20 @@ export class AnaliticaPComponent implements OnInit {
     let tempVal = 0;
     response.forEach((log: Log) => {
       if (log.description && log.created) {
-        const amount = JSON.parse(log.description);
+        const desc = JSON.parse(log.description);
         if (log.userId === this.id) {
-          this.hashCookie['expense'] += amount.awardCost;
-          this.appendNewEntry(amount.awardCost, log.created, false);
-        } else if (amount.recipientId === this.id) {
-          tempVal = amount.awardCost - amount.awardCost * amount.tax;
+          this.hashCookie['expense'] += desc.awardCost;
+          this.appendNewEntry(desc.awardCost, log.created, false);
+        } else if (desc.recipientId === this.id) {
+          tempVal = desc.awardCost - desc.awardCost * desc.tax;
           this.hashCookie['income'] += tempVal;
           this.appendNewEntry(tempVal, log.created, true);
           this.appendAwardEntry(log.created);
 
-          if (this.awards[amount.awardId]) {
-            this.awards[amount.awardId]++;
+          if (this.awards[desc.awardId]) {
+            this.awards[desc.awardId]++;
           } else {
-            this.awards[amount.awardId] = 1;
+            this.awards[desc.awardId] = 1;
           }
         }
       }
@@ -305,10 +305,8 @@ export class AnaliticaPComponent implements OnInit {
   private assembleAwardChart(): void {
     this.awardData = [];
     this.awardLabel = [];
-
     this.awardData.push({ data: Object.values(this.hashAward), label: 'Awards' });
     this.awardLabel = Object.keys(this.hashAward);
-    console.warn(this.hashAward);
     if (Object.values(this.hashAward).every(item => item === 0)) {
       this.line2Empty = true;
     } else {
@@ -323,8 +321,6 @@ export class AnaliticaPComponent implements OnInit {
       this.lineData.push({ data: Object.values(this.hashLineIncome), label: 'Income' });
 
       this.lineLabel = Object.keys(this.hashLineIncome);
-      console.warn(Object.values(this.hashLineIncome));
-      console.warn(Object.values(this.hashLineExpense));
       if (Object.values(this.hashLineIncome).every(item => item === 0) && Object.values(this.hashLineExpense).every(item => item === 0)) {
         this.line1Empty = true;
       } else {
