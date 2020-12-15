@@ -111,20 +111,20 @@ export class AnaliticaPComponent implements OnInit {
     let tempVal = 0;
     response.forEach((log: Log) => {
       if (log.description && log.created) {
-        const amount = JSON.parse(log.description);
+        const desc = JSON.parse(log.description);
         if (log.userId === this.id) {
-          this.hashCookie['expense'] += amount.awardCost;
-          this.appendNewEntry(amount.awardCost, log.created, false);
-        } else if (amount.recipientId === this.id) {
-          tempVal = amount.awardCost - amount.awardCost * amount.tax;
+          this.hashCookie['expense'] += desc.awardCost;
+          this.appendNewEntry(desc.awardCost, log.created, false);
+        } else if (desc.recipientId === this.id) {
+          tempVal = desc.awardCost - desc.awardCost * desc.tax;
           this.hashCookie['income'] += tempVal;
           this.appendNewEntry(tempVal, log.created, true);
           this.appendAwardEntry(log.created);
 
-          if (this.awards[amount.awardId]) {
-            this.awards[amount.awardId]++;
+          if (this.awards[desc.awardId]) {
+            this.awards[desc.awardId]++;
           } else {
-            this.awards[amount.awardId] = 1;
+            this.awards[desc.awardId] = 1;
           }
         }
       }
