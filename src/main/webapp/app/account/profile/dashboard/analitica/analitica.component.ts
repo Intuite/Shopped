@@ -4,6 +4,7 @@ import { Transaction } from 'app/shared/model/transaction.model';
 import { TransactionService } from 'app/entities/transaction/transaction.service';
 import { CommendationService } from 'app/entities/commendation/commendation.service';
 import { Commendation } from 'app/shared/model/commendation.model';
+import { LogService } from 'app/entities/log/log.service';
 
 @Component({
   selector: 'jhi-analitica',
@@ -26,7 +27,11 @@ export class AnaliticaComponent implements OnInit {
   moneyEmpty = false;
   awardEmpty = false;
 
-  constructor(private transactionService: TransactionService, private commendationService: CommendationService) {}
+  constructor(
+    private transactionService: TransactionService,
+    private commendationService: CommendationService,
+    private logService: LogService
+  ) {}
 
   ngOnInit(): void {
     this.getData();

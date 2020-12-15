@@ -6,9 +6,9 @@
             </h2>
         </div>
         <div>
-            <button mat-raised-button color="accent" (click)="makeDaily()" class="mr-2">Daily</button>
-            <button mat-raised-button color="accent" (click)="makeWeekly()" class="mr-2">Weekly</button>
-            <button mat-raised-button color="accent" (click)="makeMonthly()">Monthly</button>
+            <button (click)="makeDaily()" class="mr-2" color="accent" mat-raised-button>Daily</button>
+            <button (click)="makeWeekly()" class="mr-2" color="accent" mat-raised-button>Weekly</button>
+            <button (click)="makeMonthly()" color="accent" mat-raised-button>Monthly</button>
         </div>
     </div>
     <div class="row">
@@ -16,16 +16,11 @@
             <mat-card>
                 <h3>Cookie Income/Expenses</h3>
                 <mat-card-content>
-                    <div *ngIf="!cookieEmpty">
-                        <jhi-pie-chart
-                            [pieChartData]="data"
-                            [pieChartLabels]="labels"
-                            [width]="520">
-                        </jhi-pie-chart>
-                    </div>
-                    <div *ngIf="cookieEmpty" align="center">
-                        <p align="center">No transaction for the selected time frame</p>
-                    </div>
+                    <jhi-pie-chart
+                        [pieChartData]="data"
+                        [pieChartLabels]="labels"
+                        [width]="520">
+                    </jhi-pie-chart>
                 </mat-card-content>
             </mat-card>
         </div>
@@ -33,35 +28,26 @@
             <mat-card>
                 <h3>App Income/Expenses</h3>
                 <mat-card-content>
-                    <div *ngIf="!moneyEmpty">
-                        <jhi-pie-chart
-                            [pieChartData]="moneyData"
-                            [pieChartLabels]="moneyLabels"
-                            [width]="520">
-                        </jhi-pie-chart>
-                    </div>
-                    <div *ngIf="moneyEmpty" align="center">
-                        <p align="center">No transaction for the selected time frame</p>
-                    </div>
+                    <jhi-pie-chart
+                        [pieChartData]="moneyData"
+                        [pieChartLabels]="moneyLabels"
+                        [width]="520">
+                    </jhi-pie-chart>
                 </mat-card-content>
             </mat-card>
         </div>
     </div>
     <div class="row mt-4">
         <div class="col-8 constHeight">
-            <mat-card class="h-100">
+            <mat-card>
                 <h3>Awards</h3>
                 <mat-card-content align="center">
-                    <div *ngIf="!awardEmpty">
-                        <jhi-bar-chart
-                            [barChartData]="barData"
-                            [barChartLabels]="barLabel"
-                            [width]="700">
-                        </jhi-bar-chart>
-                    </div>
-                    <div *ngIf="awardEmpty" align="center">
-                        <p align="center">No awards for the selected time frame</p>
-                    </div>
+                    <jhi-bar-chart
+                        [barChartData]="barData"
+                        [barChartLabels]="barLabel"
+                        [width]="700">
+                    </jhi-bar-chart>
+
                 </mat-card-content>
             </mat-card>
         </div>
@@ -69,19 +55,14 @@
             <mat-card class="h-100">
                 <h3>Trending</h3>
                 <mat-card-content>
-                    <div *ngIf="!awardEmpty">
-                        <mat-selection-list #awards [multiple]="false">
-                            <mat-list-option *ngFor="let key of keys" [value]="">
-                                <div class="justify-content-center padT">
-                                    <div class="float-left">{{key}}</div>
-                                    <div class="float-right">{{commendation[key]}}</div>
-                                </div>
-                            </mat-list-option>
-                        </mat-selection-list>
-                    </div>
-                    <div *ngIf="awardEmpty" align="center">
-                        <p align="center">No awards for the selected time frame</p>
-                    </div>
+                    <mat-selection-list #awards [multiple]="false">
+                        <mat-list-option *ngFor="let key of keys" [value]="">
+                            <div class="justify-content-center padT">
+                                <div class="float-left">{{key}}</div>
+                                <div class="float-right">{{commendation[key]}}</div>
+                            </div>
+                        </mat-list-option>
+                    </mat-selection-list>
                 </mat-card-content>
             </mat-card>
         </div>
@@ -89,6 +70,12 @@
     <div class="row mt-3 table-transac">
         <div class="col">
             <jhi-view-transactions></jhi-view-transactions>
+        </div>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="row mt-4">
+        <div class="col-8 constHeight">
+            <jhi-ingredient-recipes-chart [dated]="dated" [maxBars]="8"></jhi-ingredient-recipes-chart>
         </div>
     </div>
 </div>
