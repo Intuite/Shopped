@@ -73,18 +73,17 @@ a {
 }
 
 .collection-card-picture {
-  height: 250px;
-  width: auto;
+  height: 300px;
+  width: 300px;
   display: inline-block;
   vertical-align: middle;
   background-size: cover;
   background: url('../../../content/images/placeholder-square.png') no-repeat center center;
-  margin-bottom: 3px;
 }
 
 .collection-card-picture img {
-  height: 250px;
-  width: 100%;
+  height: 300px;
+  width: 300px;
   object-fit: cover;
   object-position: center;
 }
