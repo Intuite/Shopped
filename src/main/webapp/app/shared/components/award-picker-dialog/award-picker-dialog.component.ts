@@ -18,6 +18,7 @@ import { Commendation } from 'app/shared/model/commendation.model';
 import moment from 'moment';
 import { Log } from 'app/shared/model/log.model';
 import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
+import { EventEmitterServiceService } from 'app/shared/services/event-emitter-service.service';
 
 @Component({
   selector: 'jhi-award-picker-dialog',
@@ -42,7 +43,8 @@ export class AwardPickerDialogComponent implements OnInit {
     private postService: PostService,
     private catalogueService: CatalogueService,
     private commendationService: CommendationService,
-    private logService: LogService
+    private logService: LogService,
+    private eventEmitter: EventEmitterServiceService
   ) {}
 
   ngOnInit(): void {
@@ -177,6 +179,7 @@ export class AwardPickerDialogComponent implements OnInit {
           () => console.warn('log succesful'),
           () => console.warn('log failed')
         );
+      this.eventEmitter.onAwardUpdated();
     }
   }
 

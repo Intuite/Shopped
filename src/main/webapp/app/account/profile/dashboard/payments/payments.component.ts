@@ -21,7 +21,7 @@ export class PaymentsComponent implements OnInit, OnDestroy {
     this.load();
     this.id = setInterval(() => {
       this.load();
-    }, 3000);
+    }, 4000);
   }
 
   ngOnDestroy(): void {
