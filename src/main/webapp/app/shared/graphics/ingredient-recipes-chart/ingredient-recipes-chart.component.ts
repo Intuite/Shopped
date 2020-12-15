@@ -63,7 +63,7 @@ export class IngredientRecipesChartComponent implements OnInit {
   private assembleRhiData(): void {
     this.rhiData = [];
     const keys = this.sort(Object.keys(this.rhi));
-    this.maxBars = keys.length <= this.maxBars ? keys.length : this.maxBars;
+    this.maxBars = keys.length < this.maxBars ? keys.length : this.maxBars;
     for (let i = 0; i < this.maxBars; i++) {
       const key = keys[i];
       const temp = [];
