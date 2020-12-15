@@ -10,6 +10,18 @@
         >
             <mat-icon>more_vert</mat-icon>
             <mat-menu #menu="matMenu">
+                <button (click)="historyView = !historyView" mat-menu-item>
+                    <mat-icon>history</mat-icon>
+                    <span>Toggle History</span>
+                </button>
+                <button (click)="showCart()" *ngIf="!cartView && hasRecipes" mat-menu-item>
+                    <mat-icon>shopping_cart</mat-icon>
+                    <span>Cart</span>
+                </button>
+                <button (click)="showRecipeList()" *ngIf="cartView && hasRecipes" mat-menu-item>
+                    <mat-icon>fastfood</mat-icon>
+                    <span>Recipes</span>
+                </button>
                 <button
                     (click)="toggleVisibility()"
                     mat-menu-item
@@ -28,22 +40,16 @@
                     <mat-icon>sort</mat-icon>
                     <span>Sort by status</span>
                 </button>
-                <button (click)="showCart()" *ngIf="!cartView && hasRecipes" mat-menu-item>
-                    <mat-icon>shopping_cart</mat-icon>
-                    <span>Cart</span>
-                </button>
-                <button (click)="showRecipeList()" *ngIf="cartView && hasRecipes" mat-menu-item>
-                    <mat-icon>fastfood</mat-icon>
-                    <span>Recipes</span>
-                </button>
-                <button disabled mat-menu-item>
-                    <mat-icon>history</mat-icon>
-                    <span>History (Coming soon)</span>
-                </button>
             </mat-menu>
         </button>
     </mat-card-title-group>
-    <div *ngIf="cartView">
+    <div *ngIf="historyView">
+        <mat-card-content>
+            <mat-divider></mat-divider>
+            <jhi-cart-history [account]="account"></jhi-cart-history>
+        </mat-card-content>
+    </div>
+    <div *ngIf="cartView && !historyView">
         <mat-card-content>
             <mat-divider></mat-divider>
             <!-- cart list -->
@@ -77,7 +83,7 @@
             </div>
         </mat-card-actions>
     </div>
-    <div *ngIf="!cartView">
+    <div *ngIf="!cartView && !historyView">
         <mat-card-content>
             <mat-divider></mat-divider>
             <jhi-cart-recipe-list (emptyEmitter)="setHasRecipes($event)"></jhi-cart-recipe-list>

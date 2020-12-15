@@ -19,6 +19,7 @@ export class CartComponent implements OnInit {
   act = Status.ACTIVE;
   pen = Status.PENDING;
   cartView = true;
+  historyView = false;
 
   hasRecipes = false;
   stats = '0/0';
@@ -61,11 +62,13 @@ export class CartComponent implements OnInit {
 
   showRecipeList(): void {
     this.cartView = false;
+    this.historyView = false;
     this.checkIfHasRecipes(this.service.cart.id!);
   }
 
   showCart(): void {
     this.cartView = true;
+    this.historyView = false;
     this.checkIfHasRecipes(this.service.cart.id!);
   }
 
