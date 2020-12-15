@@ -150,22 +150,23 @@ values (1,'Award','','ACTIVE'),
 	   (4,'Post bite','','ACTIVE'),
 	   (5,'Post comment','','ACTIVE'),
 	   (6,'Follower','','ACTIVE');
-	 
+
 insert into notification_type (id, name, status)	insert into report_type (id, name, text ,status)
 values (1,'Bite','ACTIVE'),	values (1,'Spam content','Content is ineligible or empty','ACTIVE'),
 	   (2,'Comment','ACTIVE'),		   (2,'Hateful material','Hateful or discriminatory speech in post','ACTIVE'),
 	   (3,'Follower','ACTIVE');
-     
+
 insert into report_type (id, name, text ,status)
 values (1,'Spam content','Content is ineligible or empty','ACTIVE'),
 	   (2,'Hateful material','Hateful or discriminatory speech in post','ACTIVE'),
 	   (3,'Dangerous activities','Contains a dangerous activity instruction','ACTIVE'),
-	   (4,'Copyright Infringement','Copyright infringement inside the content of the recipe','ACTIVE');	   
+	   (4,'Copyright Infringement','Copyright infringement inside the content of the recipe','ACTIVE');
 
 insert into user_profile(status, user_id)
 values ('ACTIVE', 1),
        ('ACTIVE', 2),
-       ('ACTIVE', 3);
+       ('ACTIVE', 3),
+       ('ACTIVE', 4);
 
 update jhi_user
 set email = 'teamintuite@gmail.com'
