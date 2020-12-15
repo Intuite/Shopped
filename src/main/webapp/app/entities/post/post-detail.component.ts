@@ -67,6 +67,7 @@ export class PostDetailComponent implements OnInit {
   reportStatus = false;
   reporttypes: IReportType[] = [];
   countReportPost: any = 0;
+  requesting = false;
 
   constructor(
     protected recipeService: RecipeService,
@@ -89,6 +90,7 @@ export class PostDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.requesting = true;
     this.activatedRoute.data.subscribe(({ post }) => (this.post = post));
     this.accountService.identity().subscribe(res => (this.account = res || undefined));
     this.recipeService.query().subscribe(
@@ -203,7 +205,9 @@ export class PostDetailComponent implements OnInit {
   }
 
   findReport(): void {
-    this.postService.findReport(this.post?.id).subscribe(res => ((this.countReportPost = res), this.checkReportStatus()));
+    this.postService
+      .findReport(this.post?.id)
+      .subscribe(res => ((this.countReportPost = res), this.checkReportStatus(), (this.requesting = false)));
   }
 
   checkReportStatus(): void {
