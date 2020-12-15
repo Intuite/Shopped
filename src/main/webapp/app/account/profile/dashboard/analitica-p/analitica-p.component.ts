@@ -305,10 +305,8 @@ export class AnaliticaPComponent implements OnInit {
   private assembleAwardChart(): void {
     this.awardData = [];
     this.awardLabel = [];
-
     this.awardData.push({ data: Object.values(this.hashAward), label: 'Awards' });
     this.awardLabel = Object.keys(this.hashAward);
-    console.warn(this.hashAward);
     if (Object.values(this.hashAward).every(item => item === 0)) {
       this.line2Empty = true;
     } else {
@@ -323,8 +321,6 @@ export class AnaliticaPComponent implements OnInit {
       this.lineData.push({ data: Object.values(this.hashLineIncome), label: 'Income' });
 
       this.lineLabel = Object.keys(this.hashLineIncome);
-      console.warn(Object.values(this.hashLineIncome));
-      console.warn(Object.values(this.hashLineExpense));
       if (Object.values(this.hashLineIncome).every(item => item === 0) && Object.values(this.hashLineExpense).every(item => item === 0)) {
         this.line1Empty = true;
       } else {
