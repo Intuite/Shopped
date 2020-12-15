@@ -64,6 +64,7 @@ import { PieChartComponent } from './components/pie-chart/pie-chart.component';
 import { LineChartComponent } from './components/line-chart/line-chart.component';
 import { ChartsModule } from 'ng2-charts';
 import { UserPickerComponent } from './components/pickers/user-picker/user-picker.component';
+import { IngredientRecipesChartComponent } from './graphics/ingredient-recipes-chart/ingredient-recipes-chart.component';
 
 @NgModule({
   imports: [JhMaterialModule, ShoppedSharedLibsModule, FlexModule, RouterModule, ExtendedModule, NgxPayPalModule, ChartsModule],
@@ -120,6 +121,7 @@ import { UserPickerComponent } from './components/pickers/user-picker/user-picke
     BarChartComponent,
     PieChartComponent,
     LineChartComponent,
+    IngredientRecipesChartComponent,
   ],
   entryComponents: [LoginModalComponent],
   exports: [
@@ -169,6 +171,7 @@ import { UserPickerComponent } from './components/pickers/user-picker/user-picke
     BarChartComponent,
     LineChartComponent,
     PieChartComponent,
+    IngredientRecipesChartComponent,
   ],
 })
 export class ShoppedSharedModule {}

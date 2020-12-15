@@ -24,6 +24,7 @@
                 </button>
                 <button
                     (click)="toggleVisibility()"
+                    *ngIf="!historyView"
                     mat-menu-item
                     role="menuitemradio"
                 >
@@ -35,6 +36,7 @@
                 </button>
                 <button
                     (click)="visibilityAll$.next(visibilityAll$.value)"
+                    *ngIf="!historyView"
                     mat-menu-item
                 >
                     <mat-icon>sort</mat-icon>

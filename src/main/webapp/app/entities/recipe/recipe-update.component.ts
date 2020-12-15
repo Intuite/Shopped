@@ -1,12 +1,12 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
-import { JhiDataUtils, JhiFileLoadError, JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
+import { JhiDataUtils, JhiEventManager, JhiEventWithContent, JhiFileLoadError } from 'ng-jhipster';
 
 import { IRecipe, Recipe } from 'app/shared/model/recipe.model';
 import { RecipeService } from './recipe.service';
@@ -170,7 +170,7 @@ export class RecipeUpdateComponent implements OnInit {
         undefined,
         this.savedIngredients[i].amount,
         recipe.status,
-        undefined,
+        this.savedIngredients[i].ingredient.name,
         this.savedIngredients[i].ingredient.id,
         recipe.name,
         recipe.id
@@ -204,20 +204,14 @@ export class RecipeUpdateComponent implements OnInit {
     }
   }
 
-  private createFromForm(): IRecipe {
-    return {
-      ...new Recipe(),
-      id: this.editForm.get(['id'])!.value,
-      name: this.editForm.get(['name'])!.value,
-      portion: this.editForm.get(['portion'])!.value,
-      description: this.editForm.get(['description'])!.value,
-      duration: this.editForm.get(['duration'])!.value,
-      creation: this.editForm.get(['creation'])!.value ? moment(this.editForm.get(['creation'])!.value, DATE_TIME_FORMAT) : undefined,
-      imageContentType: this.editForm.get(['imageContentType'])!.value,
-      image: this.editForm.get(['image'])!.value,
-      status: this.editForm.get(['status'])!.value,
-      userId: this.user.id,
-    };
+  trackById(index: number, item: IUser): any {
+    return item.id;
+  }
+
+  gotoAfterSave(): void {
+    // this.router.navigate(['/recipe', ${id: this.recipeCreated.id}, 'view']);
+    // this.router.navigate(['/recipe', 'list']);
+    this.previousState();
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IRecipe>>): void {
@@ -236,13 +230,19 @@ export class RecipeUpdateComponent implements OnInit {
     this.isSaving = false;
   }
 
-  trackById(index: number, item: IUser): any {
-    return item.id;
-  }
-
-  gotoAfterSave(): void {
-    // this.router.navigate(['/recipe', ${id: this.recipeCreated.id}, 'view']);
-    // this.router.navigate(['/recipe', 'list']);
-    this.previousState();
+  private createFromForm(): IRecipe {
+    return {
+      ...new Recipe(),
+      id: this.editForm.get(['id'])!.value,
+      name: this.editForm.get(['name'])!.value,
+      portion: this.editForm.get(['portion'])!.value,
+      description: this.editForm.get(['description'])!.value,
+      duration: this.editForm.get(['duration'])!.value,
+      creation: this.editForm.get(['creation'])!.value ? moment(this.editForm.get(['creation'])!.value, DATE_TIME_FORMAT) : undefined,
+      imageContentType: this.editForm.get(['imageContentType'])!.value,
+      image: this.editForm.get(['image'])!.value,
+      status: this.editForm.get(['status'])!.value,
+      userId: this.user.id,
+    };
   }
 }
