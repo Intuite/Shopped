@@ -1,34 +1,32 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AwardService } from 'app/entities/award/award.service';
 import { CommendationService } from 'app/entities/commendation/commendation.service';
 import { HttpResponse } from '@angular/common/http';
 import { Award, IAward } from 'app/shared/model/award.model';
 import { ICommendation } from 'app/shared/model/commendation.model';
+import { EventEmitterServiceService } from 'app/shared/services/event-emitter-service.service';
 
 @Component({
   selector: 'jhi-award-viewer',
   templateUrl: './award-viewer.component.html',
   styleUrls: ['./award-viewer.component.scss'],
 })
-export class AwardViewerComponent implements OnInit, OnDestroy {
+export class AwardViewerComponent implements OnInit {
   @Input() postId: number | undefined;
   awards: Award[] = [];
   len = 0;
-  private id: NodeJS.Timeout | undefined;
 
-  constructor(private awardService: AwardService, private commendationService: CommendationService) {}
+  constructor(
+    private awardService: AwardService,
+    private commendationService: CommendationService,
+    private eventEmitter: EventEmitterServiceService
+  ) {}
 
   ngOnInit(): void {
-    this.load();
-    this.id = setInterval(() => {
-      this.load();
-    }, 3000);
-  }
-
-  ngOnDestroy(): void {
-    if (this.id) {
-      clearInterval(this.id);
+    if (this.eventEmitter.subsVar === undefined) {
+      this.eventEmitter.subsVar = this.eventEmitter.invokeFunction.subscribe(() => this.load());
     }
+    this.load();
   }
 
   private load(): void {

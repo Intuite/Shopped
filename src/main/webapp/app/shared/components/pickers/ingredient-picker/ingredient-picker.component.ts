@@ -44,6 +44,7 @@ export class IngredientPickerComponent implements OnInit {
         id: item.ingredient.id,
         name: item.ingredient.name,
         amount: item.amount,
+        imageContentType: item.ingredient.imageContentType,
         image: item.ingredient.image,
         unitAbbrev: item.ingredient.unitAbbrev,
         cartHasIngredientId: undefined,
