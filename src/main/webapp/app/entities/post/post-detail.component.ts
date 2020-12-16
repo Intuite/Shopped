@@ -110,7 +110,11 @@ export class PostDetailComponent implements OnInit {
     this.commentService.refreshNeeded$.subscribe(() => {
       this.findComments();
     });
-    this.collectionService.query().subscribe((res: HttpResponse<ICollection[]>) => (this.collections = res.body || []));
+    this.collectionService
+      .queryAll({
+        ...{ 'userId.equals': this.account?.id },
+      })
+      .subscribe((res: HttpResponse<ICollection[]>) => (this.collections = res.body || []));
   }
 
   byteSize(base64String: string): string {

@@ -100,7 +100,7 @@
                                     <mat-icon>shopping_cart</mat-icon>
                                     Add to cart
                                 </button>
-                                <span *ngIf="collections">
+                                <span *ngIf="collections && collections.length > 0">
                                     <button class="text-white" color="primary" mat-raised-button
                                             [matMenuTriggerFor]="collectionsMenu">
                                         <mat-icon>bookmark_border</mat-icon>
