@@ -8,9 +8,13 @@
         <mat-autocomplete #auto="matAutocomplete">
             <mat-option *ngFor="let userProfile of filteredUserProfiles | async" [value]="userProfile.userLogin"
                         [routerLink]="['/account/profile', userProfile.userLogin]">
-                <img *ngIf="userProfile.image; else icon" class="example-option-img" aria-hidden
-                     [src]="'data:' + userProfile.imageContentType + ';base64,' + userProfile.image" height="25">
-                <ng-template #icon><fa-icon icon="user"></fa-icon></ng-template>
+                <img *ngIf="userProfile.image; else icon" class="example-option-img rounded-circle" aria-hidden
+                     [src]="'data:' + userProfile.imageContentType + ';base64,' + userProfile.image" height="14" width="14">
+                <ng-template #icon>
+                    <span lass="text-center">
+                        <fa-icon icon="user" class="example-option-img"></fa-icon>
+                    </span>
+                </ng-template>
                 <span>{{userProfile.userLogin}}</span>
             </mat-option>
         </mat-autocomplete>
