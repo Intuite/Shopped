@@ -34,7 +34,7 @@
 
     <dl class="jh-entity-details">
         <div class="recipe-card-content" fxLayout="row wrap" fxLayoutGap="6px grid">
-            <div *ngFor="let card of recipes | recipeFilter:searchText" fxFlex="100%" fxFlex.gt-sm="33%" fxFlex.sm="50%"
+            <div *ngFor="let card of displayRecipes | recipeFilter:searchText " fxFlex="100%" fxFlex.gt-sm="33%" fxFlex.sm="50%"
                  fxFlex.xs="100%">
 
                 <mat-card class="mat-elevation-z4 col-sm-12">

@@ -15,8 +15,8 @@ export class PostFilterPipe implements PipeTransform {
           .includes(searchText.toLowerCase());
       })
       .sort((a: any, b: any) => {
-        const x = a.name.toUpperCase(),
-          y = b.name.toUpperCase();
+        const x = a.recipeName.toUpperCase(),
+          y = b.recipeName.toUpperCase();
         return x === y ? 0 : x > y ? 1 : -1;
       });
   }

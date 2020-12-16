@@ -1,9 +1,9 @@
 import { Pipe } from '@angular/core';
 
 @Pipe({
-  name: 'reverse',
+  name: 'recipeReverse',
 })
-export class ReversePipe {
+export class RecipeReversePipe {
   transform(items: any[]): any[] {
     return items.reverse();
   }

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { JhiDataUtils } from 'ng-jhipster';
 
@@ -7,9 +7,9 @@ import { RecipeService } from 'app/entities/recipe/recipe.service';
 import { HttpResponse } from '@angular/common/http';
 import { Account } from 'app/core/user/account.model';
 import { AccountService } from 'app/core/auth/account.service';
+import { Subscription } from 'rxjs';
 import { IUser } from 'app/core/user/user.model';
 import { UserService } from 'app/core/user/user.service';
-import { Status } from 'app/shared/model/enumerations/status.model';
 import { MatDialog } from '@angular/material/dialog';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RecipeDeleteDialogComponent } from './recipe-delete-dialog.component';
@@ -19,9 +19,11 @@ import { RecipeDeleteDialogComponent } from './recipe-delete-dialog.component';
   templateUrl: './recipe-list.component.html',
   styleUrls: ['./recipe-list.component.scss'],
 })
-export class RecipeListComponent implements OnInit, AfterViewInit {
+export class RecipeListComponent implements OnInit {
   recipes: IRecipe[] = [];
-  account?: Account;
+  displayRecipes: IRecipe[] = [];
+  account: Account | null = null;
+  authSubscription?: Subscription;
   user!: IUser;
   statusOptions = ['ACTIVE', 'INACTIVE'];
   searchText = '';
@@ -37,16 +39,9 @@ export class RecipeListComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
-    this.accountService.getAuthenticationState().subscribe(account => {
-      if (account) {
-        this.userService.find(account.login).subscribe(user => (this.user = user));
-      }
-    });
+    this.authSubscription = this.accountService.getAuthenticationState().subscribe(account => (this.account = account));
 
-    this.recipeService.query().subscribe(
-      (res: HttpResponse<IRecipe[]>) => this.onSuccess(res.body),
-      () => this.onError()
-    );
+    this.getRecipes();
 
     this.recipeService.refreshNeeded$.subscribe(() => {
       this.getRecipes();
@@ -55,22 +50,19 @@ export class RecipeListComponent implements OnInit, AfterViewInit {
 
   getRecipes(): any {
     this.recipeService.query().subscribe(
-      (res: HttpResponse<IRecipe[]>) => this.onSuccess(res.body),
+      (res: HttpResponse<IRecipe[]>) => {
+        if (res.body !== null) {
+          res.body.reverse(),
+            (this.displayRecipes = []),
+            res.body.forEach(recipe => {
+              if (recipe.userId === this.account?.id && recipe.status === this.statusOptions[0]) {
+                this.displayRecipes.push(recipe);
+              }
+            });
+        }
+      },
       () => this.onError()
     );
-  }
-
-  ngAfterViewInit(): void {}
-
-  cleanRecipes(): void {
-    let i = 0;
-    while (i < this.recipes.length) {
-      if (this.recipes[i].userId !== this.user.id || this.recipes[i].status === this.statusOptions[1]) {
-        this.recipes.splice(i, 1);
-      } else {
-        i++;
-      }
-    }
   }
 
   byteSize(base64String: string): string {
@@ -89,24 +81,12 @@ export class RecipeListComponent implements OnInit, AfterViewInit {
     console.warn('There are no Recipes');
   }
 
-  private onSuccess(body: IRecipe[] | null): void {
-    this.recipes = body || [];
-    this.cleanRecipes();
-  }
-
-  setStatus(element: IRecipe, newStatus: boolean): void {
-    this.recipeService
-      .update({
-        ...element,
-        status: !newStatus ? (Status.ACTIVE.toUpperCase() as Status) : (Status.INACTIVE.toUpperCase() as Status),
-      })
-      .subscribe(() => {
-        // this.loadPage(this.page);
-      });
-  }
-
   delete(recipe: IRecipe): void {
-    const modalRef = this.modalService.open(RecipeDeleteDialogComponent, { size: 'md', backdrop: 'static', centered: true });
+    const modalRef = this.modalService.open(RecipeDeleteDialogComponent, {
+      size: 'md',
+      backdrop: 'static',
+      centered: true,
+    });
     modalRef.componentInstance.recipe = recipe;
   }
 }
