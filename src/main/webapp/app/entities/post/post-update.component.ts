@@ -149,7 +149,7 @@ export class PostUpdateComponent implements OnInit {
 
   protected onSaveSuccess(): void {
     this.isSaving = false;
-    // this.gotoAfterSave();
+    this.gotoAfterSave();
   }
 
   protected onSaveError(): void {

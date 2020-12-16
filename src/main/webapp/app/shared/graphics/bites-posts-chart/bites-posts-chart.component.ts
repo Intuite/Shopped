@@ -6,6 +6,7 @@ import { LogService } from 'app/entities/log/log.service';
 import { Account } from 'app/core/user/account.model';
 import { AccountService } from 'app/core/auth/account.service';
 import { Subscription } from 'rxjs';
+
 @Component({
   selector: 'jhi-bites-posts-chart',
   templateUrl: './bites-posts-chart.component.html',
@@ -40,25 +41,10 @@ export class BitesPostsChartComponent implements OnInit {
   }
 
   private processBiteInPost(logs: Log[]): void {
-    let i = 0;
-    let desc: any;
-    while (i < logs.length) {
-      desc = JSON.parse(logs[i].description!);
-      if (desc!['ownerId'] !== this.account?.id) {
-        logs.splice(i, 1);
-      } else {
-        i++;
-      }
-    }
-
-    this.processDescription(logs);
-  }
-
-  private processDescription(logs: Log[]): void {
     logs.forEach((log: Log) => {
       log.description = JSON.parse(log.description!);
       console.warn(log.description);
-      if (log.description!['recipeName'])
+      if (log.description!['recipeName'] && log.description!['ownerId'] === this.account?.id)
         log.description!['recipeName'] in this.bitePost
           ? (this.bitePost[log.description!['recipeName']] += 1)
           : (this.bitePost[log.description!['recipeName']] = 1);
