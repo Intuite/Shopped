@@ -8,7 +8,6 @@ import { DATE_FORMAT } from 'app/shared/constants/input.constants';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
 import { IUserProfile } from 'app/shared/model/user-profile.model';
-import { RecipeService } from 'app/entities/recipe/recipe.service';
 
 type EntityResponseType = HttpResponse<IUserProfile>;
 type EntityArrayResponseType = HttpResponse<IUserProfile[]>;
@@ -17,7 +16,7 @@ type EntityArrayResponseType = HttpResponse<IUserProfile[]>;
 export class UserProfileService {
   public resourceUrl = SERVER_API_URL + 'api/user-profiles';
 
-  constructor(protected http: HttpClient, protected recipeService: RecipeService) {}
+  constructor(protected http: HttpClient) {}
 
   create(userProfile: IUserProfile): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(userProfile);
@@ -31,12 +30,6 @@ export class UserProfileService {
     return this.http
       .put<IUserProfile>(this.resourceUrl, copy, { observe: 'response' })
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
-  }
-
-  findRecipes(id: number | undefined): Observable<HttpResponse<any[]>> {
-    return this.recipeService.query({
-      ...{ 'userId.equals': id },
-    });
   }
 
   find(id: number): Observable<EntityResponseType> {

@@ -69,11 +69,11 @@ export class PostHomeComponent implements OnInit {
   }
 
   getPosts(): any {
-    this.displayCardPosts = [];
-    this.postService.query().subscribe(
+    this.postService.queryAll().subscribe(
       (res: HttpResponse<any[]>) => {
         if (res.body !== null) {
           res.body.reverse(),
+            (this.displayCardPosts = []),
             res.body.forEach(post => {
               if (post.status === this.statusOptions[0]) {
                 this.recipeService.find(post.recipeId).subscribe(recipe => {

@@ -51,7 +51,7 @@ export class RecipeListComponent implements OnInit {
   }
 
   getRecipes(): any {
-    this.userProfile.findRecipes(this.account?.id).subscribe(
+    this.recipeService.queryAll().subscribe(
       (res: HttpResponse<any[]>) => {
         if (res.body !== null) {
           res.body.reverse(),
