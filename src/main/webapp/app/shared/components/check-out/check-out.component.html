@@ -1,6 +1,6 @@
 <div #paypal>
 </div>
 <ngx-paypal [config]="payPalConfig"></ngx-paypal>
-<div *ngIf="!payPalConfig" align="center">
+<div *ngIf="!payPalConfig || !paypalElement" align="center">
     Paypal is not available.
 </div>
