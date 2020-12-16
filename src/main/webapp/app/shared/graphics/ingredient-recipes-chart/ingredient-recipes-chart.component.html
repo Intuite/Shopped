@@ -1,11 +1,15 @@
 <mat-card>
-    <h3>Ingredients Used</h3>
+    <h3>Most Used Ingredients</h3>
     <mat-card-content align="center">
-        <jhi-bar-chart
-            [barChartData]="rhiData"
-            [barChartLabels]="rhiLabel"
-            [width]="700"
-        >
-        </jhi-bar-chart>
+        <div *ngIf="!empty" align="center">
+            <jhi-bar-chart
+                [barChartData]="rhiData"
+                [barChartLabels]="rhiLabel"
+            >
+            </jhi-bar-chart>
+        </div>
+        <div *ngIf="empty" align="center">
+            <p align="center">No ingredients added to a recipe yet.</p>
+        </div>
     </mat-card-content>
 </mat-card>
