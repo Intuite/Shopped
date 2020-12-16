@@ -4,6 +4,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class CounterFilterPipe implements PipeTransform {
   transform(array: any, field: string): any[] {
+    if (!Array.isArray(array)) {
+      return array;
+    }
     array.sort((a: any, b: any) => {
       if (a[field] < b[field]) {
         return -1;

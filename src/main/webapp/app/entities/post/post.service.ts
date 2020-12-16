@@ -11,7 +11,6 @@ import { FollowerService } from 'app/entities/follower/follower.service';
 import { CommentService } from 'app/entities/comment/comment.service';
 import { RecipeService } from 'app/entities/recipe/recipe.service';
 import { ReportPostService } from 'app/entities/report-post/report-post.service';
-import { LogService } from 'app/entities/log/log.service';
 import * as moment from 'moment';
 
 type EntityResponseType = HttpResponse<IPost>;
@@ -29,8 +28,7 @@ export class PostService {
     protected followerService: FollowerService,
     protected commentService: CommentService,
     protected recipeService: RecipeService,
-    protected reportPostService: ReportPostService,
-    protected logService: LogService
+    protected reportPostService: ReportPostService
   ) {}
 
   getRefreshNeed(): any {
@@ -64,12 +62,6 @@ export class PostService {
   findRecipe(id: number | undefined): Observable<HttpResponse<any>> {
     return this.recipeService.query({
       ...{ 'recipeId.equals': id },
-    });
-  }
-
-  findUserLogs(id: number | undefined): Observable<HttpResponse<any>> {
-    return this.logService.query({
-      ...{ 'userId.equals': id },
     });
   }
 
