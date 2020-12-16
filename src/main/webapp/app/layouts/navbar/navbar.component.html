@@ -18,6 +18,9 @@
     </a>
     <div [ngSwitch]="isAuthenticated()" [ngbCollapse]="isNavbarCollapsed" class="navbar-collapse collapse"
          id="navbarResponsive">
+        <div class="ml-2 mt-2" *ngSwitchCase="true">
+            <jhi-user-search-bar></jhi-user-search-bar>
+        </div>
         <ul class="navbar-nav ml-auto">
             <li [routerLinkActiveOptions]="{ exact: true }" class="nav-item" routerLinkActive="active">
                 <button (click)="collapseNavbar()" class="nav-link" mat-button routerLink="/">

@@ -1,0 +1,18 @@
+<form class="example-form">
+    <mat-form-field class="example-full-width">
+        <input matInput
+               placeholder="Search user"
+               aria-label="User"
+               [matAutocomplete]="auto"
+               [formControl]="userCtrl">
+        <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let userProfile of filteredUserProfiles | async" [value]="userProfile.userLogin"
+                        [routerLink]="['/account/profile', userProfile.userLogin]">
+                <img *ngIf="userProfile.image; else icon" class="example-option-img" aria-hidden
+                     [src]="'data:' + userProfile.imageContentType + ';base64,' + userProfile.image" height="25">
+                <ng-template #icon><fa-icon icon="user"></fa-icon></ng-template>
+                <span>{{userProfile.userLogin}}</span>
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+</form>
