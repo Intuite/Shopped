@@ -13,6 +13,7 @@ import { UserService } from 'app/core/user/user.service';
 import { MatDialog } from '@angular/material/dialog';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RecipeDeleteDialogComponent } from './recipe-delete-dialog.component';
+import { UserProfileService } from 'app/entities/user-profile/user-profile.service';
 
 @Component({
   selector: 'jhi-recipe-user-list',
@@ -35,7 +36,8 @@ export class RecipeListComponent implements OnInit {
     protected userService: UserService,
     private accountService: AccountService,
     public dialog: MatDialog,
-    protected modalService: NgbModal
+    protected modalService: NgbModal,
+    protected userProfile: UserProfileService
   ) {}
 
   ngOnInit(): void {
@@ -49,8 +51,8 @@ export class RecipeListComponent implements OnInit {
   }
 
   getRecipes(): any {
-    this.recipeService.query().subscribe(
-      (res: HttpResponse<IRecipe[]>) => {
+    this.userProfile.findRecipes(this.account?.id).subscribe(
+      (res: HttpResponse<any[]>) => {
         if (res.body !== null) {
           res.body.reverse(),
             (this.displayRecipes = []),
