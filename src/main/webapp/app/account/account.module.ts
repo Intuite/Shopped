@@ -33,6 +33,8 @@ import { AnaliticaPComponent } from './profile/dashboard/analitica-p/analitica-p
 import { RecipeListComponent } from './profile/dashboard/cart/recipe-list/recipe-list.component';
 import { HistoryComponent } from './profile/dashboard/cart/history/history.component';
 import { ItemComponent } from './profile/dashboard/cart/history/item/item.component';
+import { PublicDashboardComponent } from './profile/public-dashboard/public-dashboard.component';
+import { GeneralDataComponent } from './profile/public-dashboard/general-data/general-data.component';
 
 @NgModule({
   imports: [ShoppedSharedModule, RouterModule.forChild(accountState), ShoppedTransactionModule, ShoppedRecipeModule],
@@ -64,6 +66,8 @@ import { ItemComponent } from './profile/dashboard/cart/history/item/item.compon
     RecipeListComponent,
     HistoryComponent,
     ItemComponent,
+    PublicDashboardComponent,
+    GeneralDataComponent,
   ],
 })
 export class AccountModule {}

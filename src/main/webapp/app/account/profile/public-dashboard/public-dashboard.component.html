@@ -1,0 +1,9 @@
+<mat-tab-group mat-align-tabs="center" mat-stretch-tabs>
+    <mat-tab *ngIf="user && account">
+        <ng-template mat-tab-label>
+            <mat-icon>public</mat-icon>
+            Posts
+        </ng-template>
+        <jhi-general-data [user]="user"></jhi-general-data>
+    </mat-tab>
+</mat-tab-group>
