@@ -75,13 +75,13 @@
 
                     <a (click)="view(collection)">
                         <div *ngIf="collection.image">
-                            <div class="collection-card-picture">
+                            <div class="collection-card-picture rounded-circle">
                                 <img [src]="'data:' + collection.imageContentType + ';base64,' + collection.image"
                                      alt="card image" class="rounded-circle"/>
                             </div>
                         </div>
                         <div *ngIf="!collection.image">
-                            <div class="collection-card-picture">
+                            <div class="collection-card-picture rounded-circle">
                                 <img alt="Shopped logo" class="rounded-circle"
                                      src='../../../content/images/placeholder-image.png' />
                             </div>

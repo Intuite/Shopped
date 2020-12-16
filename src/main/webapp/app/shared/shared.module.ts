@@ -65,6 +65,7 @@ import { LineChartComponent } from './components/line-chart/line-chart.component
 import { ChartsModule } from 'ng2-charts';
 import { UserPickerComponent } from './components/pickers/user-picker/user-picker.component';
 import { IngredientRecipesChartComponent } from './graphics/ingredient-recipes-chart/ingredient-recipes-chart.component';
+import { UserSearchBarComponent } from './components/user-search-bar/user-search-bar.component';
 import { BitesPostsChartComponent } from './graphics/bites-posts-chart/bites-posts-chart.component';
 import { TagsPostsChartComponent } from './graphics/tags-posts-chart/tags-posts-chart.component';
 
@@ -124,6 +125,7 @@ import { TagsPostsChartComponent } from './graphics/tags-posts-chart/tags-posts-
     PieChartComponent,
     LineChartComponent,
     IngredientRecipesChartComponent,
+    UserSearchBarComponent,
     BitesPostsChartComponent,
     TagsPostsChartComponent,
   ],
@@ -176,6 +178,7 @@ import { TagsPostsChartComponent } from './graphics/tags-posts-chart/tags-posts-
     LineChartComponent,
     PieChartComponent,
     IngredientRecipesChartComponent,
+    UserSearchBarComponent,
     BitesPostsChartComponent,
     TagsPostsChartComponent,
   ],

@@ -48,6 +48,12 @@
                            type="text">
                 </mat-form-field>
             </div>
+<!--            <div class="my-3">-->
+<!--                <span>Filter by recipe tag</span>-->
+<!--                <jhi-recipe-tag-picker #recipeTagPk (change)="setRecipeTags()" (click)="close()">-->
+
+<!--                </jhi-recipe-tag-picker>-->
+<!--            </div>-->
             <div class="recipe-card-content" fxLayout="row wrap" fxLayoutGap="6px grid">
                 <div *ngFor="let recipe of recipes | recipeFilter:searchText" fxFlex="100%" fxFlex.gt-sm="33%" fxFlex.sm="50%"
                      fxFlex.xs="100%">
