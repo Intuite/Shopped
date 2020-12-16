@@ -6,17 +6,18 @@ import { LogService } from 'app/entities/log/log.service';
 import { Account } from 'app/core/user/account.model';
 import { AccountService } from 'app/core/auth/account.service';
 import { Subscription } from 'rxjs';
+
 @Component({
-  selector: 'jhi-bites-posts-chart',
-  templateUrl: './bites-posts-chart.component.html',
-  styleUrls: ['./bites-posts-chart.component.scss'],
+  selector: 'jhi-tags-posts-chart',
+  templateUrl: './tags-posts-chart.component.html',
+  styleUrls: ['./tags-posts-chart.component.scss'],
 })
-export class BitesPostsChartComponent implements OnInit {
+export class TagsPostsChartComponent implements OnInit {
   @Input() dated!: Date;
   @Input() maxBars = 5;
-  bitePostData = [{}];
-  bitePostLabel = ['Bite'];
-  bitePost: IHash = {};
+  rhiData = [{}];
+  rhiLabel = ['Ingredient'];
+  rhi: IHash = {};
   account: Account | null = null;
   authSubscription?: Subscription;
 
@@ -24,22 +25,22 @@ export class BitesPostsChartComponent implements OnInit {
 
   ngOnInit(): void {
     this.authSubscription = this.accountService.getAuthenticationState().subscribe(account => (this.account = account));
-    this.getBiteInPostData();
+    this.getRecipeHasIngredientData();
   }
 
-  private getBiteInPostData(): void {
+  private getRecipeHasIngredientData(): void {
     this.logService
       .query({
         ...(this.dated.toISOString() && { 'created.greaterThan': this.dated.toISOString() }),
-        ...(4 && { 'typeId.equals': 4 }),
+        ...(2 && { 'typeId.equals': 2 }),
       })
       .subscribe(
-        (res: HttpResponse<Log[]>) => this.processBiteInPost(res.body || []),
+        (res: HttpResponse<Log[]>) => this.processRecipeHasIngredient(res.body || []),
         () => console.warn('Post fetch failed')
       );
   }
 
-  private processBiteInPost(logs: Log[]): void {
+  private processRecipeHasIngredient(logs: Log[]): void {
     let i = 0;
     let desc: any;
     while (i < logs.length) {
@@ -50,7 +51,6 @@ export class BitesPostsChartComponent implements OnInit {
         i++;
       }
     }
-
     this.processDescription(logs);
   }
 
@@ -58,12 +58,10 @@ export class BitesPostsChartComponent implements OnInit {
     logs.forEach((log: Log) => {
       log.description = JSON.parse(log.description!);
       console.warn(log.description);
-      if (log.description!['recipeName'])
-        log.description!['recipeName'] in this.bitePost
-          ? (this.bitePost[log.description!['recipeName']] += 1)
-          : (this.bitePost[log.description!['recipeName']] = 1);
+      if (log.description!['tag'])
+        log.description!['tag'] in this.rhi ? (this.rhi[log.description!['tag']] += 1) : (this.rhi[log.description!['tag']] = 1);
     });
-    this.assembleBitePostData();
+    this.assembleRhiData();
   }
 
   private sort(keys: string[]): string[] {
@@ -71,7 +69,7 @@ export class BitesPostsChartComponent implements OnInit {
     keys.forEach(() => {
       let m = 0;
       for (let _i = 1; _i < keys.length; _i++) {
-        if ((this.bitePost[keys[m]] < this.bitePost[keys[_i]] && !temp.includes(keys[_i])) || temp.includes(keys[m])) {
+        if ((this.rhi[keys[m]] < this.rhi[keys[_i]] && !temp.includes(keys[_i])) || temp.includes(keys[m])) {
           m = _i;
         }
       }
@@ -80,15 +78,15 @@ export class BitesPostsChartComponent implements OnInit {
     return temp;
   }
 
-  private assembleBitePostData(): void {
-    this.bitePostData = [];
-    const keys = this.sort(Object.keys(this.bitePost));
+  private assembleRhiData(): void {
+    this.rhiData = [];
+    const keys = this.sort(Object.keys(this.rhi));
     this.maxBars = keys.length < this.maxBars ? keys.length : this.maxBars;
     for (let i = 0; i < this.maxBars; i++) {
       const key = keys[i];
       const temp = [];
-      temp.push(this.bitePost[key]);
-      this.bitePostData.push({ data: temp, label: key });
+      temp.push(this.rhi[key]);
+      this.rhiData.push({ data: temp, label: key });
     }
   }
 }
