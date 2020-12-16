@@ -157,8 +157,8 @@ values (1, 'Award', '', 'ACTIVE'),
 
 insert into notification_type (id, name, status)
 values (1, 'Bite','ACTIVE'),
-       (2, 'Comment', '', 'ACTIVE'),
-       (3, 'Follower', '', 'ACTIVE');
+       (2, 'Comment','ACTIVE'),
+       (3, 'Follower', 'ACTIVE');
 
 insert into report_type (id, name, text, status)
 values (1, 'Spam content', 'Content is ineligible or empty', 'ACTIVE'),

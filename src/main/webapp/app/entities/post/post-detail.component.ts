@@ -171,7 +171,8 @@ export class PostDetailComponent implements OnInit {
 
   saveHistoryBite(): void {
     const description = JSON.stringify({
-      user: this.account?.login,
+      recipeName: this.post?.recipeName,
+      ownerId: this.post?.userId,
       postId: this.post?.id,
     });
     this.logService
