@@ -4,6 +4,7 @@ import { Transaction } from 'app/shared/model/transaction.model';
 import { TransactionService } from 'app/entities/transaction/transaction.service';
 import { CommendationService } from 'app/entities/commendation/commendation.service';
 import { Commendation } from 'app/shared/model/commendation.model';
+import { LogService } from 'app/entities/log/log.service';
 
 @Component({
   selector: 'jhi-analitica',
@@ -22,8 +23,15 @@ export class AnaliticaComponent implements OnInit {
   barLabel = ['Mon', 'Tuesday'];
   commendation: IHash = {};
   keys: string[] = [];
+  cookieEmpty = false;
+  moneyEmpty = false;
+  awardEmpty = false;
 
-  constructor(private transactionService: TransactionService, private commendationService: CommendationService) {}
+  constructor(
+    private transactionService: TransactionService,
+    private commendationService: CommendationService,
+    private logService: LogService
+  ) {}
 
   ngOnInit(): void {
     this.getData();
@@ -51,6 +59,7 @@ export class AnaliticaComponent implements OnInit {
     const week = new Date(today.setDate(today.getDate() - 7));
     this.dated = week;
     this.getData();
+    this.getBarData();
   }
 
   public makeMonthly(): void {
@@ -58,6 +67,7 @@ export class AnaliticaComponent implements OnInit {
     const month = new Date(today.setDate(today.getDate() - 30));
     this.dated = month;
     this.getData();
+    this.getBarData();
   }
 
   public makeDaily(): void {
@@ -65,6 +75,7 @@ export class AnaliticaComponent implements OnInit {
     const daily = new Date(today.setDate(today.getDate() - 1));
     this.dated = daily;
     this.getData();
+    this.getBarData();
   }
 
   private assembleData(transactions: Transaction[]): void {
@@ -96,9 +107,18 @@ export class AnaliticaComponent implements OnInit {
     this.moneyData.push(this.hashMoney['purchase']);
 
     this.moneyLabels = Object.keys(this.hashMoney);
+
+    if (this.data.every(item => item === 0)) {
+      this.cookieEmpty = true;
+      this.moneyEmpty = true;
+    } else {
+      this.cookieEmpty = false;
+      this.moneyEmpty = false;
+    }
   }
 
   private getBarData(): void {
+    this.commendation = {};
     this.commendationService
       .query({
         ...(this.dated.toISOString() && { 'date.greaterThan': this.dated.toISOString() }),
@@ -134,6 +154,12 @@ export class AnaliticaComponent implements OnInit {
       temp.push(this.commendation[key]);
       this.barData.push({ data: temp, label: key });
     });
+
+    if (Object.values(this.commendation).every(item => item === 0)) {
+      this.awardEmpty = true;
+    } else {
+      this.awardEmpty = false;
+    }
   }
 
   private sort(keys: string[]): void {

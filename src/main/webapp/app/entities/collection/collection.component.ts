@@ -25,7 +25,7 @@ export class CollectionComponent implements OnInit, OnDestroy {
   collections?: ICollection[] | null = null;
   eventSubscriber?: Subscription;
   totalItems = 0;
-  itemsPerPage = ITEMS_PER_PAGE;
+  itemsPerPage = 4;
   page!: number;
   predicate!: string;
   ascending!: boolean;
@@ -35,6 +35,8 @@ export class CollectionComponent implements OnInit, OnDestroy {
   currentAccount: Account | null = null;
   dataLoaded = false;
   searchText = '';
+  orderAsc = false;
+  sort_icon = 'import_export';
 
   constructor(
     protected collectionService: CollectionService,
@@ -149,5 +151,11 @@ export class CollectionComponent implements OnInit, OnDestroy {
     this.requesting = false;
   }
 
-  protected onError(): void {}
+  protected onError(): void {
+    this.requesting = false;
+  }
+
+  invertOrder(): void {
+    this.orderAsc = !this.orderAsc;
+  }
 }

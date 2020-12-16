@@ -186,13 +186,20 @@ where user_id = @uauser
 insert into recipe (name, portion, description, duration, creation, status, user_id)
 values ( 'Chicken Lasagna', 15,
          'To make the sauce, melt butter, onion and garlic over medium low heat. Cook until onion is softened, about 3 minutes. Add flour and cook for 1-2 minutes.
+
         Reduce heat to low. Combine milk and broth. Add a small amount at a time whisking to thicken. The mixture will become very thick, continue adding a little bit of liquid at a time whisking until smooth.
+
         Once all of the liquid has been added, stir in cream cheese until melted.
         Remove from heat and add 1 cup a cheese, dried basil and oregano.
+
         Assembly
+
         Combine cheese, eggs, parsley and spinach. Set aside.
+
         In a 9x13 pan, layer 4 noodles, sauce, cooked vegetables and half of the chicken. Sprinkle with 1/2 mozza, 1/4 cup parmesan and 1/3 of the sauce.
+
         Add another layer of noodles, chicken, cottage cheese mixture, sauce.  Top with noodles and sauce. Cover and bake 40 minutes.
+
         Uncover, top with cheese and bake 20-30 minutes more.'
        , 105, '2020-11-26 01:00:00'
        , 'ACTIVE', 4),
@@ -200,8 +207,10 @@ values ( 'Chicken Lasagna', 15,
        ('Chocolate Chip Cookies', 24,
         'Step 1
        Preheat oven to 350 degrees F (175 degrees C).
+
        Step 2
        Cream together the butter, white sugar, and brown sugar until smooth. Beat in the eggs one at a time, then stir in the vanilla. Dissolve baking soda in hot water. Add to batter along with salt. Stir in flour, chocolate chips, and nuts. Drop by large spoonfuls onto ungreased pans.
+
        Step 3
        Bake for about 10 minutes in the preheated oven, or until edges are nicely browned.
        '
@@ -215,10 +224,15 @@ values ( 'Chicken Lasagna', 15,
 
        ('Vegetable Soup', 6,
         'Heat two tablespoons of the olive oil in a stockpot pot or Dutch oven over medium heat. Add the onions, carrots, celery, and the tomato paste. Cook, stirring often until the vegetables have softened and the onions are translucent; 8 to 10 minutes.
+
        Add the garlic, fennel, black pepper, 1/2 teaspoon of salt, and the red pepper flakes. Cook, while stirring, for one minute.
+
        Pour in the canned tomatoes and their juices as well as the stock/broth.
+
        Add the potatoes, cabbage, and the bay leaves. Raise the heat to medium-high and bring the soup to a boil. Partially cover the pot with a lid, and then reduce the heat to maintain a low simmer.
+
        Simmer for 20 minutes or until the potatoes, and other vegetables are tender. Add the frozen peas and cook for five more minutes.
+
        Remove the pot from the heat and remove the bay leaves. Stir in the cider vinegar (or lemon juice) and the remaining tablespoon of olive oil. Taste and season with more salt, pepper or vinegar. Serve.'
            , 40, '2020-11-26 04:00:00', 'ACTIVE', 4),
 
@@ -232,6 +246,7 @@ values ( 'Chicken Lasagna', 15,
 
        ('Greek Salad', 4,
         'Make the dressing: In a small bowl, whisk together the olive oil, vinegar, garlic, oregano, mustard, salt, and several grinds of pepper.
+
        On a large platter, arrange the cucumber, green pepper, baby tomatoes, feta cheese, onions, and olives. Drizzle with the dressing and very gently toss. Sprinkle with a few generous pinches of oregano and top with the mint leaves. Season to taste and serve.
        '
            , 15, '2020-11-26 06:00:00', 'ACTIVE', 4),
@@ -239,10 +254,13 @@ values ( 'Chicken Lasagna', 15,
        ('Grilled Salmon', 6,
         'Step 1
        Season salmon fillets with pepper, garlic salt, and salt.
+
        Step 2
        In a small bowl, stir together soy sauce, brown sugar, water, and oil until sugar is dissolved. Place fish in a large resealable plastic bag with the soy sauce mixture, seal, and turn to coat. Refrigerate for at least 2 hours.
+
        Step 3
        Preheat grill for medium heat.
+
        Step 4
        Lightly oil grill grate. Place salmon on the preheated grill, and discard marinade. Cook salmon for 6 to 8 minutes per side, or until the fish flakes easily with a fork.
        '
@@ -260,6 +278,7 @@ values ( 'Chicken Lasagna', 15,
 
        ('Meatballs', 8,
         'In a small bowl, stir bread crumbs with milk until evenly combined. Let sit 15 minutes, or while you prep other ingredients.
+
        In a large bowl, use your hands to combine beef, pork, sausage, onion, and garlic. Season with salt and pepper, then gently stir in bread crumb mixture, eggs and parsley until just combined. Form mixture into 1" balls.
        In a large high-sided skillet over medium heat, heat oil. Working in batches, sear meatballs on all sides to develop a crust. Set meatballs aside, reduce heat to medium-low, and add sauce to skillet. Bring sauce to a simmer then immediately add meatballs back to skillet. Cover and simmer until cooked through, about 8 minutes more.'
            , 60, '2020-11-26 09:00:00', 'ACTIVE', 4),
@@ -267,10 +286,13 @@ values ( 'Chicken Lasagna', 15,
        ('Spicy Tuna Sushi Roll', 4,
         'Step 1
        Bring the rice, water, and vinegar to a boil in a saucepan over high heat. Reduce heat to medium-low, cover, and simmer until the rice is tender, and the liquid has been absorbed, 20 to 25 minutes. Let stand, covered, for about 10 minutes to absorb any excess water. Set rice aside to cool.
+
        Step 2
        Lightly mix together the tuna, mayonnaise, chili powder, and wasabi paste in a bowl, breaking the tuna apart but not mashing it into a paste.
+
        Step 3
        To roll the sushi, cover a bamboo sushi rolling mat with plastic wrap. Lay a sheet of nori, rough side up, on the plastic wrap. With wet fingers, firmly pat a thick, even layer of prepared rice over the nori, covering it completely. Place about 1 tablespoon each of diced cucumber, carrot, and avocado in a line along the bottom edge of the sheet, and spread a line of tuna mixture alongside the vegetables.
+
        Step 4
        Pick up the edge of the bamboo rolling sheet, fold the bottom edge of the sheet up, enclosing the filling, and tightly roll the sushi into a thick cylinder. Once the sushi is rolled, wrap it in the mat and gently squeeze to compact it tightly. Cut each roll into 6 pieces, and refrigerate until serve
        '
