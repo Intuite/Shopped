@@ -42,7 +42,7 @@ export class TopsComponent implements OnInit {
 
   ngOnInit(): void {
     this.biteService.query().subscribe(
-      (res: HttpResponse<IBite[]>) => (this.countBitesDistribution(res.body), this.joinPost(), this.sortTopItems()),
+      (res: HttpResponse<IBite[]>) => (this.countBitesDistribution(res.body), this.joinPost(), this.cleanTopItems(), this.sortTopItems()),
       () => this.onError()
     );
   }
@@ -62,6 +62,7 @@ export class TopsComponent implements OnInit {
           if (post.body !== null) {
             this.topItems.push({
               id: post.body.id,
+              status: post.body.status,
               recipeName: post.body.recipeName,
               recipeId: post.body.recipeId,
               userLogin: post.body.userLogin,
@@ -103,6 +104,17 @@ export class TopsComponent implements OnInit {
           y = b.biteCounter;
         return x === y ? 0 : x < y ? 1 : -1;
       });
+    }
+  }
+
+  cleanTopItems(): void {
+    let i = 0;
+    while (i < this.topItems.length) {
+      if (this.topItems[i].status === this.statusOptions[1] || this.topItems[i].status === this.statusOptions[2]) {
+        this.topItems.splice(i, 1);
+      } else {
+        i++;
+      }
     }
   }
 

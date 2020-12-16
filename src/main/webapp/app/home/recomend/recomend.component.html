@@ -1,9 +1,10 @@
 <div fxFlex="100%">
     <mat-card-content>
-        <div *ngIf="recomendedItems">
+        <div *ngIf="displayRecomendedItems">
+
             <h5>Recomended for you</h5>
             <mat-list>
-                <div *ngFor="let item of recomendedItems; let i = index">
+                <div *ngFor="let item of displayRecomendedItems| counterRecomended:'biteCounter'; let i = index">
                     <div *ngIf="i<3">
                         <hr>
                         <a [routerLink]="['/post', item.id, 'view']">
@@ -23,6 +24,7 @@
                                     </div>
                                     <div style="float:left;">
                                         <strong>{{item.recipeName}}</strong>
+
                                     </div>
                                 </div>
                             </mat-list-item>
@@ -32,4 +34,5 @@
             </mat-list>
         </div>
     </mat-card-content>
+
 </div>
