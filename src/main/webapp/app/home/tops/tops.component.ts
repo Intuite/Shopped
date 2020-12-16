@@ -41,7 +41,7 @@ export class TopsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.biteService.query().subscribe(
+    this.biteService.queryAll().subscribe(
       (res: HttpResponse<IBite[]>) => (
         this.countBitesDistribution(res.body), this.joinPost(), this.sortTopItems(), (this.displayTopItems = this.topItems)
       ),
