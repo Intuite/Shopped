@@ -11,10 +11,10 @@
             <button (click)="makeMonthly()" color="accent" mat-raised-button>Monthly</button>
         </div>
     </div>
-    <div class="row">
-        <div align="center" class="col tab-container">
-            <mat-card>
-                <h3>Cookie Income/Expenses</h3>
+    <div class="flex-row d-flex flxW">
+        <div align="center" class="col tab-container align-items-center">
+            <mat-card class="">
+                <h4>Cookie Income/Expenses</h4>
                 <mat-card-content>
                     <jhi-pie-chart
                         [pieChartData]="data"
@@ -24,9 +24,9 @@
                 </mat-card-content>
             </mat-card>
         </div>
-        <div align="center" class="col tab-container">
-            <mat-card>
-                <h3>App Income/Expenses</h3>
+        <div align="center" class="col tab-container align-items-center">
+            <mat-card class="">
+                <h4>App Income/Expenses</h4>
                 <mat-card-content>
                     <jhi-pie-chart
                         [pieChartData]="moneyData"
@@ -37,10 +37,10 @@
             </mat-card>
         </div>
     </div>
-    <div class="row mt-4">
-        <div class="col-8 constHeight">
-            <mat-card>
-                <h3>Awards</h3>
+    <div class="flex-row mt-4 d-flex flxW">
+        <div class="col-8 constHeight align-items-center">
+            <mat-card class="h-100">
+                <h4>Awards</h4>
                 <mat-card-content align="center">
                     <jhi-bar-chart
                         [barChartData]="barData"
@@ -51,9 +51,9 @@
                 </mat-card-content>
             </mat-card>
         </div>
-        <div class="col-4 constHeight">
+        <div class="col-4 constHeight align-items-center">
             <mat-card class="h-100">
-                <h3>Trending</h3>
+                <h4>Trending</h4>
                 <mat-card-content>
                     <mat-selection-list #awards [multiple]="false">
                         <mat-list-option *ngFor="let key of keys" [value]="">
