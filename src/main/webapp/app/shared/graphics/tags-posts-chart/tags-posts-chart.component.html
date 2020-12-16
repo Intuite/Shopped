@@ -1,11 +1,16 @@
 <mat-card>
     <h3>Most used tags</h3>
     <mat-card-content align="center">
-        <jhi-bar-chart
-            [barChartData]="tagPostData"
-            [barChartLabels]="tagPostLabel"
-            [width]="700"
-        >
-        </jhi-bar-chart>
+        <div *ngIf="!empty">
+            <jhi-bar-chart
+                [barChartData]="tagPostData"
+                [barChartLabels]="tagPostLabel"
+                [width]="700"
+            >
+            </jhi-bar-chart>
+        </div>
+        <div *ngIf="empty">
+            No tags used in the selected time frame
+        </div>
     </mat-card-content>
 </mat-card>

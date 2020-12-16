@@ -20,6 +20,7 @@ export class BitesPostsChartComponent implements OnInit {
   bitePost: IHash = {};
   account: Account | null = null;
   authSubscription?: Subscription;
+  empty = false;
 
   constructor(private logService: LogService, private accountService: AccountService) {}
 
@@ -75,6 +76,11 @@ export class BitesPostsChartComponent implements OnInit {
       const temp = [];
       temp.push(this.bitePost[key]);
       this.bitePostData.push({ data: temp, label: key });
+    }
+    if (Object.values(this.bitePost).every(item => item === 0)) {
+      this.empty = true;
+    } else {
+      this.empty = false;
     }
   }
 }

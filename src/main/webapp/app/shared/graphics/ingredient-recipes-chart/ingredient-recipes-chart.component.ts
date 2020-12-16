@@ -15,6 +15,7 @@ export class IngredientRecipesChartComponent implements OnInit {
   rhiData = [{}];
   rhiLabel = ['Ingredient'];
   rhi: IHash = {};
+  empty = false;
 
   constructor(private logService: LogService) {}
 
@@ -69,6 +70,11 @@ export class IngredientRecipesChartComponent implements OnInit {
       const temp = [];
       temp.push(this.rhi[key]);
       this.rhiData.push({ data: temp, label: key });
+    }
+    if (Object.values(this.rhi).every(item => item === 0)) {
+      this.empty = true;
+    } else {
+      this.empty = false;
     }
   }
 }

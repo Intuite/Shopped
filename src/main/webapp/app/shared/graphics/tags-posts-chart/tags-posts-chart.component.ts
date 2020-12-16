@@ -20,6 +20,7 @@ export class TagsPostsChartComponent implements OnInit {
   tagPost: IHash = {};
   account: Account | null = null;
   authSubscription?: Subscription;
+  empty = false;
 
   constructor(private logService: LogService, private accountService: AccountService) {}
 
@@ -76,6 +77,11 @@ export class TagsPostsChartComponent implements OnInit {
       const temp = [];
       temp.push(this.tagPost[key]);
       this.tagPostData.push({ data: temp, label: key });
+    }
+    if (Object.values(this.tagPost).every(item => item === 0)) {
+      this.empty = true;
+    } else {
+      this.empty = false;
     }
   }
 }

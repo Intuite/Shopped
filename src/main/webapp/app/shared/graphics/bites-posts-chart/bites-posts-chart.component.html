@@ -1,11 +1,19 @@
 <mat-card>
     <h3>Most bites received</h3>
     <mat-card-content align="center">
-        <jhi-bar-chart
-            [barChartData]="bitePostData"
-            [barChartLabels]="bitePostLabel"
-            [width]="700"
-        >
-        </jhi-bar-chart>
+
+        <mat-card-content align="center">
+            <div *ngIf="!empty">
+                <jhi-bar-chart
+                    [barChartData]="bitePostData"
+                    [barChartLabels]="bitePostLabel"
+                    [width]="700"
+                >
+                </jhi-bar-chart>
+            </div>
+            <div *ngIf="empty">
+                No bites in the selected time frame
+            </div>
+        </mat-card-content>
     </mat-card-content>
 </mat-card>
