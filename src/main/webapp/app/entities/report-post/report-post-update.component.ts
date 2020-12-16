@@ -140,7 +140,7 @@ export class ReportPostUpdateComponent implements OnInit {
       userReporting: this.account?.login,
     });
     this.logService
-      .create(new Log(undefined, description, moment().startOf('minute'), 'Report post', 7, this.account?.login, this.account?.id))
+      .create(new Log(undefined, description, moment().startOf('minute'), 'Report post', 8, this.account?.login, this.account?.id))
       .subscribe(
         () => console.warn('Report post log succesful'),
         () => console.warn('Report post log failed')

@@ -392,7 +392,7 @@ export class PostDetailComponent implements OnInit {
       userSaving: this.account?.login,
     });
     this.logService
-      .create(new Log(undefined, description, moment().startOf('minute'), 'Save recipe', 7, this.account?.login, this.account?.id))
+      .create(new Log(undefined, description, moment().startOf('minute'), 'Save recipe', 9, this.account?.login, this.account?.id))
       .subscribe(
         () => console.warn('Follower log succesful'),
         () => console.warn('Follower log failed')

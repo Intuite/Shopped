@@ -151,10 +151,14 @@ values (1, 'Award', '', 'ACTIVE'),
        (4, 'Post bite', '', 'ACTIVE'),
        (5, 'Post comment', '', 'ACTIVE'),
        (6, 'Follower', '', 'ACTIVE'),
-       (7, 'Recipe has Ingredient', '', 'ACTIVE');
+       (7, 'Recipe has Ingredient', '', 'ACTIVE'),
+	   (8,'Report post','','ACTIVE'),
+	   (9,'Save recipe','','ACTIVE');
 
 insert into notification_type (id, name, status)
-values (1, 'Bite', 'ACTIVE');
+values (1, 'Bite','ACTIVE'),
+       (2, 'Comment', '', 'ACTIVE'),
+       (3, 'Follower', '', 'ACTIVE');
 
 insert into report_type (id, name, text, status)
 values (1, 'Spam content', 'Content is ineligible or empty', 'ACTIVE'),
