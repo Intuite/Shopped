@@ -64,6 +64,7 @@ import { PieChartComponent } from './components/pie-chart/pie-chart.component';
 import { LineChartComponent } from './components/line-chart/line-chart.component';
 import { ChartsModule } from 'ng2-charts';
 import { UserPickerComponent } from './components/pickers/user-picker/user-picker.component';
+import { IngredientRecipesChartComponent } from './graphics/ingredient-recipes-chart/ingredient-recipes-chart.component';
 import { UserSearchBarComponent } from './components/user-search-bar/user-search-bar.component';
 
 @NgModule({
@@ -121,6 +122,7 @@ import { UserSearchBarComponent } from './components/user-search-bar/user-search
     BarChartComponent,
     PieChartComponent,
     LineChartComponent,
+    IngredientRecipesChartComponent,
     UserSearchBarComponent,
   ],
   entryComponents: [LoginModalComponent],
@@ -171,6 +173,7 @@ import { UserSearchBarComponent } from './components/user-search-bar/user-search
     BarChartComponent,
     LineChartComponent,
     PieChartComponent,
+    IngredientRecipesChartComponent,
     UserSearchBarComponent,
   ],
 })
