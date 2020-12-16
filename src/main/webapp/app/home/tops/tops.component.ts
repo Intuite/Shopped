@@ -19,11 +19,6 @@ interface TopItem {
   biteCounter?: number;
 }
 
-interface BiteCounter {
-  postId?: number;
-  biteCounter?: number;
-}
-
 @Component({
   selector: 'jhi-tops',
   templateUrl: './tops.component.html',
@@ -32,12 +27,9 @@ interface BiteCounter {
 export class TopsComponent implements OnInit {
   bites: IBite[] = [];
   topItems: TopItem[] = [];
+  displayTopItems: TopItem[] = [];
   statusOptions = ['ACTIVE', 'INACTIVE', 'BLOCKED'];
-  listValues: any = 0;
-  bitesList: any[] = [];
   biteCounter: any[] = [];
-  listBitePostId: any[] = [];
-  listBiteCount: any[] = [];
 
   constructor(
     protected biteService: BiteService,
@@ -50,7 +42,7 @@ export class TopsComponent implements OnInit {
 
   ngOnInit(): void {
     this.biteService.query().subscribe(
-      (res: HttpResponse<IBite[]>) => (this.onSuccessPost(res.body), this.countBitesDistribution(res.body), this.joinPost()),
+      (res: HttpResponse<IBite[]>) => (this.countBitesDistribution(res.body), this.joinPost(), this.sortTopItems()),
       () => this.onError()
     );
   }
@@ -112,5 +104,15 @@ export class TopsComponent implements OnInit {
         return x === y ? 0 : x < y ? 1 : -1;
       });
     }
+  }
+
+  sortTopItems(): void {
+    this.topItems.sort((a: any, b: any) => {
+      const x = a.biteCounter,
+        y = b.biteCounter;
+      return x === y ? 0 : x < y ? 1 : -1;
+    });
+
+    this.displayTopItems = this.topItems;
   }
 }

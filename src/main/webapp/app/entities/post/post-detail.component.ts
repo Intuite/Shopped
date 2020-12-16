@@ -35,6 +35,7 @@ import { CommentUpdateComponent } from 'app/entities/comment/comment-update.comp
 import { CartService } from 'app/entities/cart/cart.service';
 import { IIngredient } from 'app/shared/model/ingredient.model';
 import { ICartIngredient } from 'app/shared/model/cart-ingredient.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 interface FullIngredient {
   id?: number;
@@ -86,7 +87,8 @@ export class PostDetailComponent implements OnInit {
     protected modalService: NgbModal,
     protected modalReportService: NgbModal,
     protected accountService: AccountService,
-    protected collectionService: CollectionService
+    protected collectionService: CollectionService,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -395,5 +397,14 @@ export class PostDetailComponent implements OnInit {
         () => console.warn('Follower log succesful'),
         () => console.warn('Follower log failed')
       );
+    this.launchSnackbar('Recipe saved to personal list', 'Thanks!', 4);
+  }
+
+  launchSnackbar(msg: string, action: string, seconds: number): void {
+    this.snackBar.open(msg, action, {
+      duration: seconds * 1000,
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom',
+    });
   }
 }
