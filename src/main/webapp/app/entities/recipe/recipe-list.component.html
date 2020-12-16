@@ -34,23 +34,22 @@
 
     <dl class="jh-entity-details">
         <div class="recipe-card-content" fxLayout="row wrap" fxLayoutGap="6px grid">
-            <div *ngFor="let card of recipes | recipeFilter:searchText" fxFlex="100%" fxFlex.gt-sm="33%" fxFlex.sm="50%"
+            <div *ngFor="let card of displayRecipes | recipeFilter:searchText " fxFlex="100%" fxFlex.gt-sm="33%" fxFlex.sm="50%"
                  fxFlex.xs="100%">
 
                 <mat-card class="mat-elevation-z4 col-sm-12">
 
                     <mat-card-header>
                         <mat-card-title class="recipe-card-title">
-                            {{ card.name }}
-                        </mat-card-title>
-
-                        <div class="recipe-card-disable-button">
+                            {{ card.name }}&nbsp;
                             <button [routerLink]="['/recipe/', card.id, 'edit']"
                                     aria-label="Close" data-dismiss="modal" class="close" type="button"
                                     type="submit">
                                 <fa-icon style="font-size: 12px" icon="pencil-alt"></fa-icon>
                             </button>
-                            
+                        </mat-card-title>
+
+                        <div class="recipe-card-disable-button">
                             <button aria-label="Close" data-dismiss="modal" class="close" type="button"
                                     (click)="this.delete(card)">
                                 <span aria-hidden="true">x</span>

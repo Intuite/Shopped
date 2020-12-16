@@ -89,5 +89,16 @@
             <jhi-view-transactions></jhi-view-transactions>
         </div>
     </div>
+    <mat-divider></mat-divider>
+    <div class="row mt-4">
+        <div class="col-10 constHeight">
+            <jhi-bites-posts-chart [dated]="dated" [maxBars]="8"></jhi-bites-posts-chart>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-10 constHeight">
+            <jhi-tags-posts-chart [dated]="dated" [maxBars]="8"></jhi-tags-posts-chart>
+        </div>
+    </div>
 </div>
 

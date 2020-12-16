@@ -11,7 +11,7 @@ import { NotificationService } from 'app/entities/notification/notification.serv
 
 import { IPost } from 'app/shared/model/post.model';
 import { PostService } from 'app/entities/post/post.service';
-import { IRecipe } from 'app/shared/model/recipe.model';
+import { IRecipe, Recipe } from 'app/shared/model/recipe.model';
 import { RecipeService } from 'app/entities/recipe/recipe.service';
 import { IRecipeHasRecipeTag } from 'app/shared/model/recipe-has-recipe-tag.model';
 import { IngredientService } from 'app/entities/ingredient/ingredient.service';
@@ -35,6 +35,7 @@ import { CommentUpdateComponent } from 'app/entities/comment/comment-update.comp
 import { CartService } from 'app/entities/cart/cart.service';
 import { IIngredient } from 'app/shared/model/ingredient.model';
 import { ICartIngredient } from 'app/shared/model/cart-ingredient.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 interface FullIngredient {
   id?: number;
@@ -66,6 +67,8 @@ export class PostDetailComponent implements OnInit {
   collections: ICollection[] = [];
   reportStatus = false;
   reporttypes: IReportType[] = [];
+  countReportPost: any = 0;
+  requesting = false;
 
   constructor(
     protected recipeService: RecipeService,
@@ -84,10 +87,12 @@ export class PostDetailComponent implements OnInit {
     protected modalService: NgbModal,
     protected modalReportService: NgbModal,
     protected accountService: AccountService,
-    protected collectionService: CollectionService
+    protected collectionService: CollectionService,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
+    this.requesting = true;
     this.activatedRoute.data.subscribe(({ post }) => (this.post = post));
     this.accountService.identity().subscribe(res => (this.account = res || undefined));
     this.recipeService.query().subscribe(
@@ -101,6 +106,7 @@ export class PostDetailComponent implements OnInit {
     this.countBites();
     this.countFollowers();
     this.findComments();
+    this.findReport();
     this.commentService.refreshNeeded$.subscribe(() => {
       this.findComments();
     });
@@ -165,7 +171,8 @@ export class PostDetailComponent implements OnInit {
 
   saveHistoryBite(): void {
     const description = JSON.stringify({
-      user: this.account?.login,
+      recipeName: this.post?.recipeName,
+      ownerId: this.post?.userId,
       postId: this.post?.id,
     });
     this.logService
@@ -198,6 +205,24 @@ export class PostDetailComponent implements OnInit {
         () => console.warn('Notification bite succesful'),
         () => console.warn('Notification bite failed')
       );
+  }
+
+  findReport(): void {
+    this.postService
+      .findReport(this.post?.id)
+      .subscribe(res => ((this.countReportPost = res), this.checkReportStatus(), (this.requesting = false)));
+  }
+
+  checkReportStatus(): void {
+    let i = 0;
+    let found = false;
+    while (i < this.countReportPost.body.length && found === false) {
+      if (this.countReportPost.body[i].userId === this.account?.id) {
+        this.reportStatus = true;
+        found = true;
+      }
+      i++;
+    }
   }
 
   countBites(): void {
@@ -336,5 +361,51 @@ export class PostDetailComponent implements OnInit {
     const modalRef = this.modalService.open(CollectionHasRecipeUpdateComponent, { size: 'lg', backdrop: 'static', centered: true });
     modalRef.componentInstance.currentCollection = collection;
     modalRef.componentInstance.currentRecipe = this.recipe;
+  }
+
+  saveRecipe(): void {
+    this.recipeService
+      .create(
+        new Recipe(
+          undefined,
+          this.recipe?.name,
+          this.recipe?.portion,
+          this.recipe?.description,
+          this.recipe?.duration,
+          moment().startOf('minute'),
+          this.recipe?.imageContentType,
+          this.recipe?.image,
+          this.post?.status,
+          this.account?.login,
+          this.account?.id
+        )
+      )
+      .subscribe(
+        () => this.saveHistorysaveRecipe(),
+        () => console.warn('copy recipe failed')
+      );
+  }
+
+  saveHistorysaveRecipe(): void {
+    const description = JSON.stringify({
+      recipeIdSaved: this.recipe?.id,
+      recipeNameSaved: this.recipe?.name,
+      userSaving: this.account?.login,
+    });
+    this.logService
+      .create(new Log(undefined, description, moment().startOf('minute'), 'Save recipe', 9, this.account?.login, this.account?.id))
+      .subscribe(
+        () => console.warn('Follower log succesful'),
+        () => console.warn('Follower log failed')
+      );
+    this.launchSnackbar('Recipe saved to personal list', 'Thanks!', 4);
+  }
+
+  launchSnackbar(msg: string, action: string, seconds: number): void {
+    this.snackBar.open(msg, action, {
+      duration: seconds * 1000,
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom',
+    });
   }
 }
