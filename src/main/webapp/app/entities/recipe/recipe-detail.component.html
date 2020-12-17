@@ -68,13 +68,7 @@
                                     <div *ngFor="let ingredient of ingredients; first as first">
                                         <mat-divider></mat-divider>
                                         <mat-list-item>
-                                            <img
-                                                *ngIf="ingredient.image"
-                                                [src]="'data:' + ingredient.imageContentType + ';base64,' + ingredient.image"
-                                                alt="ingredient image"
-                                                matListAvatar
-                                            />
-                                            <mat-icon *ngIf="!ingredient.image" color="primary" matListIcon>
+                                            <mat-icon color="primary" matListIcon>
                                                 shopping_cart
                                             </mat-icon>
                                             <div matLine> {{ ingredient.name }} </div>
@@ -101,13 +95,13 @@
                                     Add to cart
                                 </button>
                                 <span *ngIf="collections && collections.length > 0">
-                                    <button class="text-white" color="primary" mat-raised-button
-                                            [matMenuTriggerFor]="collectionsMenu">
+                                    <button [matMenuTriggerFor]="collectionsMenu" class="text-white" color="primary"
+                                            mat-raised-button>
                                         <mat-icon>bookmark_border</mat-icon>
                                         Add to collection
                                     </button>
                                     <mat-menu #collectionsMenu="matMenu">
-                                        <button *ngFor="let collection of collections" (click)="create(collection)"
+                                        <button (click)="create(collection)" *ngFor="let collection of collections"
                                                 mat-menu-item>
                                             {{ collection.name }}
                                         </button>

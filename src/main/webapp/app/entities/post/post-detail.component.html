@@ -126,13 +126,7 @@
                                     <div *ngFor="let ingredient of ingredients; first as first">
                                         <mat-divider></mat-divider>
                                         <mat-list-item>
-                                            <img
-                                                *ngIf="ingredient.image"
-                                                [src]="'data:' + ingredient.imageContentType + ';base64,' + ingredient.image"
-                                                alt="ingredient image"
-                                                matListAvatar
-                                            />
-                                            <mat-icon *ngIf="!ingredient.image" color="primary" matListIcon>
+                                            <mat-icon color="primary" matListIcon>
                                                 shopping_cart
                                             </mat-icon>
                                             <div matLine> {{ ingredient.name }} </div>
@@ -158,13 +152,13 @@
                                     Add to cart
                                 </button>
                                 <span *ngIf="collections  && collections.length > 0">
-                                    <button class="text-white" color="primary" mat-raised-button
-                                            [matMenuTriggerFor]="collectionsMenu">
+                                    <button [matMenuTriggerFor]="collectionsMenu" class="text-white" color="primary"
+                                            mat-raised-button>
                                         <mat-icon>bookmark_border</mat-icon>
                                         Add to collection
                                     </button>
                                     <mat-menu #collectionsMenu="matMenu">
-                                        <button *ngFor="let collection of collections" (click)="create(collection)"
+                                        <button (click)="create(collection)" *ngFor="let collection of collections"
                                                 mat-menu-item>
                                             {{ collection.name }}
                                         </button>
@@ -188,11 +182,11 @@
                                 <button class="post-save-buttons" type="submit">
                                     <div [ngSwitch]="reportStatus">
                                         <a (click)="this.addReport(post,account,reporttypes)" *ngSwitchCase="false">
-                                            <fa-icon icon="flag" class="post-font-report"></fa-icon>
+                                            <fa-icon class="post-font-report" icon="flag"></fa-icon>
                                             <span>Report</span>
                                         </a>
                                         <a *ngSwitchCase="true">
-                                            <fa-icon icon="flag" class="post-font-reported"></fa-icon>
+                                            <fa-icon class="post-font-reported" icon="flag"></fa-icon>
                                             <span>Reported</span>
                                         </a>
                                     </div>
@@ -200,7 +194,7 @@
 
                                 <button class="post-save-buttons" type="submit">
                                     <a (click)="this.saveRecipe()">
-                                        <fa-icon icon="save" class="post-font-save"></fa-icon>
+                                        <fa-icon class="post-font-save" icon="save"></fa-icon>
                                         <div style="clear:both">
                                             <span>Save Recipe</span>
                                         </div>
