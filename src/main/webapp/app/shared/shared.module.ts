@@ -66,6 +66,8 @@ import { ChartsModule } from 'ng2-charts';
 import { UserPickerComponent } from './components/pickers/user-picker/user-picker.component';
 import { IngredientRecipesChartComponent } from './graphics/ingredient-recipes-chart/ingredient-recipes-chart.component';
 import { UserSearchBarComponent } from './components/user-search-bar/user-search-bar.component';
+import { BitesPostsChartComponent } from './graphics/bites-posts-chart/bites-posts-chart.component';
+import { TagsPostsChartComponent } from './graphics/tags-posts-chart/tags-posts-chart.component';
 
 @NgModule({
   imports: [JhMaterialModule, ShoppedSharedLibsModule, FlexModule, RouterModule, ExtendedModule, NgxPayPalModule, ChartsModule],
@@ -124,6 +126,8 @@ import { UserSearchBarComponent } from './components/user-search-bar/user-search
     LineChartComponent,
     IngredientRecipesChartComponent,
     UserSearchBarComponent,
+    BitesPostsChartComponent,
+    TagsPostsChartComponent,
   ],
   entryComponents: [LoginModalComponent],
   exports: [
@@ -175,6 +179,8 @@ import { UserSearchBarComponent } from './components/user-search-bar/user-search
     PieChartComponent,
     IngredientRecipesChartComponent,
     UserSearchBarComponent,
+    BitesPostsChartComponent,
+    TagsPostsChartComponent,
   ],
 })
 export class ShoppedSharedModule {}

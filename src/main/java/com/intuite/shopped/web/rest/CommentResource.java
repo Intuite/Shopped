@@ -130,6 +130,19 @@ public class CommentResource {
     }
 
     /**
+     * {@code GET  /comments} : get all the comments.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of comments in body.
+     */
+    @GetMapping("/comments/all")
+    public ResponseEntity<List<CommentDTO>> getAllComments(CommentCriteria criteria) {
+        log.debug("REST request to get Comments by criteria: {}", criteria);
+        List<CommentDTO> list = commentQueryService.findByCriteria(criteria);
+        return ResponseEntity.ok().body(list);
+    }
+
+    /**
      * {@code DELETE  /comments/:id} : delete the "id" comment.
      *
      * @param id the id of the commentDTO to delete.

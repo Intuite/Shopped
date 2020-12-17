@@ -41,13 +41,14 @@
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
-
                 <div class="form-group">
                     <label class="form-control-label" for="field_type"></label>
+
                     <select class="form-control" id="field_type" name="type" formControlName="typeId">
                         <option *ngIf="!editForm.get('typeId')!.value" [ngValue]="null" selected></option>
                         <option [ngValue]="reportTypeOption.id" *ngFor="let reportTypeOption of reporttypes; trackBy: trackById">{{ reportTypeOption.name }}</option>
                     </select>
+
                 </div>
                 <div *ngIf="editForm.get('typeId')!.invalid && (editForm.get('typeId')!.dirty || editForm.get('typeId')!.touched)">
                     <small class="form-text text-danger"

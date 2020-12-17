@@ -6,7 +6,13 @@
     </div>
     <div class="col-8">
 
-        <div *ngIf="post">
+        <div *ngIf="requesting">
+            <div class="w-100" fxLayout="row" fxLayoutAlign="space-around center">
+                <mat-spinner diameter="50" strokeWidth="5"></mat-spinner>
+            </div>
+        </div>
+
+        <div *ngIf="post && !requesting">
             <mat-card>
                 <mat-card-content *ngIf="recipe">
                     <div style="height: auto;">
@@ -151,7 +157,7 @@
                                     <mat-icon>shopping_cart</mat-icon>
                                     Add to cart
                                 </button>
-                                <span *ngIf="collections">
+                                <span *ngIf="collections  && collections.length > 0">
                                     <button class="text-white" color="primary" mat-raised-button
                                             [matMenuTriggerFor]="collectionsMenu">
                                         <mat-icon>bookmark_border</mat-icon>
@@ -180,21 +186,27 @@
 
                             <div class="blocks-13 post-element-right" gdArea="exportButtons">
                                 <button class="post-save-buttons" type="submit">
-                                <div [ngSwitch]="reportStatus">
-                                    <a (click)="this.addReport(post,account,reporttypes)" *ngSwitchCase="false">
-                                        <span class="post-icon-report"></span> Report
-                                    </a>
-                                    <a *ngSwitchCase="true">
-                                        <span class="post-icon-report"></span> Reported
-                                    </a>
-                                </div>
+                                    <div [ngSwitch]="reportStatus">
+                                        <a (click)="this.addReport(post,account,reporttypes)" *ngSwitchCase="false">
+                                            <fa-icon icon="flag" class="post-font-report"></fa-icon>
+                                            <span>Report</span>
+                                        </a>
+                                        <a *ngSwitchCase="true">
+                                            <fa-icon icon="flag" class="post-font-reported"></fa-icon>
+                                            <span>Reported</span>
+                                        </a>
+                                    </div>
                                 </button>
+
                                 <button class="post-save-buttons" type="submit">
-                                    <span class="post-icon-pdf"></span> PDF
+                                    <a (click)="this.saveRecipe()">
+                                        <fa-icon icon="save" class="post-font-save"></fa-icon>
+                                        <div style="clear:both">
+                                            <span>Save Recipe</span>
+                                        </div>
+                                    </a>
                                 </button>
-                                <button class="post-save-buttons" type="submit">
-                                    <span class="post-icon-bookmark"></span> Bookmark
-                                </button>
+
                             </div>
 
                             <div class="blocks-14 post-element-center post-bite" gdArea="biteButton">
@@ -277,4 +289,5 @@
             </mat-card>
         </div>
     </div>
+
 </div>

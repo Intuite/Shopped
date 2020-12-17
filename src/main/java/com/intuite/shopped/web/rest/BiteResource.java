@@ -105,6 +105,19 @@ public class BiteResource {
     }
 
     /**
+     * {@code GET  /bites} : get all the bites.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of bites in body.
+     */
+    @GetMapping("/bites/all")
+    public ResponseEntity<List<BiteDTO>> getAllBites(BiteCriteria criteria) {
+        log.debug("REST request to get Bites by criteria: {}", criteria);
+        List<BiteDTO> list = biteQueryService.findByCriteria(criteria);
+        return ResponseEntity.ok().body(list);
+    }
+
+    /**
      * {@code GET  /bites/count} : count all the bites.
      *
      * @param criteria the criteria which the requested entities should match.

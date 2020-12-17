@@ -84,10 +84,27 @@
             </mat-card>
         </div>
     </div>
+    <div class="flex-row mt-2">
+        <mat-divider></mat-divider>
+        <div class="row mt-4">
+            <div class="col">
+                <jhi-bites-posts-chart [dated]="dated" [maxBars]="8"></jhi-bites-posts-chart>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col">
+                <jhi-tags-posts-chart [dated]="dated" [maxBars]="8"></jhi-tags-posts-chart>
+            </div>
+        </div>
+    </div>
+    <h2 class="text-left mt-2">
+        Transactions
+    </h2>
     <div class="row mt-3 table-transac">
         <div class="col">
             <jhi-view-transactions></jhi-view-transactions>
         </div>
     </div>
+
 </div>
 
