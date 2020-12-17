@@ -85,7 +85,12 @@ export class RecipeDetailComponent implements OnInit {
         this.userService.find(account.login).subscribe(user => (this.user = user));
       }
     });
-    this.collectionService.query().subscribe((res: HttpResponse<ICollection[]>) => (this.collections = res.body || []));
+
+    this.collectionService
+      .queryAll({
+        ...{ 'userId.equals': this.account?.id },
+      })
+      .subscribe((res: HttpResponse<ICollection[]>) => (this.collections = res.body || []));
   }
 
   addIngredientToCart(ing: IIngredient): void {

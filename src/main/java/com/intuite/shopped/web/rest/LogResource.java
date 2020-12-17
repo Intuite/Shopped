@@ -105,6 +105,19 @@ public class LogResource {
     }
 
     /**
+     * {@code GET  /logs} : get all the logs.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of logs in body.
+     */
+    @GetMapping("/logs/all")
+    public ResponseEntity<List<LogDTO>> getAllLogs(LogCriteria criteria) {
+        log.debug("REST request to get Logs by criteria: {}", criteria);
+        List<LogDTO> list = logQueryService.findByCriteria(criteria);
+        return ResponseEntity.ok().body(list);
+    }
+
+    /**
      * {@code GET  /logs/count} : count all the logs.
      *
      * @param criteria the criteria which the requested entities should match.

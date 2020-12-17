@@ -32,6 +32,8 @@ export class PostUpdateComponent implements OnInit {
   user!: IUser;
   account?: Account | undefined;
   post?: IPost;
+  recipeTags!: any[] | null;
+  tagName: string | undefined;
 
   editForm = this.fb.group({
     id: [],
@@ -122,7 +124,7 @@ export class PostUpdateComponent implements OnInit {
       this.subscribeToSaveResponse(this.postService.update(post));
     } else {
       this.subscribeToSaveResponse(this.postService.create(post));
-      this.saveHistory();
+      this.saveHistory(post);
     }
   }
 
@@ -163,15 +165,24 @@ export class PostUpdateComponent implements OnInit {
     // this.previousState();
   }
 
-  saveHistory(): void {
-    const description = JSON.stringify({
-      user: this.account?.login,
-    });
-    this.logService
-      .create(new Log(undefined, description, moment().startOf('minute'), 'Post create', 2, this.account?.login, this.account?.id))
-      .subscribe(
-        () => console.warn('log succesful'),
-        () => console.warn('log failed')
-      );
+  saveHistory(post: IPost): void {
+    if (post.recipeId !== undefined) {
+      this.recipeService.findRecipeHasRecipeTags(post.recipeId).subscribe(recipeTags => {
+        if (recipeTags.body !== null) {
+          recipeTags.body.forEach(tag => {
+            const description = JSON.stringify({
+              ownerId: this.account?.id,
+              tag: tag.recipeTagName,
+            });
+            this.logService
+              .create(new Log(undefined, description, moment().startOf('minute'), 'Post create', 2, this.account?.login, this.account?.id))
+              .subscribe(
+                () => console.warn('log succesful'),
+                () => console.warn('log failed')
+              );
+          });
+        }
+      });
+    }
   }
 }
