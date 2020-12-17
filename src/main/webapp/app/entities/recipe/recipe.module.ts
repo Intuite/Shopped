@@ -9,6 +9,7 @@ import { RecipeDeleteDialogComponent } from './recipe-delete-dialog.component';
 import { RecipeListComponent } from './recipe-list.component';
 import { recipeRoute } from './recipe.route';
 import { RecipeFilterPipe } from './recipe-filter.pipe';
+import { RecipeReversePipe } from './recipe-reverse.pipe';
 
 @NgModule({
   imports: [ShoppedSharedModule, RouterModule.forChild(recipeRoute)],
@@ -19,8 +20,9 @@ import { RecipeFilterPipe } from './recipe-filter.pipe';
     RecipeDeleteDialogComponent,
     RecipeListComponent,
     RecipeFilterPipe,
+    RecipeReversePipe,
   ],
   entryComponents: [RecipeDeleteDialogComponent],
-  exports: [RecipeComponent, RecipeListComponent],
+  exports: [RecipeComponent, RecipeListComponent, RecipeFilterPipe],
 })
 export class ShoppedRecipeModule {}

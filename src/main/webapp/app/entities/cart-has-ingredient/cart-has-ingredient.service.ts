@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
 import { ICartHasIngredient } from 'app/shared/model/cart-has-ingredient.model';
+import { ICartIngredient } from 'app/shared/model/cart-ingredient.model';
 
 type EntityResponseType = HttpResponse<ICartHasIngredient>;
 type EntityArrayResponseType = HttpResponse<ICartHasIngredient[]>;
@@ -34,5 +35,24 @@ export class CartHasIngredientService {
 
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  }
+
+  findByCart(cartId: number): Observable<EntityArrayResponseType> {
+    const options = createRequestOption({ ...{ 'cartId.equals': cartId } });
+    return this.http.get<ICartHasIngredient[]>(this.resourceUrl, {
+      params: options,
+      observe: 'response',
+    });
+  }
+
+  map(i: ICartIngredient): ICartHasIngredient {
+    return {
+      id: i.cartHasIngredientId,
+      amount: i.amount,
+      status: i.status,
+      cartId: i.cartId,
+      ingredientName: i.name,
+      ingredientId: i.id,
+    };
   }
 }

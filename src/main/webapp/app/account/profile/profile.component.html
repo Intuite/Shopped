@@ -7,8 +7,13 @@
         <div fxFlex="20" fxFlex.md="35" fxFlex.xl="30">
             <jhi-user-info [canEdit]="(account?.id == user?.id) || false" [user]="user"></jhi-user-info>
         </div>
-        <div fxFlex>
-            <jhi-dashboard></jhi-dashboard>
+        <div fxFlex *ngIf="(account?.id == user?.id) || false else public_dashboard">
+            <jhi-dashboard [account]="account" [user]="user"></jhi-dashboard>
         </div>
+        <ng-template #public_dashboard>
+            <div fxFlex>
+                <jhi-public-dashboard [account]="account" [user]="user"></jhi-public-dashboard>
+            </div>
+        </ng-template>
     </div>
 </div>

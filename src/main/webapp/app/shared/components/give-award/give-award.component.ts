@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Award } from 'app/shared/model/award.model';
 import { MatDialog } from '@angular/material/dialog';
-import { AwardPickerDialogComponent } from 'app/shared/components/giveAward/award-picker-dialog/award-picker-dialog.component';
+import { AwardPickerDialogComponent } from 'app/shared/components/award-picker-dialog/award-picker-dialog.component';
 
 @Component({
   selector: 'jhi-give-award',

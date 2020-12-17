@@ -76,8 +76,14 @@ public class TransactionResource {
         log.debug("SENDING EMAIL");
         final Optional<User> isUser = userService.getUserWithAuthorities();
         log.debug(String.valueOf(isUser.get()));
+
         if (isUser.isPresent()){
             log.debug(isUser.toString());
+
+            if (transactionDTO.getDescription() == "Withdrew cookies in shopped") {
+                transactionService.sendPayment(transactionDTO, isUser.get());
+            }
+
             mailService.sendInvoiceEmail(isUser.get(), result);
         } else {
             log.warn("user was not found");

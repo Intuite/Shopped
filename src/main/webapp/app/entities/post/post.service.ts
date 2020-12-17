@@ -5,7 +5,13 @@ import { Observable, Subject } from 'rxjs';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
 import { IPost } from 'app/shared/model/post.model';
-import { tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
+import { BiteService } from 'app/entities/bite/bite.service';
+import { FollowerService } from 'app/entities/follower/follower.service';
+import { CommentService } from 'app/entities/comment/comment.service';
+import { RecipeService } from 'app/entities/recipe/recipe.service';
+import { ReportPostService } from 'app/entities/report-post/report-post.service';
+import * as moment from 'moment';
 
 type EntityResponseType = HttpResponse<IPost>;
 type EntityArrayResponseType = HttpResponse<IPost[]>;
@@ -16,10 +22,47 @@ export class PostService {
 
   refreshNeeded$ = new Subject<void>();
 
-  constructor(protected http: HttpClient) {}
+  constructor(
+    protected http: HttpClient,
+    protected biteService: BiteService,
+    protected followerService: FollowerService,
+    protected commentService: CommentService,
+    protected recipeService: RecipeService,
+    protected reportPostService: ReportPostService
+  ) {}
 
   getRefreshNeed(): any {
     return this.refreshNeeded$;
+  }
+
+  countBites(id: number | undefined): Observable<HttpResponse<any>> {
+    return this.biteService.query({
+      ...{ 'postId.equals': id },
+    });
+  }
+
+  countFollowers(id: number | undefined): Observable<HttpResponse<any>> {
+    return this.followerService.query({
+      ...{ 'userFollowedId.equals': id },
+    });
+  }
+
+  findReport(id: number | undefined): Observable<HttpResponse<any>> {
+    return this.reportPostService.query({
+      ...{ 'postId.equals': id },
+    });
+  }
+
+  findComments(id: number | undefined): Observable<HttpResponse<any>> {
+    return this.commentService.query({
+      ...{ 'postId.equals': id },
+    });
+  }
+
+  findRecipe(id: number | undefined): Observable<HttpResponse<any>> {
+    return this.recipeService.query({
+      ...{ 'recipeId.equals': id },
+    });
   }
 
   create(post: IPost): Observable<EntityResponseType> {
@@ -42,8 +85,10 @@ export class PostService {
       );
   }
 
-  find(id: number): Observable<EntityResponseType> {
-    return this.http.get<IPost>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  find(id: number | undefined): Observable<EntityResponseType> {
+    return this.http
+      .get<IPost>(`${this.resourceUrl}/${id}`, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
   query(req?: any): Observable<EntityArrayResponseType> {
@@ -58,5 +103,12 @@ export class PostService {
 
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  }
+
+  protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
+    if (res.body) {
+      res.body.date = res.body.date ? moment(res.body.date) : undefined;
+    }
+    return res;
   }
 }

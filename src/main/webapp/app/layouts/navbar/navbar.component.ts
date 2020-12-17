@@ -40,7 +40,6 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.loadAccount();
     this.profileService.getProfileInfo().subscribe(profileInfo => {
       this.inProduction = profileInfo.inProduction;
       this.swaggerEnabled = profileInfo.swaggerEnabled;
@@ -67,13 +66,17 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   }
 
   isAuthenticated(): boolean {
-    return this.accountService.isAuthenticated();
+    const isAuthenticated = this.accountService.isAuthenticated();
+    if (isAuthenticated) {
+      this.prepareReset();
+      this.loadAccount();
+    }
+    return isAuthenticated;
   }
 
   login(): void {
     this.loginModalService.open(() => {
-      this.accountLoaded = false;
-      this.currentAccount = null;
+      this.prepareReset();
       this.loadAccount();
     });
   }
@@ -81,7 +84,13 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   logout(): void {
     this.collapseNavbar();
     this.loginService.logout();
+    this.prepareReset();
     this.router.navigate(['']);
+  }
+
+  prepareReset(): void {
+    this.accountLoaded = false;
+    this.currentAccount = null;
   }
 
   toggleNavbar(): void {

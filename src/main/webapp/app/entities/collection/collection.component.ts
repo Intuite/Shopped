@@ -10,23 +10,37 @@ import { ICollection } from 'app/shared/model/collection.model';
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { CollectionService } from './collection.service';
 import { CollectionDeleteDialogComponent } from './collection-delete-dialog.component';
+import { PageEvent } from '@angular/material/paginator';
+import { Account } from 'app/core/user/account.model';
+import { AccountService } from 'app/core/auth/account.service';
+import { CollectionUpdateComponent } from 'app/entities/collection/collection-update.component';
+import { CollectionHasRecipeComponent } from 'app/entities/collection-has-recipe/collection-has-recipe.component';
 
 @Component({
   selector: 'jhi-collection',
   templateUrl: './collection.component.html',
+  styleUrls: ['./collection.scss'],
 })
 export class CollectionComponent implements OnInit, OnDestroy {
-  collections?: ICollection[];
+  collections?: ICollection[] | null = null;
   eventSubscriber?: Subscription;
   totalItems = 0;
-  itemsPerPage = ITEMS_PER_PAGE;
+  itemsPerPage = 4;
   page!: number;
   predicate!: string;
   ascending!: boolean;
   ngbPaginationPage = 1;
+  requesting = false;
+  pageEvent!: PageEvent;
+  currentAccount: Account | null = null;
+  dataLoaded = false;
+  searchText = '';
+  orderAsc = false;
+  sort_icon = 'import_export';
 
   constructor(
     protected collectionService: CollectionService,
+    private accountService: AccountService,
     protected activatedRoute: ActivatedRoute,
     protected dataUtils: JhiDataUtils,
     protected router: Router,
@@ -34,39 +48,41 @@ export class CollectionComponent implements OnInit, OnDestroy {
     protected modalService: NgbModal
   ) {}
 
-  loadPage(page?: number, dontNavigate?: boolean): void {
-    const pageToLoad: number = page || this.page || 1;
-
-    this.collectionService
-      .query({
-        page: pageToLoad - 1,
-        size: this.itemsPerPage,
-        sort: this.sort(),
-      })
-      .subscribe(
-        (res: HttpResponse<ICollection[]>) => this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate),
-        () => this.onError()
-      );
-  }
-
   ngOnInit(): void {
+    this.accountService.identity().subscribe(account => (this.currentAccount = account));
     this.handleNavigation();
     this.registerChangeInCollections();
+  }
+
+  registerChangeInCollections(): void {
+    this.eventSubscriber = this.eventManager.subscribe('collectionListModification', () => this.loadAll());
   }
 
   protected handleNavigation(): void {
     combineLatest(this.activatedRoute.data, this.activatedRoute.queryParamMap, (data: Data, params: ParamMap) => {
       const page = params.get('page');
-      const pageNumber = page !== null ? +page : 1;
+      this.page = page !== null ? +page : 1;
+      const pageSize = params.get('size');
+      this.itemsPerPage = pageSize !== null ? +pageSize : ITEMS_PER_PAGE;
       const sort = (params.get('sort') ?? data['defaultSort']).split(',');
-      const predicate = sort[0];
-      const ascending = sort[1] === 'asc';
-      if (pageNumber !== this.page || predicate !== this.predicate || ascending !== this.ascending) {
-        this.predicate = predicate;
-        this.ascending = ascending;
-        this.loadPage(pageNumber, true);
-      }
+      this.predicate = sort[0];
+      this.ascending = sort[1] === 'asc';
+      this.loadAll();
     }).subscribe();
+  }
+
+  loadAll(): void {
+    this.requesting = true;
+    this.collectionService
+      .queryAll({
+        ...{ 'userId.equals': this.currentAccount?.id },
+      })
+      .subscribe(
+        (res: HttpResponse<ICollection[]>) => {
+          this.onSuccess(res.body, res.headers);
+        },
+        () => this.onError()
+      );
   }
 
   ngOnDestroy(): void {
@@ -80,6 +96,17 @@ export class CollectionComponent implements OnInit, OnDestroy {
     return item.id!;
   }
 
+  transition(): void {
+    this.router.navigate(['./'], {
+      relativeTo: this.activatedRoute.parent,
+      queryParams: {
+        page: this.page,
+        size: this.itemsPerPage,
+        sort: this.predicate + ',' + (this.ascending ? 'asc' : 'desc'),
+      },
+    });
+  }
+
   byteSize(base64String: string): string {
     return this.dataUtils.byteSize(base64String);
   }
@@ -88,40 +115,47 @@ export class CollectionComponent implements OnInit, OnDestroy {
     return this.dataUtils.openFile(contentType, base64String);
   }
 
-  registerChangeInCollections(): void {
-    this.eventSubscriber = this.eventManager.subscribe('collectionListModification', () => this.loadPage());
+  create(): void {
+    const modalRef = this.modalService.open(CollectionUpdateComponent, { size: 'lg', backdrop: 'static', centered: true });
+    modalRef.componentInstance.currentAccount = this.currentAccount;
+  }
+
+  edit(collection: ICollection): void {
+    const modalRef = this.modalService.open(CollectionUpdateComponent, { size: 'lg', backdrop: 'static', centered: true });
+    modalRef.componentInstance.collection = collection;
+    modalRef.componentInstance.currentAccount = this.currentAccount;
   }
 
   delete(collection: ICollection): void {
-    const modalRef = this.modalService.open(CollectionDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+    const modalRef = this.modalService.open(CollectionDeleteDialogComponent, { size: 'lg', backdrop: 'static', centered: true });
     modalRef.componentInstance.collection = collection;
   }
 
-  sort(): string[] {
-    const result = [this.predicate + ',' + (this.ascending ? 'asc' : 'desc')];
-    if (this.predicate !== 'id') {
-      result.push('id');
-    }
-    return result;
+  view(collection: ICollection): void {
+    const modalRef = this.modalService.open(CollectionHasRecipeComponent, { size: 'xl', backdrop: 'static', centered: true });
+    modalRef.componentInstance.collection = collection;
   }
 
-  protected onSuccess(data: ICollection[] | null, headers: HttpHeaders, page: number, navigate: boolean): void {
+  // sort(): string[] {
+  //   const result = [this.predicate + ',' + (this.ascending ? 'asc' : 'desc')];
+  //   if (this.predicate !== 'id') {
+  //     result.push('id');
+  //   }
+  //   return result;
+  // }
+
+  protected onSuccess(data: ICollection[] | null, headers: HttpHeaders): void {
     this.totalItems = Number(headers.get('X-Total-Count'));
-    this.page = page;
-    if (navigate) {
-      this.router.navigate(['/collection'], {
-        queryParams: {
-          page: this.page,
-          size: this.itemsPerPage,
-          sort: this.predicate + ',' + (this.ascending ? 'asc' : 'desc'),
-        },
-      });
-    }
-    this.collections = data || [];
-    this.ngbPaginationPage = this.page;
+    this.collections = data;
+    this.dataLoaded = true;
+    this.requesting = false;
   }
 
   protected onError(): void {
-    this.ngbPaginationPage = this.page ?? 1;
+    this.requesting = false;
+  }
+
+  invertOrder(): void {
+    this.orderAsc = !this.orderAsc;
   }
 }

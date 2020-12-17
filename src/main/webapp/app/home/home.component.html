@@ -63,5 +63,36 @@
     </div>
 </div>
 <div *ngIf="account">
-    <jhi-post-home></jhi-post-home>
+    <div>
+            <div style="height: auto;">
+                <div
+                    [ngStyle.gt-sm]="{ 'max-width': 'auto' }"
+                    [ngStyle]="{ 'max-width': 'auto' }"
+                    gdAreas.gt-sm="topPosts latestsPosts recomendedPosts"
+                    gdAreas.sm="topPosts  recomendedPosts |
+                                latestsPosts latestsPosts"
+                    gdAreas.xs="topPosts | recomendedPosts | latestsPosts"
+                    gdColumns.gt-sm="200px auto 200px"
+                    gdColumns.sm="50%!"
+                    gdColumns.xs="none"
+                    gdGap="1em"
+                    gdGap.gt-sm="20px">
+
+                    <div class="blocks-1" gdArea="topPosts">
+                        <jhi-tops></jhi-tops>
+                    </div>
+
+                    <div class="blocks-2" gdArea="latestsPosts">
+                        <jhi-post-home></jhi-post-home>
+                    </div>
+
+                    <div class="blocks-3" gdArea="recomendedPosts">
+                        <jhi-recomend></jhi-recomend>
+                    </div>
+
+                </div>
+            </div>
+
+    </div>
+
 </div>

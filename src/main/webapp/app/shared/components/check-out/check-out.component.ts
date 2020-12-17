@@ -6,7 +6,6 @@ import { TransactionLogicService } from 'app/shared/services/transaction-logic.s
 import { MatDialogRef } from '@angular/material/dialog';
 import { BundlePickerDialogComponent } from 'app/shared/components/buy-cookie/bundle-picker-dialog/bundle-picker-dialog.component';
 import { IClientAuthorizeCallbackData, ICreateOrderRequest, IOnApproveCallbackData, IPayPalConfig } from 'ngx-paypal';
-import { HttpClient } from '@angular/common/http';
 
 // declare let paypal: any;
 
@@ -29,11 +28,7 @@ export class CheckOutComponent implements OnInit {
     description: 'Shopped, Cookies',
   };
 
-  constructor(
-    private transactionLogicService: TransactionLogicService,
-    public dialogRef: MatDialogRef<BundlePickerDialogComponent>,
-    private http: HttpClient
-  ) {}
+  constructor(private transactionLogicService: TransactionLogicService, public dialogRef: MatDialogRef<BundlePickerDialogComponent>) {}
 
   ngOnInit(): void {
     this.initConfig();

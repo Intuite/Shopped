@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
 import { ICartHasRecipe } from 'app/shared/model/cart-has-recipe.model';
+import { Status } from 'app/shared/model/enumerations/status.model';
+import { IRecipe } from 'app/shared/model/recipe.model';
 
 type EntityResponseType = HttpResponse<ICartHasRecipe>;
 type EntityArrayResponseType = HttpResponse<ICartHasRecipe[]>;
@@ -34,5 +36,22 @@ export class CartHasRecipeService {
 
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  }
+
+  findByCart(cartId: number): Observable<EntityArrayResponseType> {
+    const options = createRequestOption({ ...{ 'cartId.equals': cartId } });
+    return this.http.get<ICartHasRecipe[]>(this.resourceUrl, {
+      params: options,
+      observe: 'response',
+    });
+  }
+
+  map(recipe: IRecipe, cid: number | undefined): ICartHasRecipe {
+    return {
+      cartId: cid,
+      recipeId: recipe.id,
+      recipeName: recipe.name,
+      status: Status.ACTIVE.toUpperCase() as Status,
+    };
   }
 }

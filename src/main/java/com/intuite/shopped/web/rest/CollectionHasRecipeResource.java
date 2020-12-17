@@ -105,6 +105,18 @@ public class CollectionHasRecipeResource {
     }
 
     /**
+     * {@code GET /users} : get all collections and recipes connexions.
+     *
+     * @param criteria the information specify.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body all entries.
+     */
+    @GetMapping("/collection-has-recipes/all")
+    public ResponseEntity<List<CollectionHasRecipeDTO>> getAllUsers(CollectionHasRecipeCriteria criteria) {
+        List<CollectionHasRecipeDTO> list = collectionHasRecipeQueryService.findByCriteria(criteria);
+        return ResponseEntity.ok().body(list);
+    }
+
+    /**
      * {@code GET  /collection-has-recipes/count} : count all the collectionHasRecipes.
      *
      * @param criteria the criteria which the requested entities should match.

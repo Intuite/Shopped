@@ -1,10 +1,10 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe } from '@angular/core';
 
 @Pipe({
   name: 'reverse',
 })
-export class ReversePipe implements PipeTransform {
+export class ReversePipe {
   transform(items: any[]): any[] {
-    return items.slice().reverse();
+    return items.reverse();
   }
 }

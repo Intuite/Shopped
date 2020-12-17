@@ -109,6 +109,18 @@ public class UserProfileResource {
     }
 
     /**
+     * {@code GET  /user-profiles/all} : get all the userProfiles.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of userProfiles in body.
+     */
+    @GetMapping("/user-profiles/all")
+    public ResponseEntity<List<UserProfileDTO>> getAllUserProfiles(UserProfileCriteria criteria) {
+        List<UserProfileDTO> list = userProfileQueryService.findByCriteria(criteria);
+        return ResponseEntity.ok().body(list);
+    }
+
+    /**
      * {@code GET  /user-profiles/count} : count all the userProfiles.
      *
      * @param criteria the criteria which the requested entities should match.

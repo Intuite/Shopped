@@ -1,11 +1,11 @@
 package com.intuite.shopped.web.rest;
 
-import com.intuite.shopped.service.CartService;
-import com.intuite.shopped.web.rest.errors.BadRequestAlertException;
-import com.intuite.shopped.service.dto.CartDTO;
-import com.intuite.shopped.service.dto.CartCriteria;
+import com.intuite.shopped.domain.enumeration.Status;
 import com.intuite.shopped.service.CartQueryService;
-
+import com.intuite.shopped.service.CartService;
+import com.intuite.shopped.service.dto.CartCriteria;
+import com.intuite.shopped.service.dto.CartDTO;
+import com.intuite.shopped.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -15,14 +15,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,16 +33,12 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class CartResource {
 
-    private final Logger log = LoggerFactory.getLogger(CartResource.class);
-
     private static final String ENTITY_NAME = "cart";
-
+    private final Logger log = LoggerFactory.getLogger(CartResource.class);
+    private final CartService cartService;
+    private final CartQueryService cartQueryService;
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
-
-    private final CartService cartService;
-
-    private final CartQueryService cartQueryService;
 
     public CartResource(CartService cartService, CartQueryService cartQueryService) {
         this.cartService = cartService;
@@ -62,6 +58,8 @@ public class CartResource {
         if (cartDTO.getId() != null) {
             throw new BadRequestAlertException("A new cart cannot already have an ID", ENTITY_NAME, "idexists");
         }
+        cartDTO.setCreated(Instant.now());
+        cartDTO.setStatus(Status.ACTIVE);
         CartDTO result = cartService.save(cartDTO);
         return ResponseEntity.created(new URI("/api/carts/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))

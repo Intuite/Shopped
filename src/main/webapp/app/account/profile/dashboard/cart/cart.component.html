@@ -1,1 +1,94 @@
-<p>cart works!</p>
+<mat-card class="mat-elevation-z2" tabindex="-1">
+    <mat-card-title-group>
+        <mat-card-title>{{ cartView ? 'Cart' : 'Cart recipes'}}</mat-card-title>
+        <mat-card-subtitle *ngIf="cartView">{{ service.cartInfo$ | async }}</mat-card-subtitle>
+        <!-- right corner menu -->
+        <button
+            [matMenuTriggerFor]="menu"
+            aria-label="Cart menu"
+            mat-icon-button
+        >
+            <mat-icon>more_vert</mat-icon>
+            <mat-menu #menu="matMenu">
+                <button (click)="historyView = !historyView" mat-menu-item>
+                    <mat-icon>history</mat-icon>
+                    <span>Toggle History</span>
+                </button>
+                <button (click)="showCart()" *ngIf="!cartView && hasRecipes" mat-menu-item>
+                    <mat-icon>shopping_cart</mat-icon>
+                    <span>Cart</span>
+                </button>
+                <button (click)="showRecipeList()" *ngIf="cartView && hasRecipes" mat-menu-item>
+                    <mat-icon>fastfood</mat-icon>
+                    <span>Recipes</span>
+                </button>
+                <button
+                    (click)="toggleVisibility()"
+                    *ngIf="!historyView"
+                    mat-menu-item
+                    role="menuitemradio"
+                >
+                    <mat-icon>visibility</mat-icon>
+                    <span *ngIf="!visibilityAll$.value">See all items</span>
+                    <span *ngIf="visibilityAll$.value"
+                    >Hide selected items</span
+                    >
+                </button>
+                <button
+                    (click)="visibilityAll$.next(visibilityAll$.value)"
+                    *ngIf="!historyView"
+                    mat-menu-item
+                >
+                    <mat-icon>sort</mat-icon>
+                    <span>Sort by status</span>
+                </button>
+            </mat-menu>
+        </button>
+    </mat-card-title-group>
+    <div *ngIf="historyView">
+        <mat-card-content>
+            <mat-divider></mat-divider>
+            <jhi-cart-history [account]="account"></jhi-cart-history>
+        </mat-card-content>
+    </div>
+    <div *ngIf="cartView && !historyView">
+        <mat-card-content>
+            <mat-divider></mat-divider>
+            <!-- cart list -->
+            <jhi-cart-list [visibilityAll$]="visibilityAll$"></jhi-cart-list>
+        </mat-card-content>
+        <!-- bottom buttons -->
+        <mat-card-actions fxLayout="row" fxLayoutAlign="space-between center">
+            <button disabled mat-mini-fab>
+                <span>{{ stats }}</span>
+            </button>
+            <div fxLayout="row">
+                <button (click)="closeCart()" mat-button>Close Cart</button>
+                <button
+                    (click)="openAddIngredients()"
+                    class="text-white"
+                    color="primary"
+                    mat-raised-button
+                >
+                    Add Ingredients
+                </button>
+                <button
+                    (click)="saveCart()"
+                    [disabled]="changes === 0"
+                    [matTooltipDisabled]="changes > 0"
+                    color="accent"
+                    mat-raised-button
+                    matTooltip="There must be changes to save"
+                >
+                    Save Changes
+                </button>
+            </div>
+        </mat-card-actions>
+    </div>
+    <div *ngIf="!cartView && !historyView">
+        <mat-card-content>
+            <mat-divider></mat-divider>
+            <jhi-cart-recipe-list (emptyEmitter)="setHasRecipes($event)"></jhi-cart-recipe-list>
+        </mat-card-content>
+    </div>
+</mat-card>

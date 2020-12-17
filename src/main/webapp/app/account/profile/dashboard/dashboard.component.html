@@ -1,11 +1,4 @@
 <mat-tab-group mat-align-tabs="center" mat-stretch-tabs>
-<!--    <mat-tab>-->
-<!--        <ng-template mat-tab-label>-->
-<!--            <mat-icon>shopping_cart</mat-icon>-->
-<!--            Cart-->
-<!--        </ng-template>-->
-<!--        <jhi-dashboard-cart></jhi-dashboard-cart>-->
-<!--    </mat-tab>-->
     <mat-tab *ngIf="account!.id!==3">
         <ng-template mat-tab-label>
             <mat-icon>fastfood</mat-icon>
@@ -13,18 +6,39 @@
         </ng-template>
         <jhi-dashboard-recipes></jhi-dashboard-recipes>
     </mat-tab>
-<!--    <mat-tab>-->
-<!--        <ng-template mat-tab-label>-->
-<!--            <mat-icon>layers</mat-icon>-->
-<!--            Collections-->
-<!--        </ng-template>-->
-<!--        <jhi-dashboard-collections></jhi-dashboard-collections>-->
-<!--    </mat-tab>-->
+    <mat-tab *ngIf="isUsersCart && account!.id!==3">
+        <ng-template mat-tab-label>
+            <mat-icon>shopping_cart</mat-icon>
+            Cart
+        </ng-template>
+        <jhi-dashboard-cart [account]="account"></jhi-dashboard-cart>
+    </mat-tab>
+    <!--    <mat-tab>-->
+    <!--        <ng-template mat-tab-label>-->
+    <!--            <mat-icon>layers</mat-icon>-->
+    <!--            Collections-->
+    <!--        </ng-template>-->
+    <!--        <jhi-dashboard-collections></jhi-dashboard-collections>-->
+    <!--    </mat-tab>-->
     <mat-tab>
         <ng-template mat-tab-label>
             <mat-icon>payment</mat-icon>
             Payments
         </ng-template>
         <jhi-dashboard-payments></jhi-dashboard-payments>
+    </mat-tab>
+    <mat-tab *ngIf="account!.id==3">
+        <ng-template mat-tab-label>
+            <mat-icon>assessment</mat-icon>
+            Analitics
+        </ng-template>
+        <jhi-analitica></jhi-analitica>
+    </mat-tab>
+    <mat-tab *ngIf="account!.id!==3">
+        <ng-template mat-tab-label>
+            <mat-icon>assessment</mat-icon>
+            Analitics
+        </ng-template>
+        <jhi-analitica-p [id]="account!.id"></jhi-analitica-p>
     </mat-tab>
 </mat-tab-group>

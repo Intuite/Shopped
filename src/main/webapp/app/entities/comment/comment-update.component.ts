@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { JhiEventManager } from 'ng-jhipster';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -13,6 +15,12 @@ import { IPost } from 'app/shared/model/post.model';
 import { PostService } from 'app/entities/post/post.service';
 import { IUser } from 'app/core/user/user.model';
 import { UserService } from 'app/core/user/user.service';
+import { AccountService } from 'app/core/auth/account.service';
+import { Account } from 'app/core/user/account.model';
+import { Log } from 'app/shared/model/log.model';
+import { Notification } from 'app/shared/model/notification.model';
+import { NotificationService } from 'app/entities/notification/notification.service';
+import { LogService } from 'app/entities/log/log.service';
 
 type SelectableEntity = IPost | IUser;
 
@@ -21,17 +29,20 @@ type SelectableEntity = IPost | IUser;
   templateUrl: './comment-update.component.html',
 })
 export class CommentUpdateComponent implements OnInit {
+  post?: IPost;
+  account?: Account | undefined;
   isSaving = false;
   posts: IPost[] = [];
   users: IUser[] = [];
+  statusOptions = ['ACTIVE', 'INACTIVE'];
 
   editForm = this.fb.group({
     id: [],
-    content: [null, [Validators.required]],
+    content: [null, [Validators.required, Validators.maxLength(200)]],
     created: [],
     status: [],
-    postId: [null, Validators.required],
-    userId: [null, Validators.required],
+    postId: [],
+    userId: [],
   });
 
   constructor(
@@ -39,21 +50,17 @@ export class CommentUpdateComponent implements OnInit {
     protected postService: PostService,
     protected userService: UserService,
     protected activatedRoute: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    public activeModal: NgbActiveModal,
+    protected eventManager: JhiEventManager,
+    protected accountService: AccountService,
+    private logService: LogService,
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ comment }) => {
-      if (!comment.id) {
-        const today = moment().startOf('day');
-        comment.created = today;
-      }
-
       this.updateForm(comment);
-
-      this.postService.query().subscribe((res: HttpResponse<IPost[]>) => (this.posts = res.body || []));
-
-      this.userService.query().subscribe((res: HttpResponse<IUser[]>) => (this.users = res.body || []));
     });
   }
 
@@ -69,7 +76,7 @@ export class CommentUpdateComponent implements OnInit {
   }
 
   previousState(): void {
-    window.history.back();
+    this.activeModal.dismiss();
   }
 
   save(): void {
@@ -85,12 +92,12 @@ export class CommentUpdateComponent implements OnInit {
   private createFromForm(): IComment {
     return {
       ...new Comment(),
-      id: this.editForm.get(['id'])!.value,
+      id: undefined,
       content: this.editForm.get(['content'])!.value,
-      created: this.editForm.get(['created'])!.value ? moment(this.editForm.get(['created'])!.value, DATE_TIME_FORMAT) : undefined,
-      status: this.editForm.get(['status'])!.value,
-      postId: this.editForm.get(['postId'])!.value,
-      userId: this.editForm.get(['userId'])!.value,
+      created: moment().startOf('minute'),
+      status: this.post?.status,
+      postId: this.post?.id,
+      userId: this.account?.id,
     };
   }
 
@@ -103,7 +110,9 @@ export class CommentUpdateComponent implements OnInit {
 
   protected onSaveSuccess(): void {
     this.isSaving = false;
-    this.previousState();
+    this.saveHistoryComment();
+    this.addNotificationComment();
+    this.activeModal.close();
   }
 
   protected onSaveError(): void {
@@ -112,5 +121,41 @@ export class CommentUpdateComponent implements OnInit {
 
   trackById(index: number, item: SelectableEntity): any {
     return item.id;
+  }
+
+  saveHistoryComment(): void {
+    const description = JSON.stringify({
+      postRecipeName: this.post?.recipeName,
+      userComment: this.account?.login,
+    });
+    this.logService
+      .create(new Log(undefined, description, moment().startOf('minute'), 'Post comment', 5, this.account?.login, this.account?.id))
+      .subscribe(
+        () => console.warn('Comment log succesful'),
+        () => console.warn('Comment log failed')
+      );
+  }
+
+  addNotificationComment(): void {
+    const content = JSON.stringify({
+      userComment: this.account?.login,
+    });
+    this.notificationService
+      .create(
+        new Notification(
+          undefined,
+          content,
+          moment().startOf('minute'),
+          this.post?.status,
+          'Comment',
+          2,
+          this.account?.login,
+          this.account?.id
+        )
+      )
+      .subscribe(
+        () => console.warn('Notification comment succesful'),
+        () => console.warn('Notification comment failed')
+      );
   }
 }

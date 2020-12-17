@@ -1,0 +1,10 @@
+:host {
+  background-color: white;
+  width: 100%;
+}
+
+mat-card-content.mat-card-content {
+  min-height: 50vh;
+  max-height: 55vh;
+  overflow-y: auto;
+}

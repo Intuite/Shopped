@@ -6,6 +6,9 @@ import { flatMap } from 'rxjs/operators';
 
 import { ICollection, Collection } from 'app/shared/model/collection.model';
 import { CollectionService } from './collection.service';
+import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
+import { Authority } from 'app/shared/constants/authority.constants';
+import { CollectionComponent } from 'app/entities/collection/collection.component';
 
 @Injectable({ providedIn: 'root' })
 export class CollectionResolve implements Resolve<ICollection> {
@@ -30,16 +33,16 @@ export class CollectionResolve implements Resolve<ICollection> {
 }
 
 export const collectionRoute: Routes = [
-  // {
-  //   path: '',
-  //   component: CollectionComponent,
-  //   data: {
-  //     authorities: [Authority.USER],
-  //     defaultSort: 'id,asc',
-  //     pageTitle: 'shoppedApp.collection.home.title',
-  //   },
-  //   canActivate: [UserRouteAccessService],
-  // },
+  {
+    path: '',
+    component: CollectionComponent,
+    data: {
+      authorities: [Authority.USER],
+      defaultSort: 'id,asc',
+      pageTitle: 'shoppedApp.collection.home.title',
+    },
+    canActivate: [UserRouteAccessService],
+  },
   // {
   //   path: ':id/view',
   //   component: CollectionDetailComponent,

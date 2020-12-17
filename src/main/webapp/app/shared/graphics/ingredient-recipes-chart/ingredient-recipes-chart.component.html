@@ -1,0 +1,16 @@
+<mat-card>
+    <h3>Ingredients Used</h3>
+        <mat-card-content align="center">
+            <div *ngIf="!empty">
+            <jhi-bar-chart
+                [barChartData]="rhiData"
+                [barChartLabels]="rhiLabel"
+                [width]="700"
+            >
+            </jhi-bar-chart>
+            </div>
+            <div *ngIf="empty">
+                No ingredients used in the selected time frame
+            </div>
+        </mat-card-content>
+</mat-card>
