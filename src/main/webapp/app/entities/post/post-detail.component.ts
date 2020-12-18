@@ -36,6 +36,7 @@ import { CartService } from 'app/entities/cart/cart.service';
 import { IIngredient } from 'app/shared/model/ingredient.model';
 import { ICartIngredient } from 'app/shared/model/cart-ingredient.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { RecipeHasIngredientService } from 'app/entities/recipe-has-ingredient/recipe-has-ingredient.service';
 
 interface FullIngredient {
   id?: number;
@@ -72,6 +73,7 @@ export class PostDetailComponent implements OnInit {
 
   constructor(
     protected recipeService: RecipeService,
+    protected recipeHasIngredientService: RecipeHasIngredientService,
     protected ingredientService: IngredientService,
     protected dataUtils: JhiDataUtils,
     protected activatedRoute: ActivatedRoute,
@@ -317,7 +319,11 @@ export class PostDetailComponent implements OnInit {
   }
 
   addReport(post: IPost, account: Account | undefined, reporttypes: IReportType[]): void {
-    const modalReportRef = this.modalReportService.open(ReportPostUpdateComponent, { size: 'md', backdrop: 'static', centered: true });
+    const modalReportRef = this.modalReportService.open(ReportPostUpdateComponent, {
+      size: 'md',
+      backdrop: 'static',
+      centered: true,
+    });
     modalReportRef.componentInstance.post = post;
     modalReportRef.componentInstance.account = account;
     modalReportRef.componentInstance.reporttypes = reporttypes;
@@ -334,35 +340,12 @@ export class PostDetailComponent implements OnInit {
     this.postService.findComments(this.post?.id).subscribe(res => (this.countComments = res.body));
   }
 
-  protected onSuccess(): void {
-    this.recipeService.find(this.post?.recipeId).subscribe(response => {
-      this.recipe = response.body;
-      if (this.post?.recipeId !== undefined) {
-        this.recipeService.findRecipeHasIngredients(this.post.recipeId).subscribe(recipeHasIng => {
-          if (recipeHasIng.body !== null) {
-            recipeHasIng.body.forEach(ing => {
-              if (ing.id !== undefined) {
-                this.ingredientService.find(ing.id).subscribe(fullIng => {
-                  this.ingredients.push({
-                    id: ing.ingredientId,
-                    name: ing.ingredientName,
-                    amount: ing.amount,
-                    unitAbbrev: fullIng.body!.unitAbbrev,
-                    image: fullIng.body?.image,
-                    imageContentType: fullIng.body?.imageContentType,
-                  });
-                });
-              }
-            });
-          }
-        });
-        this.recipeService.findRecipeHasRecipeTags(this.post?.recipeId).subscribe(recipeTags => (this.recipeTags = recipeTags.body));
-      }
-    });
-  }
-
   create(collection: ICollection): void {
-    const modalRef = this.modalService.open(CollectionHasRecipeUpdateComponent, { size: 'lg', backdrop: 'static', centered: true });
+    const modalRef = this.modalService.open(CollectionHasRecipeUpdateComponent, {
+      size: 'lg',
+      backdrop: 'static',
+      centered: true,
+    });
     modalRef.componentInstance.currentCollection = collection;
     modalRef.componentInstance.currentRecipe = this.recipe;
   }
@@ -410,6 +393,35 @@ export class PostDetailComponent implements OnInit {
       duration: seconds * 1000,
       horizontalPosition: 'center',
       verticalPosition: 'bottom',
+    });
+  }
+
+  protected onSuccess(): void {
+    this.recipeService.find(this.post?.recipeId).subscribe(response => {
+      this.recipe = response.body;
+      if (this.recipe !== null) {
+        this.recipeHasIngredientService.query({ 'recipeId.equals': this.recipe.id! }).subscribe(recipeHasIng => {
+          console.warn(recipeHasIng.body);
+          if (recipeHasIng.body !== null) {
+            recipeHasIng.body.forEach(rhi => {
+              if (rhi.ingredientId !== undefined) {
+                this.ingredientService.find(rhi.ingredientId).subscribe(ingRes => {
+                  const ing = ingRes.body!;
+                  this.ingredients.push({
+                    id: ing.id,
+                    name: ing.name,
+                    amount: rhi.amount,
+                    unitAbbrev: ing.unitAbbrev,
+                    image: ing.image,
+                    imageContentType: ing.imageContentType,
+                  });
+                });
+              }
+            });
+          }
+        });
+        this.recipeService.findRecipeHasRecipeTags(this.recipe.id!).subscribe(recipeTags => (this.recipeTags = recipeTags.body));
+      }
     });
   }
 }

@@ -19,6 +19,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ICollection } from 'app/shared/model/collection.model';
 import { HttpResponse } from '@angular/common/http';
 import { CollectionService } from 'app/entities/collection/collection.service';
+import { RecipeHasIngredientService } from 'app/entities/recipe-has-ingredient/recipe-has-ingredient.service';
 
 interface FullIngredient {
   id?: number;
@@ -46,6 +47,7 @@ export class RecipeDetailComponent implements OnInit {
 
   constructor(
     protected dataUtils: JhiDataUtils,
+    protected recipeHasIngredientService: RecipeHasIngredientService,
     protected activatedRoute: ActivatedRoute,
     private accountService: AccountService,
     protected userService: UserService,
@@ -59,25 +61,30 @@ export class RecipeDetailComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ recipe }) => {
       this.recipe = recipe;
-      this.recipeService.findRecipeHasIngredients(recipe.id).subscribe(recipeHasIng => {
-        if (recipeHasIng.body !== null) {
-          recipeHasIng.body.forEach(ing => {
-            if (ing.id !== undefined) {
-              this.ingredientService.find(ing.id).subscribe(response => {
-                this.ingredients.push({
-                  id: ing.ingredientId,
-                  name: ing.ingredientName,
-                  amount: ing.amount,
-                  unitAbbrev: response.body!.unitAbbrev,
-                  image: response.body?.image,
-                  imageContentType: response.body?.imageContentType,
+      console.warn(this.recipe);
+      if (this.recipe !== null) {
+        this.recipeHasIngredientService.query({ 'recipeId.equals': this.recipe.id! }).subscribe(recipeHasIng => {
+          console.warn(recipeHasIng.body);
+          if (recipeHasIng.body !== null) {
+            recipeHasIng.body.forEach(rhi => {
+              if (rhi.ingredientId !== undefined) {
+                this.ingredientService.find(rhi.ingredientId).subscribe(ingRes => {
+                  const ing = ingRes.body!;
+                  this.ingredients.push({
+                    id: ing.id,
+                    name: ing.name,
+                    amount: rhi.amount,
+                    unitAbbrev: ing.unitAbbrev,
+                    image: ing.image,
+                    imageContentType: ing.imageContentType,
+                  });
                 });
-              });
-            }
-          });
-        }
-      });
-      this.recipeService.findRecipeHasRecipeTags(recipe.id).subscribe(recipeTags => (this.recipeTags = recipeTags.body));
+              }
+            });
+          }
+        });
+        this.recipeService.findRecipeHasRecipeTags(this.recipe.id!).subscribe(recipeTags => (this.recipeTags = recipeTags.body));
+      }
     });
     this.accountService.getAuthenticationState().subscribe(account => {
       if (account) {
@@ -124,7 +131,11 @@ export class RecipeDetailComponent implements OnInit {
   }
 
   create(collection: ICollection): void {
-    const modalRef = this.modalService.open(CollectionHasRecipeUpdateComponent, { size: 'lg', backdrop: 'static', centered: true });
+    const modalRef = this.modalService.open(CollectionHasRecipeUpdateComponent, {
+      size: 'lg',
+      backdrop: 'static',
+      centered: true,
+    });
     modalRef.componentInstance.currentCollection = collection;
     modalRef.componentInstance.currentRecipe = this.recipe;
   }
