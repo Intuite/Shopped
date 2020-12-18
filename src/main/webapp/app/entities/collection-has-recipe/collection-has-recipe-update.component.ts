@@ -91,6 +91,7 @@ export class CollectionHasRecipeUpdateComponent implements OnInit {
     this.eventManager.broadcast('collectionHasRecipeListModification');
     // this.close();
     if (this.currentCollection) this.viewCollectionContent(this.currentCollection);
+    this.close();
   }
 
   protected onSaveError(): void {

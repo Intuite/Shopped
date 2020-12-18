@@ -205,4 +205,9 @@ export class CollectionHasRecipeComponent implements OnInit, OnDestroy {
   setRecipeTags(): void {
     this.recipeTags = this.recipePiker.getRecipeTags();
   }
+
+  showPostOrRecipe(recipe: IRecipe) {
+    if (recipe.postId) this.router.navigate(['/post', recipe.postId, 'view']);
+    else this.router.navigate(['/recipe', recipe.id, 'view']);
+  }
 }
