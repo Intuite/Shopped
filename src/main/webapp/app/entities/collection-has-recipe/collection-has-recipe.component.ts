@@ -16,6 +16,7 @@ import { CollectionHasRecipeService } from 'app/entities/collection-has-recipe/c
 import { ICollection } from 'app/shared/model/collection.model';
 import { RecipeTagPickerComponent } from 'app/shared/components/pickers/recipe-tag-picker/recipe-tag-picker.component';
 import { IRecipeTag } from 'app/shared/model/recipe-tag.model';
+import { PostService } from 'app/entities/post/post.service';
 
 @Component({
   selector: 'jhi-collection-has-recipe',
@@ -48,7 +49,8 @@ export class CollectionHasRecipeComponent implements OnInit, OnDestroy {
     protected router: Router,
     protected eventManager: JhiEventManager,
     protected modalService: NgbModal,
-    private activeModal: NgbActiveModal
+    private activeModal: NgbActiveModal,
+    private postService: PostService
   ) {}
 
   loadAll(): void {
@@ -63,7 +65,7 @@ export class CollectionHasRecipeComponent implements OnInit, OnDestroy {
 
   retrieveRecipes(collectionHasRecipesIds: number[]): any {
     this.recipeService
-      .query({
+      .queryAll({
         ...{ 'id.in': collectionHasRecipesIds },
       })
       .subscribe(
@@ -206,8 +208,19 @@ export class CollectionHasRecipeComponent implements OnInit, OnDestroy {
     this.recipeTags = this.recipePiker.getRecipeTags();
   }
 
-  showPostOrRecipe(recipe: IRecipe) {
-    if (recipe.postId) this.router.navigate(['/post', recipe.postId, 'view']);
-    else this.router.navigate(['/recipe', recipe.id, 'view']);
+  showPostOrRecipe(recipe: IRecipe): void {
+    this.postService
+      .queryAll({
+        ...{ 'recipeId.equals': recipe.id },
+      })
+      .subscribe(
+        res => {
+          if (res.body && res.body[0]) this.router.navigate(['/post/' + res.body[0].id + '/view']);
+          else this.router.navigate(['/recipe/' + recipe.id + '/view']);
+        },
+        () => {
+          this.router.navigate(['/recipe/' + recipe.id + '/view']);
+        }
+      );
   }
 }
