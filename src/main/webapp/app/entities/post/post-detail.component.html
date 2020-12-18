@@ -132,7 +132,7 @@
                                                 alt="ingredient image"
                                                 matListAvatar
                                             />
-                                            <mat-icon color="primary" matListIcon>
+                                            <mat-icon *ngIf="!ingredient.image" color="primary" matListIcon>
                                                 shopping_cart
                                             </mat-icon>
                                             <div matLine> {{ ingredient.name }} </div>
