@@ -10,6 +10,7 @@ import { CollectionService } from './collection.service';
 })
 export class CollectionDeleteDialogComponent {
   collection?: ICollection;
+  error = false;
 
   constructor(
     protected collectionService: CollectionService,
@@ -22,9 +23,17 @@ export class CollectionDeleteDialogComponent {
   }
 
   confirmDelete(id: number): void {
-    this.collectionService.delete(id).subscribe(() => {
-      this.eventManager.broadcast('collectionListModification');
-      this.activeModal.close();
-    });
+    this.collectionService.delete(id).subscribe(
+      () => {
+        this.eventManager.broadcast('collectionListModification');
+        this.activeModal.close();
+      },
+      () => {
+        this.error = true;
+        setTimeout(() => {
+          this.error = false;
+        }, 3000);
+      }
+    );
   }
 }

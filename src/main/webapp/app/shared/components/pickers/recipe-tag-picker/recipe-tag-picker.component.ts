@@ -20,7 +20,7 @@ export class RecipeTagPickerComponent implements OnInit {
   ngOnInit(): void {
     this.reloadTagList$.subscribe(() => {
       this.service
-        .query({
+        .queryAll({
           ...{ 'status.equals': 'ACTIVE' },
         })
         .subscribe((response: any) => {

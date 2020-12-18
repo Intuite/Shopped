@@ -25,9 +25,9 @@
         </h2>
 
         <div class="my-1" style="min-height: 80px">
-            <jhi-alert-error></jhi-alert-error>
+<!--            <jhi-alert-error></jhi-alert-error>-->
 
-            <jhi-alert></jhi-alert>
+<!--            <jhi-alert></jhi-alert>-->
         </div>
 
         <div *ngIf="requesting"
@@ -73,7 +73,7 @@
                             </div>
                         </mat-card-header>
 
-                        <a [routerLink]="['/recipe', recipe.id, 'view']" (click)="close()">
+                        <a (click)="showPostOrRecipe(recipe); close()">
                             <div *ngIf="recipe.image">
                                 <div class="recipe-card-picture">
                                     <img [src]="'data:' + recipe.imageContentType + ';base64,' + recipe.image"
