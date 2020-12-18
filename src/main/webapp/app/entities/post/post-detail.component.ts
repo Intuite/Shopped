@@ -401,7 +401,6 @@ export class PostDetailComponent implements OnInit {
       this.recipe = response.body;
       if (this.recipe !== null) {
         this.recipeHasIngredientService.query({ 'recipeId.equals': this.recipe.id! }).subscribe(recipeHasIng => {
-          console.warn(recipeHasIng.body);
           if (recipeHasIng.body !== null) {
             recipeHasIng.body.forEach(rhi => {
               if (rhi.ingredientId !== undefined) {

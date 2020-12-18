@@ -126,6 +126,12 @@
                                     <div *ngFor="let ingredient of ingredients; first as first">
                                         <mat-divider></mat-divider>
                                         <mat-list-item>
+                                            <img
+                                                *ngIf="ingredient.image"
+                                                [src]="'data:' + ingredient.imageContentType + ';base64,' + ingredient.image"
+                                                alt="ingredient image"
+                                                matListAvatar
+                                            />
                                             <mat-icon color="primary" matListIcon>
                                                 shopping_cart
                                             </mat-icon>

@@ -61,10 +61,8 @@ export class RecipeDetailComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ recipe }) => {
       this.recipe = recipe;
-      console.warn(this.recipe);
       if (this.recipe !== null) {
         this.recipeHasIngredientService.query({ 'recipeId.equals': this.recipe.id! }).subscribe(recipeHasIng => {
-          console.warn(recipeHasIng.body);
           if (recipeHasIng.body !== null) {
             recipeHasIng.body.forEach(rhi => {
               if (rhi.ingredientId !== undefined) {
