@@ -101,13 +101,13 @@
                                     Add to cart
                                 </button>
                                 <span *ngIf="collections && collections.length > 0">
-                                    <button class="text-white" color="primary" mat-raised-button
-                                            [matMenuTriggerFor]="collectionsMenu">
+                                    <button [matMenuTriggerFor]="collectionsMenu" class="text-white" color="primary"
+                                            mat-raised-button>
                                         <mat-icon>bookmark_border</mat-icon>
                                         Add to collection
                                     </button>
                                     <mat-menu #collectionsMenu="matMenu">
-                                        <button *ngFor="let collection of collections" (click)="create(collection)"
+                                        <button (click)="create(collection)" *ngFor="let collection of collections"
                                                 mat-menu-item>
                                             {{ collection.name }}
                                         </button>
